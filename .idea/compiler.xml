@@ -6,29 +6,28 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="cooltiger-common" />
         <module name="cooltiger-eureka" />
         <module name="cooltiger-feign" />
         <module name="cooltiger-goods" />
+        <module name="cooltiger-oauth" />
         <module name="cooltiger-ribbon" />
         <module name="cooltigercommon" />
         <module name="cooltigeroauth" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="cooltiger-eureka" target="1.8" />
-      <module name="cooltiger-feign" target="1.8" />
-      <module name="cooltiger-goods" target="1.8" />
-      <module name="cooltiger-parent" target="1.8" />
-      <module name="cooltiger-ribbon" target="1.8" />
       <module name="cooltigercommon" target="1.8" />
       <module name="cooltigeroauth" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="cooltiger-common" options="-parameters" />
       <module name="cooltiger-eureka" options="-parameters" />
       <module name="cooltiger-feign" options="-parameters" />
       <module name="cooltiger-goods" options="-parameters" />
+      <module name="cooltiger-oauth" options="-parameters" />
       <module name="cooltiger-ribbon" options="-parameters" />
       <module name="cooltigercommon" options="-parameters" />
       <module name="cooltigeroauth" options="-parameters" />
