@@ -7,6 +7,14 @@
     <groupId>com.kyj.cooltiger</groupId>
     <artifactId>cooltiger-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>cooltiger-common</module>
+        <module>cooltiger-eureka</module>
+        <module>cooltiger-feign</module>
+        <module>cooltiger-goods</module>
+        <module>cooltiger-oauth</module>
+        <module>cooltiger-ribbon</module>
+    </modules>
 
     <packaging>pom</packaging>
 
@@ -50,13 +58,13 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
+    <!--<build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 
 </project>
