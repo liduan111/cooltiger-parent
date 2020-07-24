@@ -8,6 +8,10 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public String getGoodsById(String id) {
-        return "goods";
+        String res = "error";
+        if (id.equals("1")){
+            res = "success";
+        }
+        return res;
     }
 }

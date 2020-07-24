@@ -15,9 +15,9 @@ public class GoodsController {
     @Autowired
     private GoodsService goodsService;
 
-    @RequestMapping(value = "/hello",method = RequestMethod.GET)
+    @RequestMapping(value = "/hello/{id}",method = {RequestMethod.GET})
     public String getGoodsById(@PathVariable("id") String id){
-        String goodsById = goodsService.getGoodsById(id);
-        return "hello";
+        String res = goodsService.getGoodsById(id);
+        return res;
     }
 }
