@@ -23,14 +23,12 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="cooltiger-common" options="-parameters" />
-      <module name="cooltiger-eureka" options="-parameters" />
-      <module name="cooltiger-feign" options="-parameters" />
-      <module name="cooltiger-goods" options="-parameters" />
-      <module name="cooltiger-oauth" options="-parameters" />
-      <module name="cooltiger-ribbon" options="-parameters" />
-      <module name="cooltigercommon" options="-parameters" />
-      <module name="cooltigeroauth" options="-parameters" />
+      <module name="cooltiger-eureka" options="" />
+      <module name="cooltiger-feign" options="" />
+      <module name="cooltiger-goods" options="" />
+      <module name="cooltiger-ribbon" options="" />
+      <module name="cooltigercommon" options="" />
+      <module name="cooltigeroauth" options="" />
     </option>
   </component>
 </project>
