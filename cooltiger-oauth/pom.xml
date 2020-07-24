@@ -14,12 +14,19 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.social</groupId>
-            <artifactId>spring-social-security</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+    </dependencies>
+
+    <!--<dependencies>
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-security</artifactId>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -29,38 +36,30 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
-       <!-- 验证码生成工具 -->
+       &lt;!&ndash; 验证码生成工具 &ndash;&gt;
         <dependency>
             <groupId>com.github.axet</groupId>
             <artifactId>kaptcha</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
         </dependency>
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-
-        <!-- hutool java工具类库  -->
+        &lt;!&ndash; hutool java工具类库  &ndash;&gt;
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
-    </dependencies>
+    </dependencies>-->
     <build>
         <plugins>
             <plugin>

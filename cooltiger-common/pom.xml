@@ -11,13 +11,14 @@
 
     <artifactId>cooltiger-common</artifactId>
     <packaging>jar</packaging>
-    <dependencies>
-        <!--log日志-->
+
+    <!--<dependencies>
+        &lt;!&ndash;log日志&ndash;&gt;
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-        <!--aop-->
+        &lt;!&ndash;aop&ndash;&gt;
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
@@ -31,7 +32,7 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-        <!--spring-security安全框架-->
+        &lt;!&ndash;spring-security安全框架&ndash;&gt;
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-security</artifactId>
@@ -41,7 +42,7 @@
             <artifactId>spring-security-oauth2</artifactId>
             <optional>true</optional>
         </dependency>
-        <!--cloud oauth2认证-->
+        &lt;!&ndash;cloud oauth2认证&ndash;&gt;
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
@@ -64,7 +65,7 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <optional>true</optional>
         </dependency>
-        <!--   easypoi   -->
+        &lt;!&ndash;   easypoi   &ndash;&gt;
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-base</artifactId>
@@ -89,7 +90,7 @@
             <artifactId>mybatis-plus</artifactId>
             <optional>true</optional>
         </dependency>
-        <!--redis-->
+        &lt;!&ndash;redis&ndash;&gt;
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -104,12 +105,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- jedis客户端 -->
+        &lt;!&ndash; jedis客户端 &ndash;&gt;
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
-        <!-- spring2.X集成redis所需common-pool2，使用jedis必须依赖它-->
+        &lt;!&ndash; spring2.X集成redis所需common-pool2，使用jedis必须依赖它&ndash;&gt;
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
@@ -118,6 +119,6 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
-    </dependencies>
+    </dependencies>-->
 
 </project>
