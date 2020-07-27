@@ -12,14 +12,18 @@
     <artifactId>cooltiger-oauth</artifactId>
     <packaging>jar</packaging>
 
-  <!-- <dependencies>
+  <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-    </dependencies>-->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-web</artifactId>
+      </dependency>
+    </dependencies>
 
-    <!--<build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -33,5 +37,5 @@
                 </executions>
             </plugin>
         </plugins>
-    </build>-->
+    </build>
 </project>
