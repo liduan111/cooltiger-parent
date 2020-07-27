@@ -1,17 +1,23 @@
 package com.kyj.cooltiger.cooltigergoods.service.impl;
 
+import com.kyj.cooltiger.cooltigergoods.mapper.GoodsMapper;
+import com.kyj.cooltiger.cooltigergoods.model.Goods;
 import com.kyj.cooltiger.cooltigergoods.service.GoodsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
 
+    @Autowired
+    private GoodsMapper goodsMapper;
+
     @Override
-    public String getGoodsById(String id) {
-        String res = "error";
-        if (id.equals("1")){
-            res = "success";
+    public Goods getGoodsById(Integer id) {
+        if(id.equals(null)){
+
         }
-        return res;
+        Goods goods = goodsMapper.getGoodsById(id);
+        return goods;
     }
 }
