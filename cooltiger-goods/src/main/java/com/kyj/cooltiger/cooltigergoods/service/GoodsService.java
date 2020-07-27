@@ -1,6 +1,8 @@
 package com.kyj.cooltiger.cooltigergoods.service;
 
+import com.kyj.cooltiger.cooltigergoods.model.Goods;
+
 public interface GoodsService {
 
-    public String getGoodsById(String id);
+    public Goods getGoodsById(Integer id);
 }

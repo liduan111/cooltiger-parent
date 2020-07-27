@@ -1,5 +1,6 @@
 package com.kyj.cooltiger.cooltigergoods.controller;
 
+import com.kyj.cooltiger.cooltigergoods.model.Goods;
 import com.kyj.cooltiger.cooltigergoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +17,16 @@ public class GoodsController {
     private GoodsService goodsService;
 
     @RequestMapping(value = "/hello/{id}",method = {RequestMethod.GET})
-    public String getGoodsById(@PathVariable("id") String id){
-        String res = goodsService.getGoodsById(id);
-        return res;
+    public String hello(@PathVariable("id") String id){
+        //String res = goodsService.getGoodsById(id);
+        return "hello";
     }
+
+    @RequestMapping(value = "/getById/{id}",method = {RequestMethod.GET})
+    public String getGoodsById(@PathVariable("id") Integer id){
+        Goods goods = goodsService.getGoodsById(id);
+        return goods.toString();
+    }
+
+
 }
