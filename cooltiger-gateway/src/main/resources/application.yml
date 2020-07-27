@@ -1,0 +1,24 @@
+#服务端口
+server:
+  port: 8892
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eureka/
+
+spring:
+  application:
+    name: Gateway-Service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 是否和服务注册与发现组件结合，设置为 true 后可以直接使用应用名称调用服务
+          lowerCaseServiceId: true   # 该配置开启后，服务名可以小写
+      #路由
+      routes:
+        - id: service_goods  #路由id标识
+          uri: http://localhost:8901  #请求转发地址
+          predicates:  #断言
+            - Path=/goods/**  #匹配规则
