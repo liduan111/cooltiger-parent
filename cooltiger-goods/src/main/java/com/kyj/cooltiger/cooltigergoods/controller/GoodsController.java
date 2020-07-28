@@ -1,5 +1,6 @@
 package com.kyj.cooltiger.cooltigergoods.controller;
 
+import com.kyj.cooltiger.cooltigerfeign.clients.goods.GoodsCilent;
 import com.kyj.cooltiger.cooltigergoods.model.Goods;
 import com.kyj.cooltiger.cooltigergoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/goods")
 @RestController
-public class GoodsController {
+public class GoodsController implements GoodsCilent {
     
     @Autowired
     private GoodsService goodsService;

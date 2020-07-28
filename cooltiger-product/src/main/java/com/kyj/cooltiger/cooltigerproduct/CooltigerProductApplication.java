@@ -1,15 +1,18 @@
-package com.kyj.cooltiger.cooltigerribbon;
+package com.kyj.cooltiger.cooltigerproduct;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class CooltigerRibbonApplication {
+@MapperScan("com.kyj.cooltiger.cooltigerproduct.mapper")
+public class CooltigerProductApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CooltigerRibbonApplication.class, args);
+        SpringApplication.run(CooltigerProductApplication.class, args);
     }
 
 }
+

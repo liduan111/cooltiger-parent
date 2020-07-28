@@ -13,8 +13,8 @@
         <module>cooltiger-feign</module>
         <module>cooltiger-goods</module>
         <module>cooltiger-oauth</module>
-        <module>cooltiger-ribbon</module>
         <module>cooltiger-gateway</module>
+        <module>cooltiger-product</module>
     </modules>
 
     <packaging>pom</packaging>

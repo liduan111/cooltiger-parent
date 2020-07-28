@@ -22,3 +22,7 @@ spring:
           uri: http://localhost:8901  #请求转发地址
           predicates:  #断言
             - Path=/goods/**  #匹配规则
+        - id: service_product  #路由id标识
+          uri: http://localhost:8902  #请求转发地址
+          predicates:  #断言
+            - Path=/product/**  #匹配规则
