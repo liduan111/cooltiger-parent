@@ -1,6 +1,6 @@
 #服务端口
 server:
-  port: 8902
+  port: 8903
 
 eureka:
   client:
@@ -9,46 +9,114 @@ eureka:
 
 spring:
   application:
-    name: oauth-Service
-    datasource:
-      driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/cooltiger?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
-      username: root
-      password: root
-redis:
-  database: 0
-  host: localhost
-  port: 6379
-  #password:
-  jedis:
-    pool:
-      max-active: 8
-      max-idle: 8
-      min-idle: 0
-  druid:
-    initialSize: 5 #初始化连接大小
-    minIdle: 5     #最小连接池数量
-    maxActive: 20  #最大连接池数量
-    maxWait: 60000 #获取连接时最大等待时间，单位毫秒
-    timeBetweenEvictionRunsMillis: 60000 #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-    minEvictableIdleTimeMillis: 300000   #配置一个连接在池中最小生存的时间，单位是毫秒
-    validationQuery: SELECT 1 from DUAL  #测试连接
-    testWhileIdle: true                  #申请连接的时候检测，建议配置为true，不影响性能，并且保证安全性
-    testOnBorrow: false                  #获取连接时执行检测，建议关闭，影响性能
-    testOnReturn: false                  #归还连接时执行检测，建议关闭，影响性能
-    poolPreparedStatements: false        #是否开启PSCache，PSCache对支持游标的数据库性能提升巨大，oracle建议开启，mysql下建议关闭
-    maxPoolPreparedStatementPerConnectionSize: 20 #开启poolPreparedStatements后生效
-    filters: stat,wall,log4j #配置扩展插件，常用的插件有=>stat:监控统计  log4j:日志  wall:防御sql注入
-    connectionProperties: 'druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000' #通过connectProperties属性来打开mergeSql功能;慢SQL记录
-
+    name: Oauth-Service
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/cooltiger?allowMultiQueries=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=UTC&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 此处使用Druid数据库连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    #监控统计拦截的filters
+    filters: stat,wall,log4j
+    #druid配置
+    #配置初始化大小/最小/最大
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    #获取连接等待超时时间
+    maxWait: 60000
+    #间隔多久进行一次检测，检测需要关闭的空闲连接
+    timeBetweenEvictionRunsMillis: 60000
+    #一个连接在池中最小生存的时间
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
+    poolPreparedStatements: false
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties:
+      druid:
+        stat:
+          mergeSql: true
+          slowSqlMillis: 5000
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+      #password:
+      #jedis:
+        #pool:
+          #max-active: 8
+          #max-idle: 8
+          #min-idle: 0
 
 mybatis:
   type-aliases-package: com.cool.oauth.entity
   configuration:
     map-underscore-to-camel-case: true  #开启驼峰命名,l_name -> lName
-    jdbc-type-for-null: NULL
-    lazy-loading-enabled: true
-    aggressive-lazy-loading: true
-    cache-enabled: true #开启二级缓存
-    call-setters-on-nulls: true #map空列不显示问题
-  mapper-locations: classpath*:mapper/**/*.xml
+    #jdbc-type-for-null: NULL
+    #lazy-loading-enabled: true
+    #aggressive-lazy-loading: true
+    #cache-enabled: true #开启二级缓存
+    #call-setters-on-nulls: true #map空列不显示问题
+  mapper-locations: classpath*:mapper/*.xml
+
+  logging:
+    level:
+      com.cool.oauth.dao: debug
+
+  #jwt:
+    #tokenHeader: Authorization
+    #tokenPrefix: Bearer
+    #secret: cooljwt
+    #expiration: 3600
+    #rememberExpiration: 604800
+    #自定义参数，可以迁移走
+token:
+  #redis默认过期时间（2小时）(这是自定义的)(毫秒)
+  expirationMilliSeconds: 7200000
+
+#微信相关参数
+weChat:
+  #小程序id
+  appId: wx76f37efb12075c29
+  #小程序密钥v
+  secret: 7d4678e71c868057564390c16b20ae9f
+  #商户号v
+  mchId: ''
+  #证书名称，对应不同的商户号
+  certName: /cert/apiclient_cert.p12
+  #退款查询地址
+  getCode: https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=STAT#wechat_redirect
+  #支付回调地址
+  notifyUrl: http://localhost:8085/api/pay/notify
+  #微信查询订单状态
+  orderquery: https://api.mch.weixin.qq.com/pay/orderquery
+  #支付签名
+  paySignKey: ''
+  #退款地址
+  refundUrl: https://api.mch.weixin.qq.com/secapi/pay/refund
+  #退款查询地址
+  refundqueryUrl: https://api.mch.weixin.qq.com/pay/refundquery
+
+  templateId: nAt_DYLLwYXkIhtDb5nyEm0ynrt98OK3Z3MmeUooPz4
+  #交易类型
+  tradeType: JSAPI
+  #微信统一下单接口路径
+  uniformorder: https://api.mch.weixin.qq.com/pay/unifiedorder
+  #拉取用户信息的请求地址
+  userMessage: https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s&lang=zh_CN
+  #获取Web_access_tokenhttps的请求地址
+  webAccessTokenhttps: https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code
+  #获取小程序码
+  wXACodeUnlimit: https://api.weixin.qq.com/wxa/getwxacodeunlimit
+  #企业付款
+  orgPay: https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers
