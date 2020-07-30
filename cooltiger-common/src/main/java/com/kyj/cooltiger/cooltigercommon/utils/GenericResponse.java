@@ -1,6 +1,6 @@
-package com.cool.common.utils;
+package com.kyj.cooltiger.cooltigercommon.utils;
 
-import com.cool.common.utils.enums.ServiceError;
+import com.kyj.cooltiger.cooltigercommon.enums.ServiceError;
 
 /**
  * @author guoxq

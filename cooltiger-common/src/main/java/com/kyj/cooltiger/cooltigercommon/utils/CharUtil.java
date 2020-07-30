@@ -1,4 +1,4 @@
-package com.cool.common.utils;
+package com.kyj.cooltiger.cooltigercommon.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

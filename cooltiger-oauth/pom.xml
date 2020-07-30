@@ -52,7 +52,7 @@
       <dependency>
           <groupId>io.jsonwebtoken</groupId>
           <artifactId>jjwt</artifactId>
-          <version>${jjwt.version}</version>
+          <version>0.9.1</version>
       </dependency>
       <!-- SpringBoot Mybatis 依赖 -->
       <dependency>

@@ -1,4 +1,4 @@
-package com.cool.common.utils;
+package com.kyj.cooltiger.cooltigercommon.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpEntity;

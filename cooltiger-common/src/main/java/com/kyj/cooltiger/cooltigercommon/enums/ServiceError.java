@@ -1,4 +1,4 @@
-package com.cool.common.utils.enums;
+package com.kyj.cooltiger.cooltigercommon.enums;
 
 /**
  * @author guoxq
