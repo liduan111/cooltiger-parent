@@ -1,8 +1,8 @@
 package com.cool.oauth.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.cool.oauth.utils.GenericResponse;
-import com.cool.oauth.utils.ServiceError;
+import com.cool.common.utils.GenericResponse;
+import com.cool.common.utils.enums.ServiceError;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;

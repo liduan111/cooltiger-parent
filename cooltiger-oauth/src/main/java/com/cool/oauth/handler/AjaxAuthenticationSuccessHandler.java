@@ -2,9 +2,9 @@
 package com.cool.oauth.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.cool.oauth.utils.GenericResponse;
+import com.cool.common.utils.GenericResponse;
+import com.cool.common.utils.enums.ServiceError;
 import com.cool.oauth.utils.RedisUtil;
-import com.cool.oauth.utils.ServiceError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

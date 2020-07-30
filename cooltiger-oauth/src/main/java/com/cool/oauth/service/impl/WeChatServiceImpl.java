@@ -2,6 +2,8 @@
 package com.cool.oauth.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cool.common.utils.GenericResponse;
+import com.cool.common.utils.enums.ServiceError;
 import com.cool.oauth.entity.Userpo;
 import com.cool.oauth.service.WeChatService;
 import com.cool.oauth.utils.*;

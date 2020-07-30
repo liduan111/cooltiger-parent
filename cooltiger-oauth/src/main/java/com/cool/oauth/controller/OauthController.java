@@ -2,10 +2,9 @@
 package com.cool.oauth.controller;
 
 
+import com.cool.common.utils.GenericResponse;
 import com.cool.oauth.service.ApiUserService;
 import com.cool.oauth.service.WeChatService;
-import com.cool.oauth.utils.GenericResponse;
-import com.cool.oauth.utils.ServiceError;
 import com.kyj.cooltiger.cooltigerfeign.clients.oauth.OauthClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,19 +35,19 @@ public class OauthController  implements OauthClient {
     private ApiUserService apiUserService;
 /**
      * code登录获取用户openid
-     * @param code
+     * @param
      * @return
      * @throws Exception
      */
-    @ApiOperation(value = "登录")
+  /*  @ApiOperation(value = "登录")
     @RequestMapping("/login")
     public GenericResponse login(String code)throws Exception{
         return weChatService.wxLogin(code);
-    }
+    }*/
 
     @ApiOperation(value = "登录")
     @RequestMapping("/login")
-    public String wxlogin(String id) {
+    public GenericResponse wxlogin(String id) {
         return null;
     }
 

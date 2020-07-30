@@ -1,6 +1,7 @@
 package com.cool.oauth.service;
 
-import com.cool.oauth.utils.GenericResponse;
+
+import com.cool.common.utils.GenericResponse;
 
 /**
  * @author guoxq

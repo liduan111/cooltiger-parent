@@ -1,5 +1,6 @@
 package com.cool.oauth.utils;
 
+import com.cool.common.utils.CharUtil;
 import com.cool.oauth.entity.Userpo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -92,7 +93,7 @@ public class JwtTokenUtil {
 
     public static void main(String[] args) {
         Userpo userpo=new Userpo();
-        String ss=CharUtil.getRandomNum(6);
+        String ss= CharUtil.getRandomNum(6);
         System.out.println("args = [" + ss + "]");
         userpo.setUserId(Long.parseLong(ss));
 
