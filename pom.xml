@@ -33,6 +33,9 @@
         <spring-boot-dependencies.version>2.1.4.RELEASE</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>Greenwich.SR1</spring-cloud-dependencies.version>
         <spring-boot-maven-plugin.version>2.1.1.RELEASE</spring-boot-maven-plugin.version>
+        <spring-boot-starter-security.version>2.0.4.RELEASE</spring-boot-starter-security.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <fastjson.version>1.2.58</fastjson.version>
         <!--打包的时候跳过测试-->
         <skipTests>true</skipTests>
     </properties>
@@ -43,6 +46,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
 

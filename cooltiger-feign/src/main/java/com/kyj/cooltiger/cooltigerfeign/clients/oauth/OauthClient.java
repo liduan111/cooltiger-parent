@@ -1,10 +1,13 @@
 package com.kyj.cooltiger.cooltigerfeign.clients.oauth;
 
-import com.cool.common.utils.GenericResponse;
+import com.kyj.cooltiger.cooltigercommon.utils.GenericResponse;
+import com.kyj.cooltiger.cooltigercommon.utils.LoginInfo;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author guoxq
@@ -15,11 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface OauthClient {
 
     /**
-     *  登录
-     * @param id
+     *
+     * @param loginInfo
+     * @param request
      * @return
      */
-    @RequestMapping(value = "/login",method = {RequestMethod.GET})
-    public GenericResponse wxlogin(@PathVariable("id") String id);
+   @RequestMapping(value = "/login",method = {RequestMethod.GET})
+    public GenericResponse wxlogin(@RequestBody LoginInfo loginInfo, HttpServletRequest request);
 
 }

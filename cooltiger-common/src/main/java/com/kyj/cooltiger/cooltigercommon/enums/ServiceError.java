@@ -9,7 +9,7 @@ package com.kyj.cooltiger.cooltigercommon.enums;
 public enum ServiceError {
     NORMAL(1, "操作成功"),
     UN_KNOW_ERROR(-1, "未知错误"),
-
+    LOGIN_INFO_ERROR(2, "登陆失败"),
     /** Global Error */
     GLOBAL_ERR_NO_SIGN_IN(-10001,"未登录或登录过期/Not sign in"),
     GLOBAL_ERR_NO_CODE(-10002,"code错误/error code"),
