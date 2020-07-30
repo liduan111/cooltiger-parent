@@ -1,6 +1,5 @@
 package com.kyj.cooltiger.cooltigerproduct.controller;
 
-import com.kyj.cooltiger.cooltigerfeign.clients.goods.GoodsCilent;
 import com.kyj.cooltiger.cooltigerfeign.clients.product.ProductInfoClient;
 import com.kyj.cooltiger.cooltigerproduct.service.ProductInfoService;
 import org.springframework.beans.factory.annotation.Autowired;

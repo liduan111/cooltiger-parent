@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @author liduan
- * Description:
+ * Description: 商品信息Mapper
  * date: 2020/7/28 11:25
  */
 @Repository
