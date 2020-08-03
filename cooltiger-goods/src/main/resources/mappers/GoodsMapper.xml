@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kyj.cooltiger.cooltigergoods.mapper.GoodsMapper">
 
-    <select id="getGoodsById" resultType="com.kyj.cooltiger.cooltigergoods.model.Goods">
+    <select id="getGoodsById" resultType="com.kyj.cooltiger.cooltigergoods.entity.Goods">
         select id,name,price from cooltiger_goods where id = #{id}
     </select>
 

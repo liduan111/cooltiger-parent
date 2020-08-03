@@ -1,7 +1,7 @@
 package com.kyj.cooltiger.cooltigergoods.controller;
 
-import com.kyj.cooltiger.cooltigerfeign.clients.goods.GoodsCilent;
-import com.kyj.cooltiger.cooltigergoods.model.Goods;
+import com.kyj.cooltiger.cooltigerfeign.goods.client.GoodsCilent;
+import com.kyj.cooltiger.cooltigergoods.entity.Goods;
 import com.kyj.cooltiger.cooltigergoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

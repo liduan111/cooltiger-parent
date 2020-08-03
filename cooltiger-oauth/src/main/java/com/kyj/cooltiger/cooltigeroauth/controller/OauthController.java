@@ -2,26 +2,19 @@
 package com.kyj.cooltiger.cooltigeroauth.controller;
 
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.kyj.cooltiger.cooltigercommon.enums.ServiceError;
-import com.kyj.cooltiger.cooltigercommon.utils.Base64;
 import com.kyj.cooltiger.cooltigercommon.utils.GenericResponse;
 import com.kyj.cooltiger.cooltigercommon.utils.LoginInfo;
-import com.kyj.cooltiger.cooltigeroauth.entity.Userpo;
 import com.kyj.cooltiger.cooltigeroauth.service.ApiUserService;
 import com.kyj.cooltiger.cooltigeroauth.service.WeChatService;
 import com.kyj.cooltiger.cooltigeroauth.service.impl.TokenService;
 import com.kyj.cooltiger.cooltigeroauth.utils.ApiUserUtils;
-import com.kyj.cooltiger.cooltigerfeign.clients.oauth.OauthClient;
+import com.kyj.cooltiger.cooltigerfeign.oauth.client.OauthClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;

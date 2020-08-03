@@ -1,11 +1,11 @@
-package com.kyj.cooltiger.cooltigerproduct.model;
+package com.kyj.cooltiger.cooltigerproduct.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author liduan
- * Description: 商品信息表Model
+ * Description: 商品信息表
  * date: 2020/7/28 15:16
  */
 public class ProductInfo implements Serializable {
@@ -18,16 +18,12 @@ public class ProductInfo implements Serializable {
     private String productCode;
     /** 商品标题 */
     private String title;
-    /** 商家ID */
-    private Integer sellerId;
     /** 店铺ID */
     private Integer storeId;
     /** 品牌ID */
     private Integer brandId;
     /** 分类ID */
     private Integer categoryId;
-    /** 产地ID */
-    private Integer createAddressId;
     /** 发货地ID */
     private Integer addressFromId;
     /** 预计送达时间（单位/天） */

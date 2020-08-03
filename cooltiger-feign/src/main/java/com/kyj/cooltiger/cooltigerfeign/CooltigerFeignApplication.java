@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.kyj.cooltiger.cooltigerfeign.clients")
+@EnableFeignClients(basePackages = "com.kyj.cooltiger.cooltigerfeign")
 public class CooltigerFeignApplication {
 
     public static void main(String[] args) {

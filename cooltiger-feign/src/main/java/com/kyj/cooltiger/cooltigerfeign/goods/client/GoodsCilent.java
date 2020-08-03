@@ -1,4 +1,4 @@
-package com.kyj.cooltiger.cooltigerfeign.clients.goods;
+package com.kyj.cooltiger.cooltigerfeign.goods.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;

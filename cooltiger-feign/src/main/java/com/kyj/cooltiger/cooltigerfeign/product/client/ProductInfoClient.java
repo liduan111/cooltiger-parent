@@ -1,34 +1,28 @@
-package com.kyj.cooltiger.cooltigerproduct.controller;
+package com.kyj.cooltiger.cooltigerfeign.product.client;
 
 import com.kyj.cooltiger.cooltigercommon.utils.Result;
-import com.kyj.cooltiger.cooltigerfeign.product.client.ProductInfoClient;
 import com.kyj.cooltiger.cooltigerfeign.product.vo.ProductInfoAddReqVo;
-import com.kyj.cooltiger.cooltigerproduct.service.ProductInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author liduan
- * Description: 商品信息Controller
- * date: 2020/7/28 11:18
+ * Description: 商品信息ProductInfo FeignClient接口
+ * date: 2020/7/28 14:44
  */
-@RestController
-@RequestMapping("/product/productInfo")
-public class ProductInfoController implements ProductInfoClient {
-
-    @Autowired
-    private ProductInfoService productInfoService;
+@FeignClient(name = "Product-Service")
+public interface ProductInfoClient {
 
     /**
      * 测试方法
      * @param id
      * @return
      */
-    @Override
     @RequestMapping(value = "/hello/{id}",method = {RequestMethod.GET})
-    public Result hello(@PathVariable("id") String id){
-        return Result.success("sucess");
-    }
+    public Result hello(@PathVariable("id") String id);
 
     /**
      * 获取店铺商品列表
@@ -39,17 +33,13 @@ public class ProductInfoController implements ProductInfoClient {
      * @param keyword 搜索关键字
      * @return
      */
-    @Override
-    @RequestMapping(value = "/getProductInfoList/{storeId}",method = {RequestMethod.GET})
+    @RequestMapping(value = "/productInfo/getProductInfoList/{storeId}",method = {RequestMethod.GET})
     public Result getProductInfoList(
             @PathVariable("storeId") String storeId,
             @RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
             @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
             @RequestParam(value = "categoryId",required = false) Integer categoryId,
-            @RequestParam(value = "keyword",required = false) String keyword) {
-        Object object = productInfoService.getProductInfoListByStoreId(storeId,pageNo,pageSize,categoryId,keyword);
-        return null;
-    }
+            @RequestParam(value = "keyword",required = false) String keyword);
 
     /**
      * 添加商品信息
@@ -57,12 +47,8 @@ public class ProductInfoController implements ProductInfoClient {
      * @param productInfoAddReqVo 商品信息
      * @return
      */
-    @Override
     @RequestMapping(value = "/productInfo/addProductInfo/{storeId}",method = {RequestMethod.POST})
     public Result addProductInfo(
             @PathVariable("storeId") String storeId,
-            @RequestParam("productInfoAddReqVo") ProductInfoAddReqVo productInfoAddReqVo) {
-        return null;
-    }
-
+            @RequestParam("productInfoAddReqVo") ProductInfoAddReqVo productInfoAddReqVo);
 }

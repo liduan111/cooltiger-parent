@@ -1,4 +1,4 @@
-package com.kyj.cooltiger.cooltigergoods.model;
+package com.kyj.cooltiger.cooltigergoods.entity;
 
 /**
  * @author liduan

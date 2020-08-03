@@ -1,4 +1,4 @@
-package com.kyj.cooltiger.cooltigerfeign.clients.oauth;
+package com.kyj.cooltiger.cooltigerfeign.oauth.client;
 
 import com.kyj.cooltiger.cooltigercommon.utils.GenericResponse;
 import com.kyj.cooltiger.cooltigercommon.utils.LoginInfo;

@@ -1,6 +1,6 @@
 package com.kyj.cooltiger.cooltigergoods.mapper;
 
-import com.kyj.cooltiger.cooltigergoods.model.Goods;
+import com.kyj.cooltiger.cooltigergoods.entity.Goods;
 import org.springframework.stereotype.Repository;
 
 /**

@@ -21,7 +21,7 @@ spring:
 #mybatis
 mybatis:
   mapper-locations: classpath:mappers/*Mapper.xml
-  type-aliases-package: com.kyj.cooltiger.cooltigergoods.model
+  type-aliases-package: com.kyj.cooltiger.cooltigergoods.entity
 
 logging:
   level:

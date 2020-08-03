@@ -1,11 +1,11 @@
-package com.kyj.cooltiger.cooltigerproduct.model;
+package com.kyj.cooltiger.cooltigerproduct.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author liduan
- * Description: 商品类别表Model
+ * Description: 商品类别表
  * date: 2020/7/28 15:53
  */
 public class ProductCategory implements Serializable {

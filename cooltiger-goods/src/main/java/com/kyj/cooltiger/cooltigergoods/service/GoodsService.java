@@ -1,6 +1,6 @@
 package com.kyj.cooltiger.cooltigergoods.service;
 
-import com.kyj.cooltiger.cooltigergoods.model.Goods;
+import com.kyj.cooltiger.cooltigergoods.entity.Goods;
 
 public interface GoodsService {
 

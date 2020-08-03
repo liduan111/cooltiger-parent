@@ -7,7 +7,7 @@ package com.kyj.cooltiger.cooltigercommon.enums;
  */
 public enum StatusCode {
     SUCCESS(200, "成功"),
-    ERROR(202, "失败"),;
+    ERROR(202, "失败");
 
 
     private Integer code;
@@ -18,4 +18,12 @@ public enum StatusCode {
         this.msg = msg;
     }
 
+    public Integer getCode() {
+        return code;
+    }
+
+
+    public String getMsg() {
+        return msg;
+    }
 }

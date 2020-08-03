@@ -1,7 +1,7 @@
 package com.kyj.cooltiger.cooltigergoods.service.impl;
 
 import com.kyj.cooltiger.cooltigergoods.mapper.GoodsMapper;
-import com.kyj.cooltiger.cooltigergoods.model.Goods;
+import com.kyj.cooltiger.cooltigergoods.entity.Goods;
 import com.kyj.cooltiger.cooltigergoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,7 @@
 package com.kyj.cooltiger.cooltigercommon.utils;
 
+import com.kyj.cooltiger.cooltigercommon.enums.StatusCode;
+
 /**
  * @author liduan
  * Description:  返回类型
@@ -20,6 +22,39 @@ public class Result {
         this.code = code;
         this.msg = msg;
         this.data = data;
+    }
+
+    /**
+     * 成功响应（带返回数据）
+     * @param data
+     * @return Result
+     */
+    public static  Result success(Object data) {
+        return new Result(true, StatusCode.SUCCESS.getCode(), StatusCode.SUCCESS.getMsg(), data);
+    }
+
+    /**
+     * 成功响应（不带返回数据）
+     * @return Result
+     */
+    public static Result success(){
+        return new Result(true, StatusCode.SUCCESS.getCode(), StatusCode.SUCCESS.getMsg(), null);
+    }
+
+    /**
+     * 失败响应（固定响应类型）
+     * @return Result
+     */
+    public static Result error(){
+        return new Result(false, StatusCode.ERROR.getCode(), StatusCode.ERROR.getMsg(),null);
+    }
+
+    /**
+     * 失败响应（自定义响应类型）
+     * @return Result
+     */
+    public static Result error(Integer code,String msg){
+        return new Result(false, code, msg,null);
     }
 
     public Boolean getFlag() {

@@ -16,6 +16,12 @@
     <description>Spring Boot - Feign</description>
 
     <dependencies>
+        <!-- SpringBoot Common模块依赖 -->
+        <dependency>
+            <groupId>com.kyj.cooltiger</groupId>
+            <artifactId>cooltiger-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -27,11 +33,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kyj.cooltiger</groupId>
-            <artifactId>cooltiger-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
