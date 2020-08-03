@@ -89,7 +89,7 @@ weChat:
   #小程序id
   appId: wx76f37efb12075c29
   #小程序密钥v
-  secret: 7d4678e71c868057564390c16b20ae9f
+  secret: 66c0e0156659968c8734708e538a5f90
   #商户号v
   mchId: ''
   #证书名称，对应不同的商户号

@@ -22,6 +22,8 @@ public class Userpo implements UserDetails , Serializable {
 
     //主键
     private Long userId;
+    //用户唯一标识
+    private Long userCode;
     //会员名称
     private String username;
     //会员密码
@@ -59,6 +61,12 @@ public class Userpo implements UserDetails , Serializable {
     private String qrCode;
     //真实姓名
     private String realName;
+    //城市
+   //private String citys;
+    //收货地址
+   // private String address;
+    //注册渠道
+    private String registerchannel;
 
     private Set<? extends GrantedAuthority> authorities;//权限列表
 
@@ -121,4 +129,12 @@ public class Userpo implements UserDetails , Serializable {
         return this;
     }
 
+    public Long getUserCode() {
+        return userCode;
+    }
+
+    public Userpo setUserCode(Long userCode) {
+        this.userCode = userCode;
+        return this;
+    }
 }

@@ -1,6 +1,5 @@
 package com.kyj.cooltiger.cooltigerfeign.clients.oauth;
 
-import com.kyj.cooltiger.cooltigercommon.utils.GenericResponse;
 import com.kyj.cooltiger.cooltigercommon.utils.LoginInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +23,6 @@ public interface OauthClient {
      * @return
      */
    @RequestMapping(value = "/login",method = {RequestMethod.GET})
-    public GenericResponse wxlogin(@RequestBody LoginInfo loginInfo, HttpServletRequest request);
+    public Object wxlogin(@RequestBody LoginInfo loginInfo, HttpServletRequest request);
 
 }

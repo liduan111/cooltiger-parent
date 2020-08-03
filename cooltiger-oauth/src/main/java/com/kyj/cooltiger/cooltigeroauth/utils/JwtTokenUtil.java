@@ -101,6 +101,7 @@ public class JwtTokenUtil {
 
         String token=generateToken(userpo);
         System.out.println(token);
+        System.out.println(getTokenBody(token));
         /*String  tts="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0NDE0NCIsImV4cCI6MTU5NTk5MDUyMiwiaWF0IjoxNTk1OTkwNTIyLCJpc3MiOiJKQU1FUyJ9.hXcUAa7gMj_LKEHx6kURTYYs4xCgkTCeGBS79cV2R3-jkBP8NzkT5lubsIdomex_A0gZct69QxVSFBYgJpM02w";
         System.out.println(getTokenBody(tts));*/
 
