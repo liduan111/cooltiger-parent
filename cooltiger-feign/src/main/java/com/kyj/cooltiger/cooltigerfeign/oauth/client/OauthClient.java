@@ -1,10 +1,12 @@
 package com.kyj.cooltiger.cooltigerfeign.oauth.client;
 
 import com.kyj.cooltiger.cooltigercommon.utils.LoginInfo;
+import com.kyj.cooltiger.cooltigerfeign.oauth.client.vo.UserVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,12 +19,28 @@ import javax.servlet.http.HttpServletRequest;
 public interface OauthClient {
 
     /**
-     *
+     *  登录
      * @param loginInfo
      * @param request
      * @return
      */
    @RequestMapping(value = "/login",method = {RequestMethod.GET})
     public Object wxlogin(@RequestBody LoginInfo loginInfo, HttpServletRequest request);
+
+    /**
+     * 根据用户usercode查询用户信息
+     * @param userCode
+     * @return
+     */
+    @RequestMapping(value = "/info",method = RequestMethod.GET)
+    public Object getuserInfo(@RequestBody String userCode);
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "/updateuserinfo",method = RequestMethod.POST)
+    public Object updateuserInfo(@RequestBody UserVo user);
 
 }

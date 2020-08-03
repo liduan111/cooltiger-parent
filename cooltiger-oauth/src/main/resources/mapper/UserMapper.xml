@@ -39,6 +39,13 @@
         </if>
     </select>
 
+    <select id="queryByuserCode" resultMap="userMap">
+        select * from cy_wxuser
+        where 1 = 1
+        <if test="userCode != null and userCode != 0">
+            and `usercode` = #{userCode}
+        </if>
+    </select>
     <select id="queryList" resultMap="userMap">
         select * from cy_wxuser
         <choose>
@@ -123,7 +130,7 @@
             <if test="idCard != null">`id_card` = #{idCard},</if>
             <if test="registerchannel != null">`registerchannel` = #{registerchannel},</if>
             <if test="isReal != null">`is_real` = #{isReal},</if>
-            <if test="qrCode != null">`qr_code` = #{qrCode}</if>
+            <if test="qrCode != null">`qr_code` = #{qrCode},</if>
             <if test="realName != null">`real_name` = #{realName}</if>
 
         </set>
@@ -135,6 +142,19 @@
         <set>
             <if test="last_login_time != null">`last_login_time` = #{last_login_time},</if>
             <if test="last_login_ip != null">`last_login_ip` = #{last_login_ip},</if>
+        </set>
+        where usercode = #{userCode}
+    </update>
+    <update id="updateUserInfo" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.Userpo">
+        update cy_wxuser
+        <set>
+            <if test="username != null">`username` = #{username},</if>
+            <if test="gender != null">`gender` = #{gender},</if>
+            <if test="age != null">`age` = #{age},</if>
+            <if test="nickname != null">`nickname` = #{nickname},</if>
+            <if test="mobile != null">`mobile` = #{mobile},</if>
+            <if test="avatar != null">`avatar` = #{avatar},</if>
+            <if test="realName != null">`real_name` = #{realName}</if>
         </set>
         where usercode = #{userCode}
     </update>

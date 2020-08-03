@@ -15,8 +15,32 @@ public interface ApiUserService {
      */
     Userpo queryByopenId(String openId);
 
+    /**
+     * 添加用户
+     * @param userpo
+     * @return
+     */
     boolean save(Userpo userpo);
 
+    /**
+     * 修改用户登陆时间
+     * @param user
+     * @return
+     */
     boolean updatelogintime(Userpo user);
+
+    /**
+     * 根据usercode查询用户信息
+     * @param userCode
+     * @return
+     */
+    Userpo  queryByuserCode(Long userCode);
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    boolean updateUserInfo(Userpo user);
 
 }

@@ -2,6 +2,7 @@
 package com.kyj.cooltiger.cooltigeroauth.controller;
 import com.kyj.cooltiger.cooltigercommon.utils.GenericResponse;
 import com.kyj.cooltiger.cooltigercommon.utils.LoginInfo;
+import com.kyj.cooltiger.cooltigerfeign.oauth.client.vo.UserVo;
 import com.kyj.cooltiger.cooltigeroauth.service.ApiUserService;
 import com.kyj.cooltiger.cooltigeroauth.service.WeChatService;
 import com.kyj.cooltiger.cooltigeroauth.service.impl.TokenService;
@@ -85,7 +86,7 @@ public class OauthController extends ApiBaseAction implements OauthClient {
       Userpo userVo=apiUserService.queryByopenId(openid);
         if (userVo == null){
             userVo=new Userpo();
-            userVo.setUserCode(CharUtil.createOnlyId());
+            userVo.setUserCode(CharUtil.getID());
             userVo.setUsername(Base64.encode(loginInfo.getNickName()));
             userVo.setPassword(openid);
             userVo.setRegister_time(nowTime);
@@ -136,6 +137,76 @@ public class OauthController extends ApiBaseAction implements OauthClient {
     public GenericResponse hello(){
         return GenericResponse.response(ServiceError.NORMAL,"hello security");
     }
+
+    /**
+     * 根据用户查讯
+     * @param userCode
+     * @return
+     */
+    @ApiOperation("个人资料信息")
+    @RequestMapping(value = "/info",method = RequestMethod.GET)
+    public Object getuserInfo(@RequestBody String  userCode){
+        JSONObject jsonObject = JSON.parseObject(userCode);
+        Long  code=Long.parseLong(jsonObject.getString("userCode"));
+        System.out.println("userCode = [" + userCode + "]");
+        if (code!=null||code!=0) {
+            Userpo user = apiUserService.queryByuserCode(code);
+            return toResponsSuccess(user);
+        }else {
+            return  toResponsFail("id为空");
+        }
+    }
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    @ApiOperation("个人资料信息")
+    @RequestMapping(value = "/updateuserinfo",method = RequestMethod.POST)
+    public Object updateuserInfo(@RequestBody UserVo user){
+        if(user==null|| user.equals("")){
+            return toResponsFail("请填写资料信息");
+        }
+        if(user.getNickname()==null || user.getNickname().equals("")){
+            return  toResponsFail("昵称不能为空");
+        }
+        if (user.getAge()==null||user.getAge()==0){
+            return  toResponsFail("年龄不能为空");
+        }
+        if (user.getMobile()==null||user.getMobile().equals("") ){
+            return  toResponsFail("手机号不能为空");
+        }
+        if (user.getMobile().length() != 11) {
+            return toResponsFail("手机号应为十一位");
+        }
+        if(!CharUtil.regexphone(user.getMobile())){
+            return toResponsFail("手机号格式不正确");
+        }
+        if (user.getAvatar()==null|| user.getAvatar().equals("")){
+            return  toResponsFail("头像不能为空");
+        }
+        if (user.getRealName()==null|| user.getRealName().equals("")){
+            return  toResponsFail("真实姓名不能为空");
+        }
+        Userpo userVo=new Userpo();
+        userVo.setMobile(user.getMobile());
+        userVo.setUserCode(user.getUserCode());
+        userVo.setUsername(user.getNickname());
+        userVo.setAvatar(user.getAvatar());
+        userVo.setAge(user.getAge());
+        userVo.setGender(user.getGender());
+        userVo.setNickname(user.getNickname());
+        userVo.setRealName(user.getRealName());
+        boolean flag=  apiUserService.updateUserInfo(userVo);
+        if(flag==true){
+            return  toResponsMsgSuccess("资料修改成功");
+        }
+        return toResponsFail("请检查资料信息");
+    }
+
+
+
 
    /* @GetMapping("/test")
     public GenericResponse test(){

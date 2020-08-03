@@ -37,6 +37,18 @@ public interface UserDao {
      */
     int updatelogintime(Userpo userpo);
 
+    /**
+     * 根据usercode查询用户信息
+     * @param userCode
+     * @return
+     */
+    Userpo  queryByuserCode(@Param("userCode") Long userCode);
 
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    int updateUserInfo(Userpo user);
 }
 
