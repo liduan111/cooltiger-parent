@@ -1,29 +1,20 @@
 
 package com.kyj.cooltiger.cooltigeroauth.controller;
-
-
-<<<<<<< HEAD
 import com.kyj.cooltiger.cooltigercommon.utils.GenericResponse;
 import com.kyj.cooltiger.cooltigercommon.utils.LoginInfo;
 import com.kyj.cooltiger.cooltigeroauth.service.ApiUserService;
 import com.kyj.cooltiger.cooltigeroauth.service.WeChatService;
 import com.kyj.cooltiger.cooltigeroauth.service.impl.TokenService;
-import com.kyj.cooltiger.cooltigeroauth.utils.ApiUserUtils;
+
 import com.kyj.cooltiger.cooltigerfeign.oauth.client.OauthClient;
-=======
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.kyj.cooltiger.cooltigercommon.enums.ServiceError;
 import com.kyj.cooltiger.cooltigercommon.utils.*;
 import com.kyj.cooltiger.cooltigeroauth.annotation.UserConstantInterface;
 import com.kyj.cooltiger.cooltigeroauth.entity.Userpo;
-import com.kyj.cooltiger.cooltigeroauth.service.ApiUserService;
-import com.kyj.cooltiger.cooltigeroauth.service.WeChatService;
-import com.kyj.cooltiger.cooltigeroauth.service.impl.TokenService;
 import com.kyj.cooltiger.cooltigeroauth.utils.ApiBaseAction;
-import com.kyj.cooltiger.cooltigerfeign.clients.oauth.OauthClient;
 import com.kyj.cooltiger.cooltigeroauth.utils.MapUtils;
->>>>>>> 58d008b9f0eb17ea470864ae8d0dde9049034a2c
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
