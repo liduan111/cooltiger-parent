@@ -58,7 +58,7 @@ public class ProductInfoController implements ProductInfoClient {
      * @return
      */
     @Override
-    @RequestMapping(value = "/productInfo/addProductInfo/{storeId}",method = {RequestMethod.POST})
+    @RequestMapping(value = "/addProductInfo/{storeId}",method = {RequestMethod.POST})
     public Result addProductInfo(
             @PathVariable("storeId") String storeId,
             @RequestParam("productInfoAddReqVo") ProductInfoAddReqVo productInfoAddReqVo) {

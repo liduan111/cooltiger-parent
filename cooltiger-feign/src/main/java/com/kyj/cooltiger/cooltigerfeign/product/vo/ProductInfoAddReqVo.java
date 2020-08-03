@@ -27,6 +27,14 @@ public class ProductInfoAddReqVo {
     private List<ProductParam> productParams;
     //上架状态：0下架1上架
     private Integer shelfStatus;
+    //规格
+    private List<Spec> specs;
+    //商品sku
+    private List<Sku> skus;
+    //商品图片
+    private List<ProductPicture> productPictures;
+    //商品详情
+    private String details;
 
 
     //商品运费
@@ -114,6 +122,146 @@ public class ProductInfoAddReqVo {
 
         public void setParamValue(String paramValue) {
             this.paramValue = paramValue;
+        }
+    }
+
+    //规格
+    public class Spec{
+        //规格名
+        private String specName;
+        //规格值
+        private List<String> specValues;
+
+        public String getSpecName() {
+            return specName;
+        }
+
+        public void setSpecName(String specName) {
+            this.specName = specName;
+        }
+
+        public List<String> getSpecValues() {
+            return specValues;
+        }
+
+        public void setSpecValues(List<String> specValues) {
+            this.specValues = specValues;
+        }
+    }
+
+    public class Sku{
+        //商品sku名称
+        private String skuName;
+        //图片url
+        private String url;
+        //规格值组合
+        private List<String> specValues;
+        //商品销售价
+        private Double salePrice;
+        //商品库存
+        private Integer stock;
+        //重量
+        private Double weight;
+        //分销方式（1-固定金额2-百分比）
+        private Integer distriType;
+        //百分比值（%）
+        private Integer distriRatio;
+        //分销金额
+        private Double distriAmount;
+
+        public String getSkuName() {
+            return skuName;
+        }
+
+        public void setSkuName(String skuName) {
+            this.skuName = skuName;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public List<String> getSpecValues() {
+            return specValues;
+        }
+
+        public void setSpecValues(List<String> specValues) {
+            this.specValues = specValues;
+        }
+
+        public Double getSalePrice() {
+            return salePrice;
+        }
+
+        public void setSalePrice(Double salePrice) {
+            this.salePrice = salePrice;
+        }
+
+        public Integer getStock() {
+            return stock;
+        }
+
+        public void setStock(Integer stock) {
+            this.stock = stock;
+        }
+
+        public Double getWeight() {
+            return weight;
+        }
+
+        public void setWeight(Double weight) {
+            this.weight = weight;
+        }
+
+        public Integer getDistriType() {
+            return distriType;
+        }
+
+        public void setDistriType(Integer distriType) {
+            this.distriType = distriType;
+        }
+
+        public Integer getDistriRatio() {
+            return distriRatio;
+        }
+
+        public void setDistriRatio(Integer distriRatio) {
+            this.distriRatio = distriRatio;
+        }
+
+        public Double getDistriAmount() {
+            return distriAmount;
+        }
+
+        public void setDistriAmount(Double distriAmount) {
+            this.distriAmount = distriAmount;
+        }
+    }
+
+    public class ProductPicture{
+        //图片url
+        private String url;
+        //是否为主图（0-否1-是）
+        private Integer isMain;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public Integer getIsMain() {
+            return isMain;
+        }
+
+        public void setIsMain(Integer isMain) {
+            this.isMain = isMain;
         }
     }
 }

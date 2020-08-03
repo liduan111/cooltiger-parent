@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * date: 2020/7/28 14:44
  */
 @FeignClient(name = "Product-Service")
+@RequestMapping("/product/productInfo")
 public interface ProductInfoClient {
 
     /**
@@ -33,7 +34,7 @@ public interface ProductInfoClient {
      * @param keyword 搜索关键字
      * @return
      */
-    @RequestMapping(value = "/productInfo/getProductInfoList/{storeId}",method = {RequestMethod.GET})
+    @RequestMapping(value = "/getProductInfoList/{storeId}",method = {RequestMethod.GET})
     public Result getProductInfoList(
             @PathVariable("storeId") String storeId,
             @RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
@@ -47,7 +48,7 @@ public interface ProductInfoClient {
      * @param productInfoAddReqVo 商品信息
      * @return
      */
-    @RequestMapping(value = "/productInfo/addProductInfo/{storeId}",method = {RequestMethod.POST})
+    @RequestMapping(value = "/addProductInfo/{storeId}",method = {RequestMethod.POST})
     public Result addProductInfo(
             @PathVariable("storeId") String storeId,
             @RequestParam("productInfoAddReqVo") ProductInfoAddReqVo productInfoAddReqVo);
