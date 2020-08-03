@@ -2,6 +2,7 @@
 package com.kyj.cooltiger.cooltigeroauth.controller;
 
 
+<<<<<<< HEAD
 import com.kyj.cooltiger.cooltigercommon.utils.GenericResponse;
 import com.kyj.cooltiger.cooltigercommon.utils.LoginInfo;
 import com.kyj.cooltiger.cooltigeroauth.service.ApiUserService;
@@ -9,15 +10,32 @@ import com.kyj.cooltiger.cooltigeroauth.service.WeChatService;
 import com.kyj.cooltiger.cooltigeroauth.service.impl.TokenService;
 import com.kyj.cooltiger.cooltigeroauth.utils.ApiUserUtils;
 import com.kyj.cooltiger.cooltigerfeign.oauth.client.OauthClient;
+=======
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.kyj.cooltiger.cooltigercommon.enums.ServiceError;
+import com.kyj.cooltiger.cooltigercommon.utils.*;
+import com.kyj.cooltiger.cooltigeroauth.annotation.UserConstantInterface;
+import com.kyj.cooltiger.cooltigeroauth.entity.Userpo;
+import com.kyj.cooltiger.cooltigeroauth.service.ApiUserService;
+import com.kyj.cooltiger.cooltigeroauth.service.WeChatService;
+import com.kyj.cooltiger.cooltigeroauth.service.impl.TokenService;
+import com.kyj.cooltiger.cooltigeroauth.utils.ApiBaseAction;
+import com.kyj.cooltiger.cooltigerfeign.clients.oauth.OauthClient;
+import com.kyj.cooltiger.cooltigeroauth.utils.MapUtils;
+>>>>>>> 58d008b9f0eb17ea470864ae8d0dde9049034a2c
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author guoxq
@@ -26,8 +44,8 @@ import java.util.Date;
  */
 @Api(tags = "API登录授权接口")
 @RestController
-@RequestMapping("/api")
-public class OauthController  implements OauthClient {
+@RequestMapping("/api/auth")
+public class OauthController extends ApiBaseAction implements OauthClient {
 
     private static  final Logger logger= LoggerFactory.getLogger(OauthController.class);
 
@@ -42,52 +60,90 @@ public class OauthController  implements OauthClient {
 
     /*@Autowired
     private  RestTemplate restTemplate;*/
-/**
+
+    /**
      * code登录获取用户openid
      * @param
      * @return
      * @throws Exception
      */
-  /*  @ApiOperation(value = "登录")
-    @RequestMapping("/login")
-    public GenericResponse login(String code)throws Exception{
-        return weChatService.wxLogin(code);
-    }*/
-
     @ApiOperation(value = "登录")
     @RequestMapping("/login")
-    public GenericResponse wxlogin(@RequestBody LoginInfo loginInfo, HttpServletRequest request) {
+    //@PreAuthorize("hasAuthority('ddd:list')")
+    public Object wxlogin(@RequestBody LoginInfo loginInfo, HttpServletRequest request) {
 
-        //获取openid
-        String requestUrl = ApiUserUtils.getWebAccess(loginInfo.getCode());//通过自定义工具类组合出小程序需要的登录凭证 code
-        logger.info("token为：" + requestUrl);
-       /* String res = restTemplate.getForObject(requestUrl, String.class);
-        JSONObject jsonObject = JSON.parseObject(res);
+        // 配置请求参数
+        Map<String, String> param = new HashMap<>();
+        param.put("appid", UserConstantInterface.WX_LOGIN_APPID);
+        param.put("secret", UserConstantInterface.WX_LOGIN_SECRET);
+        param.put("js_code",loginInfo.getCode());
+        param.put("grant_type", UserConstantInterface.WX_LOGIN_GRANT_TYPE);
+        // 发送请求
+        String wxResult = HttpUtil.doGet(UserConstantInterface.WX_LOGIN_URL, param);
+        JSONObject jsonObject = JSON.parseObject(wxResult);
+        logger.info("jsonObject-------"+jsonObject);
         String openid=jsonObject.getString("openid");
+        logger.info("openid-------"+openid);
         String session_key=jsonObject.getString("session_key");
+        //判断openid是否为空
         if (null == jsonObject || StringUtils.isEmpty(openid)) {
-            return   GenericResponse.response(ServiceError.LOGIN_INFO_ERROR);
-        }*/
+            return toResponsFail("登录失败");
+        }
 
         Date nowTime = new Date();
-     /* Userpo userVo=apiUserService.queryByopenId(openid);
+      Userpo userVo=apiUserService.queryByopenId(openid);
         if (userVo == null){
             userVo=new Userpo();
+            userVo.setUserCode(CharUtil.createOnlyId());
             userVo.setUsername(Base64.encode(loginInfo.getNickName()));
             userVo.setPassword(openid);
             userVo.setRegister_time(nowTime);
-            userVo.setRegister_ip();
+            userVo.setRegister_ip(this.getClientIp());
             userVo.setLast_login_ip(userVo.getRegister_ip());
             userVo.setLast_login_time(userVo.getRegister_time());
             userVo.setWeixin_openid(openid);
             userVo.setAvatar(loginInfo.getAvatarUrl());
             userVo.setGender(loginInfo.getGender()); // //性别 0：未知、1：男、2：女
             userVo.setNickname(Base64.encode(loginInfo.getNickName()));
-        }*/
+            userVo.setIsReal("0");
+            userVo.setRegisterchannel("1");
+            //添加数据库
+            boolean flag=apiUserService.save(userVo);
+            if (flag==true) {
+                Map<String, Object> map = tokenService.creatToken(userVo.getUserId());
+                String token = MapUtils.getString(map, "token");
+                if (StringUtils.isEmpty(token)) {
+                    return toResponsFail("登录失败");
+                }
+                Map<String, Object> result = new HashMap<>();
+                result.put("userVo", userVo);
+                result.put("session_key", session_key);
+                result.put("open_id", openid);
+                return toResponsSuccess(result);
+            }else {
+                return toResponsFail("登录失败");
+            }
+        }else {
+            Userpo user=new Userpo();
+            user.setLast_login_ip(userVo.getRegister_ip());
+            user.setLast_login_time(DateUtils.getDates());
+            user.setUserCode(userVo.getUserCode());
+            boolean flag=apiUserService.updatelogintime(user);
+            if (flag==true) {
+                Map<String, Object> result = new HashMap<>();
+                result.put("session_key", session_key);
+                result.put("open_id", openid);
+                return toResponsSuccess(result);
+            }else {
+                return toResponsFail("登录失败");
+            }
+        }
 
+    }
 
-
-        return null;
+    @GetMapping("/hello")
+    public GenericResponse hello(){
+        return GenericResponse.response(ServiceError.NORMAL,"hello security");
     }
 
    /* @GetMapping("/test")
@@ -121,6 +177,5 @@ public class OauthController  implements OauthClient {
     public GenericResponse dddd(){
         return GenericResponse.response(ServiceError.NORMAL,"testPOST");
     }*/
-
 
 }

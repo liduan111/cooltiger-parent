@@ -15,7 +15,7 @@ import java.util.UUID;
  * @author guoxq
  * @version 1.0
  * @date 2020/7/28 16:42
- * 字符串工具类
+ * 获取字符串，生成字符串工具类
  */
 public class CharUtil {
 
@@ -142,6 +142,11 @@ public class CharUtil {
         String userId = String.valueOf(prefix + suffix);
         return  userId;
     }
+
+    /**
+     * 生成用户唯一标识
+     * @return
+     */
     public  static long createOnlyId(){
         long time = System.currentTimeMillis() - EPOCH  + max41bit;
         System.out.println("time"+String.valueOf(time));

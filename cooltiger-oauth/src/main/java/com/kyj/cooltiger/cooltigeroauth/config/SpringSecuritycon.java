@@ -68,8 +68,8 @@ public class SpringSecuritycon extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests().antMatchers(HttpMethod.PUT,"/test").hasAuthority("test:update")
                 .and().authorizeRequests().antMatchers(HttpMethod.DELETE,"/test").hasAuthority("test:delete")
                 .and().authorizeRequests().antMatchers("/test/*").hasAuthority("test:manager")
-                .and().authorizeRequests().antMatchers("/login").permitAll() //放行login(这里使用自定义登录)
-                .and().authorizeRequests().antMatchers("/hello").permitAll();//permitAll表示不需要认证
+                .and().authorizeRequests().antMatchers("api/auth/login").permitAll() //放行login(这里使用自定义登录)
+                .and().authorizeRequests().antMatchers("api/auth/hello").permitAll();//permitAll表示不需要认证
         //微信小程序登录不给予账号密码，关闭
 //                .and()
         //开启登录, 定义当需要用户登录时候，转到的登录页面、这是使用security提供的formLogin，不需要自己实现登录登出逻辑、但需要实现相关方法
