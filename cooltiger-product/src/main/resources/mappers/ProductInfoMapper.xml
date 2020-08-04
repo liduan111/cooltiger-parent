@@ -4,7 +4,23 @@
 
     <!-- 根据店铺ID查询总条数 -->
     <select id="getTotalCountByStoreId" resultType="int">
-        SELECT COUNT(1) FROM ky_product_info WHERE store_id=#{storeId}
+        SELECT COUNT(1)
+        FROM ky_product_info
+        WHERE store_id = #{storeId}
     </select>
+
+    <!-- 添加商品基本信息 -->
+    <insert id="addProductInfo" parameterType="ProductInfo" useGeneratedKeys="true" keyProperty="productId">
+        INSERT INTO ky_product_info
+        (product_code, title, store_id, brand_id, category_id, address_from_id,
+         create_address_id, about_deliver_time, service_ids, shelf_status,
+         audit_status, deleted)
+        VALUES
+        (#{productInfo.productCode}, #{productInfo.title}, #{productInfo.storeId},
+         #{productInfo.brandId}, #{productInfo.categoryId}, #{productInfo.addressFromId},
+         #{productInfo.createAddressId}, #{productInfo.aboutDeliverTime},
+         #{productInfo.serviceIds}, #{productInfo.shelfStatus}, #{productInfo.auditStatus},
+         #{productInfo.deleted})
+    </insert>
 
 </mapper>

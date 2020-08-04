@@ -1,5 +1,7 @@
 package com.kyj.cooltiger.cooltigerproduct.service;
 
+import com.kyj.cooltiger.cooltigerfeign.product.vo.ProductInfoAddReqVo;
+
 /**
  * @author liduan
  * Description: 商品信息interface
@@ -17,4 +19,11 @@ public interface ProductInfoService {
      * @return
      */
     public Object getProductInfoListByStoreId(String storeId, Integer pageNo, Integer pageSize, Integer categoryId, String keyword);
+
+    /**
+     * 添加商品信息
+     * @param storeId 店铺ID
+     * @param productInfoAddReqVo 商品参数
+     */
+    public void addProductInfo(String storeId, ProductInfoAddReqVo productInfoAddReqVo);
 }

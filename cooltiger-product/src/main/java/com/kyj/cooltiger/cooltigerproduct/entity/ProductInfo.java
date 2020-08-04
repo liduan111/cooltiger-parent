@@ -21,11 +21,13 @@ public class ProductInfo implements Serializable {
     /** 店铺ID */
     private Integer storeId;
     /** 品牌ID */
-    private Integer brandId;
+    private Integer barandId;
     /** 分类ID */
     private Integer categoryId;
     /** 发货地ID */
     private Integer addressFromId;
+    /** 产地ID */
+    private Integer createAddressId;
     /** 预计送达时间（单位/天） */
     private Integer aboutDeliverTime;
     /** 服务ID（多个用,分隔） */
@@ -41,5 +43,127 @@ public class ProductInfo implements Serializable {
     /** 最后修改时间 */
     private Date modifiedTime;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
+    }
+
+    public Integer getBarandId() {
+        return barandId;
+    }
+
+    public void setBarandId(Integer barandId) {
+        this.barandId = barandId;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Integer getAddressFromId() {
+        return addressFromId;
+    }
+
+    public void setAddressFromId(Integer addressFromId) {
+        this.addressFromId = addressFromId;
+    }
+
+    public Integer getCreateAddressId() {
+        return createAddressId;
+    }
+
+    public void setCreateAddressId(Integer createAddressId) {
+        this.createAddressId = createAddressId;
+    }
+
+    public Integer getAboutDeliverTime() {
+        return aboutDeliverTime;
+    }
+
+    public void setAboutDeliverTime(Integer aboutDeliverTime) {
+        this.aboutDeliverTime = aboutDeliverTime;
+    }
+
+    public String getServiceIds() {
+        return serviceIds;
+    }
+
+    public void setServiceIds(String serviceIds) {
+        this.serviceIds = serviceIds;
+    }
+
+    public Integer getShelfStatus() {
+        return shelfStatus;
+    }
+
+    public void setShelfStatus(Integer shelfStatus) {
+        this.shelfStatus = shelfStatus;
+    }
+
+    public Integer getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
+    }
+
+    public Integer getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getModifiedTime() {
+        return modifiedTime;
+    }
+
+    public void setModifiedTime(Date modifiedTime) {
+        this.modifiedTime = modifiedTime;
+    }
 }

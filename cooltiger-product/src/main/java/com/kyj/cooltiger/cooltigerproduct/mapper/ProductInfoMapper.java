@@ -1,5 +1,6 @@
 package com.kyj.cooltiger.cooltigerproduct.mapper;
 
+import com.kyj.cooltiger.cooltigerproduct.entity.ProductInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,10 @@ public interface ProductInfoMapper {
      * @return
      */
     public int getTotalCountByStoreId(@Param("storeId") String storeId);
+
+    /**
+     * 添加商品基本信息
+     * @param productInfo
+     */
+    public void addProductInfo(@Param("productInfo") ProductInfo productInfo);
 }

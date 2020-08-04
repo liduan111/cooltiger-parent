@@ -12,11 +12,15 @@ public class ProductInfoAddReqVo {
     //商品标题
     private String title;
     //分类ID
-    private String categoryId;
+    private Integer categoryId;
+    //品牌ID
+    private Integer brandId;
     //商品运费
     private ProductFreight productFreight;
     //发货地ID
     private Integer addressFromId;
+    //产地ID
+    private Integer createAddressId;
     //预计送达时间
     private Integer aboutDeliverTime;
     //服务ID（多个用,分隔）
@@ -24,7 +28,7 @@ public class ProductInfoAddReqVo {
     //自定义服务
     private List<String> customService;
     //商品参数
-    private List<ProductParam> productParams;
+    private List<ProductParamReq> productParams;
     //上架状态：0下架1上架
     private Integer shelfStatus;
     //规格
@@ -102,7 +106,7 @@ public class ProductInfoAddReqVo {
     }
 
     //商品参数
-    public class ProductParam{
+    public class ProductParamReq{
         //参数名称
         private String paramName;
         //商品参数值
@@ -263,5 +267,125 @@ public class ProductInfoAddReqVo {
         public void setIsMain(Integer isMain) {
             this.isMain = isMain;
         }
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Integer getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(Integer brandId) {
+        this.brandId = brandId;
+    }
+
+    public ProductFreight getProductFreight() {
+        return productFreight;
+    }
+
+    public void setProductFreight(ProductFreight productFreight) {
+        this.productFreight = productFreight;
+    }
+
+    public Integer getAddressFromId() {
+        return addressFromId;
+    }
+
+    public void setAddressFromId(Integer addressFromId) {
+        this.addressFromId = addressFromId;
+    }
+
+    public Integer getCreateAddressId() {
+        return createAddressId;
+    }
+
+    public void setCreateAddressId(Integer createAddressId) {
+        this.createAddressId = createAddressId;
+    }
+
+    public Integer getAboutDeliverTime() {
+        return aboutDeliverTime;
+    }
+
+    public void setAboutDeliverTime(Integer aboutDeliverTime) {
+        this.aboutDeliverTime = aboutDeliverTime;
+    }
+
+    public String getServiceIds() {
+        return serviceIds;
+    }
+
+    public void setServiceIds(String serviceIds) {
+        this.serviceIds = serviceIds;
+    }
+
+    public List<String> getCustomService() {
+        return customService;
+    }
+
+    public void setCustomService(List<String> customService) {
+        this.customService = customService;
+    }
+
+    public List<ProductParamReq> getProductParams() {
+        return productParams;
+    }
+
+    public void setProductParams(List<ProductParamReq> productParams) {
+        this.productParams = productParams;
+    }
+
+    public Integer getShelfStatus() {
+        return shelfStatus;
+    }
+
+    public void setShelfStatus(Integer shelfStatus) {
+        this.shelfStatus = shelfStatus;
+    }
+
+    public List<Spec> getSpecs() {
+        return specs;
+    }
+
+    public void setSpecs(List<Spec> specs) {
+        this.specs = specs;
+    }
+
+    public List<Sku> getSkus() {
+        return skus;
+    }
+
+    public void setSkus(List<Sku> skus) {
+        this.skus = skus;
+    }
+
+    public List<ProductPicture> getProductPictures() {
+        return productPictures;
+    }
+
+    public void setProductPictures(List<ProductPicture> productPictures) {
+        this.productPictures = productPictures;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 }

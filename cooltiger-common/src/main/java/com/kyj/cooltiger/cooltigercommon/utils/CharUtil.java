@@ -34,7 +34,7 @@ public class CharUtil {
      * @return
      */
     public static String getRandomString(Integer num) {
-        String base = "abcdefghijklmnopqrstuvwxyz0123456789";
+        String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < num; i++) {
@@ -101,22 +101,6 @@ public class CharUtil {
         return str;
     }
 
-    /**
-     * 随机生成6为数字  可做验证码
-     * @return
-     */
-    public static String  getvscode(){
-        //String str="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        String str="0123456789";
-        StringBuffer sb=new StringBuffer(6);
-        for(int i=0;i<6;i++)
-        {
-            char ch=str.charAt(new Random().nextInt(str.length()));
-            sb.append(ch);
-        }
-        System.out.println(sb.toString());
-        return sb.toString();
-    }
 
     /**
      * 生成用户id
@@ -170,7 +154,6 @@ public class CharUtil {
      * @param args
      */
     public static void main(String[] args) {
-        getvscode();
         System.out.println(getRandomNum(11));
         System.out.println("args = [" + getRandomString(32) + "]");
         System.out.println("userid = [" + getNewUserId() + "]");

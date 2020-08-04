@@ -62,6 +62,7 @@ public class ProductInfoController implements ProductInfoClient {
     public Result addProductInfo(
             @PathVariable("storeId") String storeId,
             @RequestParam("productInfoAddReqVo") ProductInfoAddReqVo productInfoAddReqVo) {
+            productInfoService.addProductInfo(storeId,productInfoAddReqVo);
         return null;
     }
 
