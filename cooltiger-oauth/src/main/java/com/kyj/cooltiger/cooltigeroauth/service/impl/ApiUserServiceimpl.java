@@ -18,6 +18,24 @@ public class ApiUserServiceimpl implements ApiUserService {
     private UserDao userDao;
 
     @Override
+    public boolean updateUserInfo(Userpo user) {
+        if(user!=null||!user.equals("")) {
+            int i = userDao.updateUserInfo(user);
+            if (i > 0) {
+                return true;
+            }else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Userpo queryByuserCode(Long userCode) {
+        return userDao.queryByuserCode(userCode);
+    }
+
+    @Override
     public boolean updatelogintime(Userpo user) {
         int  i=userDao.updatelogintime(user);
         if (i>0){
@@ -43,4 +61,5 @@ public class ApiUserServiceimpl implements ApiUserService {
         }
         return false;
     }
+
 }

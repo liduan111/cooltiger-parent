@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * @author guoxq
@@ -26,7 +27,8 @@ public class CharUtil {
     private static final long max41bit= 1099511627775L;
     private static String machineId = "" ; // 机器id
 
-
+    private static final long LIMIT = 10000000000L;
+    private static long last = 0;
     /**
      * 获取随机字符串
      *
@@ -148,7 +150,33 @@ public class CharUtil {
         return  Long.valueOf(bi.toString());
     }
 
+    /**
+     * 生成唯一id
+     * @return
+     */
+    public static long getID() {
+        // 10 digits.
+        long id = System.currentTimeMillis() % LIMIT;
+        if ( id <= last ) {
+            id = (last + 1) % LIMIT;
+        }
+        last = id;
+        System.out.println("last*******"+last);
+        return last;
+    }
+   public  static  boolean regexphone(String mobile){
 
+       String regex = "^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\\d{8}$";
+       if (Pattern.matches(regex, mobile)) {
+           System.out.println("校验成功");
+           return  true;
+       } else {
+           System.out.println("校验失败");
+           log.error("手机号校验失败");
+       }
+
+       return false;
+   }
     /**
      * 测试
      * @param args
@@ -158,7 +186,11 @@ public class CharUtil {
         System.out.println("args = [" + getRandomString(32) + "]");
         System.out.println("userid = [" + getNewUserId() + "]");
         System.out.println("id = [" + createOnlyId() + "]");
-        //20072953490030   [4980655978204483]
+        //20072953490030   [4980655978204483]6434911072  6434929313
+        String mobile = "15712467832";
+
+        System.out.println("args = [" + regexphone(mobile) + "]");
+
     }
 
 }
