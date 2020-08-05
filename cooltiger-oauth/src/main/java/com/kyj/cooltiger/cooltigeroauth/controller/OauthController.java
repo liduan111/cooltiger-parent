@@ -3,6 +3,8 @@ package com.kyj.cooltiger.cooltigeroauth.controller;
 import com.kyj.cooltiger.cooltigercommon.utils.GenericResponse;
 import com.kyj.cooltiger.cooltigercommon.utils.LoginInfo;
 import com.kyj.cooltiger.cooltigerfeign.oauth.client.vo.UserVo;
+import com.kyj.cooltiger.cooltigeroauth.entity.AddressVo;
+import com.kyj.cooltiger.cooltigeroauth.service.AddressService;
 import com.kyj.cooltiger.cooltigeroauth.service.ApiUserService;
 import com.kyj.cooltiger.cooltigeroauth.service.WeChatService;
 import com.kyj.cooltiger.cooltigeroauth.service.impl.TokenService;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,9 +52,6 @@ public class OauthController extends ApiBaseAction implements OauthClient {
 
     @Autowired
     private ApiUserService apiUserService;
-
-    /*@Autowired
-    private  RestTemplate restTemplate;*/
 
     /**
      * code登录获取用户openid
@@ -204,7 +204,37 @@ public class OauthController extends ApiBaseAction implements OauthClient {
         }
         return toResponsFail("请检查资料信息");
     }
+    @ApiOperation("发送短信")
+    @RequestMapping(value = "/smscode",method = RequestMethod.POST)
+    public Object sendSms(@RequestBody Map<String,String> parm){
+        return  toResponsFail("发送失败！！！");
+    }
 
+    @ApiOperation("绑定手机号")
+    @RequestMapping(value = "/bindmobile",method = RequestMethod.POST)
+    public  Object  bindMobile(@RequestBody Map<String,String> map){
+        String  mobile=map.get("mobile");
+        String  sendcode=map.get("sendcode");
+        Long  userCode=Long.parseLong(map.get("usercode"));
+        if (userCode.equals("")||userCode==null){
+            return  toResponsFail("");
+        }
+        if(mobile==null||mobile.equals("")){
+            return  toResponsFail("请输入手机号");
+        }
+        if(sendcode==null||sendcode.equals("")){
+            return  toResponsFail("请输入验证码");
+        }
+        //校验验证码
+
+
+
+
+        Userpo user = apiUserService.queryByuserCode(userCode);
+        user.setMobile(mobile);
+        boolean flag=apiUserService.update(user);
+        return  toResponsFail("绑定失败");
+    }
 
 
 

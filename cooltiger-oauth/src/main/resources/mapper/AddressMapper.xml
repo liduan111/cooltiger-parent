@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyj.cooltiger.cooltigeroauth.dao.AddressDao">
+
+    <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.AddressVo" id="adMap">
+        <result property="Id" column="id"/>
+        <result property="userCode" column="usercode"/>
+        <result property="userName" column="username"/>
+        <result property="provinceName" column="provincename"/>
+        <result property="cityName" column="cityname"/>
+        <result property="countryName" column="countryname"/>
+        <result property="addressdetail" column="addressdetail"/>
+        <result property="isdefaul" column="isdefaul"/>
+        <result property="createTime" column="createtime"/>
+        <result property="updateTime" column="updatetime"/>
+    </resultMap>
+
+    <select id="queryByuserCode" resultMap="adMap">
+        select
+            id,
+            username,
+            provincename,
+            cityname,
+            addressdetail,
+            createtime,
+            updatetime
+        from cy_address
+        where usercode = #{userCode}
+    </select>
+</mapper>
