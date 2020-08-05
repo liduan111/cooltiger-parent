@@ -6,6 +6,9 @@ import com.kyj.cooltiger.cooltigeroauth.service.ApiUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author guoxq
  * @version 1.0
@@ -30,6 +33,40 @@ public class ApiUserServiceimpl implements ApiUserService {
         return false;
     }
 
+    /**
+     * 查询总条数
+     * @param map 参数
+     * @return
+     */
+    @Override
+    public int queryTotal(Map<String, Object> map) {
+        return userDao.queryTotals(map);
+    }
+
+    /**
+     * 查询会员列表
+     * @param map 参数
+     * @return
+     */
+    @Override
+    public List<Userpo> querylist(Map<String, Object> map) {
+        List<Userpo>  userpoList=userDao.queryuserList(map);
+        return userpoList;
+    }
+
+    @Override
+    public boolean update(Userpo user) {
+        if(user!=null||!user.equals("")) {
+            int i = userDao.update(user);
+            if (i > 0) {
+                return true;
+            }else {
+                return false;
+            }
+        }
+        return false;
+    }
+
     @Override
     public Userpo queryByuserCode(Long userCode) {
         return userDao.queryByuserCode(userCode);
@@ -45,7 +82,7 @@ public class ApiUserServiceimpl implements ApiUserService {
     }
 
     /**
-     *
+     *根据openid查询
      * @param openId
      * @return
      */
@@ -53,6 +90,12 @@ public class ApiUserServiceimpl implements ApiUserService {
     public Userpo queryByopenId(String openId) {
         return userDao.queryByOpenId(openId);
     }
+
+    /**
+     * 添加用户
+     * @param userVo
+     * @return
+     */
    @Override
     public boolean save(Userpo userVo) {
         int i=userDao.save(userVo);

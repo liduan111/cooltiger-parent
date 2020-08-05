@@ -67,6 +67,10 @@ public class Userpo implements UserDetails , Serializable {
    // private String address;
     //注册渠道
     private String registerchannel;
+    //创建时间
+    private Date createTime;
+    //更新时间
+    private Date updateTime;
 
     private Set<? extends GrantedAuthority> authorities;//权限列表
 

@@ -25,8 +25,38 @@
         <result property="qrCode" column="qr_code"/>
         <result property="realName" column="real_name"/>
         <result property="registerchannel" column="registerchannel"/>
+        <result property="createTime" column="createtime"/>
+        <result property="updateTime" column="updatetime"/>
     </resultMap>
-
+    <select id="queryuserList" resultType="com.kyj.cooltiger.cooltigeroauth.entity.Userpo">
+        SELECT a.id,
+               a.usercode,
+               a.username,
+               a.gender,
+               a.age,
+               a.avatar,
+               a.nickname,
+               a.id_card,
+               a.citys,
+               a.mobile,
+               a.register_time,
+               a.registerchannel
+        from cy_wxuser a
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by a.id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+    <select id="queryTotals" resultType="int">
+        SELECT COUNT(id) from cy_wxuser
+    </select>
     <select id="queryObject" resultMap="userMap">
         select * from cy_wxuser where id = #{value}
     </select>

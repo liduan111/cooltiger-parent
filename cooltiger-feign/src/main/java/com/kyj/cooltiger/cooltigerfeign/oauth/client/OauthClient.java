@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author guoxq
@@ -42,5 +43,37 @@ public interface OauthClient {
      */
     @RequestMapping(value = "/updateuserinfo",method = RequestMethod.POST)
     public Object updateuserInfo(@RequestBody UserVo user);
+
+    /**
+     * 发送短信
+     * @param parm
+     * @return
+     */
+    @RequestMapping(value = "/smscode",method = RequestMethod.POST)
+    public Object sendSms(@RequestBody Map<String,String> parm);
+
+    /**
+     * 绑定手机号
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/bindmobile",method = RequestMethod.POST)
+    public  Object  bindMobile(@RequestBody Map<String,String> map);
+
+     /**
+      * 查询会员列表
+      * @param map
+      * @return
+      */
+     @RequestMapping(value = "/memberlist",method = RequestMethod.GET)
+     public  Object  memberlist(@RequestBody Map<String,Object> map);
+
+     /**
+      * 根据用户id查询收货地址
+      * @param code
+      * @return
+      */
+     @RequestMapping(value = "/queryaddress",method = RequestMethod.GET)
+     public Object queryaddress(@RequestBody String code);
 
 }
