@@ -3,10 +3,10 @@ package com.kyj.cooltiger.cooltigerfeign.oauth.client;
 import com.kyj.cooltiger.cooltigercommon.utils.LoginInfo;
 import com.kyj.cooltiger.cooltigerfeign.oauth.client.vo.UserVo;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.openfeign.FeignClientProperties;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -16,7 +16,7 @@ import java.util.Map;
  * @version 1.0
  * @date 2020/7/29 17:37
  */
-@FeignClient(name ="Oauth-Service" )
+@FeignClient(name ="Oauth-Service",configuration = FeignClientProperties.FeignClientConfiguration.class,contextId = "user")
 public interface OauthClient {
 
     /**
@@ -60,20 +60,6 @@ public interface OauthClient {
     @RequestMapping(value = "/bindmobile",method = RequestMethod.POST)
     public  Object  bindMobile(@RequestBody Map<String,String> map);
 
-     /**
-      * 查询会员列表
-      * @param map
-      * @return
-      */
-     @RequestMapping(value = "/memberlist",method = RequestMethod.GET)
-     public  Object  memberlist(@RequestBody Map<String,Object> map);
 
-     /**
-      * 根据用户id查询收货地址
-      * @param code
-      * @return
-      */
-     @RequestMapping(value = "/queryaddress",method = RequestMethod.GET)
-     public Object queryaddress(@RequestBody String code);
 
 }

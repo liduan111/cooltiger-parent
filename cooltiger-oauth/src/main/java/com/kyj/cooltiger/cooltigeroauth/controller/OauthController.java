@@ -53,11 +53,6 @@ public class OauthController extends ApiBaseAction implements OauthClient {
     @Autowired
     private ApiUserService apiUserService;
 
-    /*@Autowired
-    private  RestTemplate restTemplate;*/
-
-    @Autowired
-    private AddressService addressService;
     /**
      * code登录获取用户openid
      * @param
@@ -241,40 +236,7 @@ public class OauthController extends ApiBaseAction implements OauthClient {
         return  toResponsFail("绑定失败");
     }
 
-    /**
-     * 查询会员列表
-     * @param params
-     * @return
-     */
-    @RequestMapping(value = "/memberlist",method = RequestMethod.GET)
-    public  Object  memberlist(@RequestBody Map<String,Object> params){
-        /*Integer page = Integer.parseInt(params.get("page").toString());
-        Integer limit = Integer.parseInt(params.get("limit").toString());
-        Map<String,Object> map=new HashMap<String,Object>();*/
-        Querys querys=new Querys(params);
-        List<Userpo>   userpoList=apiUserService.querylist(querys);
-        int total = apiUserService.queryTotal(querys);
-        PageUtils pageUtil = new PageUtils(userpoList, total, querys.getLimit(), querys.getPage());
 
-        return  toResponsSuccess(pageUtil);
-    }
-
-    /**
-     * 根据用户id查询收货地址
-     * @param code
-     * @return
-     */
-    @RequestMapping(value = "/queryaddress",method = RequestMethod.GET)
-    public Object queryaddress(@RequestBody String code){
-        JSONObject object=JSON.parseObject(code);
-        Long  userCode=Long.parseLong(object.getString("userCode"));
-        if (userCode!=null||userCode!=0) {
-            AddressVo addressVo = addressService.queryByuserCode(userCode);
-            return toResponsSuccess(addressVo);
-        }else {
-            return  toResponsFail("id为空");
-        }
-    }
 
    /* @GetMapping("/test")
     public GenericResponse test(){
