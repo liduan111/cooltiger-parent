@@ -7,6 +7,37 @@
         SELECT COUNT(1)
         FROM ky_product_info
         WHERE store_id = #{storeId}
+        <if test="categoryId != null and categoryId != ''">
+            AND category_id = #{categoryId}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND product_code = #{keyword} OR title like CONCAT('%', #{keyword}, '%')
+        </if>
+    </select>
+
+    <!-- 根据店铺ID查询商品列表 -->
+    <select id="getProductInfoListByStoreId" resultType="com.kyj.cooltiger.cooltigerfeign.product.vo.ProductInfoListByStoreIdRespVo">
+        SELECT
+        pro.product_id productId,
+        pro.product_code productCode,
+        pro.title,
+        pro.modified_time modifiedTime,
+        pic.url,
+        sku.sale_price minPrice,
+        sku.stock
+        FROM ky_product_info pro
+        LEFT JOIN ky_product_picture pic ON pro.product_id = pic.relation_id AND pic.is_main = 1
+        LEFT JOIN ky_product_sku sku
+        ON (SELECT MIN(sale_price) FROM ky_product_sku WHERE product_id = pro.product_id)
+        AND (SELECT SUM(stock) FROM ky_product_sku WHERE product_id = pro.product_id)
+        WHERE pro.store_id = #{storeId}
+        <if test="categoryId != null and categoryId != ''">
+            AND category_id = #{categoryId}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND product_code = #{keyword} OR title like CONCAT('%', #{keyword}, '%')
+        </if>
+        LIMIT #{pageSatrt},#{pageSize}
     </select>
 
     <!-- 添加商品基本信息 -->

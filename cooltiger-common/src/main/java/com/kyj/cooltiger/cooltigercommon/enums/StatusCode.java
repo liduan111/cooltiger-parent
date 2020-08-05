@@ -6,8 +6,8 @@ package com.kyj.cooltiger.cooltigercommon.enums;
  * date: 2020/7/30 17:00
  */
 public enum StatusCode {
-    SUCCESS(200, "成功"),
-    ERROR(202, "失败");
+    SUCCESS(0, "成功"),
+    ERROR(500, "失败");
 
 
     private Integer code;

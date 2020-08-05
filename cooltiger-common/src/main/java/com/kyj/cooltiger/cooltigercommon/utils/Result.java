@@ -8,8 +8,6 @@ import com.kyj.cooltiger.cooltigercommon.enums.StatusCode;
  * date: 2020/7/30 16:31
  */
 public class Result {
-    //返回结果
-    private Boolean flag;
     //返回码
     private Integer code;
     //返回信息
@@ -17,8 +15,7 @@ public class Result {
     //返回数据
     private Object data;
 
-    public Result(Boolean flag, Integer code, String msg, Object data) {
-        this.flag = flag;
+    public Result(Integer code, String msg, Object data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
@@ -26,44 +23,41 @@ public class Result {
 
     /**
      * 成功响应（带返回数据）
+     *
      * @param data
      * @return Result
      */
-    public static  Result success(Object data) {
-        return new Result(true, StatusCode.SUCCESS.getCode(), StatusCode.SUCCESS.getMsg(), data);
+    public static Result success(Object data) {
+        return new Result(StatusCode.SUCCESS.getCode(), StatusCode.SUCCESS.getMsg(), data);
     }
 
     /**
      * 成功响应（不带返回数据）
+     *
      * @return Result
      */
-    public static Result success(){
-        return new Result(true, StatusCode.SUCCESS.getCode(), StatusCode.SUCCESS.getMsg(), null);
+    public static Result success() {
+        return new Result(StatusCode.SUCCESS.getCode(), StatusCode.SUCCESS.getMsg(), null);
     }
 
     /**
      * 失败响应（固定响应类型）
+     *
      * @return Result
      */
-    public static Result error(){
-        return new Result(false, StatusCode.ERROR.getCode(), StatusCode.ERROR.getMsg(),null);
+    public static Result error() {
+        return new Result(StatusCode.ERROR.getCode(), StatusCode.ERROR.getMsg(), null);
     }
 
     /**
      * 失败响应（自定义响应类型）
+     *
      * @return Result
      */
-    public static Result error(Integer code,String msg){
-        return new Result(false, code, msg,null);
+    public static Result error(Integer code, String msg, Object data) {
+        return new Result(code, msg, data);
     }
 
-    public Boolean getFlag() {
-        return flag;
-    }
-
-    public void setFlag(Boolean flag) {
-        this.flag = flag;
-    }
 
     public Integer getCode() {
         return code;

@@ -3,6 +3,7 @@ package com.kyj.cooltiger.cooltigerproduct.service.impl;
 import com.kyj.cooltiger.cooltigercommon.utils.CharUtil;
 import com.kyj.cooltiger.cooltigercommon.utils.PageUtil;
 import com.kyj.cooltiger.cooltigerfeign.product.vo.ProductInfoAddReqVo;
+import com.kyj.cooltiger.cooltigerfeign.product.vo.ProductInfoListByStoreIdRespVo;
 import com.kyj.cooltiger.cooltigerproduct.entity.*;
 import com.kyj.cooltiger.cooltigerproduct.mapper.*;
 import com.kyj.cooltiger.cooltigerproduct.service.ProductInfoService;
@@ -11,11 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author liduan
- * Description: 商品信息接口实现类
+ * Description: 商品信息service实现类
  * date: 2020/7/28 11:23
  */
 @Service
@@ -50,18 +52,22 @@ public class ProductInfoServiceImpl implements ProductInfoService {
      * @return
      */
     @Override
-    public Object getProductInfoListByStoreId(String storeId, Integer pageNo, Integer pageSize, Integer categoryId, String keyword) {
+    public Map<String,Object> getProductInfoListByStoreId(String storeId, Integer pageNo, Integer pageSize, Integer categoryId, String keyword) {
         //查询总条数
-        int totalCount = productInfoMapper.getTotalCountByStoreId(storeId);
+        int totalCount = productInfoMapper.getTotalCountByStoreId(storeId,categoryId,keyword);
         //创建分页工具类对象
         PageUtil<Object> pageUtil = new PageUtil<>(pageNo, pageSize, totalCount);
+        List<ProductInfoListByStoreIdRespVo> respVoList = null;
         if(totalCount>0){
-
-        }else{
-            pageUtil.setLists(null);
+            int pageStart = (pageUtil.getPageNo()-1)*pageUtil.getPageSize();
+            respVoList = productInfoMapper.getProductInfoListByStoreId(storeId, pageStart, pageSize, categoryId, keyword);
         }
-
-        return null;
+        //定义返回map数据
+        HashMap<String, Object> res = new HashMap<>();
+        res.put("totalCoust",pageUtil.getTotalCount());
+        res.put("totaoPage",pageUtil.getTotalPage());
+        res.put("data",respVoList);
+        return res;
     }
 
     @Transactional

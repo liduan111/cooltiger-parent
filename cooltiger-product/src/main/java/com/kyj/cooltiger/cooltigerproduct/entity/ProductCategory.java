@@ -1,7 +1,7 @@
 package com.kyj.cooltiger.cooltigerproduct.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * @author liduan
@@ -21,9 +21,9 @@ public class ProductCategory implements Serializable {
     /** 分类状态(0-未启用 1-启用) */
     private Integer categoryStatus;
     /** 创建时间 */
-    private Date createTime;
+    private Timestamp createTime;
     /** 最后修改时间 */
-    private Date modifiedTime;
+    private Timestamp modifiedTime;
 
 
 }

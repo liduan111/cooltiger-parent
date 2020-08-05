@@ -2,9 +2,11 @@ package com.kyj.cooltiger.cooltigerproduct.service;
 
 import com.kyj.cooltiger.cooltigerfeign.product.vo.ProductInfoAddReqVo;
 
+import java.util.Map;
+
 /**
  * @author liduan
- * Description: 商品信息interface
+ * Description: 商品信息service接口
  * date: 2020/7/28 11:21
  */
 public interface ProductInfoService {
@@ -18,7 +20,7 @@ public interface ProductInfoService {
      * @param keyword 搜索关键字
      * @return
      */
-    public Object getProductInfoListByStoreId(String storeId, Integer pageNo, Integer pageSize, Integer categoryId, String keyword);
+    public Map<String,Object> getProductInfoListByStoreId(String storeId, Integer pageNo, Integer pageSize, Integer categoryId, String keyword);
 
     /**
      * 添加商品信息

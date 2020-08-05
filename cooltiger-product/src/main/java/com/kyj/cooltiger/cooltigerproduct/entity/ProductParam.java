@@ -1,7 +1,7 @@
 package com.kyj.cooltiger.cooltigerproduct.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author liduan
@@ -21,9 +21,9 @@ public class ProductParam implements Serializable {
     //商品参数值
     private String paramValue;
     //创建时间
-    private Date createTime;
+    private Timestamp createTime;
     //修改时间
-    private Date modifiedTime;
+    private Timestamp modifiedTime;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -61,19 +61,19 @@ public class ProductParam implements Serializable {
         this.paramValue = paramValue;
     }
 
-    public Date getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 
-    public Date getModifiedTime() {
+    public Timestamp getModifiedTime() {
         return modifiedTime;
     }
 
-    public void setModifiedTime(Date modifiedTime) {
+    public void setModifiedTime(Timestamp modifiedTime) {
         this.modifiedTime = modifiedTime;
     }
 }

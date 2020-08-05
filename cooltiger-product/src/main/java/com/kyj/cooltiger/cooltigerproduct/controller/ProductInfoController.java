@@ -7,6 +7,8 @@ import com.kyj.cooltiger.cooltigerproduct.service.ProductInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * @author liduan
  * Description: 商品信息Controller
@@ -47,8 +49,8 @@ public class ProductInfoController implements ProductInfoClient {
             @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
             @RequestParam(value = "categoryId",required = false) Integer categoryId,
             @RequestParam(value = "keyword",required = false) String keyword) {
-        Object object = productInfoService.getProductInfoListByStoreId(storeId,pageNo,pageSize,categoryId,keyword);
-        return null;
+        Map<String, Object> resMap = productInfoService.getProductInfoListByStoreId(storeId, pageNo, pageSize, categoryId, keyword);
+        return Result.success(resMap);
     }
 
     /**
@@ -63,7 +65,7 @@ public class ProductInfoController implements ProductInfoClient {
             @PathVariable("storeId") String storeId,
             @RequestParam("productInfoAddReqVo") ProductInfoAddReqVo productInfoAddReqVo) {
             productInfoService.addProductInfo(storeId,productInfoAddReqVo);
-        return null;
+        return Result.success();
     }
 
 }

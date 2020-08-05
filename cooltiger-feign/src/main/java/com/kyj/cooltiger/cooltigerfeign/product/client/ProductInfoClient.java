@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author liduan
- * Description: 商品信息ProductInfo FeignClient接口
+ * Description: 商品信息FeignClient接口
  * date: 2020/7/28 14:44
  */
 @FeignClient(name = "Product-Service")

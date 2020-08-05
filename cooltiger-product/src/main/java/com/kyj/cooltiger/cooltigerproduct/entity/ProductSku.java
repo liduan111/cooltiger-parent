@@ -1,7 +1,7 @@
 package com.kyj.cooltiger.cooltigerproduct.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author liduan
@@ -37,9 +37,9 @@ public class ProductSku implements Serializable {
     //是否删除（0未删除1已删除）
     private Integer deleted;
     //商品录入时间
-    private Date createTime;
+    private Timestamp createTime;
     //最后修改时间
-    private Date modifiedTime;
+    private Timestamp modifiedTime;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -141,19 +141,19 @@ public class ProductSku implements Serializable {
         this.deleted = deleted;
     }
 
-    public Date getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 
-    public Date getModifiedTime() {
+    public Timestamp getModifiedTime() {
         return modifiedTime;
     }
 
-    public void setModifiedTime(Date modifiedTime) {
+    public void setModifiedTime(Timestamp modifiedTime) {
         this.modifiedTime = modifiedTime;
     }
 }
