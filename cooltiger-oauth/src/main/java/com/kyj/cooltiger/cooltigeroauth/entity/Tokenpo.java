@@ -23,5 +23,5 @@ public class Tokenpo implements Serializable {
     //过期时间
     private Date expireTime;
     //更新时间
-    private Date updateTime;
+    private Date createTime;
 }

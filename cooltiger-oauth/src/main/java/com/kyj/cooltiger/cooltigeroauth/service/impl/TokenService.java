@@ -64,14 +64,14 @@ public class TokenService {
             tokenEntity = new Tokenpo();
             tokenEntity.setUserId(userId);
             tokenEntity.setToken(token);
-            tokenEntity.setUpdateTime(now);
+            tokenEntity.setCreateTime(now);
             tokenEntity.setExpireTime(expireTime);
 
             //保存token
             save(tokenEntity);
         } else {
             tokenEntity.setToken(token);
-            tokenEntity.setUpdateTime(now);
+            tokenEntity.setCreateTime(now);
             tokenEntity.setExpireTime(expireTime);
 
             //更新token

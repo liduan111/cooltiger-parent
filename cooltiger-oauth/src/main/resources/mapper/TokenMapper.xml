@@ -7,7 +7,7 @@
         <result property="userId" column="user_id"/>
         <result property="token" column="token"/>
         <result property="expireTime" column="expire_time"/>
-        <result property="updateTime" column="update_time"/>
+        <result property="createTime" column="create_time"/>
     </resultMap>
 
     <select id="queryObject" resultType="com.kyj.cooltiger.cooltigeroauth.entity.Tokenpo">
@@ -15,8 +15,8 @@
             user_id,
             token,
             expire_time,
-            update_time
-        from cy_token
+            create_time
+        from ky_user_token
         where user_id = #{id}
     </select>
 
@@ -25,8 +25,8 @@
             user_id,
             token,
             expire_time,
-            update_time
-        from cy_token
+            create_time
+        from ky_user_token
         where token = #{token}
     </select>
 
@@ -35,8 +35,8 @@
             user_id,
             token,
             expire_time,
-            update_time
-        from cy_token
+            create_time
+        from ky_user_token
         where user_id = #{userId}
     </select>
 
@@ -45,8 +45,8 @@
         user_id,
         token,
         expire_time,
-        update_time
-        from cy_token
+        create_time
+        from ky_user_token
         WHERE 1=1
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -62,39 +62,39 @@
     </select>
 
     <select id="queryTotal" resultType="int">
-        select count(*) from cy_token
+        select count(*) from ky_user_token
         WHERE 1=1
     </select>
 
     <insert id="save" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.Tokenpo">
-        insert into cy_token(
+        insert into ky_user_token(
             `user_id`,
             `token`,
             `expire_time`,
-            `update_time`)
+            `create_time`)
         values(
                   #{userId},
                   #{token},
                   #{expireTime},
-                  #{updateTime})
+                  #{createTime})
     </insert>
 
     <update id="update" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.Tokenpo">
-        update cy_token
+        update ky_user_token
         <set>
             <if test="token != null">`token` = #{token},</if>
             <if test="expireTime != null">`expire_time` = #{expireTime},</if>
-            <if test="updateTime != null">`update_time` = #{updateTime}</if>
+            <if test="createTime != null">`update_time` = #{createTime}</if>
         </set>
         where user_id = #{userId}
     </update>
 
     <delete id="delete">
-        delete from cy_token where user_id = #{value}
+        delete from ky_user_token where user_id = #{value}
     </delete>
 
     <delete id="deleteBatch">
-        delete from cy_token where user_id in
+        delete from ky_user_token where user_id in
         <foreach item="userId" collection="array" open="(" separator="," close=")">
             #{userId}
         </foreach>

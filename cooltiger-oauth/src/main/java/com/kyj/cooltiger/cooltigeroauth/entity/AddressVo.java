@@ -21,6 +21,8 @@ public class AddressVo implements Serializable {
     private Long userCode;
     //会员名称
     private String userName;
+    //手机号
+    private String mobile;
     //省
     private  String provinceName;
     //市
