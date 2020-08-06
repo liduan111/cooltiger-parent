@@ -20,12 +20,31 @@ public interface ProductInfoService {
      * @param keyword 搜索关键字
      * @return
      */
-    public Map<String,Object> getProductInfoListByStoreId(String storeId, Integer pageNo, Integer pageSize, Integer categoryId, String keyword);
+    public Map<String,Object> getProductInfoListByStoreId(Integer storeId, Integer pageNo, Integer pageSize, Integer categoryId, String keyword);
 
     /**
      * 添加商品信息
      * @param storeId 店铺ID
      * @param productInfoAddReqVo 商品参数
      */
-    public void addProductInfo(String storeId, ProductInfoAddReqVo productInfoAddReqVo);
+    public void addProductInfo(Integer storeId, ProductInfoAddReqVo productInfoAddReqVo);
+
+    /**
+     * 查询商品信息
+     * @param productId
+     * @return
+     */
+    public Map<String, Object> getProductInfo(Integer productId);
+
+    /**
+     * 商品下架
+     * @param productId
+     */
+    public void productInfoDownShelf(Integer productId);
+
+    /**
+     * 商品审核
+     * @param productId
+     */
+    public void productInfoAudit(Integer productId);
 }

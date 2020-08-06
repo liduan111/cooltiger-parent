@@ -2,6 +2,8 @@ package com.kyj.cooltiger.cooltigerproduct.service;
 
 import com.kyj.cooltiger.cooltigerfeign.product.vo.StoreApplyIntoReqVo;
 
+import java.util.Map;
+
 /**
  * @author liduan
  * Description: 店铺信息service接口
@@ -15,4 +17,22 @@ public interface StoreInfoService {
      * @param storeApplyIntoReqVo 店铺信息
      */
     public void addStoreIntoInfo(Integer userId, StoreApplyIntoReqVo storeApplyIntoReqVo);
+
+    /**
+     * 查询店铺列表
+     */
+    public Map<String,Object> getStoreList();
+
+    /**
+     * 查询店铺信息
+     * @param storeId
+     * @return
+     */
+    public Map<String, Object> getStoreInfo(Integer storeId);
+
+    /**
+     * 店铺信息审核
+     * @param storeId
+     */
+    public void storeInfoAudit(Integer storeId);
 }

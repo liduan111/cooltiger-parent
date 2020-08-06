@@ -44,7 +44,7 @@ public class ProductInfoController implements ProductInfoClient {
     @Override
     @RequestMapping(value = "/getProductInfoList/{storeId}",method = {RequestMethod.GET})
     public Result getProductInfoList(
-            @PathVariable("storeId") String storeId,
+            @PathVariable("storeId") Integer storeId,
             @RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
             @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
             @RequestParam(value = "categoryId",required = false) Integer categoryId,
@@ -62,9 +62,45 @@ public class ProductInfoController implements ProductInfoClient {
     @Override
     @RequestMapping(value = "/addProductInfo/{storeId}",method = {RequestMethod.POST})
     public Result addProductInfo(
-            @PathVariable("storeId") String storeId,
+            @PathVariable("storeId") Integer storeId,
             @RequestParam("productInfoAddReqVo") ProductInfoAddReqVo productInfoAddReqVo) {
             productInfoService.addProductInfo(storeId,productInfoAddReqVo);
+        return Result.success();
+    }
+
+    /**
+     * 查询商品信息
+     * @param productId
+     * @return
+     */
+    @Override
+    @RequestMapping(value = "/getProductInfo/{productId}",method = {RequestMethod.GET})
+    public Result getProductInfo(@PathVariable("productId") Integer productId) {
+        Map<String,Object> resMap = productInfoService.getProductInfo(productId);
+        return null;
+    }
+
+    /**
+     * 商品下架
+     * @param productId
+     * @return
+     */
+    @Override
+    @RequestMapping(value = "/productInfoDownShelf/{productId}",method = {RequestMethod.PUT})
+    public Result productInfoDownShelf(@PathVariable("productId") Integer productId){
+        productInfoService.productInfoDownShelf(productId);
+        return Result.success();
+    }
+
+    /**
+     * 商品审核
+     * @param productId
+     * @return
+     */
+    @Override
+    @RequestMapping(value = "/productInfoAudit/{productId}",method = {RequestMethod.PUT})
+    public Result productInfoAudit(@PathVariable("productId") Integer productId){
+        productInfoService.productInfoAudit(productId);
         return Result.success();
     }
 

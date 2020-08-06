@@ -4,6 +4,8 @@ import com.kyj.cooltiger.cooltigerproduct.entity.StoreInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author liduan
  * Description: 店铺信息mapper
@@ -17,4 +19,23 @@ public interface StoreInfoMapper {
      * @param storeInfo
      */
     public void addStoreInfo(@Param("storeInfo") StoreInfo storeInfo);
+
+    /**
+     * 查询店铺列表
+     * @return
+     */
+    public List<StoreInfo> getStoreList();
+
+    /**
+     * 查询店铺信息
+     * @param storeId
+     * @return
+     */
+    public StoreInfo getStoreInfo(@Param("storeId") Integer storeId);
+
+    /**
+     * 更新店铺信息
+     * @param storeInfo
+     */
+    public void updateStoreInfo(@Param("storeInfo") StoreInfo storeInfo);
 }

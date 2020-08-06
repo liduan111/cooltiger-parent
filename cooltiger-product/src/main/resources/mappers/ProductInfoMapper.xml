@@ -16,7 +16,8 @@
     </select>
 
     <!-- 根据店铺ID查询商品列表 -->
-    <select id="getProductInfoListByStoreId" resultType="com.kyj.cooltiger.cooltigerfeign.product.vo.ProductInfoListByStoreIdRespVo">
+    <select id="getProductInfoListByStoreId"
+            resultType="com.kyj.cooltiger.cooltigerfeign.product.vo.ProductInfoListByStoreIdRespVo">
         SELECT
         pro.product_id productId,
         pro.product_code productCode,
@@ -53,5 +54,46 @@
          #{productInfo.serviceIds}, #{productInfo.shelfStatus}, #{productInfo.auditStatus},
          #{productInfo.deleted})
     </insert>
+
+    <!-- 查询商品信息 -->
+    <select id="getProductInfo" resultType="ProductInfo">
+        SELECT
+            product_id         productId,
+            product_code       productCode,
+            title,
+            store_id           storeId,
+            brand_id           brandId,
+            category_id        categoryId,
+            address_from_id    addressFromId,
+            create_address_id  createAddressId,
+            about_deliver_time aboutDeliverTime,
+            service_ids        serviceIds,
+            shelf_status       shelfStatus,
+            audit_status       auditStatus,
+            deleted,
+            create_time        createTime,
+            modified_time      modifiedTime
+        FROM ky_product_info
+        WHERE product_id = #{productId}
+          AND deleted = 0
+    </select>
+
+    <!-- 更新商品信息 -->
+    <update id="updateProductInfo" parameterType="ProductInfo">
+        UPDATE ky_product_info
+        SET
+            product_code       = #{productInfo.productCode},
+            title              = #{productInfo.title},
+            store_id           = #{productInfo.storeId},
+            brand_id           = #{productInfo.brandId},
+            category_id        = #{productInfo.categoryId},
+            address_from_id    = #{productInfo.addressFromId},
+            create_address_id  = #{productInfo.createAddressId},
+            about_deliver_time = #{productInfo.aboutDeliverTime},
+            service_ids        = #{productInfo.serviceIds},
+            shelf_status       = #{productInfo.shelfStatus},
+            audit_status       = #{productInfo.auditStatus}
+        WHERE product_id = #{productInfo.productId}
+    </update>
 
 </mapper>

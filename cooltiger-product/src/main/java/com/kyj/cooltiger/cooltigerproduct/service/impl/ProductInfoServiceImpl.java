@@ -52,7 +52,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
      * @return
      */
     @Override
-    public Map<String,Object> getProductInfoListByStoreId(String storeId, Integer pageNo, Integer pageSize, Integer categoryId, String keyword) {
+    public Map<String,Object> getProductInfoListByStoreId(Integer storeId, Integer pageNo, Integer pageSize, Integer categoryId, String keyword) {
         //查询总条数
         int totalCount = productInfoMapper.getTotalCountByStoreId(storeId,categoryId,keyword);
         //创建分页工具类对象
@@ -70,14 +70,19 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         return res;
     }
 
+    /**
+     * 添加商品信息
+     * @param storeId 店铺ID
+     * @param productInfoAddReqVo 商品参数
+     */
     @Transactional
     @Override
-    public void addProductInfo(String storeId, ProductInfoAddReqVo productInfoAddReqVo) {
+    public void addProductInfo(Integer storeId, ProductInfoAddReqVo productInfoAddReqVo) {
         //添加商品基本信息
         ProductInfo productInfo = new ProductInfo();
         productInfo.setProductCode(CharUtil.getRandomNum(10));
         productInfo.setTitle(productInfoAddReqVo.getTitle());
-        productInfo.setStoreId(Integer.parseInt(storeId));
+        productInfo.setStoreId(storeId);
         productInfo.setBarandId(productInfoAddReqVo.getBrandId());
         productInfo.setCategoryId(productInfoAddReqVo.getCategoryId());
         productInfo.setAddressFromId(productInfoAddReqVo.getAddressFromId());
@@ -190,5 +195,40 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         productDetails.setProductId(productInfo.getProductId());
         productDetails.setDetails(productInfoAddReqVo.getDetails());
         productDetailsMapper.addProductDetails(productDetails);
+    }
+
+    /**
+     * 查询商品信息
+     * @param productId
+     * @return
+     */
+    @Override
+    public Map<String, Object> getProductInfo(Integer productId) {
+        ProductInfo productInfo = productInfoMapper.getProductInfo(productId);
+
+        HashMap<String, Object> res = new HashMap<>();
+        return res;
+    }
+
+    /**
+     * 商品下架
+     * @param productId
+     */
+    @Override
+    public void productInfoDownShelf(Integer productId) {
+        ProductInfo productInfo = productInfoMapper.getProductInfo(productId);
+        productInfo.setShelfStatus(0);
+        productInfoMapper.updateProductInfo(productInfo);
+    }
+
+    /**
+     * 商品审核
+     * @param productId
+     */
+    @Override
+    public void productInfoAudit(Integer productId) {
+        ProductInfo productInfo = productInfoMapper.getProductInfo(productId);
+        productInfo.setAuditStatus(1);
+        productInfoMapper.updateProductInfo(productInfo);
     }
 }

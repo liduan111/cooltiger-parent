@@ -27,6 +27,12 @@ public class StoreApplyIntoReqVo {
     private String saleCategory;
     //主营产品
     private String mainProducts;
+    //银行卡号
+    private String bankCardNumber;
+    //开户行
+    private String bankOfDeposit;
+    //账户名
+    private String accountName;
     //经营资质图片url
     private List<String> licenseUrls;
 
@@ -100,6 +106,30 @@ public class StoreApplyIntoReqVo {
 
     public void setMainProducts(String mainProducts) {
         this.mainProducts = mainProducts;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
+    }
+
+    public String getBankOfDeposit() {
+        return bankOfDeposit;
+    }
+
+    public void setBankOfDeposit(String bankOfDeposit) {
+        this.bankOfDeposit = bankOfDeposit;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public List<String> getLicenseUrls() {

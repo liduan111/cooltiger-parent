@@ -27,4 +27,26 @@ public interface StoreInfoClient {
     public Result StoreApplyInto(
             @PathVariable("userId") Integer userId,
             @RequestParam("storeApplyIntoReqVo") StoreApplyIntoReqVo storeApplyIntoReqVo);
+
+    /**
+     * 查询店铺列表
+     * @return
+     */
+    @RequestMapping(value = "/getStoreList",method = {RequestMethod.GET})
+    public Result getStoreList();
+
+    /**
+     * 查询店铺信息
+     * @param storeId
+     * @return
+     */
+    @RequestMapping(value = "/getStoreInfo/{storeId}",method ={RequestMethod.GET})
+    public Result getStoreInfo(@PathVariable("storeId") Integer storeId);
+
+    /**
+     * 店铺信息审核
+     * @return
+     */
+    @RequestMapping(value = "/storeInfoAudit/{storeId}",method ={RequestMethod.PUT})
+    public Result storeInfoAudit(@PathVariable("storeId") Integer storeId);
 }

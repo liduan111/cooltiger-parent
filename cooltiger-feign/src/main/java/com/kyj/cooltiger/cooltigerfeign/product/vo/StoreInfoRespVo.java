@@ -1,17 +1,15 @@
-package com.kyj.cooltiger.cooltigerproduct.entity;
+package com.kyj.cooltiger.cooltigerfeign.product.vo;
 
-import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author liduan
- * Description: 店铺信息表
- * date: 2020/8/5 16:26
+ * Description: 店铺信息返回vo
+ * date: 2020/8/6 13:07
  */
-public class StoreInfo implements Serializable {
-    /** 版本号 */
-    private static final long serialVersionUID = 1L;
+public class StoreInfoRespVo {
 
     //店铺ID
     private Integer storeId;
@@ -51,15 +49,44 @@ public class StoreInfo implements Serializable {
     private Date signTimeStart;
     //合约结束时间
     private Date signTimeEnd;
-    //是否删除（0-未删除1-已删除）
-    private Integer deleted;
     //创建时间
     private Timestamp createTime;
     //修改时间
     private Timestamp modifiedTime;
+    //商品图片集合
+    private List<Picture> pictures;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public class Picture{
+        //商品图片ID
+        private Integer id;
+        //图片类型（1-营业资质2-合约内容）
+        private Integer pictureType;
+        //图片url
+        private String url;
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public Integer getPictureType() {
+            return pictureType;
+        }
+
+        public void setPictureType(Integer pictureType) {
+            this.pictureType = pictureType;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
     }
 
     public Integer getStoreId() {
@@ -214,14 +241,6 @@ public class StoreInfo implements Serializable {
         this.signTimeEnd = signTimeEnd;
     }
 
-    public Integer getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Integer deleted) {
-        this.deleted = deleted;
-    }
-
     public Timestamp getCreateTime() {
         return createTime;
     }
@@ -236,5 +255,13 @@ public class StoreInfo implements Serializable {
 
     public void setModifiedTime(Timestamp modifiedTime) {
         this.modifiedTime = modifiedTime;
+    }
+
+    public List<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
     }
 }

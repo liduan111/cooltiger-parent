@@ -22,7 +22,7 @@ public interface ProductInfoMapper {
      * @param keyword 搜索关键词
      * @return
      */
-    public int getTotalCountByStoreId(@Param("storeId") String storeId,
+    public int getTotalCountByStoreId(@Param("storeId") Integer storeId,
                                       @Param("categoryId") Integer categoryId,
                                       @Param("keyword") String keyword);
 
@@ -34,7 +34,7 @@ public interface ProductInfoMapper {
      * @param categoryId 类别ID
      * @param keyword 搜索关键词
      */
-    public List<ProductInfoListByStoreIdRespVo> getProductInfoListByStoreId(@Param("storeId") String storeId,
+    public List<ProductInfoListByStoreIdRespVo> getProductInfoListByStoreId(@Param("storeId") Integer storeId,
                                                                             @Param("pageStart") Integer pageStart,
                                                                             @Param("pageSize") Integer pageSize,
                                                                             @Param("categoryId") Integer categoryId,
@@ -45,4 +45,17 @@ public interface ProductInfoMapper {
      * @param productInfo
      */
     public void addProductInfo(@Param("productInfo") ProductInfo productInfo);
+
+    /**
+     * 查询商品信息
+     * @param productId
+     * @return
+     */
+    public ProductInfo getProductInfo(@Param("productId") Integer productId);
+
+    /**
+     * 更新商品信息
+     * @param productInfo
+     */
+    public void updateProductInfo(@Param("productInfo") ProductInfo productInfo);
 }

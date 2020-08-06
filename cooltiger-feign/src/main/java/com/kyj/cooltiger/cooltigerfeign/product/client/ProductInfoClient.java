@@ -36,7 +36,7 @@ public interface ProductInfoClient {
      */
     @RequestMapping(value = "/getProductInfoList/{storeId}",method = {RequestMethod.GET})
     public Result getProductInfoList(
-            @PathVariable("storeId") String storeId,
+            @PathVariable("storeId") Integer storeId,
             @RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
             @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
             @RequestParam(value = "categoryId",required = false) Integer categoryId,
@@ -50,6 +50,30 @@ public interface ProductInfoClient {
      */
     @RequestMapping(value = "/addProductInfo/{storeId}",method = {RequestMethod.POST})
     public Result addProductInfo(
-            @PathVariable("storeId") String storeId,
+            @PathVariable("storeId") Integer storeId,
             @RequestParam("productInfoAddReqVo") ProductInfoAddReqVo productInfoAddReqVo);
+
+    /**
+     * 查询商品信息
+     * @param productId
+     * @return
+     */
+    @RequestMapping(value = "/getProductInfo/{productId}",method = {RequestMethod.GET})
+    public Result getProductInfo(@PathVariable("productId") Integer productId);
+
+    /**
+     * 商品下架
+     * @param productId
+     * @return
+     */
+    @RequestMapping(value = "/productInfoDownShelf/{productId}",method = {RequestMethod.PUT})
+    public Result productInfoDownShelf(@PathVariable("productId") Integer productId);
+
+    /**
+     * 商品审核
+     * @param productId
+     * @return
+     */
+    @RequestMapping(value = "/productInfoAudit/{productId}",method = {RequestMethod.PUT})
+    public Result productInfoAudit(@PathVariable("productId") Integer productId);
 }
