@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -99,6 +98,7 @@ public class OauthController extends ApiBaseAction implements OauthClient {
             userVo.setNickname(Base64.encode(loginInfo.getNickName()));
             userVo.setIsReal("0");
             userVo.setRegisterchannel("1");
+            userVo.setCreateTime(nowTime);
             //添加数据库
             boolean flag=apiUserService.save(userVo);
             if (flag==true) {
@@ -198,6 +198,7 @@ public class OauthController extends ApiBaseAction implements OauthClient {
         userVo.setGender(user.getGender());
         userVo.setNickname(user.getNickname());
         userVo.setRealName(user.getRealName());
+        userVo.setUpdateTime(new Date());
         boolean flag=  apiUserService.updateUserInfo(userVo);
         if(flag==true){
             return  toResponsMsgSuccess("资料修改成功");

@@ -6,8 +6,8 @@
     <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.Userpo" id="userMap">
         <result property="userId" column="id"/>
-        <result property="userCode" column="usercode"/>
-        <result property="username" column="username"/>
+        <result property="userCode" column="user_code"/>
+        <result property="username" column="user_name"/>
         <result property="password" column="password"/>
         <result property="gender" column="gender"/>
         <result property="age" column="age"/>
@@ -15,7 +15,7 @@
         <result property="last_login_time" column="last_login_time"/>
         <result property="last_login_ip" column="last_login_ip"/>
         <result property="user_level_id" column="user_level_id"/>
-        <result property="nickname" column="nickname"/>
+        <result property="nickname" column="nick_name"/>
         <result property="mobile" column="mobile"/>
         <result property="register_ip" column="register_ip"/>
         <result property="avatar" column="avatar"/>
@@ -24,24 +24,24 @@
         <result property="isReal" column="is_real"/>
         <result property="qrCode" column="qr_code"/>
         <result property="realName" column="real_name"/>
-        <result property="registerchannel" column="registerchannel"/>
-        <result property="createTime" column="createtime"/>
-        <result property="updateTime" column="updatetime"/>
+        <result property="registerchannel" column="register_channel"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="modified_time"/>
     </resultMap>
     <select id="queryuserList" resultType="com.kyj.cooltiger.cooltigeroauth.entity.Userpo">
         SELECT a.id,
-               a.usercode,
-               a.username,
+               a.user_code,
+               a.user_name,
                a.gender,
                a.age,
                a.avatar,
-               a.nickname,
+               a.nick_name,
                a.id_card,
                a.citys,
                a.mobile,
                a.register_time,
-               a.registerchannel
-        from cy_wxuser a
+               a.register_channel
+        from ky_user_info a
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -55,14 +55,14 @@
         </if>
     </select>
     <select id="queryTotals" resultType="int">
-        SELECT COUNT(id) from cy_wxuser
+        SELECT COUNT(id) from ky_user_info
     </select>
     <select id="queryObject" resultMap="userMap">
-        select * from cy_wxuser where id = #{value}
+        select * from ky_user_info where id = #{value}
     </select>
 
     <select id="queryByOpenId" resultMap="userMap">
-        select * from cy_wxuser
+        select * from ky_user_info
         where 1 = 1
         <if test="openId != null">
             and `weixin_openid` = #{openId}
@@ -70,14 +70,14 @@
     </select>
 
     <select id="queryByuserCode" resultMap="userMap">
-        select * from cy_wxuser
+        select * from ky_user_info
         where 1 = 1
         <if test="userCode != null and userCode != 0">
-            and `usercode` = #{userCode}
+            and `user_code` = #{userCode}
         </if>
     </select>
     <select id="queryList" resultMap="userMap">
-        select * from cy_wxuser
+        select * from ky_user_info
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -92,14 +92,14 @@
     </select>
 
     <select id="queryTotal" resultType="int">
-        select count(*) from cy_wxuser
+        select count(*) from ky_user_info
     </select>
 
     <insert id="save" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.Userpo" useGeneratedKeys="true" keyProperty="userId">
-        insert into cy_wxuser
+        insert into ky_user_info
         (
-            `usercode`,
-            `username`,
+            `user_code`,
+            `user_name`,
             `password`,
             `gender`,
             `age`,
@@ -107,14 +107,15 @@
             `last_login_time`,
             `last_login_ip`,
             `user_level_id`,
-            `nickname`,
+            `nick_name`,
             `mobile`,
             `register_ip`,
             `avatar`,
             `weixin_openid`,
-            `registerchannel`,
+            `register_channel`,
             `qr_code`,
-            `real_name`
+            `real_name`,
+            `create_time`
 
 
         )
@@ -136,15 +137,16 @@
             #{weixin_openid},
             #{registerchannel},
             #{qrCode},
-            #{realName}
+            #{realName},
+            #{createTime}
 
         )
     </insert>
 
     <update id="update" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.Userpo">
-        update cy_wxuser
+        update ky_user_info
         <set>
-            <if test="username != null">`username` = #{username},</if>
+            <if test="username != null">`user_name` = #{username},</if>
             <if test="password != null">`password` = #{password},</if>
             <if test="gender != null">`gender` = #{gender},</if>
             <if test="age != null">`age` = #{age},</if>
@@ -152,7 +154,7 @@
             <if test="last_login_time != null">`last_login_time` = #{last_login_time},</if>
             <if test="last_login_ip != null">`last_login_ip` = #{last_login_ip},</if>
             <if test="user_level_id != null">`user_level_id` = #{user_level_id},</if>
-            <if test="nickname != null">`nickname` = #{nickname},</if>
+            <if test="nickname != null">`nick_name` = #{nickname},</if>
             <if test="mobile != null">`mobile` = #{mobile},</if>
             <if test="register_ip != null">`register_ip` = #{register_ip},</if>
             <if test="avatar != null">`avatar` = #{avatar},</if>
@@ -161,14 +163,15 @@
             <if test="registerchannel != null">`registerchannel` = #{registerchannel},</if>
             <if test="isReal != null">`is_real` = #{isReal},</if>
             <if test="qrCode != null">`qr_code` = #{qrCode},</if>
-            <if test="realName != null">`real_name` = #{realName}</if>
+            <if test="realName != null">`real_name` = #{realName},</if>
+            <if test="updateTime != null">`modified_time` = #{updateTime}</if>
 
         </set>
         where id = #{userId}
     </update>
 
     <update id="updatelogintime" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.Userpo">
-        update cy_wxuser
+        update ky_user_info
         <set>
             <if test="last_login_time != null">`last_login_time` = #{last_login_time},</if>
             <if test="last_login_ip != null">`last_login_ip` = #{last_login_ip},</if>
@@ -176,60 +179,18 @@
         where usercode = #{userCode}
     </update>
     <update id="updateUserInfo" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.Userpo">
-        update cy_wxuser
+        update ky_user_info
         <set>
-            <if test="username != null">`username` = #{username},</if>
+            <if test="username != null">`user_name` = #{username},</if>
             <if test="gender != null">`gender` = #{gender},</if>
             <if test="age != null">`age` = #{age},</if>
-            <if test="nickname != null">`nickname` = #{nickname},</if>
+            <if test="nickname != null">`nick_name` = #{nickname},</if>
             <if test="mobile != null">`mobile` = #{mobile},</if>
             <if test="avatar != null">`avatar` = #{avatar},</if>
-            <if test="realName != null">`real_name` = #{realName}</if>
+            <if test="realName != null">`real_name` = #{realName},</if>
+            <if test="updateTime != null">`modified_time` = #{updateTime}</if>
         </set>
         where usercode = #{userCode}
     </update>
-    <!-- 可根据自己的需求，是否要使用 -->
-    <!--<resultMap type="com.platform.entity.SmsLogVo" id="smslogMap">
-        <result property="id" column="id"/>
-        <result property="user_id" column="user_id"/>
-        <result property="phone" column="phone"/>
-        <result property="log_date" column="log_date"/>
-        <result property="sms_code" column="sms_code"/>
-        <result property="send_status" column="send_status"/>
-        <result property="sms_text" column="sms_text"/>
-    </resultMap>-->
 
-    <!--<select id="querySmsCodeByUserId" resultMap="smslogMap">
-        select
-            a.id,
-            a.user_id,
-            a.phone,
-            a.log_date,
-            a.sms_code,
-            a.send_status,
-            a.sms_text
-        from nideshop_sms_log a
-                 left join nideshop_sms_log b on a.user_id = b.user_id and b.log_date > a.log_date
-        where a.user_id = #{user_id} and b.id is null
-    </select>
-
-    <insert id="saveSmsCodeLog" parameterType="com.platform.entity.SmsLogVo">
-        insert into nideshop_sms_log(
-            `id`,
-            `user_id`,
-            `phone`,
-            `log_date`,
-            `sms_code`,
-            `send_status`,
-            `sms_text`)
-        values(
-                  #{id},
-                  #{user_id},
-                  #{phone},
-                  #{log_date},
-                  #{sms_code},
-                  #{send_status},
-                  #{sms_text}
-              )
-    </insert>-->
 </mapper>

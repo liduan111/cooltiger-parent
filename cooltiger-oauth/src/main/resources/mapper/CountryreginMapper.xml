@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyj.cooltiger.cooltigeroauth.dao.CountryreginDao">
+
+    <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.CountryReginVo" id="tbTokenMap">
+        <result property="regionId" column="region_id"/>
+        <result property="regionName" column="region_name"/>
+        <result property="regionparentId" column="region_parent_id"/>
+    </resultMap>
+    <select id="countrylist" resultType="com.kyj.cooltiger.cooltigeroauth.entity.CountryReginVo">
+        select
+        region_id,
+        region_name,
+        region_parent_id
+        from ky_coutury_region
+        WHERE region_parent_id=0
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by region_id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from ky_coutury_region
+        WHERE 1=1
+    </select>
+</mapper>

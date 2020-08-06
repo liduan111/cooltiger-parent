@@ -185,6 +185,8 @@ public class CardUtil {
         }
         System.out.println("args = [" + getGenderByIdCard(code) + "]");
         System.out.println("args = [" + getDatebirthdays(code) + "]");
+        int pjjg = 6 ;
+        System.out.println(pjjg ==0 ? "未评价" : pjjg ==1 ? "非常满意" : pjjg == 2 ? "满意" : pjjg ==3 ? "一般" : pjjg == 4 ? "不满意" : pjjg == 5 ? "业务不熟" : pjjg == 6 ? "有待提高" : "空值");
     }
 
 

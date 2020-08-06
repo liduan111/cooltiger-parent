@@ -10,6 +10,8 @@ import com.kyj.cooltiger.cooltigeroauth.entity.Userpo;
 import com.kyj.cooltiger.cooltigeroauth.service.AddressService;
 import com.kyj.cooltiger.cooltigeroauth.service.ApiUserService;
 import com.kyj.cooltiger.cooltigeroauth.utils.ApiBaseAction;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,7 @@ import java.util.Map;
  * @version 1.0
  * @date 2020/8/5 11:38
  */
+@Api("会员")
 @RestController
 @RequestMapping("/member")
 public class MemberController extends ApiBaseAction implements MemberClient {
@@ -40,6 +43,7 @@ public class MemberController extends ApiBaseAction implements MemberClient {
      * @return
      */
     @Override
+    @ApiOperation("会员列表")
     @RequestMapping(value = "/memberlist",method = RequestMethod.GET)
     public  Object  memberlist(@RequestBody Map<String,Object> params){
         /*Integer page = Integer.parseInt(params.get("page").toString());
@@ -59,6 +63,7 @@ public class MemberController extends ApiBaseAction implements MemberClient {
      * @return
      */
     @Override
+    @ApiOperation("根据用户id查询收货地址")
     @RequestMapping(value = "/queryaddress",method = RequestMethod.GET)
     public Object queryaddress(@RequestBody String code){
         JSONObject object= JSON.parseObject(code);

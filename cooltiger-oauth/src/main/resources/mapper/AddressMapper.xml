@@ -5,27 +5,80 @@
 
     <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.AddressVo" id="adMap">
         <result property="Id" column="id"/>
-        <result property="userCode" column="usercode"/>
-        <result property="userName" column="username"/>
-        <result property="provinceName" column="provincename"/>
-        <result property="cityName" column="cityname"/>
-        <result property="countryName" column="countryname"/>
-        <result property="addressdetail" column="addressdetail"/>
-        <result property="isdefaul" column="isdefaul"/>
-        <result property="createTime" column="createtime"/>
-        <result property="updateTime" column="updatetime"/>
+        <result property="userCode" column="user_code"/>
+        <result property="userName" column="user_name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="provinceName" column="province_name"/>
+        <result property="cityName" column="city_name"/>
+        <result property="countryName" column="country_name"/>
+        <result property="addressdetail" column="address_detail"/>
+        <result property="isdefaul" column="is_defaul"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="modified_time"/>
     </resultMap>
+
+    <select id="addresslist" resultType="com.kyj.cooltiger.cooltigeroauth.entity.AddressVo">
+        select
+            id,
+            user_code,
+            user_name,
+            mobile,
+            province_name,
+            city_name,
+            address_detail,
+            create_time,
+            modified_time
+        from ky_user_address
+    </select>
 
     <select id="queryByuserCode" resultMap="adMap">
         select
             id,
-            username,
-            provincename,
-            cityname,
-            addressdetail,
-            createtime,
-            updatetime
-        from cy_address
-        where usercode = #{userCode}
+            user_name,
+            mobile,
+            province_name,
+            city_name,
+            address_detail,
+            create_time,
+            modified_time
+        from ky_user_address
+        where user_code = #{userCode}
     </select>
+
+    <insert id="addresssave" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.AddressVo">
+        insert into ky_user_address(
+            `user_code`,
+            `user_name`,
+            `mobile`,
+            `province_name`,
+            `city_name`,
+            `country_name`,
+            `address_detail`,
+            `is_defaul`,
+            `create_time`)
+        values(
+                  #{userCode},
+                  #{userName},
+                  #{mobile},
+                  #{provinceName},
+                  #{cityName},
+                  #{countryName},
+                  #{addressdetail},
+                  #{isdefaul},
+                  #{createTime})
+    </insert>
+    <update id="addressupdate" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.AddressVo">
+        update ky_user_address
+        <set>
+            <if test="userName != null">`user_name` = #{userName},</if>
+            <if test="mobile != null">`mobile` = #{mobile},</if>
+            <if test="provinceName != null">`province_name` = #{provinceName},</if>
+            <if test="cityName != null">`city_name` = #{cityName},</if>
+            <if test="countryName != null">`country_name` = #{countryName},</if>
+            <if test="addressdetail != null">`address_detail` = #{addressdetail},</if>
+            <if test="isdefaul != null">`is_defaul` = #{isdefaul},</if>
+            <if test="updateTime != null">`modified_time` = #{updateTime}</if>
+        </set>
+        where user_code = #{userCode}
+    </update>
 </mapper>

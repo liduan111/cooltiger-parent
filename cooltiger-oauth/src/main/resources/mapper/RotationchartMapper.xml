@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyj.cooltiger.cooltigeroauth.dao.RotationchartDao">
+
+    <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.RotationchartVo" id="tbTokenMap">
+        <result property="rotationId" column="rotation_id"/>
+        <result property="pictureUrl" column="picture_url"/>
+    </resultMap>
+    <select id="querypicturelist" resultType="com.kyj.cooltiger.cooltigeroauth.entity.RotationchartVo">
+        select
+        rotation_id,
+        picture_url
+        from ky_rotation_chart
+        WHERE 1=1
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by rotation_id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from ky_rotation_chart
+        WHERE 1=1
+    </select>
+</mapper>
