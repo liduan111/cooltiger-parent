@@ -1,7 +1,6 @@
 package com.kyj.cooltiger.cooltigerfeign.oauth.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.cloud.openfeign.FeignClientProperties;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version 1.0
  * @date 2020/8/6 10:14
  */
-@FeignClient(name ="Oauth-Service",configuration = FeignClientProperties.FeignClientConfiguration.class,contextId = "wxindex")
+@FeignClient(name ="Oauth-Service")
 public interface WxIndexClient {
     /**
      * 首页查询导航栏

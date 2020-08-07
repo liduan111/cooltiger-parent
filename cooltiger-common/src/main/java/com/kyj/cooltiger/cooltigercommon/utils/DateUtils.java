@@ -7,6 +7,7 @@ import org.springframework.util.StringUtils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -156,7 +157,7 @@ public class DateUtils {
     }
 
     /**
-     * 获取当前时间
+     * 获取当前时间年月日时分秒
      *
      *
      */
@@ -164,7 +165,7 @@ public class DateUtils {
         // 返回的日期
         Date resultDate = new Date();
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd :hh:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd hh:mm:ss");
             String da = sdf.format(resultDate);
             System.out.println("date------" + da);
             Date date = sdf.parse(da);
@@ -175,9 +176,59 @@ public class DateUtils {
         return  null;
     }
 
+    /**
+     * 回去当前时间年月日
+     * @return
+     */
+    public static Date getDatesmins() {
+        // 返回的日期
+        Date resultDate = new Date();
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+            String da = sdf.format(resultDate);
+            System.out.println("date------" + da);
+            Date date = sdf.parse(da);
+            return  date;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  null;
+    }
+
+    /**
+     * 获取当前月第一天
+     * @return
+     */
+    public static Date getFirstDayOfThisMonth() {
+        try {
+            SimpleDateFormat myFormatter = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            Date date = cal.getTime();
+            String da = myFormatter.format(date);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date1 = sdf.parse(da);
+            return date1;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  null;
+    }
+    /** * 获取当前月份最后一天 * @return 格式化的日期 */
+    public static String getMaxDayOfThisMonth() {
+        SimpleDateFormat myFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DATE, 1);
+        //主要就是这个roll方法
+        cal.roll(Calendar.DATE, -1);
+        return myFormatter.format(cal.getTime());
+    }
     public static void main(String[] args) {
         String d= compare_date("2995-11-12 15:21", "1999-12-11 09:59");
         System.out.println("i=="+d);
         getDates();
+        getDatesmins();
+        System.out.println("args = [" + getFirstDayOfThisMonth() + "]");
+        System.out.println("hhh = [" + getMaxDayOfThisMonth() + "]");
     }
 }

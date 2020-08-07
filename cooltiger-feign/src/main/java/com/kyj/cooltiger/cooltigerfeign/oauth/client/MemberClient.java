@@ -1,7 +1,6 @@
 package com.kyj.cooltiger.cooltigerfeign.oauth.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.cloud.openfeign.FeignClientProperties;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +12,7 @@ import java.util.Map;
  * @version 1.0
  * @date 2020/8/5 11:36
  */
-@FeignClient(name ="Oauth-Service",configuration = FeignClientProperties.FeignClientConfiguration.class,contextId = "member")
+@FeignClient(name ="Oauth-Service")
 public interface MemberClient {
     /**
      * 查询会员列表

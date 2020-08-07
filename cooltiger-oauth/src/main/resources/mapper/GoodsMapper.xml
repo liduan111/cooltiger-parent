@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyj.cooltiger.cooltigeroauth.dao.GoodsDao">
+
+    <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.GoodsVo" id="adMap">
+        <result property="productId" column="product_id"/>
+        <result property="productCode" column="product_code"/>
+        <result property="title" column="title"/>
+        <result property="storeId" column="store_id"/>
+        <result property="barandId" column="brand_id"/>
+        <result property="type" column="type"/>
+        <result property="relationId" column="relation_id"/>
+        <result property="url" column="url"/>
+        <result property="isMain" column="is_main"/>
+        <result property="brandChineseName" column="brand_chinese_name"/>
+        <result property="brandEnglishName" column="brand_english_name"/>
+        <result property="brandLogoUrl" column="brand_logo_url"/>
+        <result property="brandDesc" column="brand_desc"/>
+        <result property="brandStatus" column="brand_status"/>
+        <result property="salePrice" column="sale_price"/>
+        <result property="sellNum" column="sell-num"/>
+        <result property="countDate" column="count_date"/>
+    </resultMap>
+
+    <select id="goodslist" resultType="com.kyj.cooltiger.cooltigeroauth.entity.GoodsVo">
+        select
+            a.product_id,
+            a.title,
+            b.url,
+            c.brand_chinese_name,
+            c.brand_english_name,
+            c.brand_logo_url,
+            c.brand_desc,
+            d.sell_num,
+            e.sale_price
+        from ky_product_info a
+                 LEFT JOIN ky_product_picture b
+                           ON a.product_id= b.relation_id
+                 LEFT JOIN ky_product_brand_info c
+                           on a.brand_id=c.brand_id
+                 LEFT JOIN ky_product_data d
+                           ON a.product_id=d.product_id
+                 LEFT JOIN ky_product_sku e
+                           ON a.product_id=e.product_id
+        where 1=1
+          and b.type=1
+          and b.is_main=0
+          and c.brand_status=1
+          and d.sell_num=(
+            select  sum(sell_num) from ky_product_data
+            where 1=1
+           <if test="startTime != null and endTime!=null">
+             and count_date between #{startTime} and #{endTime}
+            </if>
+        )
+          and e.product_id=1
+          and e.sale_price=(select MIN(sale_price)from ky_product_sku)
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by a.product_id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+</mapper>
