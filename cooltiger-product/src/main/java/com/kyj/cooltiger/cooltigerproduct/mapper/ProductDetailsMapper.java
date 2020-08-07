@@ -16,4 +16,10 @@ public interface ProductDetailsMapper {
      * @param productDetails
      */
     public void addProductDetails(@Param("productDetails") ProductDetails productDetails);
+
+    /**
+     * 删除商品详情
+     * @param productId
+     */
+    public void deleteProductDetailsByProductId(@Param("productId") Integer productId);
 }

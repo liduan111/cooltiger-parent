@@ -14,4 +14,10 @@ public interface ProductFreightMapper {
      * @param productFreight
      */
     public void addProductFreight(@Param("productFreight") ProductFreight productFreight);
+
+    /**
+     * 删除商品运费
+     * @param productId
+     */
+    public void deleteProductFreightByProductId(@Param("productId") Integer productId);
 }

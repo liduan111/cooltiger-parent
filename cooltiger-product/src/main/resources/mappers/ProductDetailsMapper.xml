@@ -9,4 +9,9 @@
         VALUES
             (#{productDetails.productId},#{productDetails.details})
     </insert>
+
+    <!-- 删除商品详情 -->
+    <delete id="deleteProductDetailsByProductId">
+        DELETE FROM ky_product_details WHERE product_id = #{productId}
+    </delete>
 </mapper>

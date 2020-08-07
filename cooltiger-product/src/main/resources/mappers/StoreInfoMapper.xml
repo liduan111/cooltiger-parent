@@ -19,7 +19,7 @@
     </insert>
 
     <!-- 查询店铺列表 -->
-    <select id="getStoreList" resultType="StoreInfo">
+    <select id="getStoreList" resultType="com.kyj.cooltiger.cooltigerfeign.product.vo.StoreInfoListRespVo">
         SELECT
             store_id         storeId,
             store_code       storeCode,

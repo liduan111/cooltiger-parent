@@ -3,10 +3,7 @@ package com.kyj.cooltiger.cooltigerfeign.product.client;
 import com.kyj.cooltiger.cooltigercommon.utils.Result;
 import com.kyj.cooltiger.cooltigerfeign.product.vo.StoreApplyIntoReqVo;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author liduan
@@ -26,7 +23,7 @@ public interface StoreInfoClient {
     @RequestMapping(value = "/storeApplyInto/{userId}",method = {RequestMethod.POST})
     public Result StoreApplyInto(
             @PathVariable("userId") Integer userId,
-            @RequestParam("storeApplyIntoReqVo") StoreApplyIntoReqVo storeApplyIntoReqVo);
+            @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo);
 
     /**
      * 查询店铺列表

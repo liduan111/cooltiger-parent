@@ -31,7 +31,7 @@ public class StoreInfoController implements StoreInfoClient {
     @RequestMapping(value = "/storeApplyInto/{userId}",method = {RequestMethod.POST})
     public Result StoreApplyInto(
             @PathVariable("userId") Integer userId,
-            @RequestParam("storeApplyIntoReqVo") StoreApplyIntoReqVo storeApplyIntoReqVo) {
+            @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo) {
         storeInfoService.addStoreIntoInfo(userId,storeApplyIntoReqVo);
         return Result.success();
     }
@@ -44,7 +44,7 @@ public class StoreInfoController implements StoreInfoClient {
     @RequestMapping(value = "/getStoreList",method = {RequestMethod.GET})
     public Result getStoreList() {
         Map<String, Object> resMap = storeInfoService.getStoreList();
-        return Result.success(resMap.get("storeLists"));
+        return Result.success(resMap.get("datas"));
     }
 
     /**

@@ -4,6 +4,8 @@ import com.kyj.cooltiger.cooltigerproduct.entity.ProductSpecName;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author liduan
  * Description: 商品规格名mapper
@@ -17,4 +19,17 @@ public interface ProductSpecNameMapper {
      * @param productSpecName
      */
     public void addProductSpecName(@Param("productSpecName") ProductSpecName productSpecName);
+
+    /**
+     * 查询商品规格名集合
+     * @param productId
+     * @return
+     */
+    public List<ProductSpecName> getProductSpecNameListByProductId(@Param("productId") Integer productId);
+
+    /**
+     * 删除商品规格名
+     * @param productId
+     */
+    public void deleteProductSpecNameByProductId(@Param("productId") Integer productId);
 }

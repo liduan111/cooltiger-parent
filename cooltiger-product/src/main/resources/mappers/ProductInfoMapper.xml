@@ -96,4 +96,12 @@
         WHERE product_id = #{productInfo.productId}
     </update>
 
+    <!-- 更改商品信息为已删除 -->
+    <update id="deleteProductInfo">
+        UPDATE ky_product_info
+        SET
+            deleted = 1
+        WHERE product_id = #productId}
+    </update>
+
 </mapper>

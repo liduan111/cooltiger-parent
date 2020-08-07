@@ -47,4 +47,10 @@ public interface ProductInfoService {
      * @param productId
      */
     public void productInfoAudit(Integer productId);
+
+    /**
+     * 删除商品信息
+     * @param productId
+     */
+    public void deleteProductInfo(Integer productId);
 }

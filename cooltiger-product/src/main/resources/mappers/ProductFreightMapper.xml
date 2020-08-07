@@ -12,4 +12,9 @@
          #{productFreight.preightPrice}, #{productFreight.firstWeight}, #{productFreight.continueWeight},
          #{productFreight.whetherKg})
     </insert>
+
+    <!-- 删除商品运费 -->
+    <delete id="deleteProductFreightByProductId">
+        DELETE FROM ky_product_freight WHERE product_id = #{productId}
+    </delete>
 </mapper>

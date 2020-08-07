@@ -10,4 +10,8 @@
             (#{productParam.productId},#{productParam.paramName},#{productParam.paramValue})
     </insert>
 
+    <!-- 根据商品Id删除商品参数 -->
+    <delete id="deleteProductParamByProductId">
+        DELETE FROM ky_product_param WHERE product_id = #{productId}
+    </delete>
 </mapper>

@@ -58,4 +58,10 @@ public interface ProductInfoMapper {
      * @param productInfo
      */
     public void updateProductInfo(@Param("productInfo") ProductInfo productInfo);
+
+    /**
+     * 删除商品信息
+     * @param productId
+     */
+    public void deleteProductInfo(@Param("productId") Integer productId);
 }

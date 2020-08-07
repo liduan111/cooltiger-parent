@@ -17,4 +17,10 @@ public interface ProductServiceMapper {
      * @param productService
      */
     public void addProductService(@Param("productService") ProductService productService);
+
+    /**
+     * 删除商品自有服务
+     * @param productId
+     */
+    public void deleteProductServiceByProductId(@Param("productId") Integer productId);
 }

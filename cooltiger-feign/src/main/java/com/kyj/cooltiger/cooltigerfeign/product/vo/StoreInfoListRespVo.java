@@ -1,15 +1,25 @@
 package com.kyj.cooltiger.cooltigerfeign.product.vo;
+
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author liduan
- * Description: 商户申请入驻参数vo
- * date: 2020/8/5 16:11
+ * Description: 店铺列表信息返回vo
+ * date: 2020/8/7 15:16
  */
-public class StoreApplyIntoReqVo {
+public class StoreInfoListRespVo {
 
+    //店铺ID
+    @JsonProperty("store_id")
+    private Integer storeId;
+    //店铺code
+    @JsonProperty("store_code")
+    private String storeCode;
     //店铺名称
     @JsonProperty("store_name")
     private String storeName;
@@ -37,6 +47,9 @@ public class StoreApplyIntoReqVo {
     //主营产品
     @JsonProperty("main_products")
     private String mainProducts;
+    //申请人ID
+    @JsonProperty("apply_user_id")
+    private Integer applyUserId;
     //银行卡号
     @JsonProperty("bank_card_number")
     private String bankCardNumber;
@@ -46,9 +59,42 @@ public class StoreApplyIntoReqVo {
     //账户名
     @JsonProperty("account_name")
     private String accountName;
-    //经营资质图片url
-    @JsonProperty("license_urls")
-    private List<String> licenseUrls;
+    //审核状态（0-未审核1-已审核）
+    @JsonProperty("audit_status")
+    private Integer auditStatus;
+    //是否签约（0-未签约1-已签约）
+    @JsonProperty("sign_status")
+    private Integer signStatus;
+    //合约起始时间
+    @JsonProperty("sign_time_start")
+    private Date signTimeStart;
+    //合约结束时间
+    @JsonProperty("sign_time_end")
+    private Date signTimeEnd;
+    //创建时间
+    @JsonProperty("create_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Timestamp createTime;
+    //修改时间
+    @JsonProperty("modified_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Timestamp modifiedTime;
+
+    public Integer getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
+    }
+
+    public String getStoreCode() {
+        return storeCode;
+    }
+
+    public void setStoreCode(String storeCode) {
+        this.storeCode = storeCode;
+    }
 
     public String getStoreName() {
         return storeName;
@@ -122,6 +168,14 @@ public class StoreApplyIntoReqVo {
         this.mainProducts = mainProducts;
     }
 
+    public Integer getApplyUserId() {
+        return applyUserId;
+    }
+
+    public void setApplyUserId(Integer applyUserId) {
+        this.applyUserId = applyUserId;
+    }
+
     public String getBankCardNumber() {
         return bankCardNumber;
     }
@@ -146,11 +200,51 @@ public class StoreApplyIntoReqVo {
         this.accountName = accountName;
     }
 
-    public List<String> getLicenseUrls() {
-        return licenseUrls;
+    public Integer getAuditStatus() {
+        return auditStatus;
     }
 
-    public void setLicenseUrls(List<String> licenseUrls) {
-        this.licenseUrls = licenseUrls;
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
+    }
+
+    public Integer getSignStatus() {
+        return signStatus;
+    }
+
+    public void setSignStatus(Integer signStatus) {
+        this.signStatus = signStatus;
+    }
+
+    public Date getSignTimeStart() {
+        return signTimeStart;
+    }
+
+    public void setSignTimeStart(Date signTimeStart) {
+        this.signTimeStart = signTimeStart;
+    }
+
+    public Date getSignTimeEnd() {
+        return signTimeEnd;
+    }
+
+    public void setSignTimeEnd(Date signTimeEnd) {
+        this.signTimeEnd = signTimeEnd;
+    }
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+
+    public Timestamp getModifiedTime() {
+        return modifiedTime;
+    }
+
+    public void setModifiedTime(Timestamp modifiedTime) {
+        this.modifiedTime = modifiedTime;
     }
 }

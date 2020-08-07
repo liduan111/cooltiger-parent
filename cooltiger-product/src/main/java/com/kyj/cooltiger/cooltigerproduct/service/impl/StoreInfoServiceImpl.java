@@ -2,6 +2,7 @@ package com.kyj.cooltiger.cooltigerproduct.service.impl;
 
 import com.kyj.cooltiger.cooltigercommon.utils.CharUtil;
 import com.kyj.cooltiger.cooltigerfeign.product.vo.StoreApplyIntoReqVo;
+import com.kyj.cooltiger.cooltigerfeign.product.vo.StoreInfoListRespVo;
 import com.kyj.cooltiger.cooltigerfeign.product.vo.StoreInfoRespVo;
 import com.kyj.cooltiger.cooltigerproduct.entity.StoreInfo;
 import com.kyj.cooltiger.cooltigerproduct.entity.StorePicture;
@@ -60,7 +61,7 @@ public class StoreInfoServiceImpl implements StoreInfoService {
         storeInfoMapper.addStoreInfo(storeInfo);
         //添加经营资质图片信息
         StorePicture storePicture = null;
-        if(!storeApplyIntoReqVo.getLicenseUrls().isEmpty()){
+        if(storeApplyIntoReqVo.getLicenseUrls() != null && !storeApplyIntoReqVo.getLicenseUrls().isEmpty()){
             for (String licenseUrl:storeApplyIntoReqVo.getLicenseUrls()){
                 storePicture = new StorePicture();
                 storePicture.setStoreId(storeInfo.getStoreId());
@@ -76,9 +77,9 @@ public class StoreInfoServiceImpl implements StoreInfoService {
      */
     @Override
     public Map<String,Object> getStoreList() {
-        List<StoreInfo> storeInfoLists = storeInfoMapper.getStoreList();
+        List<StoreInfoListRespVo> storeInfoListRespVoLists = storeInfoMapper.getStoreList();
         Map<String, Object> res = new HashMap<>();
-        res.put("storeLists",storeInfoLists);
+        res.put("datas",storeInfoListRespVoLists);
         return res;
     }
 

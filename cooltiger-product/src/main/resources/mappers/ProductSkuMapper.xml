@@ -13,4 +13,32 @@
          #{productSku.weight}, #{productSku.distriType}, #{productSku.distriRatio},
          #{productSku.distriAmount}, #{productSku.deleted})
     </insert>
+
+    <!-- 更改商品sku信息为已删除 -->
+    <update id="deleteProductSku">
+        UPDATE ky_product_sku
+        SET
+            deleted = 1
+        WHERE product_id = #productId}
+    </update>
+
+    <select id="getProductSkuListByProductId" resultType="ProductSku">
+        SELECT
+            sku_id         skuId,
+            sku_code       skuCode,
+            sku_name       skuName,
+            product_id     productId,
+            spec_value_ids specValueIds,
+            sale_price     salePrice,
+            stock,
+            weight,
+            distri_type    distriType,
+            distri_ratio   distriRatio,
+            distri_amount  distriAmount,
+            create_time    createTime,
+            modified_time  modifiedTime
+        FROM ky_product_sku
+        WHERE product_id = #{productId}
+          AND deleted = 0
+    </select>
 </mapper>

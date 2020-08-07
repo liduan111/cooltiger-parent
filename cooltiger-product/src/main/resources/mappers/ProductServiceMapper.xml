@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kyj.cooltiger.cooltigerproduct.mapper.ProductServiceMapper">
 
-    <!-- 添加商品服务 -->
+    <!-- 添加商品自有服务 -->
     <insert id="addProductService" parameterType="ProductService">
         INSERT INTO ky_product_service
             (name, details, service_type, product_id)
@@ -11,4 +11,8 @@
          #{productService.serviceType}, #{productService.productId})
     </insert>
 
+    <!-- 删除商品自有服务 -->
+    <delete id="deleteProductServiceByProductId">
+        DELETE FROM ky_product_service WHERE product_id = #{productId}
+    </delete>
 </mapper>

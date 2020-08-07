@@ -10,3 +10,5 @@ eureka:
 spring:
   application:
     name: feign-consumer
+  main:
+    allow-bean-definition-overriding: true

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -230,5 +231,45 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         ProductInfo productInfo = productInfoMapper.getProductInfo(productId);
         productInfo.setAuditStatus(1);
         productInfoMapper.updateProductInfo(productInfo);
+    }
+
+    /**
+     * 删除商品信息
+     * @param productId
+     */
+    @Override
+    public void deleteProductInfo(Integer productId) {
+        //删除商品信息
+        productInfoMapper.deleteProductInfo(productId);
+        //获取sku列表
+        List<ProductSku> productSkuList = productSkuMapper.getProductSkuListByProductId(productId);
+        //删除sku信息
+        productSkuMapper.deleteProductSku(productId);
+        //获取所有商品ID和SkuId
+        List<Integer> relationIds = new ArrayList<>();
+        relationIds.add(productId);
+        if (!productSkuList.isEmpty()){
+            for (ProductSku productSku : productSkuList){
+                relationIds.add(productSku.getSkuId());
+            }
+        }
+        //删除商品图片
+        productPictureMapper.deleteProductPictureByRelationIds(relationIds);
+        //删除商品参数
+        productParamMapper.deleteProductParamByProductId(productId);
+        //删除商品自有服务
+        productServiceMapper.deleteProductServiceByProductId(productId);
+        //删除商品运费
+        productFreightMapper.deleteProductFreightByProductId(productId);
+        //获取商品规格名集合
+        List<ProductSpecName> productSpecNameLists = productSpecNameMapper.getProductSpecNameListByProductId(productId);
+        //删除商品规格名
+        productSpecNameMapper.deleteProductSpecNameByProductId(productId);
+        //删除商品规格值
+        for(ProductSpecName productSpecName : productSpecNameLists){
+            productSpecValueMapper.deleteProductSpecValueBySpecNameId(productSpecName.getId());
+        }
+        //删除商品详情
+        productDetailsMapper.deleteProductDetailsByProductId(productId);
     }
 }

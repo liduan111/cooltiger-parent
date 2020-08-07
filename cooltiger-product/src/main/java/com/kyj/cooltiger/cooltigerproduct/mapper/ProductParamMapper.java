@@ -17,4 +17,10 @@ public interface ProductParamMapper {
      * @param productParam
      */
     public void addProductParam(@Param("productParam") ProductParam productParam);
+
+    /**
+     * 删除商品参数
+     * @param productId
+     */
+    public void deleteProductParamByProductId(@Param("productId") Integer productId);
 }

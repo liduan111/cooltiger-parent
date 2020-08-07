@@ -17,4 +17,10 @@ public interface ProductSpecValueMapper {
      * @param productSpecValue
      */
     public void addProductSpecValue(@Param("productSpecValue") ProductSpecValue productSpecValue);
+
+    /**
+     * 根据商品规格名ID删除商品规格值
+     * @param specNameId
+     */
+    public void deleteProductSpecValueBySpecNameId(@Param("specNameId") Integer specNameId);
 }

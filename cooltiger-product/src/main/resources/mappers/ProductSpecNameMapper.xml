@@ -7,7 +7,23 @@
         INSERT INTO ky_product_spec_name
             (name, product_id, order)
         VALUES
-            (#{productSpecName.name}, #{productSpecName.productId}, #{productSpecName.order})
+        (#{productSpecName.name}, #{productSpecName.productId}, #{productSpecName.order})
     </insert>
 
+    <!-- 查询商品规格名集合 -->
+    <select id="getProductSpecNameListByProductId">
+        SELECT
+            id,
+            name,
+            product_id productId
+        order
+        FROM ky_product_spec_name
+        WHERE product_id = #{productId}
+        ORDER BY 'order'
+    </select>
+
+    <!-- 删除商品规格名 -->
+    <delete id="deleteProductSpecNameByProductId">
+        DELETE FROM ky_product_spec_name WHERE product_id = #{productId}
+    </delete>
 </mapper>

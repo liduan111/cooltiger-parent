@@ -76,4 +76,12 @@ public interface ProductInfoClient {
      */
     @RequestMapping(value = "/productInfoAudit/{productId}",method = {RequestMethod.PUT})
     public Result productInfoAudit(@PathVariable("productId") Integer productId);
+
+    /**
+     * 删除商品信息
+     * @param productId
+     * @return
+     */
+    @RequestMapping(value = "/deleteProductInfo/{productId}",method = {RequestMethod.DELETE})
+    public Result deleteProductInfo(@PathVariable("productId") Integer productId);
 }

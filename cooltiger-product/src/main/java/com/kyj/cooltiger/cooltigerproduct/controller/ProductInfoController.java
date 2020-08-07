@@ -104,4 +104,16 @@ public class ProductInfoController implements ProductInfoClient {
         return Result.success();
     }
 
+    /**
+     * 删除商品信息
+     * @param productId
+     * @return
+     */
+    @Override
+    @RequestMapping(value = "/deleteProductInfo/{productId}",method = {RequestMethod.DELETE})
+    public Result deleteProductInfo(@PathVariable("productId") Integer productId){
+        productInfoService.deleteProductInfo(productId);
+        return null;
+    }
+
 }
