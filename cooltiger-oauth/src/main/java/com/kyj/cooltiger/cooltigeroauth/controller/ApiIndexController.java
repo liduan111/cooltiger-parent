@@ -84,20 +84,10 @@ public class ApiIndexController extends ApiBaseAction implements WxIndexClient {
         //查询商品列表
         List<GoodsVo> goodsVoList=goodsService.goodslist(param2);
         map.put("goodsVoList",goodsVoList);
-
-
-
         return toResponsSuccess(map);
     }
 
-    @ApiOperation("店铺收藏")
-    @RequestMapping
-    public Object  stords(){
 
-
-
-        return  toResponsFail("收藏失败");
-    }
 
 
 }
