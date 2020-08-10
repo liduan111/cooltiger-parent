@@ -5,13 +5,15 @@
     <!-- 添加商品详情 -->
     <insert id="addProductDetails" parameterType="ProductDetails">
         INSERT INTO ky_product_details
-            (product_id,details)
+            (product_id, details)
         VALUES
-            (#{productDetails.productId},#{productDetails.details})
+            (#{productDetails.productId}, #{productDetails.details})
     </insert>
 
     <!-- 删除商品详情 -->
     <delete id="deleteProductDetailsByProductId">
-        DELETE FROM ky_product_details WHERE product_id = #{productId}
+        DELETE
+        FROM ky_product_details
+        WHERE product_id = #{productId}
     </delete>
 </mapper>

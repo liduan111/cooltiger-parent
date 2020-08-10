@@ -2,8 +2,8 @@ package com.kyj.cooltiger.cooltigerproduct.mapper;
 
 import com.kyj.cooltiger.cooltigerfeign.product.vo.StoreInfoListRespVo;
 import com.kyj.cooltiger.cooltigerproduct.entity.StoreInfo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * Description: 店铺信息mapper
  * date: 2020/8/5 16:54
  */
-@Repository
+@Mapper
 public interface StoreInfoMapper {
 
     /**

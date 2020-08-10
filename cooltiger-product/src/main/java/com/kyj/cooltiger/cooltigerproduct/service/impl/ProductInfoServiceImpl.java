@@ -1,5 +1,7 @@
 package com.kyj.cooltiger.cooltigerproduct.service.impl;
 
+import com.kyj.cooltiger.cooltigercommon.constant.DELETED;
+import com.kyj.cooltiger.cooltigercommon.constant.PRODUCT_AUDIT_STATUS;
 import com.kyj.cooltiger.cooltigercommon.utils.CharUtil;
 import com.kyj.cooltiger.cooltigercommon.utils.PageUtil;
 import com.kyj.cooltiger.cooltigerfeign.product.vo.ProductInfoAddReqVo;
@@ -85,14 +87,14 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         productInfo.setTitle(productInfoAddReqVo.getTitle());
         productInfo.setStoreId(storeId);
         productInfo.setBarandId(productInfoAddReqVo.getBrandId());
-        productInfo.setCategoryId(productInfoAddReqVo.getCategoryId());
+        //productInfo.setCategoryId(productInfoAddReqVo.getCategoryId());
         productInfo.setAddressFromId(productInfoAddReqVo.getAddressFromId());
         productInfo.setCreateAddressId(productInfoAddReqVo.getCreateAddressId());
         productInfo.setAboutDeliverTime(productInfoAddReqVo.getAboutDeliverTime());
         productInfo.setServiceIds(productInfoAddReqVo.getServiceIds());
         productInfo.setShelfStatus(productInfoAddReqVo.getShelfStatus());
-        productInfo.setAuditStatus(0);
-        productInfo.setDeleted(0);
+        productInfo.setAuditStatus(PRODUCT_AUDIT_STATUS.NOT);
+        productInfo.setDeleted(DELETED.NOT);
         productInfoMapper.addProductInfo(productInfo);
         //添加商品运费
         ProductFreight productFreight = new ProductFreight();

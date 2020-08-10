@@ -8,7 +8,9 @@
         FROM ky_product_info
         WHERE store_id = #{storeId}
         <if test="categoryId != null and categoryId != ''">
-            AND category_id = #{categoryId}
+            AND category_one_id = #{categoryId}
+            OR category_two_id = #{categoryId}
+            OR category_three_id = #{categoryId}
         </if>
         <if test="keyword != null and keyword != ''">
             AND product_code = #{keyword} OR title like CONCAT('%', #{keyword}, '%')
@@ -33,7 +35,9 @@
         AND (SELECT SUM(stock) FROM ky_product_sku WHERE product_id = pro.product_id)
         WHERE pro.store_id = #{storeId}
         <if test="categoryId != null and categoryId != ''">
-            AND category_id = #{categoryId}
+            AND category_one_id = #{categoryId}
+            OR category_two_id = #{categoryId}
+            OR category_three_id = #{categoryId}
         </if>
         <if test="keyword != null and keyword != ''">
             AND product_code = #{keyword} OR title like CONCAT('%', #{keyword}, '%')

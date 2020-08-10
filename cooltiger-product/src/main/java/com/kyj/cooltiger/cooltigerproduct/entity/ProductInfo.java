@@ -22,8 +22,12 @@ public class ProductInfo implements Serializable {
     private Integer storeId;
     /** 品牌ID */
     private Integer barandId;
-    /** 分类ID */
-    private Integer categoryId;
+    /** 一级分类ID */
+    private Integer categoryOneId;
+    /** 二级分类ID */
+    private Integer categoryTwoId;
+    /** 三级分类ID */
+    private Integer categoryThreeId;
     /** 发货地ID */
     private Integer addressFromId;
     /** 产地ID */
@@ -87,12 +91,28 @@ public class ProductInfo implements Serializable {
         this.barandId = barandId;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public Integer getCategoryOneId() {
+        return categoryOneId;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryOneId(Integer categoryOneId) {
+        this.categoryOneId = categoryOneId;
+    }
+
+    public Integer getCategoryTwoId() {
+        return categoryTwoId;
+    }
+
+    public void setCategoryTwoId(Integer categoryTwoId) {
+        this.categoryTwoId = categoryTwoId;
+    }
+
+    public Integer getCategoryThreeId() {
+        return categoryThreeId;
+    }
+
+    public void setCategoryThreeId(Integer categoryThreeId) {
+        this.categoryThreeId = categoryThreeId;
     }
 
     public Integer getAddressFromId() {

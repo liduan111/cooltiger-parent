@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kyj.cooltiger.cooltigerproduct.mapper.ProductCategoryMapper">
+
+    <!-- 批量添加商品分类 -->
+    <insert id="batchAddProductCategory" parameterType="ProductCategory">
+        INSERT INTO ky_product_category
+        (category_name, parent_id, logo_url)
+        VALUES
+        <foreach collection="productCategories" item="category" index="index" separator=",">
+            (#{category.categoryName},#{category.parentId},#{category.logoUrl})
+        </foreach>
+    </insert>
+
+    <!-- 根据父ID查询商品分类列表 -->
+    <select id="getProductCategoryListByParentId" resultType="ProductCategory">
+        SELECT
+            category_id   categoryId,
+            category_name categoryName,
+            parent_id     parentId,
+            logo_url      logoUrl
+        FROM ky_product_category
+        WHERE parent_id = #{parentId}
+    </select>
+
+    <!-- 根据分类ID查询分类信息 -->
+    <select id="getProductCategoryListByCategoryId" resultType="ProductCategory">
+        SELECT
+            category_id   categoryId,
+            category_name categoryName,
+            parent_id     parentId,
+            logo_url      logoUrl
+        FROM ky_product_category
+        WHERE category_id = #{categoryId}
+    </select>
+
+    <!-- 修改商品分类信息 -->
+    <update id="updateProductCategory" parameterType="ProductCategory">
+        UPDATE
+            ky_product_category
+        SET
+            category_name = #{productCategory.categoryName},
+            parent_id     = #{productCategory.parentId},
+            logo_url      = #{productCategory.logoUrl}
+            WHERE
+                category_id = #{productCategory.categoryId}
+    </update>
+
+    <!-- 删除商品分类信息 -->
+    <delete id="delProductCategory">
+        DELETE
+        FROM ky_product_category
+        WHERE category_id = #{categoryId}
+    </delete>
+</mapper>

@@ -18,14 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface ProductInfoClient {
 
     /**
-     * 测试方法
-     * @param id
-     * @return
-     */
-    @RequestMapping(value = "/hello/{id}",method = {RequestMethod.GET})
-    public Result hello(@PathVariable("id") String id);
-
-    /**
      * 获取店铺商品列表
      * @param storeId 店铺ID
      * @param pageNo 当前页

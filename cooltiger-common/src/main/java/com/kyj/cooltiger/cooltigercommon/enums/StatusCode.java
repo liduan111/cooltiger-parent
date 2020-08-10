@@ -6,19 +6,19 @@ package com.kyj.cooltiger.cooltigercommon.enums;
  * date: 2020/7/30 17:00
  */
 public enum StatusCode {
-    SUCCESS(0, "成功"),
-    ERROR(500, "失败");
+    SUCCESS("OK", "成功"),
+    ERROR("ERROR", "失败");
 
 
-    private Integer code;
+    private String code;
     private String msg;
 
-    StatusCode(Integer code, String msg) {
+    StatusCode(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 

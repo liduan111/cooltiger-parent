@@ -21,16 +21,6 @@ public class ProductInfoController implements ProductInfoClient {
     @Autowired
     private ProductInfoService productInfoService;
 
-    /**
-     * 测试方法
-     * @param id
-     * @return
-     */
-    @Override
-    @RequestMapping(value = "/hello/{id}",method = {RequestMethod.GET})
-    public Result hello(@PathVariable("id") String id){
-        return Result.success("sucess");
-    }
 
     /**
      * 获取店铺商品列表

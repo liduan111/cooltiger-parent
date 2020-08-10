@@ -1,8 +1,8 @@
 package com.kyj.cooltiger.cooltigerproduct.mapper;
 
 import com.kyj.cooltiger.cooltigerproduct.entity.ProductPicture;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * Description: 商品图片mapper
  * date: 2020/8/4 16:56
  */
-@Repository
+@Mapper
 public interface ProductPictureMapper {
     /**
      * 添加商品图片

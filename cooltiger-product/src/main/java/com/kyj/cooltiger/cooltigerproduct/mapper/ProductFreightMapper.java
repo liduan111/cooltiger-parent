@@ -1,6 +1,7 @@
 package com.kyj.cooltiger.cooltigerproduct.mapper;
 
 import com.kyj.cooltiger.cooltigerproduct.entity.ProductFreight;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -8,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
  * Description: 商品运费mapper
  * date: 2020/8/4 17:42
  */
+@Mapper
 public interface ProductFreightMapper {
     /**
      * 添加商品运费

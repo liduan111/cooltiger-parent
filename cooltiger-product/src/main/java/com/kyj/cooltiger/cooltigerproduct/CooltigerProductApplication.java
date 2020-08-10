@@ -7,7 +7,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan("com.kyj.cooltiger.cooltigerproduct.mapper")
 public class CooltigerProductApplication {
 
     public static void main(String[] args) {
