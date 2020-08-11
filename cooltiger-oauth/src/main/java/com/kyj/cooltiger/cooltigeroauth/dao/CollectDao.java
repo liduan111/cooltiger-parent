@@ -1,6 +1,7 @@
 package com.kyj.cooltiger.cooltigeroauth.dao;
 
 import com.kyj.cooltiger.cooltigeroauth.entity.CollectVo;
+import com.kyj.cooltiger.cooltigeroauth.entity.GoodsCollectVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -34,7 +35,7 @@ public interface CollectDao {
      * @param codeId
      * @return
      */
-    CollectVo querycollect(@Param("userCode") Long userCode,@Param("codeId") Integer codeId);
+    CollectVo querycollect(@Param("userCode") Long userCode,@Param("codeId") Integer codeId,@Param("deleted") Integer deleted);
 
     /**
      * 取消
@@ -42,4 +43,33 @@ public interface CollectDao {
      * @return
      */
     int collectremove(@Param("collectVo") CollectVo collectVo);
+
+    /**
+     * 查询商品收藏列表
+     * @param map
+     * @return
+     */
+    List<GoodsCollectVo> goodscollectlist(Map<String, Object> map);
+
+    /**
+     * 收藏商品
+     * @param goodsCollectVo
+     * @return
+     */
+    int  goodscollectsave(GoodsCollectVo goodsCollectVo);
+
+    /**
+     *查询用户查询收藏商品
+     * @param userCode
+     * @param codeId
+     * @return
+     */
+    GoodsCollectVo querygoodscollect(@Param("userCode") Long userCode,@Param("codeId") Integer codeId,@Param("deleted") Integer deleted);
+
+    /**
+     * 取消商品收藏
+     * @param goodsCollectVo1
+     * @return
+     */
+    int canselgoodscollect(@Param("goodsCollectVo1") GoodsCollectVo goodsCollectVo1);
 }

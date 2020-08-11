@@ -1,6 +1,7 @@
 package com.kyj.cooltiger.cooltigeroauth.service;
 
 import com.kyj.cooltiger.cooltigeroauth.entity.CollectVo;
+import com.kyj.cooltiger.cooltigeroauth.entity.GoodsCollectVo;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Map;
  * @version 1.0
  * @date 2020/8/10 11:08
  */
-public interface CollectService {
+public interface ApiCollectService {
 
     /**
      * 查询收藏店铺列表
@@ -39,6 +40,34 @@ public interface CollectService {
      * @return
      */
     boolean  collectremove(CollectVo collectVo);
+
+    /**
+     * 商品收藏列表
+     * @param map
+     * @return
+     */
+    List<GoodsCollectVo> goodscollectlist(Map<String,Object> map);
+
+    /**
+     * 收藏商品
+     * @param map
+     * @return
+     */
+    boolean  goodscollectsave(Map<String,Object> map);
+
+    /**
+     * 查询用户关注的商品
+     * @param map
+     * @return
+     */
+    GoodsCollectVo querygoodscollect(Map<String,Object> map);
+
+    /**
+     * 取消商品收藏
+     * @param goodsCollectVo
+     * @return
+     */
+    boolean canselgoodscollect(GoodsCollectVo goodsCollectVo);
 
 
 }
