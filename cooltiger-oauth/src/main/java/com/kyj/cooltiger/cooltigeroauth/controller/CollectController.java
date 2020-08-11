@@ -2,7 +2,8 @@ package com.kyj.cooltiger.cooltigeroauth.controller;
 
 import com.kyj.cooltiger.cooltigerfeign.oauth.client.CollectClient;
 import com.kyj.cooltiger.cooltigeroauth.entity.CollectVo;
-import com.kyj.cooltiger.cooltigeroauth.service.CollectService;
+import com.kyj.cooltiger.cooltigeroauth.entity.GoodsCollectVo;
+import com.kyj.cooltiger.cooltigeroauth.service.ApiCollectService;
 import com.kyj.cooltiger.cooltigeroauth.utils.ApiBaseAction;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +27,7 @@ import java.util.Map;
 public class CollectController extends ApiBaseAction implements CollectClient {
 
     @Autowired
-    private CollectService collectService;
+    private ApiCollectService collectService;
 
 
     /**
@@ -34,7 +35,7 @@ public class CollectController extends ApiBaseAction implements CollectClient {
      * @return
      */
     @ApiOperation("获取用户收藏店铺")
-    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @RequestMapping(value = "/shoplist",method = RequestMethod.GET)
     public  Object collectlist(@RequestBody Map<String,Object> map){
 
         if(map.size()==0||map.toString()==null){
@@ -85,11 +86,67 @@ public class CollectController extends ApiBaseAction implements CollectClient {
         }else {
             return toResponsFail("取消失败");
         }
+          return  toResponsFail("取消失败");
+    }
 
+    /**
+     * 商品收藏列表
+     * @param map
+     * @return
+     */
+    @ApiOperation("商品收藏列表")
+    @RequestMapping(value = "/goodscollectlist",method = RequestMethod.GET)
+    public  Object goodscollectlist(@RequestBody Map<String,Object> map){
+        if(map.size()==0||map.toString()==null){
+            return  toResponsFail("参数为空");
+        }
+        List<GoodsCollectVo>  goodslist=collectService.goodscollectlist(map);
+        return  toResponsSuccess(goodslist);
+    }
+
+
+    /**
+     * 商品收藏
+     * @param map
+     * @return
+     */
+    @ApiOperation("商品收藏")
+    @RequestMapping(value = "/goodscollectsave",method = RequestMethod.POST)
+    public Object  goodscollectsave(@RequestBody Map<String,Object> map){
+        if(map.size()==0||map.toString()==null){
+            return  toResponsFail("参数为空");
+        }
+        boolean flag=collectService.goodscollectsave(map);
+        if(flag){
+            return toResponsMsgSuccess("成功");
+        }
+        return  toResponsFail("收藏失败");
+    }
+
+    /**
+     * 取消商品收藏
+     * @param map
+     * @return
+     */
+    @ApiOperation("取消商品收藏")
+    @RequestMapping(value = "/canselgoodscollect",method = RequestMethod.PUT)
+    public Object canselgoodscollect(@RequestBody Map<String,Object> map){
+
+        if(map.size()==0||map.toString()==null){
+            return  toResponsFail("参数为空");
+        }
+        GoodsCollectVo goodsCollectVo=collectService.querygoodscollect(map);
+        if(goodsCollectVo!=null||!goodsCollectVo.equals("")){
+            boolean flag=collectService.canselgoodscollect(goodsCollectVo);
+            if (flag){
+                return  toResponsMsgSuccess("成功");
+            }
+        }else {
+            return  toResponsFail("修改失败");
+        }
 
         return  toResponsFail("取消失败");
     }
-
 
 
 }

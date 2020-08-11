@@ -70,7 +70,9 @@
             a.deleted
         from ky_user_collect a where 1=1
         and a.code_type=1
-        and a.deleted=0
+        <if test="deleted != null and deleted!=''">
+            and a.deleted=#{deleted}
+        </if>
         <if test="userCode != null and userCode!=0">
             and a.user_code=#{userCode}
         </if>
@@ -86,5 +88,101 @@
         where user_code = #{collectVo.userCode}
           and code_id=#{collectVo.codeId}
           and code_type=1
+    </update>
+    <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.GoodsCollectVo" id="gooodsMap">
+        <result property="Id" column="id"/>
+        <result property="userCode" column="user_code"/>
+        <result property="codeId" column="code_id"/>
+        <result property="codeType" column="code_type"/>
+        <result property="deleted" column="deleted"/>
+        <result property="collectTime" column="collect_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="modified_time"/>
+        <result property="title" column="title"/>
+        <result property="codeLogourl" column="url"/>
+        <result property="salePrice" column="sale_price"/>
+    </resultMap>
+    <select id="querygoodscollect" resultMap="gooodsMap">
+        select
+        a.id,
+        a.code_id,
+        a.code_type,
+        a.collect_time,
+        a.create_time,
+        a.user_code,
+        a.modified_time,
+        a.deleted
+        from ky_user_collect a where 1=1
+        and a.code_type=2
+        <if test="deleted != null and deleted!=''">
+            and a.deleted=#{deleted}
+        </if>
+        <if test="userCode != null and userCode!=0">
+            and a.user_code=#{userCode}
+        </if>
+        <if test="codeId != null and codeId!=0">
+            and a.code_id=#{codeId}
+        </if>
+    </select>
+    <select id="goodscollectlist" resultType="com.kyj.cooltiger.cooltigeroauth.entity.GoodsCollectVo">
+        select
+        b.title ,
+        c.url,
+        d.sale_price,
+        (select count(distinct user_code)  from ky_user_collect where code_type=1) collectnum
+        from ky_user_collect a
+        left join ky_product_info b
+        on a.code_id=b.product_id
+        left join ky_product_picture c
+        on a.code_id=c.relation_id
+        left join ky_product_sku d
+        on a.code_id=d.product_id
+        where 1=1
+        and a.code_type=2
+        and a.deleted=0
+        and b.deleted=0
+        and  c.type=1
+        and c.is_main=1
+        and d.deleted=0
+        and d.sale_price=(select min(sale_price)  from ky_product_sku where deleted=0)
+        <if test="userCode != null and userCode!=0">
+            and a.user_code=#{userCode}
+        </if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by a.id asc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+    <insert id="goodscollectsave" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.GoodsCollectVo">
+        insert into ky_user_collect(
+            `user_code`,
+            `code_id`,
+            `code_type`,
+            `deleted`,
+            `collect_time`,
+            `create_time`)
+        values(
+                  #{userCode},
+                  #{codeId},
+                  #{codeType},
+                  #{deleted},
+                  #{collectTime},
+                  #{createTime})
+    </insert>
+    <update id="canselgoodscollect" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.GoodsCollectVo">
+        update ky_user_collect
+        set deleted  = #{goodsCollectVo1.deleted},
+            collect_time  = #{goodsCollectVo1.collectTime},
+            modified_time = #{goodsCollectVo1.updateTime}
+        where user_code = #{goodsCollectVo1.userCode}
+          and code_id=#{goodsCollectVo1.codeId}
+          and code_type=2
     </update>
 </mapper>

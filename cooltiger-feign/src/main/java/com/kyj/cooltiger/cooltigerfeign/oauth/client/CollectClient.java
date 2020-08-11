@@ -36,5 +36,26 @@ public interface CollectClient {
      */
     @RequestMapping(value = "/remove",method = RequestMethod.POST)
     public Object  removecollect(@RequestBody Map<String,Object> map);
+    /**
+     * 商品收藏列表
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/goodscollectlist",method = RequestMethod.GET)
+    public  Object goodscollectlist(@RequestBody Map<String,Object> map);
+    /**
+     * 商品收藏
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/goodscollectsave",method = RequestMethod.POST)
+    public Object  goodscollectsave(@RequestBody Map<String,Object> map);
+    /**
+     * 取消商品收藏
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/canselgoodscollect",method = RequestMethod.PUT)
+    public Object canselgoodscollect(@RequestBody Map<String,Object> map);
 
 }
