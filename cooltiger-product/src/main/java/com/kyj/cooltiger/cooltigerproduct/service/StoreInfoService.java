@@ -35,4 +35,11 @@ public interface StoreInfoService {
      * @param storeId
      */
     public void storeInfoAudit(Integer storeId);
+
+    /**
+     * 修改店铺信息
+     * @param storeId
+     * @param storeApplyIntoReqVo
+     */
+    public void updateStoreInfo(Integer storeId, StoreApplyIntoReqVo storeApplyIntoReqVo);
 }

@@ -54,8 +54,8 @@ public class Result {
      *
      * @return Result
      */
-    public static Result error(String code, String msg, Object data) {
-        return new Result(code, msg, data);
+    public static Result error(String code, String msg) {
+        return new Result(code, msg, null);
     }
 
 

@@ -70,5 +70,18 @@ public class StoreInfoController implements StoreInfoClient {
         return Result.success();
     }
 
-
+    /**
+     * 修改店铺信息
+     * @param storeId
+     * @param storeApplyIntoReqVo
+     * @return
+     */
+    @Override
+    @RequestMapping(value = "/updateStoreInfo/{storeId}",method = {RequestMethod.PUT})
+    public Result updateStoreInfo(
+            @PathVariable("storeId") Integer storeId,
+            @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo){
+        storeInfoService.updateStoreInfo(storeId,storeApplyIntoReqVo);
+        return Result.success();
+    }
 }

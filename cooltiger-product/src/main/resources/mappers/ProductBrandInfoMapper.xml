@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kyj.cooltiger.cooltigerproduct.mapper.ProductBrandInfoMapper">
+
+    <!-- 根据品牌名称查询品牌个数 -->
+    <select id="getProductBrandCountByBrandName" resultType="int">
+        SELECT
+            COUNT(1)
+        FROM ky_product_brand_info
+        WHERE brand_name = #{brandName}
+    </select>
+
+    <!-- 添加品牌信息 -->
+    <insert id="addProductBrandInfo" parameterType="ProductBrandInfo">
+        INSERT
+        INTO ky_product_brand_info
+            (brand_name, brand_logo_url, brand_desc, brand_order, brand_status)
+        VALUES
+            (#{productBrandInfo.brandName},#{productBrandInfo.brandLogoUrl},#{productBrandInfo.brandDesc},
+             #{productBrandInfo.brandOrder},#{productBrandInfo.brandStatus})
+    </insert>
+</mapper>

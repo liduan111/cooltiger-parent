@@ -98,6 +98,16 @@
             sign_time_start  = #{storeInfo.signTimeStart},
             sign_time_end    = #{storeInfo.signTimeEnd}
         WHERE store_id = #{storeInfo.storeId}
+          AND deleted = 0
     </update>
+
+    <!-- 根据店铺名称查询店铺个数 -->
+    <select id="getStoreInfoCountByStoreName" resultType="int">
+        SELECT
+            COUNT(1)
+        FROM ky_store_info
+        WHERE store_name = #{storeName}
+          AND deleted = 0
+    </select>
 
 </mapper>

@@ -11,7 +11,6 @@
         <module>cooltiger-common</module>
         <module>cooltiger-eureka</module>
         <module>cooltiger-feign</module>
-        <module>cooltiger-goods</module>
         <module>cooltiger-oauth</module>
         <module>cooltiger-gateway</module>
         <module>cooltiger-product</module>

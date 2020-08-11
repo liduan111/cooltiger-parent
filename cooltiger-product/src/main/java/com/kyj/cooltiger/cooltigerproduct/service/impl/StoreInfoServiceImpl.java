@@ -1,5 +1,6 @@
 package com.kyj.cooltiger.cooltigerproduct.service.impl;
 
+import com.kyj.cooltiger.cooltigercommon.excep.MyException;
 import com.kyj.cooltiger.cooltigercommon.utils.CharUtil;
 import com.kyj.cooltiger.cooltigerfeign.product.vo.StoreApplyIntoReqVo;
 import com.kyj.cooltiger.cooltigerfeign.product.vo.StoreInfoListRespVo;
@@ -39,6 +40,10 @@ public class StoreInfoServiceImpl implements StoreInfoService {
     @Transactional
     @Override
     public void addStoreIntoInfo(Integer userId, StoreApplyIntoReqVo storeApplyIntoReqVo) {
+        int count = storeInfoMapper.getStoreInfoCountByStoreName(storeApplyIntoReqVo.getStoreName());
+        if (count > 0){
+            throw new MyException("STORE_NAME_IS_EXIST","店铺名称已存在");
+        }
         //插入店铺信息
         StoreInfo storeInfo = new StoreInfo();
         storeInfo.setStoreCode(CharUtil.getRandomNum(8));
@@ -91,6 +96,9 @@ public class StoreInfoServiceImpl implements StoreInfoService {
     @Override
     public Map<String, Object> getStoreInfo(Integer storeId) {
         StoreInfo storeInfo = storeInfoMapper.getStoreInfo(storeId);
+        if (storeId == null){
+            throw new MyException("STORE_INFO_NOT_EXIST","店铺信息不存在");
+        }
         List<StorePicture> storePictureLists = storePictureMapper.getStorePictureList(storeId);
         StoreInfoRespVo storeInfoRespVo = new StoreInfoRespVo();
         storeInfoRespVo.setStoreId(storeInfo.getStoreId());
@@ -138,7 +146,38 @@ public class StoreInfoServiceImpl implements StoreInfoService {
     @Override
     public void storeInfoAudit(Integer storeId) {
         StoreInfo storeInfo = storeInfoMapper.getStoreInfo(storeId);
+        if (storeId == null){
+            throw new MyException("STORE_INFO_NOT_EXIST","店铺信息不存在");
+        }
         storeInfo.setAuditStatus(1);
+        storeInfoMapper.updateStoreInfo(storeInfo);
+    }
+
+    /**
+     * 修改店铺信息
+     * @param storeId
+     * @param storeApplyIntoReqVo
+     */
+    @Override
+    public void updateStoreInfo(Integer storeId, StoreApplyIntoReqVo storeApplyIntoReqVo) {
+        StoreInfo storeInfo = storeInfoMapper.getStoreInfo(storeId);
+        if (storeId == null){
+            throw new MyException("STORE_INFO_NOT_EXIST","店铺信息不存在");
+        }
+        int count = storeInfoMapper.getStoreInfoCountByStoreName(storeApplyIntoReqVo.getStoreName());
+        if (count > 0){
+            throw new MyException("STORE_NAME_IS_EXIST","店铺名称已存在");
+        }
+        storeInfo.setStoreName(storeApplyIntoReqVo.getStoreName());
+        storeInfo.setLogoUrl(storeApplyIntoReqVo.getLogoUrl());
+        storeInfo.setRelationName(storeApplyIntoReqVo.getRelationName());
+        storeInfo.setRelationTel(storeApplyIntoReqVo.getRelationTel());
+        storeInfo.setStoreAddress(storeApplyIntoReqVo.getStoreAddress());
+        storeInfo.setSaleCategory(storeApplyIntoReqVo.getSaleCategory());
+        storeInfo.setMainProducts(storeApplyIntoReqVo.getMainProducts());
+        storeInfo.setBankCardNumber(storeApplyIntoReqVo.getBankCardNumber());
+        storeInfo.setBankOfDeposit(storeApplyIntoReqVo.getBankOfDeposit());
+        storeInfo.setAccountName(storeApplyIntoReqVo.getAccountName());
         storeInfoMapper.updateStoreInfo(storeInfo);
     }
 }

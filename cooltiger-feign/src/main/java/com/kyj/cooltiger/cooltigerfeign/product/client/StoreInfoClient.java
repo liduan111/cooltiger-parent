@@ -46,4 +46,15 @@ public interface StoreInfoClient {
      */
     @RequestMapping(value = "/storeInfoAudit/{storeId}",method ={RequestMethod.PUT})
     public Result storeInfoAudit(@PathVariable("storeId") Integer storeId);
+
+    /**
+     * 修改店铺信息
+     * @param storeId
+     * @param storeApplyIntoReqVo
+     * @return
+     */
+    @RequestMapping(value = "/updateStoreInfo/{storeId}",method = {RequestMethod.PUT})
+    public Result updateStoreInfo(
+            @PathVariable("storeId") Integer storeId,
+            @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo);
 }

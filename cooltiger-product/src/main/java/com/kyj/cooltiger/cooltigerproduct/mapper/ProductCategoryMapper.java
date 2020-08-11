@@ -47,4 +47,11 @@ public interface ProductCategoryMapper {
      * @return
      */
     public void delProductCategory(@Param("categoryId") Integer categoryId);
+
+    /**
+     * 根据名称查询分类信息个数
+     * @param categoryName 分类名称
+     * @return
+     */
+    public int getProductCategoryCountByCategoryId(@Param("categoryName") String categoryName);
 }

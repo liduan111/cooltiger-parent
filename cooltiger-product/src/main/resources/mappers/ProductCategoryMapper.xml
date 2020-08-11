@@ -42,8 +42,8 @@
             category_name = #{productCategory.categoryName},
             parent_id     = #{productCategory.parentId},
             logo_url      = #{productCategory.logoUrl}
-            WHERE
-                category_id = #{productCategory.categoryId}
+        WHERE
+            category_id = #{productCategory.categoryId}
     </update>
 
     <!-- 删除商品分类信息 -->
@@ -52,4 +52,12 @@
         FROM ky_product_category
         WHERE category_id = #{categoryId}
     </delete>
+
+    <!-- 根据分类名称查询分类信息个数 -->
+    <select id="getProductCategoryCountByCategoryId" resultType="int">
+        SELECT
+            COUNT(1)
+        FROM ky_product_category
+        WHERE category_name = #{categoryName}
+    </select>
 </mapper>

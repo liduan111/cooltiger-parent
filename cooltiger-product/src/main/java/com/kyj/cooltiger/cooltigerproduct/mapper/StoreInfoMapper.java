@@ -39,4 +39,11 @@ public interface StoreInfoMapper {
      * @param storeInfo
      */
     public void updateStoreInfo(@Param("storeInfo") StoreInfo storeInfo);
+
+    /**
+     * 根据店铺名称查询店铺个数
+     * @param storeName
+     * @return
+     */
+    public int getStoreInfoCountByStoreName(@Param("storeName") String storeName);
 }
