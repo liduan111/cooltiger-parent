@@ -72,7 +72,7 @@ public class ProductBrandInfoController implements ProductBrandInfoClient {
      * @param brandId
      * @return
      */
-    @RequestMapping(value = "/delProductBrandInfo/{brand_id)", method = {RequestMethod.DELETE})
+    @RequestMapping(value = "/delProductBrandInfo/{brand_id}", method = {RequestMethod.DELETE})
     public Result delProductBrandInfo(
             @PathVariable("brand_id") Integer brandId) {
         productBrandInfoService.delProductBrandInfo(brandId);

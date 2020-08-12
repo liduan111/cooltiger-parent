@@ -1,27 +1,11 @@
-
-<<<<<<< HEAD:cooltiger-oauth/src/main/java/com/kyj/cooltiger/oauth/controller/OauthController.java
 package com.kyj.cooltiger.oauth.controller;
+
 import com.kyj.cooltiger.common.utils.GenericResponse;
 import com.kyj.cooltiger.common.utils.LoginInfo;
 import com.kyj.cooltiger.feign.oauth.client.vo.UserVo;
 import com.kyj.cooltiger.oauth.service.ApiUserService;
 import com.kyj.cooltiger.oauth.service.WeChatService;
 import com.kyj.cooltiger.oauth.service.impl.TokenService;
-=======
-package com.kyj.cooltiger.cooltigeroauth.controller;
-import com.kyj.cooltiger.cooltigercommon.utils.GenericResponse;
-import com.kyj.cooltiger.cooltigercommon.utils.LoginInfo;
-import com.kyj.cooltiger.cooltigerfeign.oauth.client.vo.UserVo;
-import com.kyj.cooltiger.cooltigeroauth.entity.AddressVo;
-import com.kyj.cooltiger.cooltigeroauth.entity.CollectVo;
-import com.kyj.cooltiger.cooltigeroauth.entity.GoodsCollectVo;
-import com.kyj.cooltiger.cooltigeroauth.service.AddressService;
-import com.kyj.cooltiger.cooltigeroauth.service.ApiCollectService;
-import com.kyj.cooltiger.cooltigeroauth.service.ApiUserService;
-import com.kyj.cooltiger.cooltigeroauth.service.WeChatService;
-import com.kyj.cooltiger.cooltigeroauth.service.impl.TokenService;
->>>>>>> 436ca12715fd081e0d042c5092c854b080e6e157:cooltiger-oauth/src/main/java/com/kyj/cooltiger/cooltigeroauth/controller/OauthController.java
-
 import com.kyj.cooltiger.feign.oauth.client.OauthClient;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
