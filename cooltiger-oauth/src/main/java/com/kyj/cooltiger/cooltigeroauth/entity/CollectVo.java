@@ -36,6 +36,8 @@ public class CollectVo implements Serializable  {
     private Date updateTime;
     //收藏时间
     private Date collectTime;
+    //个数
+    private Integer collectnum;
 
 
 }
