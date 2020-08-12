@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyj.cooltiger.oauth.dao.ShopCartDao">
+
+    <resultMap type="com.kyj.cooltiger.oauth.entity.ShopCartVo" id="adMap">
+        <result property="Id" column="id"/>
+        <result property="userCode" column="user_code"/>
+        <result property="storeId" column="store_id"/>
+        <result property="storeName" column="store_name"/>
+        <result property="logoUrl" column="logo_url"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="salePrice" column="sale_price"/>
+        <result property="shopNum" column="shop_num"/>
+        <result property="title" column="title"/>
+        <result property="goodsurl" column="url"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="modified_time"/>
+    </resultMap>
+
+    <select id="shopcartlist" resultType="com.kyj.cooltiger.oauth.entity.ShopCartVo">
+
+    </select>
+
+</mapper>
