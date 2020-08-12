@@ -3,6 +3,9 @@ package com.kyj.cooltiger.oauth.controller;
 import com.kyj.cooltiger.common.utils.GenericResponse;
 import com.kyj.cooltiger.common.utils.LoginInfo;
 import com.kyj.cooltiger.feign.oauth.client.vo.UserVo;
+import com.kyj.cooltiger.oauth.entity.CollectVo;
+import com.kyj.cooltiger.oauth.entity.GoodsCollectVo;
+import com.kyj.cooltiger.oauth.service.ApiCollectService;
 import com.kyj.cooltiger.oauth.service.ApiUserService;
 import com.kyj.cooltiger.oauth.service.WeChatService;
 import com.kyj.cooltiger.oauth.service.impl.TokenService;
@@ -123,7 +126,7 @@ public class OauthController extends ApiBaseAction implements OauthClient {
             boolean flag=apiUserService.updatelogintime(user);
             Long userCode=userVo.getUserCode();
             //查询用户收藏店铺的个数
-            CollectVo  collectVo=collectService.queryusercodenum(userCode);
+            CollectVo collectVo=collectService.queryusercodenum(userCode);
             //查询用户收藏商品的个数
             GoodsCollectVo goodsCollectVo=collectService.querygoodsusercode(userCode);
             if (flag==true) {
