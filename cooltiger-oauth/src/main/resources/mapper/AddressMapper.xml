@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.kyj.cooltiger.cooltigeroauth.dao.AddressDao">
+<mapper namespace="com.kyj.cooltiger.oauth.dao.AddressDao">
 
-    <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.AddressVo" id="adMap">
+    <resultMap type="com.kyj.cooltiger.oauth.entity.AddressVo" id="adMap">
         <result property="Id" column="id"/>
         <result property="userCode" column="user_code"/>
         <result property="userName" column="user_name"/>
@@ -17,7 +17,7 @@
         <result property="updateTime" column="modified_time"/>
     </resultMap>
 
-    <select id="addresslist" resultType="com.kyj.cooltiger.cooltigeroauth.entity.AddressVo">
+    <select id="addresslist" resultType="com.kyj.cooltiger.oauth.entity.AddressVo">
         select
             id,
             user_code,
@@ -45,7 +45,7 @@
         where user_code = #{userCode}
     </select>
 
-    <insert id="addresssave" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.AddressVo">
+    <insert id="addresssave" parameterType="com.kyj.cooltiger.oauth.entity.AddressVo">
         insert into ky_user_address(
             `user_code`,
             `user_name`,
@@ -67,7 +67,7 @@
                   #{isdefaul},
                   #{createTime})
     </insert>
-    <update id="addressupdate" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.AddressVo">
+    <update id="addressupdate" parameterType="com.kyj.cooltiger.oauth.entity.AddressVo">
         update ky_user_address
         <set>
             <if test="userName != null">`user_name` = #{userName},</if>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.kyj.cooltiger.cooltigeroauth.dao.RotationchartDao">
+<mapper namespace="com.kyj.cooltiger.oauth.dao.RotationchartDao">
 
-    <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.RotationchartVo" id="tbTokenMap">
+    <resultMap type="com.kyj.cooltiger.oauth.entity.RotationchartVo" id="tbTokenMap">
         <result property="rotationId" column="rotation_id"/>
         <result property="pictureUrl" column="picture_url"/>
     </resultMap>
-    <select id="querypicturelist" resultType="com.kyj.cooltiger.cooltigeroauth.entity.RotationchartVo">
+    <select id="querypicturelist" resultType="com.kyj.cooltiger.oauth.entity.RotationchartVo">
         select
         rotation_id,
         picture_url

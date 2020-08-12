@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.kyj.cooltiger.cooltigeroauth.dao.CollectDao">
+<mapper namespace="com.kyj.cooltiger.oauth.dao.CollectDao">
 
-    <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.CollectVo" id="adMap">
+    <resultMap type="com.kyj.cooltiger.oauth.entity.CollectVo" id="adMap">
         <result property="Id" column="id"/>
         <result property="userCode" column="user_code"/>
         <result property="codeId" column="code_id"/>
@@ -16,7 +16,7 @@
         <result property="codeLogourl" column="logo_url"/>
     </resultMap>
 
-    <select id="collectlist" resultType="com.kyj.cooltiger.cooltigeroauth.entity.CollectVo">
+    <select id="collectlist" resultType="com.kyj.cooltiger.oauth.entity.CollectVo">
         select a.id as Id,
                b.store_name as codeName,
                b.logo_url as codeLogourl
@@ -42,7 +42,7 @@
         </if>
     </select>
 
-    <insert id="addcollect" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.CollectVo">
+    <insert id="addcollect" parameterType="com.kyj.cooltiger.oauth.entity.CollectVo">
         insert into ky_user_collect(
             `user_code`,
             `code_id`,
@@ -80,7 +80,7 @@
             and a.code_id=#{codeId}
         </if>
     </select>
-    <update id="collectremove" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.CollectVo">
+    <update id="collectremove" parameterType="com.kyj.cooltiger.oauth.entity.CollectVo">
         update ky_user_collect
          set deleted  = #{collectVo.deleted},
              collect_time  = #{collectVo.collectTime},
@@ -89,7 +89,7 @@
           and code_id=#{collectVo.codeId}
           and code_type=1
     </update>
-    <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.GoodsCollectVo" id="gooodsMap">
+    <resultMap type="com.kyj.cooltiger.oauth.entity.GoodsCollectVo" id="gooodsMap">
         <result property="Id" column="id"/>
         <result property="userCode" column="user_code"/>
         <result property="codeId" column="code_id"/>
@@ -124,7 +124,7 @@
             and a.code_id=#{codeId}
         </if>
     </select>
-    <select id="goodscollectlist" resultType="com.kyj.cooltiger.cooltigeroauth.entity.GoodsCollectVo">
+    <select id="goodscollectlist" resultType="com.kyj.cooltiger.oauth.entity.GoodsCollectVo">
         select
         b.title ,
         c.url,
@@ -160,7 +160,7 @@
             limit #{offset}, #{limit}
         </if>
     </select>
-    <insert id="goodscollectsave" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.GoodsCollectVo">
+    <insert id="goodscollectsave" parameterType="com.kyj.cooltiger.oauth.entity.GoodsCollectVo">
         insert into ky_user_collect(
             `user_code`,
             `code_id`,
@@ -176,7 +176,7 @@
                   #{collectTime},
                   #{createTime})
     </insert>
-    <update id="canselgoodscollect" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.GoodsCollectVo">
+    <update id="canselgoodscollect" parameterType="com.kyj.cooltiger.oauth.entity.GoodsCollectVo">
         update ky_user_collect
         set deleted  = #{goodsCollectVo1.deleted},
             collect_time  = #{goodsCollectVo1.collectTime},

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.kyj.cooltiger.cooltigeroauth.dao.TokenDao">
+<mapper namespace="com.kyj.cooltiger.oauth.dao.TokenDao">
 
-    <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.Tokenpo" id="tbTokenMap">
+    <resultMap type="com.kyj.cooltiger.oauth.entity.Tokenpo" id="tbTokenMap">
         <result property="userId" column="user_id"/>
         <result property="token" column="token"/>
         <result property="expireTime" column="expire_time"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
 
-    <select id="queryObject" resultType="com.kyj.cooltiger.cooltigeroauth.entity.Tokenpo">
+    <select id="queryObject" resultType="com.kyj.cooltiger.oauth.entity.Tokenpo">
         select
             user_id,
             token,
@@ -20,7 +20,7 @@
         where user_id = #{id}
     </select>
 
-    <select id="queryByToken" resultType="com.kyj.cooltiger.cooltigeroauth.entity.Tokenpo">
+    <select id="queryByToken" resultType="com.kyj.cooltiger.oauth.entity.Tokenpo">
         select
             user_id,
             token,
@@ -30,7 +30,7 @@
         where token = #{token}
     </select>
 
-    <select id="queryByUserId" resultType="com.kyj.cooltiger.cooltigeroauth.entity.Tokenpo">
+    <select id="queryByUserId" resultType="com.kyj.cooltiger.oauth.entity.Tokenpo">
         select
             user_id,
             token,
@@ -40,7 +40,7 @@
         where user_id = #{userId}
     </select>
 
-    <select id="queryList" resultType="com.kyj.cooltiger.cooltigeroauth.entity.Tokenpo">
+    <select id="queryList" resultType="com.kyj.cooltiger.oauth.entity.Tokenpo">
         select
         user_id,
         token,
@@ -66,7 +66,7 @@
         WHERE 1=1
     </select>
 
-    <insert id="save" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.Tokenpo">
+    <insert id="save" parameterType="com.kyj.cooltiger.oauth.entity.Tokenpo">
         insert into ky_user_token(
             `user_id`,
             `token`,
@@ -79,7 +79,7 @@
                   #{createTime})
     </insert>
 
-    <update id="update" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.Tokenpo">
+    <update id="update" parameterType="com.kyj.cooltiger.oauth.entity.Tokenpo">
         update ky_user_token
         <set>
             <if test="token != null">`token` = #{token},</if>

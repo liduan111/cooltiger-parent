@@ -18,7 +18,11 @@ spring:
           lowerCaseServiceId: true   # 该配置开启后，服务名可以小写
       #路由
       routes:
-        - id: service_product  #路由id标识
+        - id: product_serivce  #路由id标识
           uri: http://localhost:8902  #请求转发地址
           predicates:  #断言
             - Path=/product/**  #匹配规则
+        - id: order_service
+          uri: http://localhost:8904
+          predicates:
+            - Path=/order/**

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.kyj.cooltiger.cooltigeroauth.dao.GoodsDao">
+<mapper namespace="com.kyj.cooltiger.oauth.dao.GoodsDao">
 
-    <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.GoodsVo" id="adMap">
+    <resultMap type="com.kyj.cooltiger.oauth.entity.GoodsVo" id="adMap">
         <result property="productId" column="product_id"/>
         <result property="productCode" column="product_code"/>
         <result property="title" column="title"/>
@@ -23,7 +23,7 @@
         <result property="countDate" column="count_date"/>
     </resultMap>
 
-    <select id="goodslist" resultType="com.kyj.cooltiger.cooltigeroauth.entity.GoodsVo">
+    <select id="goodslist" resultType="com.kyj.cooltiger.oauth.entity.GoodsVo">
         select
             a.product_id,
             a.title,

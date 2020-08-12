@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.kyj.cooltiger.cooltigeroauth.dao.UserDao">
+<mapper namespace="com.kyj.cooltiger.oauth.dao.UserDao">
 
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.Userpo" id="userMap">
+    <resultMap type="com.kyj.cooltiger.oauth.entity.Userpo" id="userMap">
         <result property="userId" column="id"/>
         <result property="userCode" column="user_code"/>
         <result property="username" column="user_name"/>
@@ -28,7 +28,7 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="modified_time"/>
     </resultMap>
-    <select id="queryuserList" resultType="com.kyj.cooltiger.cooltigeroauth.entity.Userpo">
+    <select id="queryuserList" resultType="com.kyj.cooltiger.oauth.entity.Userpo">
         SELECT a.id,
                a.user_code,
                a.user_name,
@@ -95,7 +95,7 @@
         select count(*) from ky_user_info
     </select>
 
-    <insert id="save" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.Userpo" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="save" parameterType="com.kyj.cooltiger.oauth.entity.Userpo" useGeneratedKeys="true" keyProperty="userId">
         insert into ky_user_info
         (
             `user_code`,
@@ -143,7 +143,7 @@
         )
     </insert>
 
-    <update id="update" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.Userpo">
+    <update id="update" parameterType="com.kyj.cooltiger.oauth.entity.Userpo">
         update ky_user_info
         <set>
             <if test="username != null">`user_name` = #{username},</if>
@@ -170,7 +170,7 @@
         where id = #{userId}
     </update>
 
-    <update id="updatelogintime" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.Userpo">
+    <update id="updatelogintime" parameterType="com.kyj.cooltiger.oauth.entity.Userpo">
         update ky_user_info
         <set>
             <if test="last_login_time != null">`last_login_time` = #{last_login_time},</if>
@@ -178,7 +178,7 @@
         </set>
         where usercode = #{userCode}
     </update>
-    <update id="updateUserInfo" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.Userpo">
+    <update id="updateUserInfo" parameterType="com.kyj.cooltiger.oauth.entity.Userpo">
         update ky_user_info
         <set>
             <if test="username != null">`user_name` = #{username},</if>

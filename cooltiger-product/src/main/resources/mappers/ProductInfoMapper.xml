@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.kyj.cooltiger.cooltigerproduct.mapper.ProductInfoMapper">
+<mapper namespace="com.kyj.cooltiger.product.mapper.ProductInfoMapper">
 
     <!-- 根据店铺ID查询总条数 -->
     <select id="getTotalCountByStoreId" resultType="int">
@@ -19,7 +19,7 @@
 
     <!-- 根据店铺ID查询商品列表 -->
     <select id="getProductInfoListByStoreId"
-            resultType="com.kyj.cooltiger.cooltigerfeign.product.vo.ProductInfoListByStoreIdRespVo">
+            resultType="com.kyj.cooltiger.feign.product.vo.ProductInfoListByStoreIdRespVo">
         SELECT
         pro.product_id productId,
         pro.product_code productCode,

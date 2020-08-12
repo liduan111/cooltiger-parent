@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.kyj.cooltiger.cooltigeroauth.dao.ProductCategoryDao">
+<mapper namespace="com.kyj.cooltiger.oauth.dao.ProductCategoryDao">
 
-    <resultMap type="com.kyj.cooltiger.cooltigeroauth.entity.ProductCategoryVo" id="tbTokenMap">
+    <resultMap type="com.kyj.cooltiger.oauth.entity.ProductCategoryVo" id="tbTokenMap">
         <result property="rotationId" column="category_id"/>
         <result property="categoryName" column="category_name"/>
         <result property="logoUrl" column="logo_url"/>
@@ -12,7 +12,7 @@
         <result property="createTime" column="create_time"/>
         <result property="modifiedTime" column="modified_time"/>
     </resultMap>
-    <select id="querycategorylist" resultType="com.kyj.cooltiger.cooltigeroauth.entity.ProductCategoryVo">
+    <select id="querycategorylist" resultType="com.kyj.cooltiger.oauth.entity.ProductCategoryVo">
         select
         category_id,
         category_name,
