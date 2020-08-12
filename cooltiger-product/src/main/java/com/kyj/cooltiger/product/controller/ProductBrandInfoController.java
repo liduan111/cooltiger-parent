@@ -58,7 +58,7 @@ public class ProductBrandInfoController implements ProductBrandInfoClient {
      * @param productBrandInfoReqVo
      * @return
      */
-    @RequestMapping(value = "updateProductBrandInfo/{brand_id)", method = {RequestMethod.PUT})
+    @RequestMapping(value = "updateProductBrandInfo/{brand_id}", method = {RequestMethod.PUT})
     public Result updateProductBrandInfo(
             @PathVariable("brand_id") Integer brandId,
             @RequestBody ProductBrandInfoReqVo productBrandInfoReqVo) {

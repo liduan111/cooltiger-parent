@@ -15,13 +15,23 @@
   <dependencies>
       <dependency>
           <groupId>com.kyj.cooltiger</groupId>
-          <artifactId>cooltiger-common</artifactId>
-          <version>0.0.1-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-          <groupId>com.kyj.cooltiger</groupId>
           <artifactId>cooltiger-feign</artifactId>
           <version>0.0.1-SNAPSHOT</version>
+      </dependency>
+      <!-- SpringBoot Mybatis 依赖 -->
+      <dependency>
+          <groupId>org.mybatis.spring.boot</groupId>
+          <artifactId>mybatis-spring-boot-starter</artifactId>
+      </dependency>
+      <!-- Druid 依赖 -->
+      <dependency>
+          <groupId>com.alibaba</groupId>
+          <artifactId>druid-spring-boot-starter</artifactId>
+      </dependency>
+      <!-- mysql 依赖 -->
+      <dependency>
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
       </dependency>
      <!-- 测试-->
       <dependency>
@@ -58,21 +68,6 @@
           <groupId>io.jsonwebtoken</groupId>
           <artifactId>jjwt</artifactId>
           <version>0.9.1</version>
-      </dependency>
-      <!-- SpringBoot Mybatis 依赖 -->
-      <dependency>
-          <groupId>org.mybatis.spring.boot</groupId>
-          <artifactId>mybatis-spring-boot-starter</artifactId>
-      </dependency>
-      <!-- Druid 依赖 -->
-      <dependency>
-          <groupId>com.alibaba</groupId>
-          <artifactId>druid-spring-boot-starter</artifactId>
-      </dependency>
-      <!--mysql-->
-      <dependency>
-          <groupId>mysql</groupId>
-          <artifactId>mysql-connector-java</artifactId>
       </dependency>
       <!-- lombok -->
       <dependency>

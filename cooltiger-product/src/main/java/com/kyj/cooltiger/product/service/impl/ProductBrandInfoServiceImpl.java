@@ -66,7 +66,7 @@ public class ProductBrandInfoServiceImpl implements ProductBrandInfoService {
         }
         Map<String, Object> resMap = new HashMap<>();
         resMap.put("totalCount", totalCount);
-        resMap.put("totalPage", pageUtil.getPageSize());
+        resMap.put("totalPage", pageUtil.getTotalPage());
         resMap.put("data", productBrandInfoList);
         return resMap;
     }
