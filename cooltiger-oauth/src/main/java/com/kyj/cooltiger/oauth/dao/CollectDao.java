@@ -72,4 +72,18 @@ public interface CollectDao {
      * @return
      */
     int canselgoodscollect(@Param("goodsCollectVo1") GoodsCollectVo goodsCollectVo1);
+
+    /**
+     * 根据用户查询收藏店铺的个数
+     * @param userCode
+     * @return
+     */
+    CollectVo queryusercodenum(@Param("userCode")Long userCode);
+
+    /**
+     * 根据用户查询收藏商品的个数
+     * @param userCode
+     * @return
+     */
+    GoodsCollectVo querygoodsusercode(@Param("userCode")Long userCode);
 }

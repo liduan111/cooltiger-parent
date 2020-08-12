@@ -80,7 +80,21 @@
             and a.code_id=#{codeId}
         </if>
     </select>
+<<<<<<< HEAD
     <update id="collectremove" parameterType="com.kyj.cooltiger.oauth.entity.CollectVo">
+=======
+    <select id="queryusercodenum" resultMap="adMap">
+        select count(code_id)
+        from ky_user_collect
+        where 1=1
+        and code_type=1
+        and deleted=0
+        <if test="userCode != null and userCode!=0">
+            and user_code=#{userCode}
+        </if>
+    </select>
+    <update id="collectremove" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.CollectVo">
+>>>>>>> 436ca12715fd081e0d042c5092c854b080e6e157
         update ky_user_collect
          set deleted  = #{collectVo.deleted},
              collect_time  = #{collectVo.collectTime},
@@ -102,6 +116,16 @@
         <result property="codeLogourl" column="url"/>
         <result property="salePrice" column="sale_price"/>
     </resultMap>
+    <select id="querygoodsusercode" resultMap="gooodsMap">
+        select count(code_id)
+        from ky_user_collect
+        where 1=1
+        and code_type=2
+        and deleted=0
+        <if test="userCode != null and userCode!=0">
+            and user_code=#{userCode}
+        </if>
+    </select>
     <select id="querygoodscollect" resultMap="gooodsMap">
         select
         a.id,
@@ -185,4 +209,5 @@
           and code_id=#{goodsCollectVo1.codeId}
           and code_type=2
     </update>
+
 </mapper>

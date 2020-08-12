@@ -176,6 +176,26 @@ public class ApiCollectServiceimpl implements ApiCollectService {
     }
 
     /**
+     * 根据用户查询商品收藏个数
+     * @param userCode
+     * @return
+     */
+    @Override
+    public GoodsCollectVo querygoodsusercode(Long userCode) {
+        return collectDao.querygoodsusercode(userCode);
+    }
+
+    /**
+     * 根据用户查询收藏店铺的个数
+     * @param userCode
+     * @return
+     */
+    @Override
+    public CollectVo queryusercodenum(Long userCode) {
+           return collectDao.queryusercodenum(userCode);
+    }
+
+    /**
      * 用户店铺收藏
      * @param map
      * @return

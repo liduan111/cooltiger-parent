@@ -55,7 +55,7 @@ public interface UserDao {
      * @param userpo
      * @return
      */
-    int updatelogintime(Userpo userpo);
+    int updatelogintime(@Param("userpo") Userpo userpo);
 
     /**
      * 根据usercode查询用户信息

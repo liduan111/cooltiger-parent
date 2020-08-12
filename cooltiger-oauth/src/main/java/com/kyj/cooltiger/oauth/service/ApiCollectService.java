@@ -69,5 +69,21 @@ public interface ApiCollectService {
      */
     boolean canselgoodscollect(GoodsCollectVo goodsCollectVo);
 
+    /**
+     * 根据用户查询收藏的商品或店铺的个数
+     * @param userCode
+     * @param
+     * @return
+     */
+    CollectVo queryusercodenum(Long userCode);
+
+    /**
+     * 根据用户查询商品收藏个数
+     * @param userCode
+     * @return
+     */
+    GoodsCollectVo  querygoodsusercode(Long userCode);
+
+
 
 }

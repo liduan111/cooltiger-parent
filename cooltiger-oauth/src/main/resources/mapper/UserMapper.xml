@@ -172,11 +172,11 @@
 
     <update id="updatelogintime" parameterType="com.kyj.cooltiger.oauth.entity.Userpo">
         update ky_user_info
-        <set>
-            <if test="last_login_time != null">`last_login_time` = #{last_login_time},</if>
-            <if test="last_login_ip != null">`last_login_ip` = #{last_login_ip},</if>
-        </set>
-        where usercode = #{userCode}
+        set
+            last_login_time = #{userpo.last_login_time},
+            last_login_ip= #{userpo.last_login_ip}
+
+        where user_code = #{userpo.userCode}
     </update>
     <update id="updateUserInfo" parameterType="com.kyj.cooltiger.oauth.entity.Userpo">
         update ky_user_info
@@ -190,7 +190,7 @@
             <if test="realName != null">`real_name` = #{realName},</if>
             <if test="updateTime != null">`modified_time` = #{updateTime}</if>
         </set>
-        where usercode = #{userCode}
+        where user_code = #{userCode}
     </update>
 
 </mapper>
