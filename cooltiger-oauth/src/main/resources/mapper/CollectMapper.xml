@@ -80,9 +80,6 @@
             and a.code_id=#{codeId}
         </if>
     </select>
-<<<<<<< HEAD
-    <update id="collectremove" parameterType="com.kyj.cooltiger.oauth.entity.CollectVo">
-=======
     <select id="queryusercodenum" resultMap="adMap">
         select count(code_id)
         from ky_user_collect
@@ -93,8 +90,7 @@
             and user_code=#{userCode}
         </if>
     </select>
-    <update id="collectremove" parameterType="com.kyj.cooltiger.cooltigeroauth.entity.CollectVo">
->>>>>>> 436ca12715fd081e0d042c5092c854b080e6e157
+    <update id="collectremove" parameterType="com.kyj.cooltiger.oauth.entity.CollectVo">
         update ky_user_collect
          set deleted  = #{collectVo.deleted},
              collect_time  = #{collectVo.collectTime},
