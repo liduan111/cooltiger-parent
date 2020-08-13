@@ -2,5 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kyj.cooltiger.product.mapper.ProductParamModelMapper">
 
+    <!-- 根据分类ID查询参数模板 -->
+    <select id="getProductParamModelByCategoryId" resultType="ProductParamModel">
+        SELECT
+            id,
+            param_name    paramName,
+            required,
+            category_id   categoryId,
+            create_time   createTime,
+            modified_time modifiedTime
+        FROM
+            ky_product_param_model
+        WHERE category_id = #{categoryId}
+    </select>
+
+    <!-- 批量添加参数模板数据 -->
+    <insert id="batchAddProductParamModel" parameterType="ProductParamModel">
+        INSERT INTO ky_product_param_model
+        (param_name, required, category_id)
+        VALUES
+        <foreach collection="productParamModelList" item="param" index="index" separator=",">
+            (#{param.paramName},#{param.required},#{param.categoryId})
+        </foreach>
+    </insert>
+
+    <!-- 删除参数模板 -->
+    <delete id="delProductParamModel">
+        DELETE
+        FROM ky_product_param_model
+        WHERE category_id = #{categoryId}
+    </delete>
 
 </mapper>

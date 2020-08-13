@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kyj.cooltiger.product.mapper.CountryRegionMapper">
+
+    <!-- 查询添加名字是否存在 -->
+    <select id="getCountryRegionCountByRegionName" resultType="int">
+        SELECT
+            COUNT(1)
+        FROM ky_country_region
+        WHERE region_name = #{regionName}
+    </select>
+
+    <!-- 插入数据 -->
+    <insert id="addCountryRegion" parameterType="CountryRegion">
+        INSERT INTO ky_country_region
+            (region_name, region_code, parent_id, national_flag_url)
+        VALUES
+        (#{countryRegion.regionName}, #{countryRegion.regionCode}, #{countryRegion.parentId},
+         #{countryRegion.nationalFlagUrl})
+    </insert>
+
+    <!-- 查询国家地区列表 -->
+    <select id="getCountryRegionByParentId" resultType="CountryRegion">
+        SELECT
+            region_id         regionId,
+            region_name       regionName,
+            region_code       regionCode,
+            parent_id         parentId,
+            national_flag_url nationalFlagUrl
+        FROM ky_country_region
+        WHERE parent_id = #{parentId}
+    </select>
+
+    <!-- 查询国家地区信息 -->
+    <select id="getCountryRegionByRegionId" resultType="CountryRegion">
+        SELECT
+            region_id         regionId,
+            region_name       regionName,
+            region_code       regionCode,
+            parent_id         parentId,
+            national_flag_url nationalFlagUrl
+        FROM ky_country_region
+        WHERE region_id = #{regionId}
+    </select>
+
+    <!-- 修改国家地区信息 -->
+    <update id="updateCountryRegion" parameterType="CountryRegion">
+        UPDATE ky_country_region
+        SET
+            region_name       = #{countryRegion.regionName},
+            region_code       = #{countryRegion.regionCode},
+            parent_id         = #{countryRegion.parentId},
+            national_flag_url = #{countryRegion.nationalFlagUrl}
+        WHERE region_id = #{countryRegion.regionId}
+    </update>
+
+    <!-- 删除国家地区信息 -->
+    <delete id="delCountryRegion">
+        DELETE
+        FROM ky_country_region
+        WHERE region_id = #{regionId}
+    </delete>
+</mapper>

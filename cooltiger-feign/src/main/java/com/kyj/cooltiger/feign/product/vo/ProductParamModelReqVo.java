@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author liduan
- * Description:
+ * Description: 商品参数模板入参
  * date: 2020/8/12 17:30
  */
 public class ProductParamModelReqVo {
@@ -13,7 +13,7 @@ public class ProductParamModelReqVo {
     @JsonProperty("param_name")
     private String paramName;
     //是否必填（0-否1-是）
-    private String required;
+    private Integer required;
 
     public String getParamName() {
         return paramName;
@@ -23,11 +23,11 @@ public class ProductParamModelReqVo {
         this.paramName = paramName;
     }
 
-    public String getRequired() {
+    public Integer getRequired() {
         return required;
     }
 
-    public void setRequired(String required) {
+    public void setRequired(Integer required) {
         this.required = required;
     }
 }

@@ -31,4 +31,34 @@ public interface ProductParamModelClient {
             @RequestParam("category_id") Integer categoryId,
             @RequestBody List<ProductParamModelReqVo> paramModelReqVos);
 
+    /**
+     * 查询商品参数模板
+     *
+     * @param categoryId
+     * @return
+     */
+    @RequestMapping(value = "/getProductParamModel", method = {RequestMethod.GET})
+    public Result getProductParamModel(
+            @RequestParam("category_id") Integer categoryId);
+
+    /**
+     * 修改商品参数模板
+     *
+     * @param paramModelReqVos
+     * @return
+     */
+    @RequestMapping(value = "/updateProductParamModel", method = {RequestMethod.PUT})
+    public Result updateProductParamModel(
+            @RequestParam("category_id") Integer categoryId,
+            @RequestBody List<ProductParamModelReqVo> paramModelReqVos);
+
+    /**
+     * 删除商品模板
+     *
+     * @param categoryId
+     * @return
+     */
+    @RequestMapping(value = "/delProductParamModel",method = {RequestMethod.DELETE})
+    public Result delProductParamModel(@RequestParam("category_id") Integer categoryId);
+
 }
