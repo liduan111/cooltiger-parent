@@ -13,7 +13,7 @@
     <artifactId>cooltiger-order</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>cooltiger-product</name>
+    <name>cooltiger-order</name>
     <description>Spring Boot - Order Service</description>
 
     <dependencies>
