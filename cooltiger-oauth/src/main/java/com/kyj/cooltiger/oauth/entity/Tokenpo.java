@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author guoxq
@@ -23,4 +26,6 @@ public class Tokenpo implements Serializable {
     private Date expireTime;
     //更新时间
     private Date createTime;
+
+
 }

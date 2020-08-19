@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author guoxq
@@ -19,9 +20,21 @@ public class ApiProductCategoryServiceimpl implements ApiProductCategoryService 
     @Autowired
     private ProductCategoryDao productCategoryDao;
 
-
+    /**
+     * 查询子分类
+     * @return
+     */
     @Override
-    public List<ProductCategoryVo> querycategorylist() {
-        return productCategoryDao.querycategorylist();
+    public List<ProductCategoryVo> querycategorylist(Map<String,Object> map) {
+        return productCategoryDao.querycategorylist(map);
+    }
+
+    /**
+     * 查询父分类
+     * @return
+     */
+    @Override
+    public List<ProductCategoryVo> categorylist() {
+        return productCategoryDao.categorylist();
     }
 }

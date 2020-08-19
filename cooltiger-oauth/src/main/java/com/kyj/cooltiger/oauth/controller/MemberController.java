@@ -28,7 +28,7 @@ import java.util.Map;
  */
 @Api("会员")
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/api/member")
 public class MemberController extends ApiBaseAction implements MemberClient {
 
     @Autowired

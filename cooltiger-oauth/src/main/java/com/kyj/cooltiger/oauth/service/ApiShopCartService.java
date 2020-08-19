@@ -18,4 +18,34 @@ public interface ApiShopCartService {
      */
     List<ShopCartVo>  shopcartlist(Map<String,Object> map);
 
+    /**
+     * 加入购物车
+     * @param map
+     * @return
+     */
+    boolean addshopcart(Map<String,Object> map);
+
+    /**
+     * 删除购物车商品
+     * @param userCode
+     * @param cartIds
+     */
+    void   deletecartgoods(Long userCode,List<Long> cartIds);
+
+    /**
+     * 修改购物车商品数量
+     * @param shopCartVo1
+     * @return
+     */
+    boolean  updatesaleNum(ShopCartVo shopCartVo1);
+
+    /**
+     * 清空购物车
+     * @param parms
+     */
+    void  deleteAllgoods(String parms);
+
+
+
+
 }

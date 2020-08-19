@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @Api("收藏接口")
 @RestController
-@RequestMapping("/collect")
+@RequestMapping("/api/collect")
 public class CollectController extends ApiBaseAction implements CollectClient {
 
     @Autowired
