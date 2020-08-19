@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Api("收货地址接口")
 @RestController
-@RequestMapping("/address")
+@RequestMapping("/api/address")
 public class AddressController extends ApiBaseAction  implements AddressClient {
 
     @Autowired

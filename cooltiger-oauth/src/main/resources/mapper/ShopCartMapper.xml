@@ -4,22 +4,105 @@
 <mapper namespace="com.kyj.cooltiger.oauth.dao.ShopCartDao">
 
     <resultMap type="com.kyj.cooltiger.oauth.entity.ShopCartVo" id="adMap">
-        <result property="Id" column="id"/>
+        <result property="cartId" column="cart_id"/>
         <result property="userCode" column="user_code"/>
         <result property="storeId" column="store_id"/>
         <result property="storeName" column="store_name"/>
+        <result property="productId" column="product_id"/>
         <result property="logoUrl" column="logo_url"/>
         <result property="skuId" column="sku_id"/>
         <result property="salePrice" column="sale_price"/>
         <result property="shopNum" column="shop_num"/>
         <result property="title" column="title"/>
         <result property="goodsurl" column="url"/>
+        <result property="goodsspecifitionvalue" column="value"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="modified_time"/>
+        <result property="stocks" column="stock"/>
     </resultMap>
 
     <select id="shopcartlist" resultType="com.kyj.cooltiger.oauth.entity.ShopCartVo">
-
+        select
+               a.shop_num as shopNum,
+               b.store_name as storeName,
+               b.logo_url as logoUrl,
+               c.sale_price as salePrice,
+               c.stock as stocks,
+               c.spec_value_ids,
+               d.title as title,
+               e.url as goodsurl
+               GROUP_CONCAT(specv.value) as goodsspecifitionvalue
+        from ky_shop_cart a
+        left join ky_store_info b
+        on a.store_id=b.store_id
+        left join ky_product_sku c
+        on  a.sku_id=c.sku_id
+        left join ky_product_info d
+        on a.product_id=d.product_id
+        left join  ky_product_picture e
+        on a.product_id=e.relation_id
+        left join ky_product_spec_value specv
+        ON specv.id IN (c.spec_value_ids)
+        where 1=1
+        and b.deleted=0
+        and d.deleted=0
+        and c.deleted=0
+        and e.is_main=1
+        and e.type=1
+        <if test="userCode != null and userCode!=0">
+            and a.user_code=#{userCode}
+        </if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by a.id asc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
     </select>
+
+    <delete id="deletecartgoods">
+        delete from ky_shop_cart where user_code = #{userCode} and cart_id in
+        <foreach collection="cartIds" item="cartId" open="(" separator="," close=")">
+            #{basketId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteAllgoods">
+        delete from ky_shop_cart where cart_id in
+        <foreach item="cartId" collection="cartIds" open="(" separator="," close=")">
+            #{cartId}
+        </foreach>
+        and user_code = #{userCode}
+    </delete>
+
+    <update id="updatesaleNum" parameterType="com.kyj.cooltiger.oauth.entity.ShopCartVo">
+        update ky_shop_cart
+        set  shop_num = #{shopCartVo1.shopNum},
+            create_time  = #{shopCartVo1.collectTime}
+        where user_code = #{shopCartVo1.userCode}
+          and cart_id=#{shopCartVo1.cartId}
+    </update>
+
+    <insert id="addshopcart" parameterType="com.kyj.cooltiger.oauth.entity.ShopCartVo">
+        insert into ky_shop_cart(
+            `user_code`,
+            `store_id`,
+            `product_id`,
+            `sku_id`,
+            `shop_num`,
+            `create_time`)
+        values(
+                  #{userCode},
+                  #{storeId},
+                  #{productId},
+                  #{skuId},
+                  #{shopNum},
+                  #{createTime})
+    </insert>
 
 </mapper>

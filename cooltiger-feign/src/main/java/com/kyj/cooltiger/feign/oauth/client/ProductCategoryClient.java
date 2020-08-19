@@ -1,8 +1,11 @@
 package com.kyj.cooltiger.feign.oauth.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.Map;
 
 /**
  * @author guoxq
@@ -17,5 +20,5 @@ public interface ProductCategoryClient {
      * @return
      */
     @RequestMapping(value ="/categorylist",method = RequestMethod.GET)
-    public  Object categorylist();
+    public  Object categorylist(@RequestBody Map<String,Object> map);
 }

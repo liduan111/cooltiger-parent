@@ -4,6 +4,7 @@ import com.kyj.cooltiger.oauth.entity.ProductCategoryVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author guoxq
@@ -12,6 +13,15 @@ import java.util.List;
  */
 @Mapper
 public interface ProductCategoryDao {
+    /**
+     * 查询子分类
+     * @return
+     */
+    List<ProductCategoryVo> querycategorylist(Map<String,Object> map);
 
-    List<ProductCategoryVo> querycategorylist();
+    /**
+     * 查询父分类
+     * @return
+     */
+    List<ProductCategoryVo> categorylist();
 }

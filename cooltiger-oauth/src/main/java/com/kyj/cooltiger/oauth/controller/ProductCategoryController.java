@@ -1,11 +1,13 @@
 package com.kyj.cooltiger.oauth.controller;
 
+import com.kyj.cooltiger.feign.oauth.client.ProductCategoryClient;
 import com.kyj.cooltiger.oauth.entity.ProductCategoryVo;
 import com.kyj.cooltiger.oauth.service.ApiProductCategoryService;
 import com.kyj.cooltiger.oauth.utils.ApiBaseAction;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,8 +23,8 @@ import java.util.Map;
  */
 @Api("商品分类接口")
 @RestController
-@RequestMapping("/category")
-public class ProductCategoryController extends ApiBaseAction {
+@RequestMapping("/api/category")
+public class ProductCategoryController extends ApiBaseAction implements ProductCategoryClient {
 
     @Autowired
     private ApiProductCategoryService productCategoryService;
@@ -33,11 +35,16 @@ public class ProductCategoryController extends ApiBaseAction {
      */
     @ApiOperation("商品分类列表查询")
     @RequestMapping(value ="/categorylist",method = RequestMethod.GET)
-    public  Object categorylist(){
+    public  Object categorylist(@RequestBody Map<String,Object> map1){
+        if(map1==null||map1.size()==0){
+            toResponsFail("参数为空");
+        }
         Map<String,Object> map=new HashMap<String,Object>();
         //查询商品分类
-        List<ProductCategoryVo> productCategoryVoList=productCategoryService.querycategorylist();
+        List<ProductCategoryVo> productCategoryVo=productCategoryService.categorylist();
+        List<ProductCategoryVo> productCategoryVoList=productCategoryService.querycategorylist(map1);
         map.put("productCategoryList",productCategoryVoList);
-        return toResponsSuccess(productCategoryVoList);
+        map.put("productCategory",productCategoryVo);
+        return toResponsSuccess(map);
     }
 }

@@ -31,7 +31,7 @@ import java.util.Map;
  */
 @Api("首页")
 @RestController
-@RequestMapping("/index")
+@RequestMapping("/api")
 public class ApiIndexController extends ApiBaseAction implements WxIndexClient {
 
     @Autowired
@@ -53,14 +53,14 @@ public class ApiIndexController extends ApiBaseAction implements WxIndexClient {
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public  Object  index(){
         Map<String,Object>  map=new HashMap<String,Object>();
-        Map<String,Object>  param=new HashMap<String,Object>();
+        /*Map<String,Object>  param=new HashMap<String,Object>();
         param.put("sidx", "region_id");
         param.put("order", "desc ");
         param.put("offset", 0);
         param.put("limit", 3);
         //查询导航栏国家
         List<CountryReginVo>  countryReginList=countryreginService.countrylist(param);
-        map.put("countryReginList",countryReginList);
+        map.put("countryReginList",countryReginList);*/
         Map<String,Object>  param1=new HashMap<String,Object>();
         param1.put("sidx", "rotation_id");
         param1.put("order", "desc ");
@@ -72,8 +72,8 @@ public class ApiIndexController extends ApiBaseAction implements WxIndexClient {
         //查询商品分类
         Date startTime=DateUtils.getFirstDayOfThisMonth();
         Date endTime= DateUtils.getDatesmins();
-        List<ProductCategoryVo>  productCategoryVoList=productCategoryService.querycategorylist();
-        map.put("productCategoryList",productCategoryVoList);
+        /*List<ProductCategoryVo>  productCategoryVoList=productCategoryService.querycategorylist();
+        map.put("productCategoryList",productCategoryVoList);*/
         Map<String,Object>  param2=new HashMap<String,Object>();
         param2.put("sidx", "sell_num");
         param2.put("order", "desc ");

@@ -16,11 +16,13 @@ public class ShopCartVo implements Serializable {
     private static final long seriableid=1L;
 
     //主键
-    private  Long Id;
+    private  Long cartId;
     //用户
     private Long userCode;
     //店铺id
     private Integer storeId;
+    //商品id
+    private Integer productId;
     //店铺名字
     private String storeName;
     //店铺头像
@@ -33,16 +35,18 @@ public class ShopCartVo implements Serializable {
     private String goodsurl;
     //价格
     private  Double salePrice;
-    //
+    //规格属性id
     private  String goodsspecifitionids;
     //规格值
-    private String   goodsspecifitionvaluename;
+    private String goodsspecifitionvalue;
     //加入数量
     private Integer shopNum;
     //创建时间
     private Date createTime;
     //修改时间
     private Date updateTime;
+    //商品库存
+    private  Integer  stocks;
 
 
 

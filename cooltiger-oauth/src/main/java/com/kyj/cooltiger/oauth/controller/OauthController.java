@@ -97,7 +97,7 @@ public class OauthController extends ApiBaseAction implements OauthClient {
             userVo.setWeixin_openid(openid);
             userVo.setAvatar(loginInfo.getAvatarUrl());
             userVo.setGender(loginInfo.getGender()); // //性别 0：未知、1：男、2：女
-            userVo.setNickname(Base64.encode(loginInfo.getNickName()));
+            userVo.setNickname(loginInfo.getNickName());
             userVo.setIsReal("0");
             userVo.setRegisterchannel("1");
             userVo.setCreateTime(nowTime);
@@ -110,6 +110,7 @@ public class OauthController extends ApiBaseAction implements OauthClient {
                     return toResponsFail("登录失败");
                 }
                 Map<String, Object> result = new HashMap<>();
+                userVo.setPassword(null);
                 result.put("userVo", userVo);
                 result.put("session_key", session_key);
                 result.put("open_id", openid);
@@ -131,6 +132,7 @@ public class OauthController extends ApiBaseAction implements OauthClient {
             GoodsCollectVo goodsCollectVo=collectService.querygoodsusercode(userCode);
             if (flag==true) {
                 Map<String, Object> result = new HashMap<>();
+                userVo.setPassword(null);
                 result.put("session_key", session_key);
                 result.put("open_id", openid);
                 result.put("collectVo",collectVo);

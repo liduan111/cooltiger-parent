@@ -26,3 +26,7 @@ spring:
           uri: http://localhost:8904
           predicates:
             - Path=/order/**
+        - id: oauth_service
+          uri: http://localhost:8903
+          predicates:
+            - Path=/api/**
