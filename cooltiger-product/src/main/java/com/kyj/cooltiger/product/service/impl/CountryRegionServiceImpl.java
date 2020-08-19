@@ -24,22 +24,24 @@ public class CountryRegionServiceImpl implements CountryRegionService {
     /**
      * 添加国家地区信息
      *
-     * @param parentId
-     * @param countryRegionReqVo
+     * @param parentId 地区父ID
+     * @param regionName 地区名称
+     * @param regionCode 地区行政编码
+     * @param nationalFlagUrl 国旗url
      */
     @Override
-    public void addCountryRegion(Integer parentId, CountryRegionReqVo countryRegionReqVo) {
-        int count = countryRegionMapper.getCountryRegionCountByRegionName(countryRegionReqVo.getRegionName());
+    public void addCountryRegion(Integer parentId, String regionName, String regionCode, String nationalFlagUrl) {
+        int count = countryRegionMapper.getCountryRegionCountByRegionName(regionName);
         if (count > 0) {
             throw new MyException("REGION_NAME_IS_EXIST", "地区名称已存在");
         }
-        //添加
+        //添加实体类
         CountryRegion countryRegion = null;
         countryRegion = new CountryRegion();
-        countryRegion.setRegionName(countryRegionReqVo.getRegionName());
-        countryRegion.setRegionCode(countryRegionReqVo.getRegionCode());
+        countryRegion.setRegionName(regionName);
+        countryRegion.setRegionCode(regionCode);
         countryRegion.setParentId(parentId);
-        countryRegion.setNationalFlagUrl(countryRegionReqVo.getNationalFlagUrl());
+        countryRegion.setNationalFlagUrl(nationalFlagUrl);
         //插入
         countryRegionMapper.addCountryRegion(countryRegion);
     }
@@ -93,5 +95,20 @@ public class CountryRegionServiceImpl implements CountryRegionService {
             throw new MyException("REGION_NOT_EXIST", "地区不存在");
         }
         countryRegionMapper.delCountryRegion(regionId);
+    }
+
+    /**
+     * 根据ID查询国家地区信息
+     *
+     * @param regionId
+     * @return
+     */
+    @Override
+    public CountryRegion getCountryRegionByRegionId(Integer regionId) {
+        CountryRegion countryRegion = countryRegionMapper.getCountryRegionByRegionId(regionId);
+        if (countryRegion == null) {
+            throw new MyException("REGION_NOT_EXIST", "地区不存在");
+        }
+        return countryRegion;
     }
 }

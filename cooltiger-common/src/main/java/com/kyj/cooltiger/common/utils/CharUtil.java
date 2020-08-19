@@ -29,8 +29,9 @@ public class CharUtil {
 
     private static final long LIMIT = 10000000000L;
     private static long last = 0;
+
     /**
-     * 获取随机字符串
+     * 获取随机字符串（字母加数字）
      *
      * @param num
      * @return
@@ -47,7 +48,7 @@ public class CharUtil {
     }
 
     /**
-     * 获取随机字符串
+     * 获取随机字符串（数字）
      *
      * @param num
      * @return
@@ -61,6 +62,36 @@ public class CharUtil {
             sb.append(base.charAt(number));
         }
         return sb.toString();
+    }
+
+    /**
+     * 获取随机字符串（字母加数字加%&=）
+     *
+     * @param num
+     * @return
+     */
+    public static String getRandom(Integer num) {
+        String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%&=";
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < num; i++) {
+            int number = random.nextInt(base.length());
+            sb.append(base.charAt(number));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 生成图片随机名字
+     *
+     * @param num
+     * @return
+     */
+    public static String getImageName(Integer num){
+        //取当前时间的长整形值包含毫秒
+        long millis = System.currentTimeMillis();
+        String str = millis + getRandom(num);
+        return str;
     }
 
     /**

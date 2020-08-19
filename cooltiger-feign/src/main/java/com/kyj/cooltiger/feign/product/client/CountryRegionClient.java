@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author liduan
@@ -20,14 +21,18 @@ public interface CountryRegionClient {
     /**
      * 添加国家地区信息
      *
-     * @param parentId
-     * @param countryRegionReqVo
+     * @param parentId 地区父ID
+     * @param regionName 地区名称
+     * @param regionCode 地区行政编码
+     * @param upFile 国旗
      * @return
      */
     @RequestMapping(value = "/addCountryRegion", method = {RequestMethod.POST})
     public Result addCountryRegion(
             @RequestParam("parent_id") Integer parentId,
-            @RequestBody CountryRegionReqVo countryRegionReqVo);
+            @RequestParam("region_name") String regionName,
+            @RequestParam(value = "region_code", required = false) String regionCode,
+            @RequestParam(value = "pict", required = false) MultipartFile upFile);
 
     /**
      * 查询国家地区列表
@@ -35,7 +40,7 @@ public interface CountryRegionClient {
      * @param parentId
      * @return
      */
-    @RequestMapping(value = "/getCountryRegion",method = {RequestMethod.GET})
+    @RequestMapping(value = "/getCountryRegion", method = {RequestMethod.GET})
     public Result getCountryRegion(
             @RequestParam("parent_id") Integer parentId);
 
@@ -46,7 +51,7 @@ public interface CountryRegionClient {
      * @param countryRegionReqVo
      * @return
      */
-    @RequestMapping(value = "/updateCountryRegion",method = {RequestMethod.PUT})
+    @RequestMapping(value = "/updateCountryRegion", method = {RequestMethod.PUT})
     public Result updateCountryRegion(
             @RequestParam("region_id") Integer regionId,
             @RequestBody CountryRegionReqVo countryRegionReqVo);
@@ -57,7 +62,7 @@ public interface CountryRegionClient {
      * @param regionId
      * @return
      */
-    @RequestMapping(value = "/delCountryRegion",method = {RequestMethod.DELETE})
+    @RequestMapping(value = "/delCountryRegion", method = {RequestMethod.DELETE})
     public Result delCountryRegion(
             @RequestParam("region_id") Integer regionId);
 
