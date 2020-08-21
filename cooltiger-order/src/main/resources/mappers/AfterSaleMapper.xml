@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyj.cooltiger.order.mapper.AfterSaleMapper">
+
+    <resultMap type="com.kyj.cooltiger.order.entity.AfterSale" id="afMap">
+        <result property="refundId" column="refund_id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="title" column="title"/>
+        <result property="storeName" column="store_name"/>
+        <result property="refundPrice" column="refund_price"/>
+        <result property="deleted" column="deleted"/>
+        <result property="picturl" column="url"/>
+        <result property="aftersaleType" column="after_sale_type"/>
+        <result property="refundCode" column="refund_code"/>
+        <result property="handleTime" column="handle_time"/>
+        <result property="received" column="received"/>
+    </resultMap>
+
+    <select id="querysalelist" resultType="com.kyj.cooltiger.order.entity.AfterSale">
+        select
+            a.refund_price,
+            a.is_agree,
+            d.title,
+            e.url,
+            f.store_name,
+            g.after_sale_type,
+            GROUP_CONCAT(specv.value) as goodsspecifitionvalue
+        from  ky_refund_application  a
+                  left join ky_order_detail  b
+                            on a.order_id=b.order_id
+                  left join ky_product_sku  c
+                            on b.sku_id=c.sku_id
+                  left join ky_product_info d
+                            on c.product_id=d.product_id
+                  left join ky_product_picture  e
+                            on c.product_id=e.relation_id
+                  left join ky_store_info f
+                            on d.store_id=f.store_id
+                  left join ky_refurn_reason g
+                            on a.reason_id=g.reason_id
+                  left join ky_product_spec_value specv
+                            ON specv.id IN (c.spec_value_ids)
+        where a.deleted=0
+          and d.deleted=0
+          and c.deleted=0
+          and e.type=1
+          and e.is_main=1
+          and f.deleted=0
+        <if test="userId!= null and userId!=0">
+            and a.user_id=#{userId}
+        </if>
+    </select>
+    <select id="querysaleorderId" resultMap="afMap">
+        select * from ky_refund_application
+        where 1 = 1
+        <if test="userId != null and userId != 0">
+            and `user_id` = #{userId}
+        </if>
+        <if test="refundId != null and refundId != 0">
+            and `refund_id` = #{refundId}
+        </if>
+        <if test="orderId != null and orderId != 0">
+            and `order_id` = #{orderId}
+        </if>
+    </select>
+    <select id="looksaledetail" resultMap="afMap">
+        select
+        a.refund_price,
+        a.create_time,
+        a.refund_code,
+        a.handle_time,
+        a.is_agree,
+        d.title,
+        e.url,
+        g.reason_name
+        from  ky_refund_application  a
+        left join ky_order_detail  b
+        on a.order_id=b.order_id
+        left join ky_product_sku  c
+        on b.sku_id=c.sku_id
+        left join ky_product_info d
+        on c.product_id=d.product_id
+        left join ky_product_picture  e
+        on c.product_id=e.relation_id
+        left join ky_refurn_reason g
+        on a.reason_id=g.reason_id
+        left join ky_product_spec_value specv
+        ON specv.id IN (c.spec_value_ids)
+        where a.deleted=0
+        and d.deleted=0
+        and c.deleted=0
+        and e.type=1
+        and e.is_main=1
+        <if test="userId != null and userId != 0">
+            and `user_id` = #{userId}
+        </if>
+        <if test="refundId != null and refundId != 0">
+            and `refund_id` = #{refundId}
+        </if>
+        <if test="orderId != null and orderId != 0">
+            and `order_id` = #{orderId}
+        </if>
+    </select>
+
+    <select id="refundtype" resultMap="afMap">
+        select
+        d.title,
+        e.url,
+        g.after_sale_type
+        from  ky_refund_application  a
+        left join ky_order_detail  b
+        on a.order_id=b.order_id
+        left join ky_product_sku  c
+        on b.sku_id=c.sku_id
+        left join ky_product_info d
+        on c.product_id=d.product_id
+        left join ky_product_picture  e
+        on c.product_id=e.relation_id
+        left join ky_refurn_reason g
+        on a.reason_id=g.reason_id
+        left join ky_product_spec_value specv
+        ON specv.id IN (c.spec_value_ids)
+        where a.deleted=0
+        and d.deleted=0
+        and c.deleted=0
+        and e.type=1
+        and e.is_main=1
+        <if test="userId != null and userId != 0">
+            and `user_id` = #{userId}
+        </if>
+        <if test="refundId != null and refundId != 0">
+            and `refund_id` = #{refundId}
+        </if>
+        <if test="orderId != null and orderId != 0">
+            and `order_id` = #{orderId}
+        </if>
+    </select>
+    <!--<select id="refundappplication" resultMap="afMap">
+
+        <if test="userId != null and userId != 0">
+            and `user_id` = #{userId}
+        </if>
+        <if test="refundId != null and refundId != 0">
+            and `refund_id` = #{refundId}
+        </if>
+        <if test="orderId != null and orderId != 0">
+            and `order_id` = #{orderId}
+        </if>
+    </select>-->
+
+    <update id="updatedeleted" parameterType="com.kyj.cooltiger.order.entity.AfterSale">
+        update ky_refund_application
+        set deleted  = #{afterSale1.deleted},
+            modified_time = #{afterSale1.updateTime}
+        where user_id = #{afterSale1.userId}
+          and refund_id=#{afterSale1.refundId}
+          and order_id=#{afterSale1.OrderId}
+    </update>
+
+</mapper>

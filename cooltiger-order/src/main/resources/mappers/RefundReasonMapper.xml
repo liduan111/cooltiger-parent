@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyj.cooltiger.order.mapper.RefundReasonMapper">
+
+    <resultMap type="com.kyj.cooltiger.order.entity.RefundReason" id="afMap">
+        <result property="reasonId" column="reason_id"/>
+        <result property="aftersaleType" column="after_sale_type"/>
+        <result property="received" column="received"/>
+        <result property="reasonName" column="reason_name"/>
+    </resultMap>
+
+    <select id="refundReasonList" resultType="com.kyj.cooltiger.order.entity.RefundReason">
+        select reason_id,reason_name from ky_refurn_reason
+    </select>
+
+
+</mapper>

@@ -13,7 +13,7 @@ import java.util.Date;
  * 退款实体类
  */
 @Data
-public class RefundPojo implements Serializable {
+public class RefundApplication implements Serializable {
 
     private  static final long seriableid=1L;
 
@@ -39,6 +39,14 @@ public class RefundPojo implements Serializable {
     private Date createTime;
     //最后修改时间
     private Date updateTime;
+    //是否删除 1：已删除  0：未删除
+    private Integer deleted;
+    //退款编号
+    private String refundCode;
+    //商户处理时间
+    private  Date handleTime;
+    //是否已收到货（0-未收到货1-已收到货）
+    private Integer received;
 
 
 
