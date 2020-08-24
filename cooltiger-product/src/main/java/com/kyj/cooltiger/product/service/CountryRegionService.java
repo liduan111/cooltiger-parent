@@ -25,7 +25,7 @@ public interface CountryRegionService {
     /**
      * 查询国家地区列表
      *
-     * @param parentId
+     * @param parentId 地区父ID
      * @return
      */
     public Map<String, Object> getCountryRegion(Integer parentId);
@@ -33,11 +33,13 @@ public interface CountryRegionService {
     /**
      * 修改国家地区信息
      *
-     * @param regionId
-     * @param countryRegionReqVo
+     * @param regionId   地区ID
+     * @param regionName 地区名称
+     * @param regionCode 地区行政编码
+     * @param nationalFlagUrl 国旗Url
      * @return
      */
-    public void updateCountryRegion(Integer regionId, CountryRegionReqVo countryRegionReqVo);
+    public void updateCountryRegion(Integer regionId, String regionName, String regionCode, String nationalFlagUrl);
 
     /**
      * 删除国家地区信息

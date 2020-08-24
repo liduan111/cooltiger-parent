@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
  * date: 2020/8/5 15:59
  */
 @FeignClient(name = "Product-Service")
-@RequestMapping("/store/storeInfo")
 public interface StoreInfoClient {
 
     /**
@@ -20,8 +19,8 @@ public interface StoreInfoClient {
      * @param storeApplyIntoReqVo 店铺信息
      * @return
      */
-    @RequestMapping(value = "/storeApplyInto/{userId}",method = {RequestMethod.POST})
-    public Result StoreApplyInto(
+    @RequestMapping(value = "/store/storeInfo/storeApplyInto/{userId}",method = {RequestMethod.POST})
+    public Result storeApplyInto(
             @PathVariable("userId") Integer userId,
             @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo);
 
@@ -29,7 +28,7 @@ public interface StoreInfoClient {
      * 查询店铺列表
      * @return
      */
-    @RequestMapping(value = "/getStoreList",method = {RequestMethod.GET})
+    @RequestMapping(value = "/store/storeInfo/getStoreList",method = {RequestMethod.GET})
     public Result getStoreList();
 
     /**
@@ -37,14 +36,14 @@ public interface StoreInfoClient {
      * @param storeId
      * @return
      */
-    @RequestMapping(value = "/getStoreInfo/{storeId}",method ={RequestMethod.GET})
+    @RequestMapping(value = "/store/storeInfo/getStoreInfo/{storeId}",method ={RequestMethod.GET})
     public Result getStoreInfo(@PathVariable("storeId") Integer storeId);
 
     /**
      * 店铺信息审核
      * @return
      */
-    @RequestMapping(value = "/storeInfoAudit/{storeId}",method ={RequestMethod.PUT})
+    @RequestMapping(value = "/store/storeInfo/storeInfoAudit/{storeId}",method ={RequestMethod.PUT})
     public Result storeInfoAudit(@PathVariable("storeId") Integer storeId);
 
     /**
@@ -53,7 +52,7 @@ public interface StoreInfoClient {
      * @param storeApplyIntoReqVo
      * @return
      */
-    @RequestMapping(value = "/updateStoreInfo/{storeId}",method = {RequestMethod.PUT})
+    @RequestMapping(value = "/store/storeInfo/updateStoreInfo/{storeId}",method = {RequestMethod.PUT})
     public Result updateStoreInfo(
             @PathVariable("storeId") Integer storeId,
             @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo);

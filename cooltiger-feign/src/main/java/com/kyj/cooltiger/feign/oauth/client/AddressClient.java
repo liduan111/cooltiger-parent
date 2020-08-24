@@ -12,14 +12,14 @@ import java.util.Map;
  * @version 1.0
  * @date 2020/8/6 15:35
  */
-@FeignClient(name ="Oauth-Service")
+@FeignClient(name = "Oauth-Service")
 public interface AddressClient {
     /**
      * 根据用户id查询收货地址
      * @param code
      * @return
      */
-    @RequestMapping(value = "/queryaddress",method = RequestMethod.GET)
+    @RequestMapping(value = "/address/queryaddress",method = RequestMethod.GET)
     public Object queryaddress(@RequestBody String code);
 
     /***
@@ -27,20 +27,20 @@ public interface AddressClient {
      * @param map
      * @return
      */
-    @RequestMapping(value = "/addressadd",method = RequestMethod.POST)
+    @RequestMapping(value = "/address/addressadd",method = RequestMethod.POST)
     public  Object  addressave(@RequestBody Map<String,Object> map);
     /**
      * 修改收货人地址
      * @param map
      * @return
      */
-    @RequestMapping(value = "/addressupdate",method = RequestMethod.POST)
+    @RequestMapping(value = "/address/addressupdate",method = RequestMethod.POST)
     public  Object  addressupdate(@RequestBody Map<String,Object> map);
 
     /**
      * 收货地址列表
      * @return
      */
-    @RequestMapping(value = "/addresslist",method = RequestMethod.GET)
+    @RequestMapping(value = "/address/addresslist",method = RequestMethod.GET)
     public  Object Addresslist();
 }

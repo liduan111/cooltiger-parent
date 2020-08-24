@@ -15,6 +15,9 @@ public class Result {
     //返回数据
     private Object data;
 
+    public Result() {
+    }
+
     public Result(String code, String msg, Object data) {
         this.code = code;
         this.msg = msg;

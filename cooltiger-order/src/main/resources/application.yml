@@ -10,20 +10,14 @@ eureka:
 spring:
   application:
     name: Order-Service
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     url: jdbc:mysql://36.133.141.6:3306/cooltiger?serverTimezone=UTC&userUnicode=true&characterEncoding=utf-8
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-#  本地数据源
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/cooltiger?serverTimezone=UTC&userUnicode=true&characterEncoding=utf-8
-#    username: root
-#    password: root
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    type: com.alibaba.druid.pool.DruidDataSource
-
 
 #mybatis
 mybatis:

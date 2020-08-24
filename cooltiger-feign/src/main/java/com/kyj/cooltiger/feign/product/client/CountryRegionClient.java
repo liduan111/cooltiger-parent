@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
  * date: 2020/8/13 13:32
  */
 @FeignClient(name = "Product-Service")
-@RequestMapping("/product/countryRegion")
 public interface CountryRegionClient {
 
     /**
@@ -27,7 +26,7 @@ public interface CountryRegionClient {
      * @param upFile 国旗
      * @return
      */
-    @RequestMapping(value = "/addCountryRegion", method = {RequestMethod.POST})
+    @RequestMapping(value = "/product/countryRegion/addCountryRegion", method = {RequestMethod.POST})
     public Result addCountryRegion(
             @RequestParam("parent_id") Integer parentId,
             @RequestParam("region_name") String regionName,
@@ -37,24 +36,26 @@ public interface CountryRegionClient {
     /**
      * 查询国家地区列表
      *
-     * @param parentId
+     * @param parentId 地区父ID
      * @return
      */
-    @RequestMapping(value = "/getCountryRegion", method = {RequestMethod.GET})
+    @RequestMapping(value = "/product/countryRegion/getCountryRegion", method = {RequestMethod.GET})
     public Result getCountryRegion(
             @RequestParam("parent_id") Integer parentId);
 
     /**
      * 修改国家地区信息
      *
-     * @param regionId
-     * @param countryRegionReqVo
+     * @param regionId   地区ID
+     * @param regionName 地区名称
+     * @param regionCode 地区行政编码
      * @return
      */
-    @RequestMapping(value = "/updateCountryRegion", method = {RequestMethod.PUT})
+    @RequestMapping(value = "/product/countryRegion/updateCountryRegion", method = {RequestMethod.PUT})
     public Result updateCountryRegion(
             @RequestParam("region_id") Integer regionId,
-            @RequestBody CountryRegionReqVo countryRegionReqVo);
+            @RequestParam("region_name") String regionName,
+            @RequestParam(value = "region_code", required = false) String regionCode);
 
     /**
      * 删除国家地区信息
@@ -62,8 +63,19 @@ public interface CountryRegionClient {
      * @param regionId
      * @return
      */
-    @RequestMapping(value = "/delCountryRegion", method = {RequestMethod.DELETE})
+    @RequestMapping(value = "/product/countryRegion/delCountryRegion", method = {RequestMethod.DELETE})
     public Result delCountryRegion(
             @RequestParam("region_id") Integer regionId);
 
+    /**
+     * 更改国旗图片
+     *
+     * @param regionId
+     * @param upFile
+     * @return
+     */
+    @RequestMapping(value = "/product/countryRegion/updateNationalFlag",method = {RequestMethod.PUT})
+    Result updateNationalFlag(
+            @RequestParam("region_id") Integer regionId,
+            @RequestParam("pict") MultipartFile upFile);
 }

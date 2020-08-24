@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
  * date: 2020/8/11 14:49
  */
 @FeignClient(name = "Product-Service")
-@RequestMapping("/product/productBrandInfo")
 public interface ProductBrandInfoClient {
 
     /**
@@ -20,7 +19,7 @@ public interface ProductBrandInfoClient {
      * @param productBrandInfoReqVo
      * @return
      */
-    @RequestMapping(value = "/addProductBrandInfo", method = {RequestMethod.POST})
+    @RequestMapping(value = "/product/productBrandInfo/addProductBrandInfo", method = {RequestMethod.POST})
     public Result addProductBrandInfo(@RequestBody ProductBrandInfoReqVo productBrandInfoReqVo);
 
     /**
@@ -31,7 +30,7 @@ public interface ProductBrandInfoClient {
      * @param keyword
      * @return
      */
-    @RequestMapping(value = "/getProductBrandInfoList", method = {RequestMethod.GET})
+    @RequestMapping(value = "/product/productBrandInfo/getProductBrandInfoList", method = {RequestMethod.GET})
     public Result getProductBrandInfoList(
             @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
@@ -44,7 +43,7 @@ public interface ProductBrandInfoClient {
      * @param productBrandInfoReqVo
      * @return
      */
-    @RequestMapping(value = "updateProductBrandInfo/{brand_id}", method = {RequestMethod.PUT})
+    @RequestMapping(value = "/product/productBrandInfoupdateProductBrandInfo/{brand_id}", method = {RequestMethod.PUT})
     public Result updateProductBrandInfo(
             @PathVariable("brand_id") Integer brandId,
             @RequestBody ProductBrandInfoReqVo productBrandInfoReqVo);
@@ -55,7 +54,7 @@ public interface ProductBrandInfoClient {
      * @param brandId
      * @return
      */
-    @RequestMapping(value = "/delProductBrandInfo/{brand_id}", method = {RequestMethod.DELETE})
+    @RequestMapping(value = "/product/productBrandInfo/delProductBrandInfo/{brand_id}", method = {RequestMethod.DELETE})
     public Result delProductBrandInfo(
             @PathVariable("brand_id") Integer brandId);
 }

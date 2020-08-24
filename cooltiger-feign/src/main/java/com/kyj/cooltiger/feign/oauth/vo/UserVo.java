@@ -1,4 +1,4 @@
-package com.kyj.cooltiger.feign.oauth.client.vo;
+package com.kyj.cooltiger.feign.oauth.vo;
 
 import java.io.Serializable;
 import java.util.Date;

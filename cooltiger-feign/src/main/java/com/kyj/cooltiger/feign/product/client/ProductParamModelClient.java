@@ -16,7 +16,6 @@ import java.util.List;
  * date: 2020/8/12 16:52
  */
 @FeignClient(name = "Product-Service")
-@RequestMapping("/product/productParamModel")
 public interface ProductParamModelClient {
 
     /**
@@ -26,7 +25,7 @@ public interface ProductParamModelClient {
      * @param paramModelReqVos
      * @return
      */
-    @RequestMapping(value = "/addProductParamModel", method = {RequestMethod.POST})
+    @RequestMapping(value = "/product/productParamModel/addProductParamModel", method = {RequestMethod.POST})
     public Result addProductParamModel(
             @RequestParam("category_id") Integer categoryId,
             @RequestBody List<ProductParamModelReqVo> paramModelReqVos);
@@ -37,7 +36,7 @@ public interface ProductParamModelClient {
      * @param categoryId
      * @return
      */
-    @RequestMapping(value = "/getProductParamModel", method = {RequestMethod.GET})
+    @RequestMapping(value = "/product/productParamModel/getProductParamModel", method = {RequestMethod.GET})
     public Result getProductParamModel(
             @RequestParam("category_id") Integer categoryId);
 
@@ -47,7 +46,7 @@ public interface ProductParamModelClient {
      * @param paramModelReqVos
      * @return
      */
-    @RequestMapping(value = "/updateProductParamModel", method = {RequestMethod.PUT})
+    @RequestMapping(value = "/product/productParamModel/updateProductParamModel", method = {RequestMethod.PUT})
     public Result updateProductParamModel(
             @RequestParam("category_id") Integer categoryId,
             @RequestBody List<ProductParamModelReqVo> paramModelReqVos);
@@ -58,7 +57,7 @@ public interface ProductParamModelClient {
      * @param categoryId
      * @return
      */
-    @RequestMapping(value = "/delProductParamModel",method = {RequestMethod.DELETE})
+    @RequestMapping(value = "/product/productParamModel/delProductParamModel",method = {RequestMethod.DELETE})
     public Result delProductParamModel(@RequestParam("category_id") Integer categoryId);
 
 }

@@ -63,23 +63,25 @@ public class CountryRegionServiceImpl implements CountryRegionService {
     /**
      * 修改国家地区信息
      *
-     * @param regionId
-     * @param countryRegionReqVo
+     * @param regionId   地区ID
+     * @param regionName 地区名称
+     * @param regionCode 地区行政编码
+     * @param nationalFlagUrl 国旗Url
      * @return
      */
     @Override
-    public void updateCountryRegion(Integer regionId, CountryRegionReqVo countryRegionReqVo) {
+    public void updateCountryRegion(Integer regionId, String regionName, String regionCode, String nationalFlagUrl) {
         CountryRegion countryRegion = countryRegionMapper.getCountryRegionByRegionId(regionId);
         if (countryRegion == null) {
             throw new MyException("REGION_NOT_EXIST", "地区不存在");
         }
-        int count = countryRegionMapper.getCountryRegionCountByRegionName(countryRegionReqVo.getRegionName());
-        if (!countryRegionReqVo.getRegionName().equals(countryRegion.getRegionName()) && count > 0) {
+        int count = countryRegionMapper.getCountryRegionCountByRegionName(regionName);
+        if (!regionName.equals(countryRegion.getRegionName()) && count > 0) {
             throw new MyException("REGION_NAME_IS_EXIST", "地区名称已存在");
         }
-        countryRegion.setRegionName(countryRegionReqVo.getRegionName());
-        countryRegion.setRegionCode(countryRegionReqVo.getRegionCode());
-        countryRegion.setNationalFlagUrl(countryRegionReqVo.getNationalFlagUrl());
+        countryRegion.setRegionName(regionName);
+        countryRegion.setRegionCode(regionCode);
+        countryRegion.setNationalFlagUrl(nationalFlagUrl==null?countryRegion.getNationalFlagUrl():nationalFlagUrl);
         countryRegionMapper.updateCountryRegion(countryRegion);
     }
 

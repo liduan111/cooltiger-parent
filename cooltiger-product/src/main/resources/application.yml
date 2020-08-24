@@ -11,6 +11,8 @@ eureka:
 spring:
   application:
     name: Product-Service
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     url: jdbc:mysql://36.133.141.6:3306/cooltiger?serverTimezone=UTC&userUnicode=true&characterEncoding=utf-8
     username: root

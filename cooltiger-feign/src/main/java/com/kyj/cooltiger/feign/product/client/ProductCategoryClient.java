@@ -13,7 +13,6 @@ import java.util.List;
  * date: 2020/8/10 11:30
  */
 @FeignClient(name = "Product-Service")
-@RequestMapping("/product/productCategory")
 public interface ProductCategoryClient {
 
     /**
@@ -22,7 +21,7 @@ public interface ProductCategoryClient {
      * @param categoryLists 分类信息
      * @return
      */
-    @RequestMapping(value = "/addProductCategory",method = {RequestMethod.POST})
+    @RequestMapping(value = "/product/productCategory/addProductCategory",method = {RequestMethod.POST})
     public Result addProductCategory(
             @RequestParam(value = "parent_id",defaultValue = "0") Integer parentId,
             @RequestBody List<ProductCategoryAddReqVo> categoryLists);
@@ -32,7 +31,7 @@ public interface ProductCategoryClient {
      * @param parentId 分类父ID
      * @return
      */
-    @RequestMapping(value = "/productCategoryList/{parent_id}",method = {RequestMethod.GET})
+    @RequestMapping(value = "/product/productCategory/productCategoryList/{parent_id}",method = {RequestMethod.GET})
     public Result productCategoryList(
             @PathVariable("parent_id") Integer parentId);
 
@@ -42,7 +41,7 @@ public interface ProductCategoryClient {
      * @param category 分类信息
      * @return
      */
-    @RequestMapping(value = "/updateProductCategory",method = {RequestMethod.PUT})
+    @RequestMapping(value = "/product/productCategory/updateProductCategory",method = {RequestMethod.PUT})
     public Result updateProductCategory(
             @RequestParam(value = "category_id") Integer categoryId,
             @RequestBody ProductCategoryAddReqVo category);
@@ -52,7 +51,7 @@ public interface ProductCategoryClient {
      * @param categoryId 分类ID
      * @return
      */
-    @RequestMapping(value = "/delProductCategory",method = {RequestMethod.DELETE})
+    @RequestMapping(value = "/product/productCategory/delProductCategory",method = {RequestMethod.DELETE})
     public Result delProductCategory(
             @RequestParam(value = "category_id") Integer categoryId);
 }

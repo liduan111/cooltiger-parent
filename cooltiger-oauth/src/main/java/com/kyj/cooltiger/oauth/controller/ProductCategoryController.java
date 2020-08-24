@@ -1,6 +1,6 @@
 package com.kyj.cooltiger.oauth.controller;
 
-import com.kyj.cooltiger.feign.oauth.client.ProductCategoryClient;
+import com.kyj.cooltiger.feign.oauth.client.CategoryClient;
 import com.kyj.cooltiger.oauth.entity.ProductCategoryVo;
 import com.kyj.cooltiger.oauth.service.ApiProductCategoryService;
 import com.kyj.cooltiger.oauth.utils.ApiBaseAction;
@@ -24,7 +24,7 @@ import java.util.Map;
 @Api("商品分类接口")
 @RestController
 @RequestMapping("/api/category")
-public class ProductCategoryController extends ApiBaseAction implements ProductCategoryClient {
+public class ProductCategoryController extends ApiBaseAction implements CategoryClient {
 
     @Autowired
     private ApiProductCategoryService productCategoryService;

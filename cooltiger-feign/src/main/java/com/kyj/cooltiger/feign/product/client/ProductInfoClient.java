@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
  * date: 2020/7/28 14:44
  */
 @FeignClient(name = "Product-Service")
-@RequestMapping("/product/productInfo")
 public interface ProductInfoClient {
 
     /**
@@ -26,7 +25,7 @@ public interface ProductInfoClient {
      * @param keyword 搜索关键字
      * @return
      */
-    @RequestMapping(value = "/getProductInfoList/{storeId}",method = {RequestMethod.GET})
+    @RequestMapping(value = "/product/productInfo/getProductInfoList/{storeId}",method = {RequestMethod.GET})
     public Result getProductInfoList(
             @PathVariable("storeId") Integer storeId,
             @RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
@@ -40,7 +39,7 @@ public interface ProductInfoClient {
      * @param productInfoAddReqVo 商品信息
      * @return
      */
-    @RequestMapping(value = "/addProductInfo/{storeId}",method = {RequestMethod.POST})
+    @RequestMapping(value = "/product/productInfo/addProductInfo/{storeId}",method = {RequestMethod.POST})
     public Result addProductInfo(
             @PathVariable("storeId") Integer storeId,
             @RequestParam("productInfoAddReqVo") ProductInfoAddReqVo productInfoAddReqVo);
@@ -50,7 +49,7 @@ public interface ProductInfoClient {
      * @param productId
      * @return
      */
-    @RequestMapping(value = "/getProductInfo/{productId}",method = {RequestMethod.GET})
+    @RequestMapping(value = "/product/productInfo/getProductInfo/{productId}",method = {RequestMethod.GET})
     public Result getProductInfo(@PathVariable("productId") Integer productId);
 
     /**
@@ -58,7 +57,7 @@ public interface ProductInfoClient {
      * @param productId
      * @return
      */
-    @RequestMapping(value = "/productInfoDownShelf/{productId}",method = {RequestMethod.PUT})
+    @RequestMapping(value = "/product/productInfo/productInfoDownShelf/{productId}",method = {RequestMethod.PUT})
     public Result productInfoDownShelf(@PathVariable("productId") Integer productId);
 
     /**
@@ -66,7 +65,7 @@ public interface ProductInfoClient {
      * @param productId
      * @return
      */
-    @RequestMapping(value = "/productInfoAudit/{productId}",method = {RequestMethod.PUT})
+    @RequestMapping(value = "/product/productInfo/productInfoAudit/{productId}",method = {RequestMethod.PUT})
     public Result productInfoAudit(@PathVariable("productId") Integer productId);
 
     /**
@@ -74,6 +73,6 @@ public interface ProductInfoClient {
      * @param productId
      * @return
      */
-    @RequestMapping(value = "/deleteProductInfo/{productId}",method = {RequestMethod.DELETE})
+    @RequestMapping(value = "/product/productInfo/deleteProductInfo/{productId}",method = {RequestMethod.DELETE})
     public Result deleteProductInfo(@PathVariable("productId") Integer productId);
 }

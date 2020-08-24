@@ -2,7 +2,7 @@ package com.kyj.cooltiger.oauth.controller;
 
 import com.kyj.cooltiger.common.utils.GenericResponse;
 import com.kyj.cooltiger.common.utils.LoginInfo;
-import com.kyj.cooltiger.feign.oauth.client.vo.UserVo;
+import com.kyj.cooltiger.feign.oauth.vo.UserVo;
 import com.kyj.cooltiger.oauth.entity.CollectVo;
 import com.kyj.cooltiger.oauth.entity.GoodsCollectVo;
 import com.kyj.cooltiger.oauth.service.ApiCollectService;

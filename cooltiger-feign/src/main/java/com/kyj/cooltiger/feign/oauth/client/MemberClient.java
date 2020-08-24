@@ -12,14 +12,14 @@ import java.util.Map;
  * @version 1.0
  * @date 2020/8/5 11:36
  */
-@FeignClient(name ="Oauth-Service")
+@FeignClient(name = "Oauth-Service")
 public interface MemberClient {
     /**
      * 查询会员列表
      * @param map
      * @return
      */
-    @RequestMapping(value = "/memberlist",method = RequestMethod.GET)
+    @RequestMapping(value = "/member/memberlist",method = RequestMethod.GET)
     public  Object  memberlist(@RequestBody Map<String,Object> map);
 
     /**
@@ -27,6 +27,6 @@ public interface MemberClient {
      * @param code
      * @return
      */
-    @RequestMapping(value = "/queryaddress",method = RequestMethod.GET)
+    @RequestMapping(value = "/member/queryaddress",method = RequestMethod.GET)
     public Object queryaddress(@RequestBody String code);
 }
