@@ -21,6 +21,15 @@ public class ApiProductCategoryServiceimpl implements ApiProductCategoryService 
     private ProductCategoryDao productCategoryDao;
 
     /**
+     * 首页分类
+     * @return
+     */
+    @Override
+    public List<ProductCategoryVo> indexcategory() {
+        return productCategoryDao.indexcategory();
+    }
+
+    /**
      * 查询子分类
      * @return
      */

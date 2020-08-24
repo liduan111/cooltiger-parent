@@ -29,7 +29,7 @@ public class StoreInfoController implements StoreInfoClient {
      */
     @Override
     @RequestMapping(value = "/storeApplyInto/{userId}",method = {RequestMethod.POST})
-    public Result StoreApplyInto(
+    public Result storeApplyInto(
             @PathVariable("userId") Integer userId,
             @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo) {
         storeInfoService.addStoreIntoInfo(userId,storeApplyIntoReqVo);

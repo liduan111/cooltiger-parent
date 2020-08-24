@@ -24,4 +24,10 @@ public interface ProductCategoryDao {
      * @return
      */
     List<ProductCategoryVo> categorylist();
+
+    /**
+     *首页分类
+     * @return
+     */
+    List<ProductCategoryVo> indexcategory();
 }

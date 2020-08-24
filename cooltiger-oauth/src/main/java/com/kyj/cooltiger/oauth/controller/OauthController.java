@@ -85,6 +85,11 @@ public class OauthController extends ApiBaseAction implements OauthClient {
 
         Date nowTime = new Date();
       Userpo userVo=apiUserService.queryByopenId(openid);
+        Long userCode=userVo.getUserCode();
+        //查询用户收藏店铺的个数
+        CollectVo collectVo=collectService.queryusercodenum(userCode);
+        //查询用户收藏商品的个数
+        GoodsCollectVo goodsCollectVo=collectService.querygoodsusercode(userCode);
         if (userVo == null){
             userVo=new Userpo();
             userVo.setUserCode(CharUtil.getID());
@@ -115,6 +120,9 @@ public class OauthController extends ApiBaseAction implements OauthClient {
                 result.put("session_key", session_key);
                 result.put("open_id", openid);
                 result.put("userVo", userVo);
+                result.put("token",token);
+                result.put("collectVo",collectVo);
+                result.put("goodsCollectVo",goodsCollectVo);
                 return toResponsSuccess(result);
             }else {
                 return toResponsFail("登录失败");
@@ -125,11 +133,7 @@ public class OauthController extends ApiBaseAction implements OauthClient {
             user.setLast_login_time(DateUtils.getDates());
             user.setUserCode(userVo.getUserCode());
             boolean flag=apiUserService.updatelogintime(user);
-            Long userCode=userVo.getUserCode();
-            //查询用户收藏店铺的个数
-            CollectVo collectVo=collectService.queryusercodenum(userCode);
-            //查询用户收藏商品的个数
-            GoodsCollectVo goodsCollectVo=collectService.querygoodsusercode(userCode);
+
             if (flag==true) {
                 Map<String, Object> result = new HashMap<>();
                 userVo.setPassword(null);

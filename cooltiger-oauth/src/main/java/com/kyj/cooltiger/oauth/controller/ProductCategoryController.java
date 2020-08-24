@@ -47,4 +47,16 @@ public class ProductCategoryController extends ApiBaseAction implements Category
         map.put("productCategory",productCategoryVo);
         return toResponsSuccess(map);
     }
+
+    /**
+     * 首页分类
+     * @return
+     */
+    @ApiOperation("首页分类")
+    @RequestMapping(value = "/indexcategory",method = RequestMethod.GET)
+    public  Object indexcategory(){
+        List<ProductCategoryVo> productCategoryVo=productCategoryService.indexcategory();
+        return  toResponsSuccess(productCategoryVo);
+    }
+
 }

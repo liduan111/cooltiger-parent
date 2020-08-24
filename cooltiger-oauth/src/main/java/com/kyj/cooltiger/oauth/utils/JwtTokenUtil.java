@@ -91,17 +91,70 @@ public class JwtTokenUtil {
                 .getBody();
     }
 
+
+
+
+    public static final String SUBJECT = "onehee";
+
+    public static final long EXPIRE = 1000*60;  //过期时间，毫秒，一秒
+
+    //秘钥
+    public static final  String APPSECRET = "c60b98a542615d7d26e3724f26356a47";
+
+    /**
+     * 生成jwt
+     */
+    public static String createJsonWebToken(Userpo user){
+
+        if(user == null || user.getUserId() == null || user.getUsername()== null){
+            return null;
+        }
+        String token = Jwts.builder().setSubject(SUBJECT)
+                .claim("id",user.getUserId())
+                .claim("name",user.getUsername())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis()+EXPIRE))
+                .signWith(SignatureAlgorithm.HS256,APPSECRET).compact();
+
+        return token;
+    }
+
+
+    /**
+     * 校验token
+     */
+    public static Claims checkJWT(String token ){
+
+        try{
+            final Claims claims =  Jwts.parser().setSigningKey(APPSECRET).
+                    parseClaimsJws(token).getBody();
+            return  claims;
+
+        }catch (Exception e){ }
+        return null;
+
+    }
+
+
+
+
+
+
+
+
+
     public static void main(String[] args) {
         Userpo userpo=new Userpo();
         String ss= CharUtil.getRandomNum(6);
-        System.out.println("args = [" + ss + "]");
+        //System.out.println("args = [" + ss + "]");
         userpo.setUserId(Long.parseLong(ss));
-
-
-
-        String token=generateToken(userpo);
+        userpo.setUsername("shazi");
+        String  sheng=createJsonWebToken(userpo);
+        System.out.println("sheng = [" + sheng + "]");
+        System.out.println("args = [" + checkJWT(sheng) + "]");
+        /*String token=generateToken(userpo);
         System.out.println(token);
-        System.out.println(getTokenBody(token));
+        System.out.println(getTokenBody(token));*/
         /*String  tts="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0NDE0NCIsImV4cCI6MTU5NTk5MDUyMiwiaWF0IjoxNTk1OTkwNTIyLCJpc3MiOiJKQU1FUyJ9.hXcUAa7gMj_LKEHx6kURTYYs4xCgkTCeGBS79cV2R3-jkBP8NzkT5lubsIdomex_A0gZct69QxVSFBYgJpM02w";
         System.out.println(getTokenBody(tts));*/
 

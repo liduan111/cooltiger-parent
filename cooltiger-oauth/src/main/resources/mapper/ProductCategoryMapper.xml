@@ -12,6 +12,16 @@
         <result property="createTime" column="create_time"/>
         <result property="modifiedTime" column="modified_time"/>
     </resultMap>
+    <select id="indexcategory" resultType="com.kyj.cooltiger.oauth.entity.ProductCategoryVo">
+        select
+            category_id,
+            category_name,
+            logo_url
+        from ky_product_category
+        where parent_id=2
+
+
+    </select>
     <select id="querycategorylist" resultType="com.kyj.cooltiger.oauth.entity.ProductCategoryVo">
         select
         category_id,
