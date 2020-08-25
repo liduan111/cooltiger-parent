@@ -1,8 +1,7 @@
 package com.kyj.cooltiger.product.service;
 
-import com.kyj.cooltiger.feign.product.vo.ProductCategoryAddReqVo;
+import com.kyj.cooltiger.product.entity.ProductCategory;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,30 +13,46 @@ public interface ProductCategoryService {
 
     /**
      * 添加商品分类
-     * @param parentId 分类父ID
-     * @param categoryLists 分类信息
+     *
+     * @param categoryName     分类名称
+     * @param categoryParentId 分类父ID
+     * @param categotyLevel    分类等级
+     * @param categoryLogoUrl  分类logoUrl
      */
-    public void addProductCategory(Integer parentId,List<ProductCategoryAddReqVo> categoryLists);
+    public void addProductCategory(String categoryName, Integer categoryParentId, Integer categotyLevel, String categoryLogoUrl);
 
     /**
      * 查询商品分类列表信息
-     * @param parentId 分类父ID
+     *
+     * @param categoryParentId 父分类ID(0:一级分类）
+     * @param categoryLevel    分类等级（0-一级分类1-二级分类2-三级分类）
      * @return
      */
-    public Map<String, Object> getProductCategoryList(Integer parentId);
+    public Map<String, Object> getProductCategoryList(Integer categoryParentId, Integer categoryLevel);
 
     /**
      * 修改商品分类
-     * @param categoryId 分类ID
-     * @param category 分类信息
+     *
+     * @param categoryId      分类ID
+     * @param categoryName    分类名称
+     * @param categoryLogoUrl 分类logoUrl
      * @return
      */
-    public void updateProductCategory(Integer categoryId, ProductCategoryAddReqVo category);
+    public void updateProductCategory(Integer categoryId, String categoryName, String categoryLogoUrl);
 
     /**
      * 删除商品分类信息
+     *
      * @param categoryId 分类ID
      * @return
      */
     public void delProductCategory(Integer categoryId);
+
+    /**
+     * 根据分类ID查询分类信息
+     *
+     * @param categoryId 分类ID
+     * @return
+     */
+    public ProductCategory getProductCategoryByCategoryId(Integer categoryId);
 }

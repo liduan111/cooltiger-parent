@@ -15,34 +15,50 @@ import java.util.List;
 public interface ProductCategoryMapper {
 
     /**
-     * 批量添加商品分类
-     * @param productCategories
+     * 根据分类名称查询分类个数
+     *
+     * @param categoryName
      * @return
      */
-    public int batchAddProductCategory(@Param("productCategories") List<ProductCategory> productCategories);
+    public int getProductCategoryCountByCategoryName(@Param("categoryName") String categoryName);
 
     /**
-     * 根据父ID查询商品分类列表信息
-     * @param parentId
+     * 添加商品分类
+     *
+     * @param productCategory
      * @return
      */
-    public List<ProductCategory> getProductCategoryListByParentId(@Param("parentId") Integer parentId);
+    public int addProductCategory(@Param("productCategory") ProductCategory productCategory);
+
+    /**
+     * 根据分类父ID或分类等级查询商品分类列表信息
+     *
+     * @param categoryParentId
+     * @param categoryLevel
+     * @return
+     */
+    public List<ProductCategory> getProductCategoryListByParentId$CategoryLevel(
+            @Param("categoryParentId") Integer categoryParentId,
+            @Param("categoryLevel") Integer categoryLevel);
 
     /**
      * 根据分类ID查询分类信息
+     *
      * @param categoryId
      * @return
      */
-    public ProductCategory getProductCategoryListByCategoryId(@Param("categoryId") Integer categoryId);
+    public ProductCategory getProductCategoryByCategoryId(@Param("categoryId") Integer categoryId);
 
     /**
      * 修改商品分类信息
+     *
      * @param productCategory
      */
     public void updateProductCategory(@Param("productCategory") ProductCategory productCategory);
 
     /**
      * 删除商品分类信息
+     *
      * @param categoryId 分类ID
      * @return
      */
@@ -50,8 +66,10 @@ public interface ProductCategoryMapper {
 
     /**
      * 根据名称查询分类信息个数
+     *
      * @param categoryName 分类名称
      * @return
      */
     public int getProductCategoryCountByCategoryId(@Param("categoryName") String categoryName);
+
 }

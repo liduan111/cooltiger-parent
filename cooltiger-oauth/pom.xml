@@ -11,6 +11,7 @@
     <description>认证中心</description>
     <artifactId>cooltiger-oauth</artifactId>
     <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
 
   <dependencies>
       <dependency>

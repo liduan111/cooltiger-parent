@@ -1,10 +1,9 @@
 package com.kyj.cooltiger.product.controller;
 
-import com.alibaba.druid.util.StringUtils;
+import com.kyj.cooltiger.common.constant.IMAGES_PATH;
 import com.kyj.cooltiger.common.excep.MyException;
 import com.kyj.cooltiger.common.utils.*;
 import com.kyj.cooltiger.feign.product.client.CountryRegionClient;
-import com.kyj.cooltiger.feign.product.vo.CountryRegionReqVo;
 import com.kyj.cooltiger.product.config.FtpConfig;
 import com.kyj.cooltiger.product.entity.CountryRegion;
 import com.kyj.cooltiger.product.service.CountryRegionService;
@@ -58,16 +57,14 @@ public class CountryRegionController implements CountryRegionClient {
             }
             //1.2使用CharUtil工具类生成新图片名（时间戳+随机字符串）+ 后缀名
             String newName = CharUtil.getImageName(25) + oldName.substring(oldName.lastIndexOf("."));
-            //1.3生成文件在服务器端存储的子目录
-            String filePath = "/national_flag";
 
             //2、把前端输入信息，包括图片的url保存到数据库
             countryRegionService.addCountryRegion(parentId, regionName, regionCode,
-                    ftpConfig.getImageBaseUrl() + filePath + "/" + newName);
+                    ftpConfig.getImageBaseUrl() + IMAGES_PATH.NATIONAL_FLAG + "/" + newName);
             //3、调用FtpUtil工具类上传图片
             FtpUtil ftpUtil = new FtpUtil();
             boolean result = ftpUtil.uploadFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
-                    ftpConfig.getPassWord(), ftpConfig.getBasePath(), filePath, newName, upFile);
+                    ftpConfig.getPassWord(), ftpConfig.getBasePath(), IMAGES_PATH.NATIONAL_FLAG, newName, upFile);
             if (!result) {
                 throw new MyException("PICTURE_UPLOAD_ERROR", "图片上传失败");
             }
@@ -115,19 +112,16 @@ public class CountryRegionController implements CountryRegionClient {
      */
     @Override
     @RequestMapping(value = "/delCountryRegion", method = {RequestMethod.DELETE})
-    public Result delCountryRegion(
-            @RequestParam("region_id") Integer regionId) {
+    public Result delCountryRegion(@RequestParam("region_id") Integer regionId) {
         //获取图片名
         CountryRegion countryRegion = countryRegionService.getCountryRegionByRegionId(regionId);
         //图片存在则删除
-        if(countryRegion.getNationalFlagUrl() != null && countryRegion.getNationalFlagUrl() != ""){
+        if (countryRegion.getNationalFlagUrl() != null && countryRegion.getNationalFlagUrl() != "") {
             String fileName = countryRegion.getNationalFlagUrl().substring(countryRegion.getNationalFlagUrl().lastIndexOf("/") + 1);
-            //文件在服务器端存储的子目录
-            String filePath = "/national_flag";
             //调用FtpUtil工具类删除图片
             FtpUtil ftpUtil = new FtpUtil();
             ftpUtil.deleteFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
-                    ftpConfig.getPassWord(), ftpConfig.getBasePath() + filePath, fileName);
+                    ftpConfig.getPassWord(), ftpConfig.getBasePath() + IMAGES_PATH.NATIONAL_FLAG, fileName);
         }
         //删除数据库
         countryRegionService.delCountryRegion(regionId);
@@ -142,7 +136,7 @@ public class CountryRegionController implements CountryRegionClient {
      * @return
      */
     @Override
-    @RequestMapping(value = "/updateNationalFlag",method = {RequestMethod.PUT})
+    @RequestMapping(value = "/updateNationalFlag", method = {RequestMethod.PUT})
     public Result updateNationalFlag(
             @RequestParam("region_id") Integer regionId,
             @RequestParam("pict") MultipartFile upFile) {
@@ -150,14 +144,12 @@ public class CountryRegionController implements CountryRegionClient {
         //获取地区信息
         CountryRegion countryRegion = countryRegionService.getCountryRegionByRegionId(regionId);
         //图片存在则删除
-        if(countryRegion.getNationalFlagUrl() != null && countryRegion.getNationalFlagUrl() != ""){
+        if (countryRegion.getNationalFlagUrl() != null && countryRegion.getNationalFlagUrl() != "") {
             String fileName = countryRegion.getNationalFlagUrl().substring(countryRegion.getNationalFlagUrl().lastIndexOf("/") + 1);
-            //文件在服务器端存储的子目录
-            String filePath = "/national_flag";
             //调用FtpUtil工具类删除图片
             FtpUtil ftpUtil = new FtpUtil();
             ftpUtil.deleteFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
-                    ftpConfig.getPassWord(), ftpConfig.getBasePath() + filePath, fileName);
+                    ftpConfig.getPassWord(), ftpConfig.getBasePath() + IMAGES_PATH.NATIONAL_FLAG, fileName);
         }
         //添加信息图片
         //1、给上传的图片生成新的文件名
@@ -169,16 +161,14 @@ public class CountryRegionController implements CountryRegionClient {
         }
         //1.2使用CharUtil工具类生成新图片名（时间戳+随机字符串）+ 后缀名
         String newName = CharUtil.getImageName(25) + oldName.substring(oldName.lastIndexOf("."));
-        //1.3生成文件在服务器端存储的子目录
-        String filePath = "/national_flag";
 
         //2、把新的图片url保存到数据库
         countryRegionService.updateCountryRegion(regionId, countryRegion.getRegionName(), countryRegion.getRegionCode(),
-                ftpConfig.getImageBaseUrl() + filePath + "/" + newName);
+                ftpConfig.getImageBaseUrl() + IMAGES_PATH.NATIONAL_FLAG + "/" + newName);
         //3、调用FtpUtil工具类上传图片
         FtpUtil ftpUtil = new FtpUtil();
         boolean result = ftpUtil.uploadFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
-                ftpConfig.getPassWord(), ftpConfig.getBasePath(), filePath, newName, upFile);
+                ftpConfig.getPassWord(), ftpConfig.getBasePath(), IMAGES_PATH.NATIONAL_FLAG, newName, upFile);
         if (!result) {
             throw new MyException("PICTURE_UPLOAD_ERROR", "图片上传失败");
         }

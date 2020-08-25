@@ -1,6 +1,6 @@
 package com.kyj.cooltiger.product.service;
 
-import com.kyj.cooltiger.feign.product.vo.ProductBrandInfoReqVo;
+import com.kyj.cooltiger.product.entity.ProductBrandInfo;
 
 import java.util.Map;
 
@@ -14,10 +14,15 @@ public interface ProductBrandInfoService {
     /**
      * 添加品牌信息
      *
-     * @param productBrandInfoReqVo
+     * @param brandName 品牌名称
+     * @param brandDesc 品牌描述
+     * @param brandOrder 排序
+     * @param brandStatus 品牌状态
+     * @param brandLogoUrl 品牌logourl
      * @return
      */
-    public void addProductBrandInfo(ProductBrandInfoReqVo productBrandInfoReqVo);
+    public void addProductBrandInfo(String brandName, String brandDesc, Integer brandOrder, Integer brandStatus,
+                                    String brandLogoUrl);
 
     /**
      * 查询品牌信息列表
@@ -30,17 +35,31 @@ public interface ProductBrandInfoService {
     public Map<String, Object> getProductBrandInfoList(Integer pageNo, Integer pageSize, String keyword);
 
     /**
-     * 修改品牌信息
+     * 修改商品品牌信息
      *
-     * @param brandId
-     * @param productBrandInfoReqVo
+     * @param brandId 品牌ID
+     * @param brandName 品牌名称
+     * @param brandDesc 品牌描述
+     * @param brandOrder 排序
+     * @param brandStatus 品牌状态 0-未启用1-已启用
+     * @param brandLogoUrl 品牌logoUrl
+     * @return
      */
-    public void updateProductBrandInfo(Integer brandId, ProductBrandInfoReqVo productBrandInfoReqVo);
+    public void updateProductBrandInfo(Integer brandId, String brandName, String brandDesc, Integer brandOrder,
+                                       Integer brandStatus, String brandLogoUrl);
 
     /**
      * 删除品牌信息
      *
-     * @param brandId
+     * @param brandId 品牌ID
      */
     public void delProductBrandInfo(Integer brandId);
+
+    /**
+     * 获取品牌信息
+     *
+     * @param brandId 品牌ID
+     * @return
+     */
+    public ProductBrandInfo getProductBrandInfo(Integer brandId);
 }

@@ -2,34 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kyj.cooltiger.product.mapper.ProductCategoryMapper">
 
-    <!-- 批量添加商品分类 -->
-    <insert id="batchAddProductCategory" parameterType="ProductCategory">
+    <!-- 根据分类名称查询分类信息 -->
+    <select id="getProductCategoryCountByCategoryName" resultType="int">
+        SELECT
+            COUNT(1)
+        FROM ky_product_category
+        WHERE category_name = #{categoryName}
+    </select>
+
+    <!-- 添加商品分类 -->
+    <insert id="addProductCategory" parameterType="ProductCategory">
         INSERT INTO ky_product_category
-        (category_name, parent_id, logo_url)
+            (category_name, category_parent_id, categoty_level, category_logo_url)
         VALUES
-        <foreach collection="productCategories" item="category" index="index" separator=",">
-            (#{category.categoryName},#{category.parentId},#{category.logoUrl})
-        </foreach>
+        (#{productCategory.categoryName}, #{productCategory.categoryParentId},
+         #{productCategory.categotyLevel}, #{productCategory.categoryLogoUrl})
     </insert>
 
-    <!-- 根据父ID查询商品分类列表 -->
-    <select id="getProductCategoryListByParentId" resultType="ProductCategory">
+    <!-- 根据分类父ID或分类等级查询商品分类列表 -->
+    <select id="getProductCategoryListByParentId$CategoryLevel" resultType="ProductCategory">
         SELECT
-            category_id   categoryId,
-            category_name categoryName,
-            parent_id     parentId,
-            logo_url      logoUrl
+        category_id categoryId,
+        category_name categoryName,
+        category_parent_id categoryParentId,
+        categoty_level categotyLevel,
+        category_logo_url categoryLogoUrl
         FROM ky_product_category
-        WHERE parent_id = #{parentId}
+        WHERE 1 = 1
+        <if test="categoryParentId != null and categoryParentId != ''">
+            AND category_parent_id = #{categoryParentId}
+        </if>
+        <if test="categoryLevel != null and categoryLevel != ''">
+            AND categoty_level = #{categoryLevel}
+        </if>
     </select>
 
     <!-- 根据分类ID查询分类信息 -->
-    <select id="getProductCategoryListByCategoryId" resultType="ProductCategory">
+    <select id="getProductCategoryByCategoryId" resultType="ProductCategory">
         SELECT
-            category_id   categoryId,
-            category_name categoryName,
-            parent_id     parentId,
-            logo_url      logoUrl
+            category_id        categoryId,
+            category_name      categoryName,
+            category_parent_id categoryParentId,
+            categoty_level     categotyLevel,
+            category_logo_url  categoryLogoUrl
         FROM ky_product_category
         WHERE category_id = #{categoryId}
     </select>
@@ -39,9 +54,10 @@
         UPDATE
             ky_product_category
         SET
-            category_name = #{productCategory.categoryName},
-            parent_id     = #{productCategory.parentId},
-            logo_url      = #{productCategory.logoUrl}
+            category_name      = #{productCategory.categoryName},
+            category_parent_id = #{productCategory.categoryParentId},
+            categoty_level     = #{productCategory.categotyLevel},
+            category_logo_url  = #{productCategory.categoryLogoUrl}
         WHERE
             category_id = #{productCategory.categoryId}
     </update>
@@ -53,11 +69,4 @@
         WHERE category_id = #{categoryId}
     </delete>
 
-    <!-- 根据分类名称查询分类信息个数 -->
-    <select id="getProductCategoryCountByCategoryId" resultType="int">
-        SELECT
-            COUNT(1)
-        FROM ky_product_category
-        WHERE category_name = #{categoryName}
-    </select>
 </mapper>

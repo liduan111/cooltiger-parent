@@ -1,6 +1,5 @@
 package com.kyj.cooltiger.product.service;
 
-import com.kyj.cooltiger.feign.product.vo.CountryRegionReqVo;
 import com.kyj.cooltiger.product.entity.CountryRegion;
 
 import java.util.Map;

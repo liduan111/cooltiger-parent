@@ -2,13 +2,13 @@ package com.kyj.cooltiger.feign.product.controller;
 
 import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.product.client.ProductBrandInfoClient;
-import com.kyj.cooltiger.feign.product.vo.ProductBrandInfoReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author liduan
- * Description:
+ * Description: 品牌信息controller
  * date: 2020/8/24 14:02
  */
 @RestController
@@ -21,12 +21,21 @@ public class ProductBrandInfoController {
     /**
      * 添加品牌信息
      *
-     * @param productBrandInfoReqVo
+     * @param brandName 品牌名称
+     * @param brandDesc 品牌描述
+     * @param brandOrder 排序
+     * @param brandStatus 品牌状态 0-未启用1-启用
+     * @param brandLogo 品牌logo
      * @return
      */
     @RequestMapping(value = "/addProductBrandInfo", method = {RequestMethod.POST})
-    public Result addProductBrandInfo(@RequestBody ProductBrandInfoReqVo productBrandInfoReqVo){
-        return productBrandInfoClient.addProductBrandInfo(productBrandInfoReqVo);
+    public Result addProductBrandInfo(
+            @RequestParam("brand_name") String brandName,
+            @RequestParam(value = "brand_desc", required = false) String brandDesc,
+            @RequestParam(value = "brand_order",defaultValue = "0") Integer brandOrder,
+            @RequestParam(value = "brand_status",defaultValue = "1") Integer brandStatus,
+            @RequestParam(value = "brand_logo", required = false) MultipartFile brandLogo){
+        return productBrandInfoClient.addProductBrandInfo(brandName,brandDesc,brandOrder,brandStatus,brandLogo);
     }
 
     /**
@@ -48,26 +57,46 @@ public class ProductBrandInfoController {
     /**
      * 修改商品品牌信息
      *
-     * @param brandId
-     * @param productBrandInfoReqVo
+     * @param brandId 品牌ID
+     * @param brandName 品牌名称
+     * @param brandDesc 品牌描述
+     * @param brandOrder 排序
+     * @param brandStatus 品牌状态 0-未启用1-已启用
      * @return
      */
-    @RequestMapping(value = "updateProductBrandInfo/{brand_id}", method = {RequestMethod.PUT})
+    @RequestMapping(value = "updateProductBrandInfo", method = {RequestMethod.PUT})
     public Result updateProductBrandInfo(
-            @PathVariable("brand_id") Integer brandId,
-            @RequestBody ProductBrandInfoReqVo productBrandInfoReqVo){
-        return productBrandInfoClient.updateProductBrandInfo(brandId,productBrandInfoReqVo);
+            @RequestParam("brand_id") Integer brandId,
+            @RequestParam("brand_name") String brandName,
+            @RequestParam(value = "brand_desc", required = false) String brandDesc,
+            @RequestParam(value = "brand_order",defaultValue = "0") Integer brandOrder,
+            @RequestParam(value = "brand_status",defaultValue = "1") Integer brandStatus){
+        return productBrandInfoClient.updateProductBrandInfo(brandId,brandName,brandDesc,brandOrder,brandStatus);
     }
 
     /**
      * 删除品牌信息
      *
-     * @param brandId
+     * @param brandId 品牌ID
      * @return
      */
-    @RequestMapping(value = "/delProductBrandInfo/{brand_id}", method = {RequestMethod.DELETE})
+    @RequestMapping(value = "/delProductBrandInfo", method = {RequestMethod.DELETE})
     public Result delProductBrandInfo(
-            @PathVariable("brand_id") Integer brandId){
+            @RequestParam("brand_id") Integer brandId){
         return productBrandInfoClient.delProductBrandInfo(brandId);
+    }
+
+    /**
+     * 更换品牌logo图片
+     *
+     * @param brandId 品牌ID
+     * @param brandLogo 品牌logo
+     * @return
+     */
+    @RequestMapping(value = "/updateBrandLogo",method = {RequestMethod.PUT})
+    public Result updateBrandLogo(
+            @RequestParam("brand_id") Integer brandId,
+            @RequestParam(value = "brand_logo") MultipartFile brandLogo){
+        return productBrandInfoClient.updateBrandLogo(brandId,brandLogo);
     }
 }

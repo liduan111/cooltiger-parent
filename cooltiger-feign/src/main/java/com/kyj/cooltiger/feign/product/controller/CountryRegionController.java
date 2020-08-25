@@ -2,14 +2,13 @@ package com.kyj.cooltiger.feign.product.controller;
 
 import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.product.client.CountryRegionClient;
-import com.kyj.cooltiger.feign.product.vo.CountryRegionReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author liduan
- * Description:
+ * Description: 国家地区信息controller
  * date: 2020/8/24 13:55
  */
 @RestController

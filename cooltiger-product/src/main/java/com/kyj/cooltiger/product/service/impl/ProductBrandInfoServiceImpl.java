@@ -2,7 +2,6 @@ package com.kyj.cooltiger.product.service.impl;
 
 import com.kyj.cooltiger.common.excep.MyException;
 import com.kyj.cooltiger.common.utils.PageUtil;
-import com.kyj.cooltiger.feign.product.vo.ProductBrandInfoReqVo;
 import com.kyj.cooltiger.product.entity.ProductBrandInfo;
 import com.kyj.cooltiger.product.mapper.ProductBrandInfoMapper;
 import com.kyj.cooltiger.product.service.ProductBrandInfoService;
@@ -27,21 +26,25 @@ public class ProductBrandInfoServiceImpl implements ProductBrandInfoService {
     /**
      * 添加品牌信息
      *
-     * @param productBrandInfoReqVo
+     * @param brandName 品牌名称
+     * @param brandDesc 品牌描述
+     * @param brandOrder 排序
+     * @param brandStatus 品牌状态
+     * @param brandLogoUrl 品牌logourl
      * @return
      */
     @Override
-    public void addProductBrandInfo(ProductBrandInfoReqVo productBrandInfoReqVo) {
-        int count = productBrandInfoMapper.getProductBrandCountByBrandName(productBrandInfoReqVo.getBrandName());
+    public void addProductBrandInfo(String brandName, String brandDesc, Integer brandOrder, Integer brandStatus, String brandLogoUrl) {
+        int count = productBrandInfoMapper.getProductBrandCountByBrandName(brandName);
         if (count > 0) {
             throw new MyException("BRAND_NAME_IS_EXIST", "品牌名称已存在");
         }
         ProductBrandInfo productBrandInfo = new ProductBrandInfo();
-        productBrandInfo.setBrandName(productBrandInfoReqVo.getBrandName());
-        productBrandInfo.setBrandLogoUrl(productBrandInfoReqVo.getBrandLogoUrl());
-        productBrandInfo.setBrandDesc(productBrandInfoReqVo.getBrandDesc());
-        productBrandInfo.setBrandOrder(productBrandInfoReqVo.getBrandOrder());
-        productBrandInfo.setBrandStatus(productBrandInfoReqVo.getBrandStatus());
+        productBrandInfo.setBrandName(brandName);
+        productBrandInfo.setBrandLogoUrl(brandLogoUrl);
+        productBrandInfo.setBrandDesc(brandDesc);
+        productBrandInfo.setBrandOrder(brandOrder);
+        productBrandInfo.setBrandStatus(brandStatus);
         productBrandInfoMapper.addProductBrandInfo(productBrandInfo);
     }
 
@@ -72,40 +75,57 @@ public class ProductBrandInfoServiceImpl implements ProductBrandInfoService {
     }
 
     /**
-     * 修改品牌信息
+     * 修改商品品牌信息
      *
-     * @param brandId
-     * @param productBrandInfoReqVo
+     * @param brandId 品牌ID
+     * @param brandName 品牌名称
+     * @param brandDesc 品牌描述
+     * @param brandOrder 排序
+     * @param brandStatus 品牌状态 0-未启用1-已启用
+     * @param brandLogoUrl 品牌logoUrl
+     * @return
      */
     @Override
-    public void updateProductBrandInfo(Integer brandId, ProductBrandInfoReqVo productBrandInfoReqVo) {
+    public void updateProductBrandInfo(Integer brandId, String brandName, String brandDesc, Integer brandOrder,
+                                       Integer brandStatus, String brandLogoUrl) {
         ProductBrandInfo productBrandInfo = productBrandInfoMapper.getProductBrandInfoByBrandId(brandId);
         if (productBrandInfo == null) {
             throw new MyException("BRAND_INFO_NOT_EXIST", "品牌信息不存在");
         }
-        int count = productBrandInfoMapper.getProductBrandCountByBrandName(productBrandInfoReqVo.getBrandName());
-        if (!productBrandInfo.getBrandName().equals(productBrandInfoReqVo.getBrandName()) && count > 0) {
+        int count = productBrandInfoMapper.getProductBrandCountByBrandName(brandName);
+        if (!productBrandInfo.getBrandName().equals(brandName) && count > 0) {
             throw new MyException("BRAND_NAME_IS_EXIST", "品牌名称已存在");
         }
-        productBrandInfo.setBrandName(productBrandInfoReqVo.getBrandName());
-        productBrandInfo.setBrandLogoUrl(productBrandInfoReqVo.getBrandLogoUrl());
-        productBrandInfo.setBrandDesc(productBrandInfoReqVo.getBrandDesc());
-        productBrandInfo.setBrandOrder(productBrandInfoReqVo.getBrandOrder());
-        productBrandInfo.setBrandStatus(productBrandInfoReqVo.getBrandStatus());
+        productBrandInfo.setBrandName(brandName);
+        productBrandInfo.setBrandLogoUrl(brandLogoUrl==null?productBrandInfo.getBrandLogoUrl():brandLogoUrl);
+        productBrandInfo.setBrandDesc(brandDesc);
+        productBrandInfo.setBrandOrder(brandOrder);
+        productBrandInfo.setBrandStatus(brandStatus);
         productBrandInfoMapper.updateProductBrandInfo(productBrandInfo);
     }
 
     /**
      * 删除品牌信息
      *
-     * @param brandId
+     * @param brandId 品牌ID
      */
     @Override
     public void delProductBrandInfo(Integer brandId) {
+        productBrandInfoMapper.delProductBrandInfo(brandId);
+    }
+
+    /**
+     * 获取品牌信息
+     *
+     * @param brandId 品牌ID
+     * @return
+     */
+    @Override
+    public ProductBrandInfo getProductBrandInfo(Integer brandId) {
         ProductBrandInfo productBrandInfo = productBrandInfoMapper.getProductBrandInfoByBrandId(brandId);
         if (productBrandInfo == null) {
             throw new MyException("BRAND_INFO_NOT_EXIST", "品牌信息不存在");
         }
-        productBrandInfoMapper.delProductBrandInfo(brandId);
+        return productBrandInfo;
     }
 }

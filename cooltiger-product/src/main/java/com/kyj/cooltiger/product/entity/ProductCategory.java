@@ -20,11 +20,14 @@ public class ProductCategory implements Serializable {
     @JsonProperty("category_name")
     private String categoryName;
     /** 父分类ID(0:一级分类） */
-    @JsonProperty("parent_id")
-    private Integer parentId;
+    @JsonProperty("category_parent_id")
+    private Integer categoryParentId;
+    /** 分类等级（0-一级分类1-二级分类2-三级分类） */
+    @JsonProperty("categoty_level")
+    private Integer categotyLevel;
     /** 类别图片url */
-    @JsonProperty("logo_url")
-    private String logoUrl;
+    @JsonProperty("category_logo_url")
+    private String categoryLogoUrl;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -46,19 +49,27 @@ public class ProductCategory implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public Integer getCategoryParentId() {
+        return categoryParentId;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setCategoryParentId(Integer categoryParentId) {
+        this.categoryParentId = categoryParentId;
     }
 
-    public String getLogoUrl() {
-        return logoUrl;
+    public Integer getCategotyLevel() {
+        return categotyLevel;
     }
 
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
+    public void setCategotyLevel(Integer categotyLevel) {
+        this.categotyLevel = categotyLevel;
+    }
+
+    public String getCategoryLogoUrl() {
+        return categoryLogoUrl;
+    }
+
+    public void setCategoryLogoUrl(String categoryLogoUrl) {
+        this.categoryLogoUrl = categoryLogoUrl;
     }
 }

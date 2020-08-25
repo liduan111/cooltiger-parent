@@ -1,7 +1,6 @@
 package com.kyj.cooltiger.product.service.impl;
 
 import com.kyj.cooltiger.common.excep.MyException;
-import com.kyj.cooltiger.feign.product.vo.CountryRegionReqVo;
 import com.kyj.cooltiger.product.entity.CountryRegion;
 import com.kyj.cooltiger.product.mapper.CountryRegionMapper;
 import com.kyj.cooltiger.product.service.CountryRegionService;
@@ -92,10 +91,6 @@ public class CountryRegionServiceImpl implements CountryRegionService {
      */
     @Override
     public void delCountryRegion(Integer regionId) {
-        CountryRegion countryRegion = countryRegionMapper.getCountryRegionByRegionId(regionId);
-        if (countryRegion == null) {
-            throw new MyException("REGION_NOT_EXIST", "地区不存在");
-        }
         countryRegionMapper.delCountryRegion(regionId);
     }
 
