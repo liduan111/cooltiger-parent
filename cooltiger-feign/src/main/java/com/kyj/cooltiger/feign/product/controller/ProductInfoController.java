@@ -46,7 +46,7 @@ public class ProductInfoController {
     @RequestMapping(value = "/addProductInfo/{storeId}",method = {RequestMethod.POST})
     public Result addProductInfo(
             @PathVariable("storeId") Integer storeId,
-            @RequestParam("productInfoAddReqVo") ProductInfoAddReqVo productInfoAddReqVo){
+            @RequestBody ProductInfoAddReqVo productInfoAddReqVo){
         return productInfoClient.addProductInfo(storeId, productInfoAddReqVo);
     }
 

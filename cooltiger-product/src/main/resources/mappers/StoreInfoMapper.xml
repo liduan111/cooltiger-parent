@@ -3,13 +3,13 @@
 <mapper namespace="com.kyj.cooltiger.product.mapper.StoreInfoMapper">
 
     <!-- 添加店铺信息 -->
-    <insert id="addStoreInfo" parameterType="StoreInfo" useGeneratedKeys="true" keyProperty="storeId">
+    <insert id="addStoreInfo" parameterType="StoreInfo" useGeneratedKeys="true" keyProperty="storeInfo.storeId">
         INSERT INTO ky_store_info
-        (store_code, store_name, logo_url, relation_name, relation_tel, store_address, id_card_main_url,
+        (store_code, store_name, store_logo_url, relation_name, relation_tel, store_address, id_card_main_url,
          id_card_back_url, sale_category, main_products, apply_user_id, bank_card_number, bank_of_deposit,
          account_name, audit_status, sign_status, sign_time_start, sign_time_end, deleted)
         VALUES
-        (#{storeInfo.storeCode}, #{storeInfo.storeName}, #{storeInfo.logoUrl},
+        (#{storeInfo.storeCode}, #{storeInfo.storeName}, #{storeInfo.storeLogoUrl},
          #{storeInfo.relationName}, #{storeInfo.relationTel}, #{storeInfo.storeAddress},
          #{storeInfo.idCardMainUrl}, #{storeInfo.idCardBackUrl}, #{storeInfo.saleCategory},
          #{storeInfo.mainProducts}, #{storeInfo.applyUserId}, #{storeInfo.bankCardNumber},
@@ -18,32 +18,44 @@
          #{storeInfo.deleted})
     </insert>
 
-    <!-- 查询店铺列表 -->
-    <select id="getStoreList" resultType="com.kyj.cooltiger.feign.product.vo.StoreInfoListRespVo">
-        SELECT
-            store_id         storeId,
-            store_code       storeCode,
-            store_name       storeName,
-            logo_url         logoUrl,
-            relation_name    relationName,
-            relation_tel     relationTel,
-            store_address    storeAddress,
-            id_card_main_url idCardMainUrl,
-            id_card_back_url idCardBackUrl,
-            sale_category    saleCategory,
-            main_products    mainProducts,
-            apply_user_id    applyUserId,
-            bank_card_number bankCardNumber,
-            bank_of_deposit  bankOfDeposit,
-            account_name     accountName,
-            audit_status     auditStatus,
-            sign_status      signStatus,
-            sign_time_start  signTimeStart,
-            sign_time_end    signTimeEnd,
-            create_time      createTime,
-            modified_time    modifiedTime
+    <!--  根据关键字查询总条数 -->
+    <select id="getTotalCountByKeyword" resultType="int">
+        SELECT COUNT(1)
         FROM ky_store_info
         WHERE deleted = 0
+        <if test="keyword != null and keyword != ''">
+            AND store_name LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    </select>
+
+    <!-- 根据关键字查询店铺列表 -->
+    <select id="getStoreListByKeyword" resultType="com.kyj.cooltiger.feign.product.vo.StoreInfoListRespVo">
+        SELECT
+        store_id storeId,
+        store_code storeCode,
+        store_name storeName,
+        store_logo_url storeLogoUrl,
+        relation_name relationName,
+        relation_tel relationTel,
+        store_address storeAddress,
+        sale_category saleCategory,
+        main_products mainProducts,
+        apply_user_id applyUserId,
+        bank_card_number bankCardNumber,
+        bank_of_deposit bankOfDeposit,
+        account_name accountName,
+        audit_status auditStatus,
+        sign_status signStatus,
+        sign_time_start signTimeStart,
+        sign_time_end signTimeEnd,
+        create_time createTime,
+        modified_time modifiedTime
+        FROM ky_store_info
+        WHERE deleted = 0
+        <if test="keyword != null and keyword != ''">
+            AND store_name LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        LIMIT #{pageStart},#{pageSize}
     </select>
 
     <!-- 查询店铺信息 -->
@@ -52,7 +64,7 @@
             store_id         storeId,
             store_code       storeCode,
             store_name       storeName,
-            logo_url         logoUrl,
+            store_logo_url   storeLogoUrl,
             relation_name    relationName,
             relation_tel     relationTel,
             store_address    storeAddress,
@@ -81,7 +93,7 @@
         SET
             store_code       = #{storeInfo.storeCode},
             store_name       = #{storeInfo.storeName},
-            logo_url         = #{storeInfo.logoUrl},
+            store_logo_url   = #{storeInfo.storeLogoUrl},
             relation_name    = #{storeInfo.relationName},
             relation_tel     = #{storeInfo.relationTel},
             store_address    = #{storeInfo.storeAddress},

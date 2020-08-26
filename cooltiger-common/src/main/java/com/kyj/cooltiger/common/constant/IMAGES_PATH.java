@@ -13,4 +13,14 @@ public class IMAGES_PATH {
     public static final String BRAND_LOGO = "/brand_logo";
     //商品分类logo
     public static final String CATEGORY_LOGO = "/category_logo";
+    //店铺图片
+    public static final String STORE = "/store";
+    //店铺logo
+    public static final String STORE_LOGO = "/store_logo";
+    //身份证正反面照片
+    public static final String ID_CARD = "/id_card";
+    //经营资质照片
+    public static final String LICENSES =  "/licenses";
+    //合约内容
+    public static final String CONTRACT = "/contract";
 }

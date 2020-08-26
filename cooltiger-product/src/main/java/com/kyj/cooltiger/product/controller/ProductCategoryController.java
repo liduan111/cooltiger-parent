@@ -7,7 +7,6 @@ import com.kyj.cooltiger.common.utils.FileTypeUtil;
 import com.kyj.cooltiger.common.utils.FtpUtil;
 import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.product.client.ProductCategoryClient;
-import com.kyj.cooltiger.feign.product.vo.ProductCategoryAddReqVo;
 import com.kyj.cooltiger.product.config.FtpConfig;
 import com.kyj.cooltiger.product.entity.ProductCategory;
 import com.kyj.cooltiger.product.service.ProductCategoryService;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.Map;
 
 /**

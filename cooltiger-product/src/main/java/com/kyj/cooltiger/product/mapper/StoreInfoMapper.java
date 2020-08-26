@@ -17,18 +17,30 @@ public interface StoreInfoMapper {
 
     /**
      * 添加店铺信息
+     *
      * @param storeInfo
      */
-    public void addStoreInfo(@Param("storeInfo") StoreInfo storeInfo);
+    public int addStoreInfo(@Param("storeInfo") StoreInfo storeInfo);
+
+    /**
+     * 根据关键字查询总条数
+     *
+     * @param keyword
+     * @return
+     */
+    public int getTotalCountByKeyword(@Param("keyword") String keyword);
 
     /**
      * 查询店铺列表
+     *
      * @return
      */
-    public List<StoreInfoListRespVo> getStoreList();
+    public List<StoreInfoListRespVo> getStoreListByKeyword(
+            @Param("keyword") String keyword,@Param("pageStart") Integer pageStart,@Param("pageSize") Integer pageSize);
 
     /**
      * 查询店铺信息
+     *
      * @param storeId
      * @return
      */
@@ -36,14 +48,17 @@ public interface StoreInfoMapper {
 
     /**
      * 更新店铺信息
+     *
      * @param storeInfo
      */
     public void updateStoreInfo(@Param("storeInfo") StoreInfo storeInfo);
 
     /**
      * 根据店铺名称查询店铺个数
+     *
      * @param storeName
      * @return
      */
     public int getStoreInfoCountByStoreName(@Param("storeName") String storeName);
+
 }

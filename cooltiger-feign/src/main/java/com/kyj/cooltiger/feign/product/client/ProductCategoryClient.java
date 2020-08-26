@@ -1,12 +1,9 @@
 package com.kyj.cooltiger.feign.product.client;
 
 import com.kyj.cooltiger.common.utils.Result;
-import com.kyj.cooltiger.feign.product.vo.ProductCategoryAddReqVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 /**
  * @author liduan

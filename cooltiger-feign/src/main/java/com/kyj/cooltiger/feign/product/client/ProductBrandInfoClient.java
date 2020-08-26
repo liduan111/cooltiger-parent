@@ -41,8 +41,8 @@ public interface ProductBrandInfoClient {
      */
     @RequestMapping(value = "/product/productBrandInfo/getProductBrandInfoList", method = {RequestMethod.GET})
     public Result getProductBrandInfoList(
-            @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+            @RequestParam(value = "page_no", defaultValue = "1") Integer pageNo,
+            @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize,
             @RequestParam(value = "keyword", required = false) String keyword);
 
     /**

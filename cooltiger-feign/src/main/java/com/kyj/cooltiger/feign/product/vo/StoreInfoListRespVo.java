@@ -23,8 +23,8 @@ public class StoreInfoListRespVo {
     @JsonProperty("store_name")
     private String storeName;
     //店铺logoUrl
-    @JsonProperty("logo_url")
-    private String logoUrl;
+    @JsonProperty("store_logo_url")
+    private String storeLogoUrl;
     //联系人
     @JsonProperty("relation_name")
     private String relationName;
@@ -34,12 +34,6 @@ public class StoreInfoListRespVo {
     //店铺地址
     @JsonProperty("store_address")
     private String storeAddress;
-    //身份证正面url
-    @JsonProperty("id_card_main_url")
-    private String idCardMainUrl;
-    //身份证反面url
-    @JsonProperty("id_card_back_url")
-    private String idCardBackUrl;
     //销售类目
     @JsonProperty("sale_category")
     private String saleCategory;
@@ -103,12 +97,12 @@ public class StoreInfoListRespVo {
         this.storeName = storeName;
     }
 
-    public String getLogoUrl() {
-        return logoUrl;
+    public String getStoreLogoUrl() {
+        return storeLogoUrl;
     }
 
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
+    public void setStoreLogoUrl(String storeLogoUrl) {
+        this.storeLogoUrl = storeLogoUrl;
     }
 
     public String getRelationName() {
@@ -133,22 +127,6 @@ public class StoreInfoListRespVo {
 
     public void setStoreAddress(String storeAddress) {
         this.storeAddress = storeAddress;
-    }
-
-    public String getIdCardMainUrl() {
-        return idCardMainUrl;
-    }
-
-    public void setIdCardMainUrl(String idCardMainUrl) {
-        this.idCardMainUrl = idCardMainUrl;
-    }
-
-    public String getIdCardBackUrl() {
-        return idCardBackUrl;
-    }
-
-    public void setIdCardBackUrl(String idCardBackUrl) {
-        this.idCardBackUrl = idCardBackUrl;
     }
 
     public String getSaleCategory() {

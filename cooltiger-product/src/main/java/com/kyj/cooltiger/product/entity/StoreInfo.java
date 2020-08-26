@@ -20,7 +20,7 @@ public class StoreInfo implements Serializable {
     //店铺名称
     private String storeName;
     //店铺logoUrl
-    private String logoUrl;
+    private String storeLogoUrl;
     //联系人
     private String relationName;
     //联系电话
@@ -86,12 +86,12 @@ public class StoreInfo implements Serializable {
         this.storeName = storeName;
     }
 
-    public String getLogoUrl() {
-        return logoUrl;
+    public String getStoreLogoUrl() {
+        return storeLogoUrl;
     }
 
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
+    public void setStoreLogoUrl(String storeLogoUrl) {
+        this.storeLogoUrl = storeLogoUrl;
     }
 
     public String getRelationName() {
