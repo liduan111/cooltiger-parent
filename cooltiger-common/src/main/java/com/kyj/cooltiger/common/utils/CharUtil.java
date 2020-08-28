@@ -1,5 +1,6 @@
 package com.kyj.cooltiger.common.utils;
 
+import com.kyj.cooltiger.common.excep.MyException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -196,14 +197,19 @@ public class CharUtil {
         return last;
     }
    public  static  boolean regexphone(String mobile){
-
+       if (mobile.isEmpty()){
+           new MyException("null  mobile","请确认手机号");
+       }
+       if (mobile.length()!=11){
+           new MyException("手机号位数不够","请确认手机号");
+       }
        String regex = "^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\\d{8}$";
        if (Pattern.matches(regex, mobile)) {
            System.out.println("校验成功");
            return  true;
        } else {
-           System.out.println("校验失败");
            log.error("手机号校验失败");
+           new MyException("bushishoujihao","手机号校验失败请确认手机号");
        }
 
        return false;

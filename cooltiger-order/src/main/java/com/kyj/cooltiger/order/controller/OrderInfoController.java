@@ -25,4 +25,14 @@ public class OrderInfoController implements OrderInfoClient {
     public Result hello() {
         return Result.success("hello");
     }
+
+    /**
+     * 创建订单
+     * @return
+     */
+    @RequestMapping(value = "/createorder")
+    public Result  createorder(){
+        return  Result.error("500","服务器出错");
+    }
+
 }

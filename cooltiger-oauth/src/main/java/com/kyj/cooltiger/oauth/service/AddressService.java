@@ -16,26 +16,26 @@ public interface AddressService {
     * 查询收货地址列表
     * @return
     */
-   List<AddressVo> addresslist();
+   List<AddressVo> addresslist(Map<String,Object> map);
 
    /**
     *
     *查询收货人地址
     */
-   AddressVo queryByuserCode(Long userCode);
+   AddressVo queryByuserCode(Long userId);
 
    /**
     * 添加收货人地址
     * @param map
     * @return
     */
-   boolean addresssave(Map<String,Object> map);
+   boolean addresssave(Map<String,Object> map,String idcardzUrl,String idcardfUrl);
 
    /**
     * 修改收货人地址
     * @param map
     * @return
     */
-   boolean addressupdate(Map<String,Object> map);
+   boolean addressupdate(Map<String,Object> map,String idcardzUrl,String idcardfUrl);
 
 }

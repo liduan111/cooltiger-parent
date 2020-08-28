@@ -37,6 +37,10 @@ public class AddressVo implements Serializable {
     private Date createTime;
     //更新时间
     private Date updateTime;
+    //身份证正面
+    private String idcardzUrl;
+    //身份证反面
+    private String idcardfUrl;
 
 
 }
