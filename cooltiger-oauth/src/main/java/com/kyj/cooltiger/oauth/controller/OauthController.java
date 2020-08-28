@@ -7,7 +7,6 @@ import com.kyj.cooltiger.oauth.entity.CollectVo;
 import com.kyj.cooltiger.oauth.entity.GoodsCollectVo;
 import com.kyj.cooltiger.oauth.service.ApiCollectService;
 import com.kyj.cooltiger.oauth.service.ApiUserService;
-import com.kyj.cooltiger.oauth.service.WeChatService;
 import com.kyj.cooltiger.oauth.service.impl.TokenService;
 import com.kyj.cooltiger.feign.oauth.client.OauthClient;
 import com.alibaba.fastjson.JSON;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,9 +39,6 @@ import java.util.Map;
 public class OauthController extends ApiBaseAction implements OauthClient {
 
     private static  final Logger logger= LoggerFactory.getLogger(OauthController.class);
-
-    @Autowired
-    private WeChatService weChatService;
 
     @Autowired
     private TokenService tokenService;
@@ -63,7 +58,7 @@ public class OauthController extends ApiBaseAction implements OauthClient {
     @ApiOperation(value = "登录")
     @RequestMapping(value = "/login" ,method = RequestMethod.POST)
     //@PreAuthorize("hasAuthority('ddd:list')")
-    public Object wxlogin(@RequestBody LoginInfo loginInfo, HttpServletRequest request) {
+    public Object wxlogin(@RequestBody LoginInfo loginInfo) {
 
         // 配置请求参数
         Map<String, String> param = new HashMap<>();
@@ -109,7 +104,7 @@ public class OauthController extends ApiBaseAction implements OauthClient {
             //添加数据库
             boolean flag=apiUserService.save(userVo);
             if (flag==true) {
-                Map<String, Object> map = tokenService.creatToken(userVo.getUserId());
+                Map<String, Object> map = tokenService.creatToken(userVo.getUserId(),userVo.getUsername());
                 String token = MapUtils.getString(map, "token");
                 if (StringUtils.isEmpty(token)) {
                     return toResponsFail("登录失败");

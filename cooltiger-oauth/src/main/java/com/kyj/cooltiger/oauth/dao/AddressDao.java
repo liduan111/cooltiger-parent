@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author guoxq
@@ -17,14 +18,14 @@ public interface AddressDao {
      * 收货地址列表查询
      * @return
      */
-    List<AddressVo> addresslist();
+    List<AddressVo> addresslist(Map<String,Object> map);
 
     /**
      *  根据usercode查
-     * @param userCode
+     * @param  Id
      * @return
      */
-   AddressVo queryByuserCode(@Param("userCode")Long userCode);
+   AddressVo queryByuserCode(@Param("Id")Long  Id);
 
     /**
      * 添加收货人地址

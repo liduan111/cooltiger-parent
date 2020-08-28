@@ -1,5 +1,7 @@
 package com.kyj.cooltiger.oauth.service.impl;
 
+import com.kyj.cooltiger.common.excep.MyException;
+import com.kyj.cooltiger.common.utils.CharUtil;
 import com.kyj.cooltiger.oauth.dao.AddressDao;
 import com.kyj.cooltiger.oauth.entity.AddressVo;
 import com.kyj.cooltiger.oauth.service.AddressService;
@@ -26,18 +28,20 @@ public class AddressServiceimpl implements AddressService {
      * @return
      */
     @Override
-    public List<AddressVo> addresslist() {
-        return addressDao.addresslist();
+    public List<AddressVo> addresslist(Map<String,Object> map) {
+        return addressDao.addresslist(map);
     }
 
     /**
-     * 修改
+     * x修改
      * @param map
+     * @param idcardzUrl
+     * @param idcardfUrl
      * @return
      */
     @Override
-    public boolean addressupdate(Map<String, Object> map) {
-
+    public boolean addressupdate(Map<String, Object> map,String idcardzUrl,String idcardfUrl) {
+        Long Id=Long.parseLong(map.get("Id").toString());
         Long userCode=Long.parseLong(map.get("userCode").toString());
         String userName=map.get("userName").toString();
         String mobile=map.get("mobile").toString();
@@ -46,7 +50,11 @@ public class AddressServiceimpl implements AddressService {
         String countryName=map.get("countryName").toString();
         String addressDetail=map.get("addressDetail").toString();
         Integer isDefaul=Integer.valueOf(map.get("isDefaul").toString());
+        if (!CharUtil.regexphone(mobile)){
+            new MyException("error mobile","请确认手机号");
+        }
         AddressVo addressVo=new AddressVo();
+        addressVo.setId(Id);
         addressVo.setUserCode(userCode);
         addressVo.setUserName(userName);
         addressVo.setMobile(mobile);
@@ -55,6 +63,8 @@ public class AddressServiceimpl implements AddressService {
         addressVo.setCountryName(countryName);
         addressVo.setAddressdetail(addressDetail);
         addressVo.setIsdefaul(isDefaul);
+        addressVo.setIdcardzUrl(idcardzUrl);
+        addressVo.setIdcardfUrl(idcardfUrl);
         addressVo.setUpdateTime(new Date());
         if (addressVo!=null){
             int i=addressDao.addressupdate(addressVo);
@@ -65,8 +75,13 @@ public class AddressServiceimpl implements AddressService {
         return false;
     }
 
+    /**
+     * tianjia
+     * @param map
+     * @return
+     */
     @Override
-    public boolean addresssave(Map<String, Object> map) {
+    public boolean addresssave(Map<String, Object> map,String idcardzUrl,String idcardfUrl) {
 
         Long userCode=Long.parseLong(map.get("userCode").toString());
         String userName=map.get("userName").toString();
@@ -76,6 +91,9 @@ public class AddressServiceimpl implements AddressService {
         String countryName=map.get("countryName").toString();
         String addressDetail=map.get("addressDetail").toString();
         Integer isDefaul=Integer.valueOf(map.get("isDefaul").toString());
+        if (!CharUtil.regexphone(mobile)){
+            new MyException("error mobile","请确认手机号");
+        }
         AddressVo addressVo=new AddressVo();
         addressVo.setUserCode(userCode);
         addressVo.setUserName(userName);
@@ -86,6 +104,8 @@ public class AddressServiceimpl implements AddressService {
         addressVo.setAddressdetail(addressDetail);
         addressVo.setIsdefaul(isDefaul);
         addressVo.setCreateTime(new Date());
+        addressVo.setIdcardzUrl(idcardzUrl);
+        addressVo.setIdcardfUrl(idcardfUrl);
         if (addressVo!=null){
             int i=addressDao.addresssave(addressVo);
             if(i>0){
@@ -95,8 +115,13 @@ public class AddressServiceimpl implements AddressService {
         return false;
     }
 
+    /**
+     * 根据用户查询收货地
+     * @param userId
+     * @return
+     */
     @Override
-    public AddressVo queryByuserCode(Long userCode) {
-        return addressDao.queryByuserCode(userCode);
+    public AddressVo queryByuserCode(Long  userId) {
+        return addressDao.queryByuserCode(userId);
     }
 }

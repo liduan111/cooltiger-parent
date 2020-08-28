@@ -6,9 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -23,11 +21,11 @@ public interface OauthClient {
      * 登录
      *
      * @param loginInfo
-     * @param request
+     * @param
      * @return
      */
     @RequestMapping(value = "/oauth/login", method = {RequestMethod.GET})
-    public Object wxlogin(@RequestBody LoginInfo loginInfo, @RequestParam("request") HttpServletRequest request);
+    public Object wxlogin(@RequestBody LoginInfo loginInfo);
 
     /**
      * 根据用户usercode查询用户信息

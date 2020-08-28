@@ -6,7 +6,6 @@ import com.kyj.cooltiger.feign.oauth.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -24,12 +23,12 @@ public class OauthController {
     /**
      *  登录
      * @param loginInfo
-     * @param request
+     * @param
      * @return
      */
     @RequestMapping(value = "/login",method = {RequestMethod.GET})
-    public Object wxlogin(@RequestBody LoginInfo loginInfo, @RequestParam("request") HttpServletRequest request){
-        return oauthClient.wxlogin(loginInfo, request);
+    public Object wxlogin(@RequestBody LoginInfo loginInfo){
+        return oauthClient.wxlogin(loginInfo);
     }
 
     /**

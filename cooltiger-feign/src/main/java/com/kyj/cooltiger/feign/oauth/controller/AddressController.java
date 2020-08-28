@@ -2,10 +2,8 @@ package com.kyj.cooltiger.feign.oauth.controller;
 
 import com.kyj.cooltiger.feign.oauth.client.AddressClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -22,7 +20,7 @@ public class AddressController {
     private AddressClient addressClient;
 
     /**
-     * 根据用户id查询收货地址
+     * 根据用户查询收货地址
      * @param code
      * @return
      */
@@ -33,21 +31,40 @@ public class AddressController {
 
     /***
      * 添加收货人地址
-     * @param map
+     * @param
      * @return
      */
     @RequestMapping(value = "/addressadd",method = RequestMethod.POST)
-    public  Object  addressave(@RequestBody Map<String,Object> map){
-        return addressClient.addressave(map);
+    public  Object  addressave(@RequestParam(value = "userCode", required = false) Long userCode,
+                               @RequestParam(value = "userName", required = false) String userName,
+                               @RequestParam(value = "mobile", required = false) String  mobile,
+                               @RequestParam(value = "provinceName", required = false) String  provinceName,
+                               @RequestParam(value = "cityName", required = false) String cityName,
+                               @RequestParam(value = "countryName", required = false) String countryName,
+                               @RequestParam(value = "addressDetail", required = false) String addressDetail,
+                               @RequestParam(value = "isDefaul", required = false) Integer isDefaul,
+                               @RequestParam(value = "idcardz", required = false) MultipartFile idcardz,
+                               @RequestParam(value = "idcardf", required = false) MultipartFile idcardf){
+        return addressClient.addressave(userCode,userName,mobile,provinceName,cityName,countryName,addressDetail,isDefaul,idcardz,idcardf);
     }
     /**
      * 修改收货人地址
-     * @param map
+     * @param
      * @return
      */
-    @RequestMapping(value = "/addressupdate",method = RequestMethod.POST)
-    public  Object  addressupdate(@RequestBody Map<String,Object> map){
-        return addressClient.addressupdate(map);
+    @RequestMapping(value = "/addressupdate",method = RequestMethod.PUT)
+    public  Object  addressupdate(@RequestParam(value = "userCode", required = false) Long userCode,
+                                  @RequestParam(value = "Id", required = false) Long Id,
+                                  @RequestParam(value = "userName", required = false) String userName,
+                                  @RequestParam(value = "mobile", required = false) String  mobile,
+                                  @RequestParam(value = "provinceName", required = false) String  provinceName,
+                                  @RequestParam(value = "cityName", required = false) String cityName,
+                                  @RequestParam(value = "countryName", required = false) String countryName,
+                                  @RequestParam(value = "addressDetail", required = false) String addressDetail,
+                                  @RequestParam(value = "isDefaul", required = false) Integer isDefaul,
+                                  @RequestParam(value = "idcardz", required = false) MultipartFile idcardz,
+                                  @RequestParam(value = "idcardf", required = false) MultipartFile idcardf){
+        return addressClient.addressupdate(Id,userCode,userName,mobile,provinceName,cityName,countryName,addressDetail,isDefaul,idcardz,idcardf);
     }
 
     /**
@@ -55,7 +72,7 @@ public class AddressController {
      * @return
      */
     @RequestMapping(value = "/addresslist",method = RequestMethod.GET)
-    public  Object Addresslist(){
-        return addressClient.Addresslist();
+    public  Object Addresslist(@RequestBody Map<String,Object> map){
+        return addressClient.Addresslist(map);
     }
 }

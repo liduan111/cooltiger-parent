@@ -15,6 +15,8 @@
         <result property="isdefaul" column="is_defaul"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="modified_time"/>
+        <result property="idcardzUrl" column="idcardz_url"/>
+        <result property="idcardfUrl" column="idcardf_url"/>
     </resultMap>
 
     <select id="addresslist" resultType="com.kyj.cooltiger.oauth.entity.AddressVo">
@@ -26,9 +28,11 @@
             province_name,
             city_name,
             address_detail,
+            is_defaul,
             create_time,
             modified_time
         from ky_user_address
+        where  user_code=#{userCode}
     </select>
 
     <select id="queryByuserCode" resultMap="adMap">
@@ -39,10 +43,12 @@
             province_name,
             city_name,
             address_detail,
+            idcardz_url,
+            idcardf_url,
             create_time,
             modified_time
         from ky_user_address
-        where user_code = #{userCode}
+        where id = #{Id}
     </select>
 
     <insert id="addresssave" parameterType="com.kyj.cooltiger.oauth.entity.AddressVo">
@@ -55,6 +61,8 @@
             `country_name`,
             `address_detail`,
             `is_defaul`,
+            `idcardz_url`,
+            `idcardf_url`,
             `create_time`)
         values(
                   #{userCode},
@@ -65,6 +73,8 @@
                   #{countryName},
                   #{addressdetail},
                   #{isdefaul},
+                  #{idcardzUrl},
+                  #{idcardfUrl},
                   #{createTime})
     </insert>
     <update id="addressupdate" parameterType="com.kyj.cooltiger.oauth.entity.AddressVo">
@@ -77,8 +87,10 @@
             <if test="countryName != null">`country_name` = #{countryName},</if>
             <if test="addressdetail != null">`address_detail` = #{addressdetail},</if>
             <if test="isdefaul != null">`is_defaul` = #{isdefaul},</if>
+            <if test="idcardzUrl != null">`idcardz_url` = #{idcardzUrl},</if>
+            <if test="idcardfUrl != null">`idcardf_url` = #{idcardfUrl},</if>
             <if test="updateTime != null">`modified_time` = #{updateTime}</if>
         </set>
-        where user_code = #{userCode}
+        where user_code = #{userCode} and id=#{Id}
     </update>
 </mapper>
