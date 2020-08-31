@@ -2,9 +2,10 @@ package com.kyj.cooltiger.product.service.impl;
 
 import com.kyj.cooltiger.common.constant.DELETED;
 import com.kyj.cooltiger.common.constant.PRODUCT_AUDIT_STATUS;
+import com.kyj.cooltiger.common.excep.MyException;
 import com.kyj.cooltiger.common.utils.CharUtil;
 import com.kyj.cooltiger.common.utils.PageUtil;
-import com.kyj.cooltiger.feign.product.vo.ProductInfoAddReqVo;
+import com.kyj.cooltiger.feign.product.vo.ProductBaseReqVo;
 import com.kyj.cooltiger.feign.product.vo.ProductInfoListByStoreIdRespVo;
 import com.kyj.cooltiger.product.entity.*;
 import com.kyj.cooltiger.product.mapper.*;
@@ -68,9 +69,74 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         }
         //定义返回map数据
         HashMap<String, Object> res = new HashMap<>();
-        res.put("totalCoust", pageUtil.getTotalCount());
-        res.put("totaoPage", pageUtil.getTotalPage());
+        res.put("totalCount", pageUtil.getTotalCount());
+        res.put("totalPage", pageUtil.getTotalPage());
         res.put("data", respVoList);
+        return res;
+    }
+
+    /**
+     * 添加商品基本信息
+     *
+     * @param storeId          店铺ID
+     * @param productBaseReqVo 商品基本信息
+     * @return
+     */
+    @Transactional
+    @Override
+    public Map<String, Object> addProductBaseInfo(Integer storeId, ProductBaseReqVo productBaseReqVo){
+        //添加商品基本信息
+        ProductInfo productInfo = new ProductInfo();
+        productInfo.setProductCode(CharUtil.getRandomNum(10));
+        productInfo.setTitle(productBaseReqVo.getTitle());
+        productInfo.setStoreId(storeId);
+        productInfo.setBrandId(productBaseReqVo.getBrandId());
+        productInfo.setCategoryOneId(productBaseReqVo.getCategoryOneId());
+        productInfo.setCategoryTwoId(productBaseReqVo.getCategoryTwoId());
+        productInfo.setCategoryThreeId(productBaseReqVo.getCategoryThreeId());
+        productInfo.setAddressFromId(productBaseReqVo.getAddressFromId());
+        productInfo.setCreateAddressId(productBaseReqVo.getCreateAddressId());
+        productInfo.setAboutDeliverTime(productBaseReqVo.getAboutDeliverTime());
+        productInfo.setServiceIds(productBaseReqVo.getServiceIds());
+        productInfo.setShelfStatus(productBaseReqVo.getShelfStatus());
+        productInfo.setAuditStatus(PRODUCT_AUDIT_STATUS.NOT);
+        productInfo.setDeleted(DELETED.NOT);
+        productInfoMapper.addProductInfo(productInfo);
+        //添加商品运费
+        ProductFreight productFreight = new ProductFreight();
+        productFreight.setProductId(productInfo.getProductId());
+        productFreight.setProductFreightType(productBaseReqVo.getProductFreight().getProductFreightType());
+        productFreight.setFactor(productBaseReqVo.getProductFreight().getFactor());
+        productFreight.setFreightPrice(productBaseReqVo.getProductFreight().getFreightPrice());
+        productFreight.setFirstWeight(productBaseReqVo.getProductFreight().getFirstWeight());
+        productFreight.setContinueWeight(productBaseReqVo.getProductFreight().getContinueWeight());
+        productFreight.setWhetherKg(productBaseReqVo.getProductFreight().getWhetherKg());
+        productFreightMapper.addProductFreight(productFreight);
+        //添加商品参数
+        if (!productBaseReqVo.getParams().isEmpty()) {
+            ProductParam productParam = null;
+            for (ProductBaseReqVo.Param productParamReq : productBaseReqVo.getParams()) {
+                productParam = new ProductParam();
+                productParam.setProductId(productInfo.getProductId());
+                productParam.setParamName(productParamReq.getParamName());
+                productParam.setParamValue(productParamReq.getParamValue());
+                productParamMapper.addProductParam(productParam);
+            }
+        }
+        //添加商品服务
+        if (!productBaseReqVo.getCustomServices().isEmpty()) {
+            ProductService productService = null;
+            for (String name : productBaseReqVo.getCustomServices()) {
+                productService = new ProductService();
+                productService.setName(name);
+                productService.setServiceType(1);
+                productService.setProductId(productInfo.getProductId());
+                productServiceMapper.addProductService(productService);
+            }
+        }
+        Map<String, Object> res = new HashMap<>();
+        res.put("product_id",productInfo.getProductId());
+        res.put("product_code",productInfo.getProductCode());
         return res;
     }
 
@@ -80,10 +146,10 @@ public class ProductInfoServiceImpl implements ProductInfoService {
      * @param storeId             店铺ID
      * @param productInfoAddReqVo 商品参数
      */
-    @Transactional
-    @Override
-    public void addProductInfo(Integer storeId, ProductInfoAddReqVo productInfoAddReqVo) {
-        //添加商品基本信息
+   // @Transactional
+    //@Override
+   // public void addProductInfo(Integer storeId, ProductInfoAddReqVo productInfoAddReqVo) {
+        /*//添加商品基本信息
         ProductInfo productInfo = new ProductInfo();
         productInfo.setProductCode(CharUtil.getRandomNum(10));
         productInfo.setTitle(productInfoAddReqVo.getTitle());
@@ -199,8 +265,8 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         ProductDetails productDetails = new ProductDetails();
         productDetails.setProductId(productInfo.getProductId());
         productDetails.setDetails(productInfoAddReqVo.getDetails());
-        productDetailsMapper.addProductDetails(productDetails);
-    }
+        productDetailsMapper.addProductDetails(productDetails);*/
+    //}
 
     /**
      * 查询商品信息
@@ -209,11 +275,12 @@ public class ProductInfoServiceImpl implements ProductInfoService {
      * @return
      */
     @Override
-    public Map<String, Object> getProductInfo(Integer productId) {
+    public ProductInfo getProductInfo(Integer productId) {
         ProductInfo productInfo = productInfoMapper.getProductInfo(productId);
-
-        HashMap<String, Object> res = new HashMap<>();
-        return res;
+        if (productId == null){
+            throw new MyException("PRODUCT_INFO_NOT_EXIST","商品信息不存在");
+        }
+        return productInfo;
     }
 
     /**
@@ -280,4 +347,5 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         //删除商品详情
         productDetailsMapper.deleteProductDetailsByProductId(productId);
     }
+
 }

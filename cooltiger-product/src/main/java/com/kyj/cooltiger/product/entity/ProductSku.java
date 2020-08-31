@@ -16,8 +16,6 @@ public class ProductSku implements Serializable {
     private Integer skuId;
     //商品sku编码
     private String skuCode;
-    //商品sku名称
-    private String skuName;
     //商品ID
     private Integer productId;
     //规格值组合id（多个用,分隔）
@@ -59,14 +57,6 @@ public class ProductSku implements Serializable {
 
     public void setSkuCode(String skuCode) {
         this.skuCode = skuCode;
-    }
-
-    public String getSkuName() {
-        return skuName;
-    }
-
-    public void setSkuName(String skuName) {
-        this.skuName = skuName;
     }
 
     public Integer getProductId() {

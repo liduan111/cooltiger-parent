@@ -16,11 +16,11 @@ public class ProductFreight implements Serializable {
     //商品ID
     private Integer productId;
     //运费方式（0-包邮1-固定运费2-满减包邮3-满件包邮4-重量计费）
-    private Integer productTreightType;
+    private Integer productFreightType;
     //满减包邮|满件包邮条件（满多少元|满多少件）
-    private Integer condition;
+    private Integer factor;
     //运费（固定运费|不满足满减包邮|不满足满件包邮|重量计费首重）
-    private Double preightPrice;
+    private Double freightPrice;
     //重量计费_首重（kg）
     private Double firstWeight;
     //续重（元/kg）
@@ -48,28 +48,28 @@ public class ProductFreight implements Serializable {
         this.productId = productId;
     }
 
-    public Integer getProductTreightType() {
-        return productTreightType;
+    public Integer getProductFreightType() {
+        return productFreightType;
     }
 
-    public void setProductTreightType(Integer productTreightType) {
-        this.productTreightType = productTreightType;
+    public void setProductFreightType(Integer productFreightType) {
+        this.productFreightType = productFreightType;
     }
 
-    public Integer getCondition() {
-        return condition;
+    public Integer getFactor() {
+        return factor;
     }
 
-    public void setCondition(Integer condition) {
-        this.condition = condition;
+    public void setFactor(Integer factor) {
+        this.factor = factor;
     }
 
-    public Double getPreightPrice() {
-        return preightPrice;
+    public Double getFreightPrice() {
+        return freightPrice;
     }
 
-    public void setPreightPrice(Double preightPrice) {
-        this.preightPrice = preightPrice;
+    public void setFreightPrice(Double freightPrice) {
+        this.freightPrice = freightPrice;
     }
 
     public Double getFirstWeight() {

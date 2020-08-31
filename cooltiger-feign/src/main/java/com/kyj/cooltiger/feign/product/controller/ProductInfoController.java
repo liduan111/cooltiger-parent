@@ -2,7 +2,8 @@ package com.kyj.cooltiger.feign.product.controller;
 
 import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.product.client.ProductInfoClient;
-import com.kyj.cooltiger.feign.product.vo.ProductInfoAddReqVo;
+import com.kyj.cooltiger.feign.product.vo.ProductBaseReqVo;
+import com.kyj.cooltiger.feign.product.vo.ProductSkuReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,18 +41,32 @@ public class ProductInfoController {
     }
 
     /**
-     * 添加商品信息
+     * 添加商品基本信息
      *
-     * @param storeId             店铺ID
-     * @param productInfoAddReqVo 商品信息
+     * @param storeId          店铺ID
+     * @param productBaseReqVo 商品基本信息
      * @return
      */
-    @RequestMapping(value = "/addProductInfo/{storeId}", method = {RequestMethod.POST})
-    public Result addProductInfo(
-            @PathVariable("storeId") Integer storeId,
-            ProductInfoAddReqVo productInfoAddReqVo,
-            @RequestParam("file") MultipartFile[] file) {
-        return productInfoClient.addProductInfo(storeId, productInfoAddReqVo,file);
+    @RequestMapping(value = "/addProductBaseInfo/{store_id}", method = {RequestMethod.POST})
+    public Result addProductBaseInfo(
+            @PathVariable("store_id") Integer storeId,
+            @RequestBody ProductBaseReqVo productBaseReqVo) {
+        return productInfoClient.addProductBaseInfo(storeId, productBaseReqVo);
+    }
+
+
+    /**
+     * 添加商品Sku信息
+     *
+     * @param productId       商品ID
+     * @param productSkuReqVo 商品Sku信息
+     * @return
+     */
+    @RequestMapping(value = "/addProductSkuInfo/{product_id}", method = {RequestMethod.POST})
+    public Result addProductSkuInfo(
+            @PathVariable("product_id") Integer productId,
+            @RequestBody ProductSkuReqVo productSkuReqVo) {
+        return productInfoClient.addProductInfo(productId, productSkuReqVo);
     }
 
     /**
@@ -96,5 +111,21 @@ public class ProductInfoController {
     @RequestMapping(value = "/deleteProductInfo/{productId}", method = {RequestMethod.DELETE})
     public Result deleteProductInfo(@PathVariable("productId") Integer productId) {
         return productInfoClient.deleteProductInfo(productId);
+    }
+
+    /**
+     * 上传商品图片
+     *
+     * @param productId 商品ID
+     * @param picType   图片类型（1-商品图片2-sku图片3-详情图片）
+     * @param pic       图片
+     * @return
+     */
+    @RequestMapping(value = "/upProductImage", method = {RequestMethod.POST})
+    public Result upProductImage(
+            @RequestParam("product_id") Integer productId,
+            @RequestParam("pic_type") Integer picType,
+            @RequestParam("pic") MultipartFile pic) {
+        return productInfoClient.upProductImage(productId, picType, pic);
     }
 }
