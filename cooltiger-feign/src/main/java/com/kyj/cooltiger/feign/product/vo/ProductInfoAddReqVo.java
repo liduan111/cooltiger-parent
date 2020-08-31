@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author liduan
- * Description: 添加商品vo
+ * Description: 添加商品入参vo
  * date: 2020/8/3 10:05
  */
 public class ProductInfoAddReqVo {

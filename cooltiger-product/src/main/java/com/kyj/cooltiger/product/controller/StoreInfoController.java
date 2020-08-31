@@ -166,12 +166,13 @@ public class StoreInfoController implements StoreInfoClient {
     /**
      * 查询店铺信息
      *
-     * @param storeId
+     * @param storeId 店铺ID
      * @return
      */
     @Override
-    @RequestMapping(value = "/getStoreInfo/{storeId}", method = {RequestMethod.GET})
-    public Result getStoreInfo(@PathVariable("storeId") Integer storeId) {
+    @RequestMapping(value = "/getStoreInfo", method = {RequestMethod.GET})
+    public Result getStoreInfo(
+            @RequestParam("store_id") Integer storeId) {
         Map<String, Object> resMap = storeInfoService.getStoreInfo(storeId);
         return Result.success(resMap.get("data"));
     }
@@ -179,26 +180,30 @@ public class StoreInfoController implements StoreInfoClient {
     /**
      * 店铺信息审核
      *
+     * @param storeId     店铺ID
+     * @param auditStatus 审核结果（1-审核通过2-审核未通过）
      * @return
      */
     @Override
-    @RequestMapping(value = "/storeInfoAudit/{storeId}", method = {RequestMethod.PUT})
-    public Result storeInfoAudit(@PathVariable("storeId") Integer storeId) {
-        storeInfoService.storeInfoAudit(storeId);
+    @RequestMapping(value = "/storeInfoAudit", method = {RequestMethod.PUT})
+    public Result storeInfoAudit(
+            @RequestParam("store_id") Integer storeId,
+            @RequestParam("audit_status") Integer auditStatus) {
+        storeInfoService.storeInfoAudit(storeId, auditStatus);
         return Result.success();
     }
 
     /**
      * 修改店铺信息
      *
-     * @param storeId
-     * @param storeApplyIntoReqVo
+     * @param storeId             店铺ID
+     * @param storeApplyIntoReqVo 店铺信息
      * @return
      */
     @Override
-    @RequestMapping(value = "/updateStoreInfo/{storeId}", method = {RequestMethod.PUT})
+    @RequestMapping(value = "/updateStoreInfo", method = {RequestMethod.PUT})
     public Result updateStoreInfo(
-            @PathVariable("storeId") Integer storeId,
+            @RequestParam("store_id") Integer storeId,
             @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo) {
         storeInfoService.updateStoreInfo(storeId, storeApplyIntoReqVo);
         return Result.success();

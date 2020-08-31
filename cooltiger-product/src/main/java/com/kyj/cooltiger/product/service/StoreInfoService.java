@@ -38,7 +38,7 @@ public interface StoreInfoService {
     /**
      * 查询店铺信息
      *
-     * @param storeId
+     * @param storeId 店铺ID
      * @return
      */
     public Map<String, Object> getStoreInfo(Integer storeId);
@@ -46,15 +46,17 @@ public interface StoreInfoService {
     /**
      * 店铺信息审核
      *
-     * @param storeId
+     * @param storeId     店铺ID
+     * @param auditStatus 审核结果（1-审核通过2-审核未通过）
      */
-    public void storeInfoAudit(Integer storeId);
+    public void storeInfoAudit(Integer storeId, Integer auditStatus);
 
     /**
      * 修改店铺信息
      *
-     * @param storeId
-     * @param storeApplyIntoReqVo
+     * @param storeId             店铺ID
+     * @param storeApplyIntoReqVo 店铺信息
+     * @return
      */
     public void updateStoreInfo(Integer storeId, StoreApplyIntoReqVo storeApplyIntoReqVo);
 }

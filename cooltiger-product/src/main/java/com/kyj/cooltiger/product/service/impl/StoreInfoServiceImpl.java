@@ -1,6 +1,7 @@
 package com.kyj.cooltiger.product.service.impl;
 
 import com.kyj.cooltiger.common.constant.DELETED;
+import com.kyj.cooltiger.common.constant.STORE_AUDIT_STATUS;
 import com.kyj.cooltiger.common.excep.MyException;
 import com.kyj.cooltiger.common.utils.PageUtil;
 import com.kyj.cooltiger.feign.product.vo.StoreApplyIntoReqVo;
@@ -67,7 +68,7 @@ public class StoreInfoServiceImpl implements StoreInfoService {
         storeInfo.setBankCardNumber(storeApplyIntoReqVo.getBank_card_number());
         storeInfo.setBankOfDeposit(storeApplyIntoReqVo.getBank_of_deposit());
         storeInfo.setAccountName(storeApplyIntoReqVo.getAccount_name());
-        storeInfo.setAuditStatus(0);
+        storeInfo.setAuditStatus(STORE_AUDIT_STATUS.NOT_AUDIT);
         storeInfo.setSignStatus(0);
         storeInfo.setDeleted(DELETED.NOT);
         storeInfoMapper.addStoreInfo(storeInfo);
@@ -165,44 +166,53 @@ public class StoreInfoServiceImpl implements StoreInfoService {
     /**
      * 店铺信息审核
      *
-     * @param storeId
+     * @param storeId     店铺ID
+     * @param auditStatus 审核结果（1-审核通过2-审核未通过）
      */
     @Override
-    public void storeInfoAudit(Integer storeId) {
+    public void storeInfoAudit(Integer storeId, Integer auditStatus) {
         StoreInfo storeInfo = storeInfoMapper.getStoreInfo(storeId);
-        if (storeId == null) {
+        if (storeInfo == null) {
             throw new MyException("STORE_INFO_NOT_EXIST", "店铺信息不存在");
         }
-        storeInfo.setAuditStatus(1);
+        if (!storeInfo.getAuditStatus().equals(STORE_AUDIT_STATUS.NOT_AUDIT)){
+            throw new MyException("STORE_IS_AUDIT", "店铺已审核");
+        }else if (auditStatus.equals(STORE_AUDIT_STATUS.AUDIT_YES)) {
+            storeInfo.setAuditStatus(STORE_AUDIT_STATUS.AUDIT_YES);
+        } else if (auditStatus.equals(STORE_AUDIT_STATUS.AUDIT_NOT)) {
+            storeInfo.setAuditStatus(STORE_AUDIT_STATUS.AUDIT_NOT);
+        } else {
+            throw new MyException("PARAM_REEOR", "参数错误");
+        }
         storeInfoMapper.updateStoreInfo(storeInfo);
     }
 
     /**
      * 修改店铺信息
      *
-     * @param storeId
-     * @param storeApplyIntoReqVo
+     * @param storeId             店铺ID
+     * @param storeApplyIntoReqVo 店铺信息
+     * @return
      */
     @Override
     public void updateStoreInfo(Integer storeId, StoreApplyIntoReqVo storeApplyIntoReqVo) {
         StoreInfo storeInfo = storeInfoMapper.getStoreInfo(storeId);
-        if (storeId == null) {
+        if (storeInfo == null) {
             throw new MyException("STORE_INFO_NOT_EXIST", "店铺信息不存在");
         }
-        /*int count = storeInfoMapper.getStoreInfoCountByStoreName(storeApplyIntoReqVo.getStoreName());
-        if (count > 0){
+        int count = storeInfoMapper.getStoreInfoCountByStoreName(storeApplyIntoReqVo.getStore_name());
+        if (!storeInfo.getStoreName().equals(storeApplyIntoReqVo.getAccount_name()) && count > 0){
             throw new MyException("STORE_NAME_IS_EXIST","店铺名称已存在");
         }
-        storeInfo.setStoreName(storeApplyIntoReqVo.getStoreName());
-        //storeInfo.setLogoUrl(storeApplyIntoReqVo.getLogoUrl());
-        storeInfo.setRelationName(storeApplyIntoReqVo.getRelationName());
-        storeInfo.setRelationTel(storeApplyIntoReqVo.getRelationTel());
-        storeInfo.setStoreAddress(storeApplyIntoReqVo.getStoreAddress());
-        storeInfo.setSaleCategory(storeApplyIntoReqVo.getSaleCategory());
-        storeInfo.setMainProducts(storeApplyIntoReqVo.getMainProducts());
-        storeInfo.setBankCardNumber(storeApplyIntoReqVo.getBankCardNumber());
-        storeInfo.setBankOfDeposit(storeApplyIntoReqVo.getBankOfDeposit());
-        storeInfo.setAccountName(storeApplyIntoReqVo.getAccountName());*/
+        storeInfo.setStoreName(storeApplyIntoReqVo.getStore_name());
+        storeInfo.setRelationName(storeApplyIntoReqVo.getRelation_name());
+        storeInfo.setRelationTel(storeApplyIntoReqVo.getRelation_tel());
+        storeInfo.setStoreAddress(storeApplyIntoReqVo.getStore_address());
+        storeInfo.setSaleCategory(storeApplyIntoReqVo.getSale_category());
+        storeInfo.setMainProducts(storeApplyIntoReqVo.getMain_products());
+        storeInfo.setBankCardNumber(storeApplyIntoReqVo.getBank_card_number());
+        storeInfo.setBankOfDeposit(storeApplyIntoReqVo.getBank_of_deposit());
+        storeInfo.setAccountName(storeApplyIntoReqVo.getAccount_name());
         storeInfoMapper.updateStoreInfo(storeInfo);
     }
 }
