@@ -7,6 +7,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @author liduan
  * Description: 商品信息FeignClient接口
@@ -52,8 +54,8 @@ public interface ProductInfoClient {
      * @param productSkuReqVo 商品Sku信息
      * @return
      */
-    @RequestMapping(value = "/product/productInfo/addProductInfo/{product_id}", method = {RequestMethod.POST})
-    public Result addProductInfo(
+    @RequestMapping(value = "/product/productInfo/addProductSkuInfo/{product_id}", method = {RequestMethod.POST})
+    public Result addProductSkuInfo(
             @PathVariable("product_id") Integer productId,
             @RequestBody ProductSkuReqVo productSkuReqVo);
 
@@ -94,16 +96,26 @@ public interface ProductInfoClient {
     public Result deleteProductInfo(@PathVariable("productId") Integer productId);
 
     /**
-     * 上传商品图片
+     * 批量上传商品图片
      *
      * @param productId 商品ID
      * @param picType   图片类型（1-商品图片2-sku图片3-详情图片）
-     * @param pic       图片
+     * @param pics      图片
      * @return
      */
     @RequestMapping(value = "/upProductImage", method = {RequestMethod.POST})
     public Result upProductImage(
             @RequestParam("product_id") Integer productId,
             @RequestParam("pic_type") Integer picType,
-            @RequestParam("pic") MultipartFile pic);
+            @RequestParam("pics") MultipartFile[] pics);
+
+    /**
+     * 批量删除图片
+     *
+     * @param imageUrls 图片url
+     * @return
+     */
+    @RequestMapping(value = "/delProductImage",method = {RequestMethod.DELETE})
+    public Result delProductImage(
+            @RequestBody List<String> imageUrls);
 }

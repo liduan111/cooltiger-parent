@@ -1,6 +1,7 @@
 package com.kyj.cooltiger.product.service;
 
 import com.kyj.cooltiger.feign.product.vo.StoreApplyIntoReqVo;
+import com.kyj.cooltiger.product.entity.StoreInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -59,4 +60,12 @@ public interface StoreInfoService {
      * @return
      */
     public void updateStoreInfo(Integer storeId, StoreApplyIntoReqVo storeApplyIntoReqVo);
+
+    /**
+     * 根据店铺ID获取店铺信息
+     *
+     * @param storeId
+     * @return
+     */
+    public StoreInfo getStoreInfoByStoreId(Integer storeId);
 }

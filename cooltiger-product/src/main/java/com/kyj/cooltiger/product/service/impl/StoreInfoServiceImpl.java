@@ -175,9 +175,9 @@ public class StoreInfoServiceImpl implements StoreInfoService {
         if (storeInfo == null) {
             throw new MyException("STORE_INFO_NOT_EXIST", "店铺信息不存在");
         }
-        if (!storeInfo.getAuditStatus().equals(STORE_AUDIT_STATUS.NOT_AUDIT)){
+        if (!storeInfo.getAuditStatus().equals(STORE_AUDIT_STATUS.NOT_AUDIT)) {
             throw new MyException("STORE_IS_AUDIT", "店铺已审核");
-        }else if (auditStatus.equals(STORE_AUDIT_STATUS.AUDIT_YES)) {
+        } else if (auditStatus.equals(STORE_AUDIT_STATUS.AUDIT_YES)) {
             storeInfo.setAuditStatus(STORE_AUDIT_STATUS.AUDIT_YES);
         } else if (auditStatus.equals(STORE_AUDIT_STATUS.AUDIT_NOT)) {
             storeInfo.setAuditStatus(STORE_AUDIT_STATUS.AUDIT_NOT);
@@ -201,8 +201,8 @@ public class StoreInfoServiceImpl implements StoreInfoService {
             throw new MyException("STORE_INFO_NOT_EXIST", "店铺信息不存在");
         }
         int count = storeInfoMapper.getStoreInfoCountByStoreName(storeApplyIntoReqVo.getStore_name());
-        if (!storeInfo.getStoreName().equals(storeApplyIntoReqVo.getAccount_name()) && count > 0){
-            throw new MyException("STORE_NAME_IS_EXIST","店铺名称已存在");
+        if (!storeInfo.getStoreName().equals(storeApplyIntoReqVo.getAccount_name()) && count > 0) {
+            throw new MyException("STORE_NAME_IS_EXIST", "店铺名称已存在");
         }
         storeInfo.setStoreName(storeApplyIntoReqVo.getStore_name());
         storeInfo.setRelationName(storeApplyIntoReqVo.getRelation_name());
@@ -214,5 +214,20 @@ public class StoreInfoServiceImpl implements StoreInfoService {
         storeInfo.setBankOfDeposit(storeApplyIntoReqVo.getBank_of_deposit());
         storeInfo.setAccountName(storeApplyIntoReqVo.getAccount_name());
         storeInfoMapper.updateStoreInfo(storeInfo);
+    }
+
+    /**
+     * 根据店铺ID获取店铺信息
+     *
+     * @param storeId
+     * @return
+     */
+    @Override
+    public StoreInfo getStoreInfoByStoreId(Integer storeId) {
+        StoreInfo storeInfo = storeInfoMapper.getStoreInfo(storeId);
+        if (storeInfo == null) {
+            throw new MyException("STORE_INFO_NOT_EXIST", "店铺信息不存在");
+        }
+        return storeInfo;
     }
 }

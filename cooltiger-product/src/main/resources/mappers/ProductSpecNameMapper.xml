@@ -3,11 +3,11 @@
 <mapper namespace="com.kyj.cooltiger.product.mapper.ProductSpecNameMapper">
 
     <!-- 添加商品规格名 -->
-    <insert id="addProductSpecName" parameterType="ProductSpecName" useGeneratedKeys="true" keyProperty="id">
+    <insert id="addProductSpecName" parameterType="ProductSpecName" useGeneratedKeys="true" keyProperty="productSpecName.id">
         INSERT INTO ky_product_spec_name
-            (name, product_id, order)
+            (name, product_id, sort)
         VALUES
-        (#{productSpecName.name}, #{productSpecName.productId}, #{productSpecName.order})
+        (#{productSpecName.name}, #{productSpecName.productId}, #{productSpecName.sort})
     </insert>
 
     <!-- 查询商品规格名集合 -->
@@ -16,14 +16,16 @@
             id,
             name,
             product_id productId
-        order
+            sort
         FROM ky_product_spec_name
         WHERE product_id = #{productId}
-        ORDER BY 'order'
+        ORDER BY 'sort'
     </select>
 
     <!-- 删除商品规格名 -->
     <delete id="deleteProductSpecNameByProductId">
-        DELETE FROM ky_product_spec_name WHERE product_id = #{productId}
+        DELETE
+        FROM ky_product_spec_name
+        WHERE product_id = #{productId}
     </delete>
 </mapper>

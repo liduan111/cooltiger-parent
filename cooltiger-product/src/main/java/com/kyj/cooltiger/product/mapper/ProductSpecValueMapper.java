@@ -4,6 +4,8 @@ import com.kyj.cooltiger.product.entity.ProductSpecValue;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * @author liduan
  * Description: 商品规格值mapper
@@ -13,13 +15,15 @@ import org.apache.ibatis.annotations.Param;
 public interface ProductSpecValueMapper {
 
     /**
-     * 添加商品规格值
-     * @param productSpecValue
+     * 批量添加商品规格值
+     *
+     * @param productSpecValueList
      */
-    public void addProductSpecValue(@Param("productSpecValue") ProductSpecValue productSpecValue);
+    public void batchAddProductSpecValue(@Param("list") List<ProductSpecValue> productSpecValueList);
 
     /**
      * 根据商品规格名ID删除商品规格值
+     *
      * @param specNameId
      */
     public void deleteProductSpecValueBySpecNameId(@Param("specNameId") Integer specNameId);

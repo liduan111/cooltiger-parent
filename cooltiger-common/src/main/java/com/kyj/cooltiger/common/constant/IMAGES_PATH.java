@@ -20,7 +20,15 @@ public class IMAGES_PATH {
     //身份证正反面照片
     public static final String ID_CARD = "/id_card";
     //经营资质照片
-    public static final String LICENSES =  "/licenses";
+    public static final String LICENSES = "/licenses";
     //合约内容
     public static final String CONTRACT = "/contract";
+    //商品
+    public static final String PRODUCT = "/product";
+    //商品主图
+    public static final String INFO = "/info";
+    //商品sku图
+    public static final String SKU = "/sku";
+    //商品详情图
+    public static final String DETAIL = "/detail";
 }

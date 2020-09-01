@@ -49,7 +49,8 @@ public class ProductSkuReqVo {
         @JsonProperty("spec_values")
         private List<String> specValues;
         //图片url
-        private String url;
+        @JsonProperty("pic_url")
+        private String picUrl;
         //商品销售价
         @JsonProperty("sale_price")
         private Double salePrice;
@@ -78,12 +79,12 @@ public class ProductSkuReqVo {
             this.specValues = specValues;
         }
 
-        public String getUrl() {
-            return url;
+        public String getPicUrl() {
+            return picUrl;
         }
 
-        public void setUrl(String url) {
-            this.url = url;
+        public void setPicUrl(String picUrl) {
+            this.picUrl = picUrl;
         }
 
         public Double getSalePrice() {

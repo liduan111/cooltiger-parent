@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @author liduan
  * Description: 商品信息controller
@@ -66,7 +68,14 @@ public class ProductInfoController {
     public Result addProductSkuInfo(
             @PathVariable("product_id") Integer productId,
             @RequestBody ProductSkuReqVo productSkuReqVo) {
-        return productInfoClient.addProductInfo(productId, productSkuReqVo);
+        return productInfoClient.addProductSkuInfo(productId, productSkuReqVo);
+    }
+
+
+    @RequestMapping(value = "/addProductDetail/{product_id}", method = {RequestMethod.POST})
+    public Result addProductDetail(
+            @PathVariable("product_id") Integer productId){
+        return null;
     }
 
     /**
@@ -114,18 +123,30 @@ public class ProductInfoController {
     }
 
     /**
-     * 上传商品图片
+     * 批量上传商品图片
      *
      * @param productId 商品ID
      * @param picType   图片类型（1-商品图片2-sku图片3-详情图片）
-     * @param pic       图片
+     * @param pics      图片
      * @return
      */
     @RequestMapping(value = "/upProductImage", method = {RequestMethod.POST})
     public Result upProductImage(
             @RequestParam("product_id") Integer productId,
             @RequestParam("pic_type") Integer picType,
-            @RequestParam("pic") MultipartFile pic) {
-        return productInfoClient.upProductImage(productId, picType, pic);
+            @RequestParam("pics") MultipartFile[] pics) {
+        return productInfoClient.upProductImage(productId, picType, pics);
+    }
+
+    /**
+     * 批量删除图片
+     *
+     * @param imageUrls 图片url
+     * @return
+     */
+    @RequestMapping(value = "/delProductImage", method = {RequestMethod.DELETE})
+    public Result delProductImage(
+            @RequestBody List<String> imageUrls) {
+        return productInfoClient.delProductImage(imageUrls);
     }
 }

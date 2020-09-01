@@ -1,16 +1,27 @@
 package com.kyj.cooltiger.product.controller;
 
+import com.kyj.cooltiger.common.constant.IMAGES_PATH;
+import com.kyj.cooltiger.common.constant.PRODUCT_IMAGE_TYPE;
+import com.kyj.cooltiger.common.excep.MyException;
+import com.kyj.cooltiger.common.utils.CharUtil;
+import com.kyj.cooltiger.common.utils.FileTypeUtil;
+import com.kyj.cooltiger.common.utils.FtpUtil;
 import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.product.client.ProductInfoClient;
 import com.kyj.cooltiger.feign.product.vo.ProductBaseReqVo;
 import com.kyj.cooltiger.feign.product.vo.ProductSkuReqVo;
+import com.kyj.cooltiger.product.config.FtpConfig;
 import com.kyj.cooltiger.product.entity.ProductInfo;
+import com.kyj.cooltiger.product.entity.StoreInfo;
 import com.kyj.cooltiger.product.service.ProductInfoService;
+import com.kyj.cooltiger.product.service.ProductPictureService;
 import com.kyj.cooltiger.product.service.StoreInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,6 +37,10 @@ public class ProductInfoController implements ProductInfoClient {
     private ProductInfoService productInfoService;
     @Autowired
     private StoreInfoService storeInfoService;
+    @Autowired
+    private ProductPictureService productPictureService;
+    @Autowired
+    private FtpConfig ftpConfig;
 
     /**
      * 获取店铺商品列表
@@ -72,12 +87,11 @@ public class ProductInfoController implements ProductInfoClient {
      * @return
      */
     @Override
-    @RequestMapping(value = "/addProductInfo/{product_id}", method = {RequestMethod.POST})
-    public Result addProductInfo(
+    @RequestMapping(value = "/addProductSkuInfo/{product_id}", method = {RequestMethod.POST})
+    public Result addProductSkuInfo(
             @PathVariable("product_id") Integer productId,
             @RequestBody ProductSkuReqVo productSkuReqVo) {
-        int i = 0;
-        //productInfoService.addProductInfo(storeId, productInfoAddReqVo);
+        productInfoService.addProductSkuInfo(productId, productSkuReqVo);
         return Result.success();
     }
 
@@ -134,22 +148,87 @@ public class ProductInfoController implements ProductInfoClient {
     }
 
     /**
-     * 上传商品图片
+     * 批量上传商品图片
      *
      * @param productId 商品ID
      * @param picType   图片类型（1-商品图片2-sku图片3-详情图片）
-     * @param pic       图片
+     * @param pics      图片
      * @return
      */
     @RequestMapping(value = "/upProductImage", method = {RequestMethod.POST})
     public Result upProductImage(
             @RequestParam("product_id") Integer productId,
             @RequestParam("pic_type") Integer picType,
-            @RequestParam("pic") MultipartFile pic) {
+            @RequestParam("pics") MultipartFile[] pics) {
         //获取商品信息
         ProductInfo productInfo = productInfoService.getProductInfo(productId);
         //获取店铺信息
-        Map<String, Object> storeInfo = storeInfoService.getStoreInfo(productInfo.getStoreId());
-        return Result.success();
+        StoreInfo storeInfo = storeInfoService.getStoreInfoByStoreId(productInfo.getStoreId());
+        //实例化FtpUtil工具类上传图片
+        FtpUtil ftpUtil = new FtpUtil();
+        ArrayList<FtpUtil.FileInfo> fileInfos = new ArrayList<>();
+        FtpUtil.FileInfo fileInfo = null;
+        //图片存放子目录
+        StringBuilder filePath = new StringBuilder(IMAGES_PATH.STORE + "/" + storeInfo.getStoreCode() +
+                IMAGES_PATH.PRODUCT + "/" + productInfo.getProductCode());
+        if (picType == PRODUCT_IMAGE_TYPE.INFO) {
+            filePath.append(IMAGES_PATH.INFO);
+        } else if (picType == PRODUCT_IMAGE_TYPE.SKU) {
+            filePath.append(IMAGES_PATH.SKU);
+        } else if (picType == PRODUCT_IMAGE_TYPE.DATAIL) {
+            filePath.append(IMAGES_PATH.DETAIL);
+        }
+        //定义返回url
+        List<String> resUrls = new ArrayList<>();
+        for (MultipartFile pic : pics) {
+            //获取文件名
+            String oldName = pic.getOriginalFilename();
+            //根据文件名字判断是否为图片，支持（jpg png gif bmp）
+            if (!FileTypeUtil.isImageByName(oldName)) {
+                throw new MyException("PICTURE_FORMAT_ERROR", "图片格式错误");
+            }
+            //使用CharUtil工具类生成新图片名（时间戳+随机字符串）+ 后缀名
+            String newName = CharUtil.getImageName(25) + oldName.substring(oldName.lastIndexOf("."));
+            fileInfo = ftpUtil.new FileInfo();
+            fileInfo.setBasePath(ftpConfig.getBasePath());
+            fileInfo.setFilePath(filePath.toString());
+            fileInfo.setFileName(newName);
+            fileInfo.setUpFile(pic);
+            fileInfos.add(fileInfo);
+            resUrls.add(ftpConfig.getImageBaseUrl() + filePath.toString() + "/" + newName);
+        }
+        //添加到数据库
+        if (picType == PRODUCT_IMAGE_TYPE.INFO) {
+            productPictureService.addProductPicture(productId,resUrls);
+        }
+        int result = ftpUtil.uploadBatchFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
+                ftpConfig.getPassWord(), fileInfos);
+        return Result.success(resUrls);
+    }
+
+    /**
+     * 批量删除图片
+     *
+     * @param imageUrls 图片url
+     * @return
+     */
+    @RequestMapping(value = "/delProductImage", method = {RequestMethod.DELETE})
+    public Result delProductImage(
+            @RequestBody List<String> imageUrls) {
+        //调用FtpUtil工具类删除图片
+        FtpUtil ftpUtil = new FtpUtil();
+        //删除的集合
+        ArrayList<FtpUtil.FileInfo> fileInfos = new ArrayList<>();
+        FtpUtil.FileInfo fileInfo = null;
+        for (String imageUrl : imageUrls) {
+            fileInfo = ftpUtil.new FileInfo();
+            fileInfo.setBasePath(ftpConfig.getBasePath());
+            fileInfo.setFilePath(imageUrl.substring(imageUrl.lastIndexOf(IMAGES_PATH.STORE), imageUrl.lastIndexOf("/")));
+            fileInfo.setFileName(imageUrl.substring(imageUrl.lastIndexOf("/") + 1));
+            fileInfos.add(fileInfo);
+        }
+        int res = ftpUtil.deleteBatchFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
+                ftpConfig.getPassWord(), fileInfos);
+        return Result.success(res);
     }
 }
