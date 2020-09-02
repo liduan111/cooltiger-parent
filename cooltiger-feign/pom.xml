@@ -35,10 +35,7 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
-<<<<<<< HEAD
 
-=======
->>>>>>> 5176943226653c5c354a34c73490f5077e16b140
     <build>
         <plugins>
             <plugin>
@@ -58,8 +55,4 @@
             </plugin>
         </plugins>
     </build>
-<<<<<<< HEAD
-
-=======
->>>>>>> 5176943226653c5c354a34c73490f5077e16b140
 </project>
