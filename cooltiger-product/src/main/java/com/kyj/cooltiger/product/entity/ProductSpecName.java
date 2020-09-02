@@ -19,7 +19,7 @@ public class ProductSpecName implements Serializable {
     //商品ID
     private Integer productId;
     //排序
-    private Integer order;
+    private Integer sort;
     //创建时间
     private Timestamp createTime;
     //修改时间
@@ -53,12 +53,12 @@ public class ProductSpecName implements Serializable {
         this.productId = productId;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getSort() {
+        return sort;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 
     public Timestamp getCreateTime() {

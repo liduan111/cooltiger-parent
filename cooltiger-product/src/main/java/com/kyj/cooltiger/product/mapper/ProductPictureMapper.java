@@ -14,13 +14,15 @@ import java.util.List;
 @Mapper
 public interface ProductPictureMapper {
     /**
-     * 添加商品图片
-     * @param productPicture
+     * 批量插入图片信息
+     *
+     * @param productPictureList
      */
-    public void addProductPicture(@Param("productPicture") ProductPicture productPicture);
+    public void batchAddProductPicture(@Param("list") List<ProductPicture> productPictureList);
 
     /**
      * 根据关联ids删除多个商品图片
+     *
      * @param relationIds
      */
     public void deleteProductPictureByRelationIds(List<Integer> relationIds);

@@ -91,7 +91,7 @@ public class CharUtil {
     public static String getImageName(Integer num){
         //取当前时间的长整形值包含毫秒
         long millis = System.currentTimeMillis();
-        String str = millis + getRandom(num);
+        String str = millis + getRandomString(num);
         return str;
     }
 

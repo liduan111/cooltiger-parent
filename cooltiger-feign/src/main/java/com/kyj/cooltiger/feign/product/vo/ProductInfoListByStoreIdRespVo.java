@@ -1,5 +1,7 @@
 package com.kyj.cooltiger.feign.product.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author liduan
  * Description: 根据店铺ID查询商品列表返回vo
@@ -8,16 +10,21 @@ package com.kyj.cooltiger.feign.product.vo;
 public class ProductInfoListByStoreIdRespVo {
 
     //商品ID
+    @JsonProperty("product_id")
     private Integer productId;
     //商品编码
+    @JsonProperty("product_code")
     private String productCode;
     //商品标题
     private String title;
     //最后修改时间
+    @JsonProperty("modified_time")
     private String modifiedTime;
     //图片url
-    private String url;
+    @JsonProperty("pic_url")
+    private String picUrl;
     //商品销售价最低价
+    @JsonProperty("min_price")
     private Double minPrice;
     //库存
     private Integer stock;
@@ -54,12 +61,12 @@ public class ProductInfoListByStoreIdRespVo {
         this.modifiedTime = modifiedTime;
     }
 
-    public String getUrl() {
-        return url;
+    public String getPicUrl() {
+        return picUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     public Double getMinPrice() {

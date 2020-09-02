@@ -5,16 +5,18 @@
     <!-- 添加商品运费 -->
     <insert id="addProductFreight" parameterType="ProductFreight">
         INSERT INTO ky_product_freight
-        (product_id, product_freight_type, condition, preight_price, first_weight,
+        (product_id, product_freight_type, factor, freight_price, first_weight,
          continue_weight, whether_kg)
-        VALUES
-        (#{productFreight.productId}, #{productFreight.productFreightType}, #{productFreight.condition},
-         #{productFreight.preightPrice}, #{productFreight.firstWeight}, #{productFreight.continueWeight},
+        VALUE
+        (#{productFreight.productId}, #{productFreight.productFreightType}, #{productFreight.factor},
+         #{productFreight.freightPrice}, #{productFreight.firstWeight}, #{productFreight.continueWeight},
          #{productFreight.whetherKg})
     </insert>
 
     <!-- 删除商品运费 -->
     <delete id="deleteProductFreightByProductId">
-        DELETE FROM ky_product_freight WHERE product_id = #{productId}
+        DELETE
+        FROM ky_product_freight
+        WHERE product_id = #{productId}
     </delete>
 </mapper>

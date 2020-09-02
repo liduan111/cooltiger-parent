@@ -21,7 +21,7 @@ public class ProductInfo implements Serializable {
     /** 店铺ID */
     private Integer storeId;
     /** 品牌ID */
-    private Integer barandId;
+    private Integer brandId;
     /** 一级分类ID */
     private Integer categoryOneId;
     /** 二级分类ID */
@@ -83,12 +83,12 @@ public class ProductInfo implements Serializable {
         this.storeId = storeId;
     }
 
-    public Integer getBarandId() {
-        return barandId;
+    public Integer getBrandId() {
+        return brandId;
     }
 
-    public void setBarandId(Integer barandId) {
-        this.barandId = barandId;
+    public void setBrandId(Integer brandId) {
+        this.brandId = brandId;
     }
 
     public Integer getCategoryOneId() {

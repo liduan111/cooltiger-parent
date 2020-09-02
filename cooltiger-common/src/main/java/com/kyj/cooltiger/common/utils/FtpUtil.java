@@ -3,7 +3,6 @@ package com.kyj.cooltiger.common.utils;
 import com.kyj.cooltiger.common.excep.MyException;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
-import org.hibernate.validator.constraints.EAN;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -199,6 +198,37 @@ public class FtpUtil {
             closeConnect();
         }
         return temp;
+    }
+
+    /**
+     * 批量删除文件
+     *
+     * @param host      FTP服务器ip
+     * @param port      FTP服务器端口
+     * @param username  FTP登录账号
+     * @param password  FTP登录密码
+     * @param fileInfos 删除文件集合
+     * @return
+     */
+    public int deleteBatchFile(String host, int port, String username, String password, List<FileInfo> fileInfos) {
+        //登陆FTP服务器
+        login(host, port, username, password);
+        boolean flag = false;
+        int res = 0;
+        try {
+            for (FileInfo fileInfo : fileInfos) {
+                ftpClient.changeWorkingDirectory(fileInfo.getBasePath() + fileInfo.getFilePath());
+                flag = ftpClient.deleteFile(fileInfo.getFileName());
+                if (flag) {
+                    res++;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnect();
+        }
+        return res;
     }
 
     public class FileInfo {

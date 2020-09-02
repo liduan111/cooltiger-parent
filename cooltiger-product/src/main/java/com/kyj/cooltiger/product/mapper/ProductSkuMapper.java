@@ -15,19 +15,22 @@ import java.util.List;
 public interface ProductSkuMapper {
 
     /**
-     * 添加商品sku
-     * @param productSku
+     * 批量添加商品sku
+     *
+     * @param productSkuList
      */
-    public void addProductSku(@Param("productSku") ProductSku productSku);
+    public void batchAddProductSku(@Param("list") List<ProductSku> productSkuList);
 
     /**
      * 删除商品sku信息
+     *
      * @param productId
      */
     public void deleteProductSku(@Param("productId") Integer productId);
 
     /**
      * 根据商品ID获取商品Sku列表
+     *
      * @param productId
      * @return
      */

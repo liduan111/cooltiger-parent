@@ -2,13 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kyj.cooltiger.product.mapper.ProductPictureMapper">
 
-    <!-- 添加商品图片 -->
-    <insert id="addProductPicture" parameterType="ProductPicture">
+    <!-- 批量插入图片信息 -->
+    <insert id="batchAddProductPicture" parameterType="ProductPicture">
         INSERT INTO ky_product_picture
-            (type, relation_id, url, is_main, order)
+        (pic_type, relation_id, pic_url, is_main, sort)
         VALUES
-        (#{productPicture.type}, #{productPicture.relationId}, #{productPicture.url},
-         #{productPicture.isMain}, #{productPicture.order})
+        <foreach collection="productPictureList" item="productPicture" index="index" separator=",">
+            (#{productPicture.picType}, #{productPicture.relationId}, #{productPicture.picUrl},
+            #{productPicture.isMain}, #{productPicture.sort})
+        </foreach>
     </insert>
 
     <!-- 根据关联ids删除多个商品图片 -->
