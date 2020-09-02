@@ -1,6 +1,6 @@
 #服务端口
 server:
-  port: 8902
+  port: 8802
 
 #eureka
 eureka:

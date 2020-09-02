@@ -1,6 +1,6 @@
 #服务端口
 server:
-  port: 8892
+  port: 8890
 
 eureka:
   client:
