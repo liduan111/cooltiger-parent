@@ -25,7 +25,7 @@
         pro.product_code productCode,
         pro.title,
         pro.modified_time modifiedTime,
-        pic.url,
+        pic.pic_url,
         sku.sale_price minPrice,
         sku.stock
         FROM ky_product_info pro
@@ -42,21 +42,22 @@
         <if test="keyword != null and keyword != ''">
             AND product_code = #{keyword} OR title like CONCAT('%', #{keyword}, '%')
         </if>
-        LIMIT #{pageSatrt},#{pageSize}
+        LIMIT #{pageStart},#{pageSize}
     </select>
 
     <!-- 添加商品基本信息 -->
-    <insert id="addProductInfo" parameterType="ProductInfo" useGeneratedKeys="true" keyProperty="productId">
+    <insert id="addProductInfo" parameterType="ProductInfo" useGeneratedKeys="true" keyProperty="productInfo.productId">
         INSERT INTO ky_product_info
-        (product_code, title, store_id, brand_id, category_id, address_from_id,
-         create_address_id, about_deliver_time, service_ids, shelf_status,
-         audit_status, deleted)
+        (product_code, title, store_id, brand_id, category_one_id, category_two_id,
+         category_three_id, address_from_id, create_address_id, about_deliver_time,
+         service_ids, shelf_status, audit_status, deleted
+        )
         VALUES
         (#{productInfo.productCode}, #{productInfo.title}, #{productInfo.storeId},
-         #{productInfo.brandId}, #{productInfo.categoryId}, #{productInfo.addressFromId},
-         #{productInfo.createAddressId}, #{productInfo.aboutDeliverTime},
-         #{productInfo.serviceIds}, #{productInfo.shelfStatus}, #{productInfo.auditStatus},
-         #{productInfo.deleted})
+         #{productInfo.brandId}, #{productInfo.categoryOneId}, #{productInfo.categoryTwoId},
+         #{productInfo.categoryThreeId}, #{productInfo.addressFromId}, #{productInfo.createAddressId},
+         #{productInfo.aboutDeliverTime}, #{productInfo.serviceIds}, #{productInfo.shelfStatus},
+         #{productInfo.auditStatus}, #{productInfo.deleted})
     </insert>
 
     <!-- 查询商品信息 -->
@@ -67,7 +68,9 @@
             title,
             store_id           storeId,
             brand_id           brandId,
-            category_id        categoryId,
+            category_one_id    categoryOneId,
+            category_two_id    categoryTwoId,
+            category_Three_id  categoryThreeId,
             address_from_id    addressFromId,
             create_address_id  createAddressId,
             about_deliver_time aboutDeliverTime,
@@ -90,7 +93,9 @@
             title              = #{productInfo.title},
             store_id           = #{productInfo.storeId},
             brand_id           = #{productInfo.brandId},
-            category_id        = #{productInfo.categoryId},
+            category_one_id    = #{productInfo.categoryOneId},
+            category_two_id    = #{productInfo.categoryTwoId},
+            category_Three_id  = #{productInfo.categoryThreeId},
             address_from_id    = #{productInfo.addressFromId},
             create_address_id  = #{productInfo.createAddressId},
             about_deliver_time = #{productInfo.aboutDeliverTime},

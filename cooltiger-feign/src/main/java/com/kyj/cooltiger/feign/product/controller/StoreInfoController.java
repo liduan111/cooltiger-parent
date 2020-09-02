@@ -60,34 +60,39 @@ public class StoreInfoController {
     /**
      * 查询店铺信息
      *
-     * @param storeId
+     * @param storeId 店铺ID
      * @return
      */
-    @RequestMapping(value = "/getStoreInfo/{storeId}", method = {RequestMethod.GET})
-    public Result getStoreInfo(@PathVariable("storeId") Integer storeId) {
+    @RequestMapping(value = "/getStoreInfo", method = {RequestMethod.GET})
+    public Result getStoreInfo(
+            @RequestParam("store_id") Integer storeId) {
         return storeInfoClient.getStoreInfo(storeId);
     }
 
     /**
      * 店铺信息审核
      *
+     * @param storeId     店铺ID
+     * @param auditStatus 审核结果（1-审核通过2-审核未通过）
      * @return
      */
-    @RequestMapping(value = "/storeInfoAudit/{storeId}", method = {RequestMethod.PUT})
-    public Result storeInfoAudit(@PathVariable("storeId") Integer storeId) {
-        return storeInfoClient.storeInfoAudit(storeId);
+    @RequestMapping(value = "/storeInfoAudit", method = {RequestMethod.PUT})
+    public Result storeInfoAudit(
+            @RequestParam("store_id") Integer storeId,
+            @RequestParam("audit_status") Integer auditStatus) {
+        return storeInfoClient.storeInfoAudit(storeId, auditStatus);
     }
 
     /**
      * 修改店铺信息
      *
-     * @param storeId
-     * @param storeApplyIntoReqVo
+     * @param storeId             店铺ID
+     * @param storeApplyIntoReqVo 店铺信息
      * @return
      */
-    @RequestMapping(value = "/updateStoreInfo/{storeId}", method = {RequestMethod.PUT})
+    @RequestMapping(value = "/updateStoreInfo", method = {RequestMethod.PUT})
     public Result updateStoreInfo(
-            @PathVariable("storeId") Integer storeId,
+            @RequestParam("store_id") Integer storeId,
             @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo) {
         return storeInfoClient.updateStoreInfo(storeId, storeApplyIntoReqVo);
     }

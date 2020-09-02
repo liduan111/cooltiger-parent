@@ -12,36 +12,36 @@ public class ProductPicture implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //图片ID
-    private Integer id;
+    private Integer picId;
     //图片类型（0-商品图片1-商品sku图片）
-    private Integer type;
+    private Integer picType;
     //关联ID
     private Integer relationId;
     //图片url
-    private String url;
+    private String picUrl;
     //是否为主图（0-否1-是）
     private Integer isMain;
     //排序
-    private Integer order;
+    private Integer sort;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getPicId() {
+        return picId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setPicId(Integer picId) {
+        this.picId = picId;
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getPicType() {
+        return picType;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setPicType(Integer picType) {
+        this.picType = picType;
     }
 
     public Integer getRelationId() {
@@ -52,12 +52,12 @@ public class ProductPicture implements Serializable {
         this.relationId = relationId;
     }
 
-    public String getUrl() {
-        return url;
+    public String getPicUrl() {
+        return picUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     public Integer getIsMain() {
@@ -68,11 +68,11 @@ public class ProductPicture implements Serializable {
         this.isMain = isMain;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getSort() {
+        return sort;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

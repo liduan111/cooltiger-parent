@@ -2,7 +2,7 @@ package com.kyj.cooltiger.feign.product.vo;
 
 /**
  * @author liduan
- * Description: 商户申请入驻参数vo
+ * Description: 店铺信息参数vo
  * date: 2020/8/5 16:11
  */
 public class StoreApplyIntoReqVo {

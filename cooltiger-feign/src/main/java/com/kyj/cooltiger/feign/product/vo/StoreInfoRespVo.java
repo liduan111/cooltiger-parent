@@ -59,7 +59,7 @@ public class StoreInfoRespVo {
     //账户名
     @JsonProperty("account_name")
     private String accountName;
-    //审核状态（0-未审核1-已审核）
+    //审核状态（0-未审核1-审核通过2-审核未通过）
     @JsonProperty("audit_status")
     private Integer auditStatus;
     //是否签约（0-未签约1-已签约）

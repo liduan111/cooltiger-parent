@@ -22,4 +22,19 @@ public interface ProductDetailsMapper {
      * @param productId
      */
     public void deleteProductDetailsByProductId(@Param("productId") Integer productId);
+
+    /**
+     * 根据商品ID获取商品详情
+     *
+     * @param productId
+     * @return
+     */
+    public ProductDetails getProductDetailsByProductId(@Param("productId") Integer productId);
+
+    /**
+     * 修改商品详情
+     *
+     * @param productDetails
+     */
+    public void updateProductDetails(@Param("productDetails") ProductDetails productDetails);
 }
