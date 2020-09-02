@@ -71,4 +71,11 @@ public interface ProductInfoService {
      */
     public void deleteProductInfo(Integer productId);
 
+    /**
+     * 添加修改商品详情
+     *
+     * @param productId
+     * @param detail
+     */
+    public void addProductDetail(Integer productId, String detail);
 }

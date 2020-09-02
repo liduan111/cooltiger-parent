@@ -118,4 +118,16 @@ public interface ProductInfoClient {
     @RequestMapping(value = "/delProductImage",method = {RequestMethod.DELETE})
     public Result delProductImage(
             @RequestBody List<String> imageUrls);
+
+    /**
+     * 添加修改商品详情
+     *
+     * @param productId 商品ID
+     * @param detail    商品详情
+     * @return
+     */
+    @RequestMapping(value = "/addProductDetail", method = {RequestMethod.POST})
+    public Result addProductDetail(
+            @RequestParam("product_id") Integer productId,
+            @RequestParam("detail") String detail);
 }

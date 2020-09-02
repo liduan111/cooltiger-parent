@@ -231,4 +231,20 @@ public class ProductInfoController implements ProductInfoClient {
                 ftpConfig.getPassWord(), fileInfos);
         return Result.success(res);
     }
+
+    /**
+     * 添加修改商品详情
+     *
+     * @param productId 商品ID
+     * @param detail    商品详情
+     * @return
+     */
+    @Override
+    @RequestMapping(value = "/addProductDetail", method = {RequestMethod.POST})
+    public Result addProductDetail(
+            @RequestParam("product_id") Integer productId,
+            @RequestParam("detail") String detail){
+        productInfoService.addProductDetail(productId,detail);
+        return Result.success();
+    }
 }

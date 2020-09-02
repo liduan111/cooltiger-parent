@@ -16,4 +16,19 @@
         FROM ky_product_details
         WHERE product_id = #{productId}
     </delete>
+
+    <!-- 根据商品ID查询商品详情 -->
+    <select id="getProductDetailsByProductId" resultType="ProductDetails">
+        SELECT details_id,product_id,details
+        FROM ky_product_details
+        WHERE product_id = #{productId}
+    </select>
+
+    <!-- 修改商品详情 -->
+    <update id="updateProductDetails" parameterType="ProductDetails">
+        UPDATE ky_product_details
+        SET details = #{productDetails.details}
+        WHERE product_id = #{productDetails.productId}
+          AND details_id = #{productDetails.detailsId}
+    </update>
 </mapper>

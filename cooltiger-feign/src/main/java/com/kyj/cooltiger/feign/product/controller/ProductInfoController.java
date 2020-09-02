@@ -71,13 +71,6 @@ public class ProductInfoController {
         return productInfoClient.addProductSkuInfo(productId, productSkuReqVo);
     }
 
-
-    @RequestMapping(value = "/addProductDetail/{product_id}", method = {RequestMethod.POST})
-    public Result addProductDetail(
-            @PathVariable("product_id") Integer productId){
-        return null;
-    }
-
     /**
      * 查询商品信息
      *
@@ -148,5 +141,19 @@ public class ProductInfoController {
     public Result delProductImage(
             @RequestBody List<String> imageUrls) {
         return productInfoClient.delProductImage(imageUrls);
+    }
+
+    /**
+     * 添加修改商品详情
+     *
+     * @param productId 商品ID
+     * @param detail    商品详情
+     * @return
+     */
+    @RequestMapping(value = "/addProductDetail", method = {RequestMethod.POST})
+    public Result addProductDetail(
+            @RequestParam("product_id") Integer productId,
+            @RequestParam("detail") String detail) {
+        return productInfoClient.addProductDetail(productId, detail);
     }
 }

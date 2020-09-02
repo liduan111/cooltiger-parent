@@ -179,8 +179,8 @@ public class ProductInfoServiceImpl implements ProductInfoService {
             productSpecValueMapper.batchAddProductSpecValue(productSpecValueList);
             //Map集合 key:规格值value:规格值ID
             Map<String, Integer> specValueMap = new HashMap<>();
-            for (ProductSpecValue specValue : productSpecValueList){
-                specValueMap.put(specValue.getValue(),specValue.getId());
+            for (ProductSpecValue specValue : productSpecValueList) {
+                specValueMap.put(specValue.getValue(), specValue.getId());
             }
             //添加sku
             ProductPicture productPicture = null;
@@ -213,7 +213,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
                 }
                 //批量插入sku信息
                 productSkuMapper.batchAddProductSku(productSkuList);
-                for (ProductPicture picture : productPictureList){
+                for (ProductPicture picture : productPictureList) {
                     picture.setRelationId(productSkuList.get(productPictureList.indexOf(picture)).getSkuId());
                 }
                 //批量插入sku图片信息
@@ -274,7 +274,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         List<ProductSku> productSkuList = productSkuMapper.getProductSkuListByProductId(productId);
         //删除sku信息
         productSkuMapper.deleteProductSku(productId);
-        //获取所有商品ID和SkuId
+        //获取商品ID和SkuId
         List<Integer> relationIds = new ArrayList<>();
         relationIds.add(productId);
         if (!productSkuList.isEmpty()) {
@@ -300,6 +300,27 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         }
         //删除商品详情
         productDetailsMapper.deleteProductDetailsByProductId(productId);
+    }
+
+    /**
+     * 添加修改商品详情
+     *
+     * @param productId
+     * @param detail
+     */
+    @Override
+    public void addProductDetail(Integer productId, String detail) {
+        ProductDetails productDetails = productDetailsMapper.getProductDetailsByProductId(productId);
+        if (productDetails == null){
+            productDetails = new ProductDetails();
+            productDetails.setProductId(productId);
+            productDetails.setDetails(detail);
+            productDetailsMapper.addProductDetails(productDetails);
+        }else {
+            productDetails.setDetails(detail);
+            productDetailsMapper.updateProductDetails(productDetails);
+        }
+
     }
 
 }
