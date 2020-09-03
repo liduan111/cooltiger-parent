@@ -14,7 +14,7 @@
         <result property="salePrice" column="sale_price"/>
         <result property="shopNum" column="shop_num"/>
         <result property="title" column="title"/>
-        <result property="goodsurl" column="url"/>
+        <result property="goodsurl" column="pic_url"/>
         <result property="goodsspecifitionvalue" column="value"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="modified_time"/>
@@ -30,7 +30,7 @@
                c.stock as stocks,
                c.spec_value_ids,
                d.title as title,
-               e.url as goodsurl
+               e.pic_url as goodsurl
                GROUP_CONCAT(specv.value) as goodsspecifitionvalue
         from ky_shop_cart a
         left join ky_store_info b

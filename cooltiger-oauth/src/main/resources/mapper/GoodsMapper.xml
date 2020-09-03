@@ -9,12 +9,11 @@
         <result property="title" column="title"/>
         <result property="storeId" column="store_id"/>
         <result property="barandId" column="brand_id"/>
-        <result property="type" column="type"/>
+        <result property="type" column="pic_type"/>
         <result property="relationId" column="relation_id"/>
-        <result property="url" column="url"/>
+        <result property="url" column="pic_url"/>
         <result property="isMain" column="is_main"/>
-        <result property="brandChineseName" column="brand_chinese_name"/>
-        <result property="brandEnglishName" column="brand_english_name"/>
+        <result property="brandName" column="brand_name"/>
         <result property="brandLogoUrl" column="brand_logo_url"/>
         <result property="brandDesc" column="brand_desc"/>
         <result property="brandStatus" column="brand_status"/>
@@ -27,9 +26,8 @@
         select
             a.product_id,
             a.title,
-            b.url,
-            c.brand_chinese_name,
-            c.brand_english_name,
+            b.pic_url,
+            c.brand_name,
             c.brand_logo_url,
             c.brand_desc,
             d.sell_num,
@@ -44,7 +42,7 @@
                  LEFT JOIN ky_product_sku e
                            ON a.product_id=e.product_id
         where 1=1
-          and b.type=1
+          and b.pic_type=1
           and b.is_main=0
           and c.brand_status=1
           and d.sell_num=(

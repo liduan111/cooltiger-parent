@@ -14,8 +14,8 @@ spring:
     allow-bean-definition-overriding: true
   datasource:
     username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/cooltiger?allowMultiQueries=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=UTC&useSSL=false
+    password: kyj@cool.123456
+    url: jdbc:mysql://36.133.141.6:3306/cooltiger?allowMultiQueries=true&useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=UTC&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
   #文件上传器
   servlet:

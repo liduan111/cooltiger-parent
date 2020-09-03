@@ -34,10 +34,10 @@ public class GoodsVo implements Serializable {
     private String url;
     //是否为主图（0-否1-是）
     private Integer isMain;
-    //品牌中文名称
-    private String brandChineseName;
+    //品牌名称
+    private String brandName;
     //品牌英文名称
-    private String brandEnglishName;
+    //private String brandEnglishName;
     //品牌图片
     private String brandLogoUrl;
     //品牌描述
