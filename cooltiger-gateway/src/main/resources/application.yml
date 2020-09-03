@@ -19,14 +19,14 @@ spring:
       #路由
       routes:
         - id: product_serivce  #路由id标识
-          uri: http://localhost:8902  #请求转发地址
+          uri: http://localhost:8802  #请求转发地址
           predicates:  #断言
             - Path=/product/**  #匹配规则
         - id: order_service
-          uri: http://localhost:8904
+          uri: http://localhost:8803
           predicates:
             - Path=/order/**
         - id: oauth_service
-          uri: http://localhost:8903
+          uri: http://localhost:8801
           predicates:
             - Path=/api/**

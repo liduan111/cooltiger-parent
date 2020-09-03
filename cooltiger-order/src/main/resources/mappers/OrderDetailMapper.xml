@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kyj.cooltiger.order.mapper.OrderDetailMapper">
+
+    <!-- 根据订单ID获取订单详情列表 -->
+    <select id="getOrderDetailListByOrderId">
+        SELECT
+            order_detail_id orderDetailId,
+            order_id        orderId,
+            sku_id          skuId,
+            product_title   productTitle,
+            sku_spec        skuSpec,
+            sku_number      skuNumber,
+            sku_price       skuPrice,
+            sku_weight      skuWeight
+        FROM
+            ky_order_detail
+        WHERE
+            order_id = #{orderId}
+    </select>
+</mapper>

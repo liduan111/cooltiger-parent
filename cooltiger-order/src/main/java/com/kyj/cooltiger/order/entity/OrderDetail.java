@@ -20,6 +20,10 @@ public class OrderDetail implements Serializable {
     private Integer orderId;
     //商品skuID
     private Integer skuId;
+    //商品标题
+    private String productTitle;
+    //sku规格
+    private String skuSpec;
     //商品数量
     private Integer skuNumber;
     //商品sku价格
