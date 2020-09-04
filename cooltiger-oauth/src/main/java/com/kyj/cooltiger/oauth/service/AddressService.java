@@ -38,4 +38,9 @@ public interface AddressService {
     */
    boolean addressupdate(Map<String,Object> map,String idcardzUrl,String idcardfUrl);
 
+   /**
+    * 删除地址
+    * @param map
+    */
+   void  deleteaddress(Map<String,Object> map);
 }

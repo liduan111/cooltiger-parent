@@ -93,4 +93,9 @@
         </set>
         where user_code = #{userCode} and id=#{Id}
     </update>
+    <delete id="deleteaddress">
+        delete from ky_user_address
+        where user_code = #{userCode}
+        and id = #{Id}
+    </delete>
 </mapper>
