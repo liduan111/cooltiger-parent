@@ -35,4 +35,12 @@ public interface ProductSkuMapper {
      * @return
      */
     public List<ProductSku> getProductSkuListByProductId(@Param("productId") Integer productId);
+
+    /**
+     * 根据skuId获取信息
+     *
+     * @param skuId
+     * @return
+     */
+    public ProductSku getProductSkuBySkuId(@Param("skuId") Integer skuId);
 }

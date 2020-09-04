@@ -208,4 +208,17 @@ public class StoreInfoController implements StoreInfoClient {
         storeInfoService.updateStoreInfo(storeId, storeApplyIntoReqVo);
         return Result.success();
     }
+
+    /**
+     * 获取店铺运费信息
+     *
+     * @param storeId 店铺ID
+     * @return
+     */
+    @RequestMapping(value = "/store/storeInfo/getStoreFreight", method = {RequestMethod.GET})
+    public Result getStoreFreight(
+            @RequestParam("store_id") Integer storeId) {
+        Map<String, Object> res = storeInfoService.getStoreFreight(storeId);
+        return Result.success(res.get("data"));
+    }
 }

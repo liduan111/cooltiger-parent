@@ -1,11 +1,11 @@
 package com.kyj.cooltiger.feign.order.client;
 
 import com.kyj.cooltiger.common.utils.Result;
+import com.kyj.cooltiger.feign.order.vo.ProductSettlementReqVo;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author liduan
@@ -30,7 +30,7 @@ public interface OrderInfoClient {
      */
     @RequestMapping(value = "/order/orderInfo/getOrderList", method = {RequestMethod.GET})
     public Result getOrderList(
-            @RequestParam(value = "store_id",required = false) Integer storeId,
+            @RequestParam(value = "store_id", required = false) Integer storeId,
             @RequestParam(value = "user_id", required = false) Integer userId,
             @RequestParam(value = "order_status", required = false) Integer orderStatus,
             @RequestParam(value = "date_start", required = false) String dateStart,
@@ -38,4 +38,16 @@ public interface OrderInfoClient {
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page_no", defaultValue = "1") Integer pageNo,
             @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize);
+
+    /**
+     * 购物车或商品结算
+     *
+     * @param userId                     用户ID
+     * @param productSettlementReqVoList 结算信息入参
+     * @return
+     */
+    @RequestMapping(value = "/order/orderInfo/settlement", method = {RequestMethod.POST})
+    public Result settlement(
+            @RequestParam("user_id") Integer userId,
+            @RequestBody List<ProductSettlementReqVo> productSettlementReqVoList);
 }

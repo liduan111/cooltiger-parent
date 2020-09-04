@@ -247,4 +247,17 @@ public class ProductInfoController implements ProductInfoClient {
         productInfoService.addProductDetail(productId,detail);
         return Result.success();
     }
+
+    /**
+     * 获取商品sku信息
+     *
+     * @param skuId skuID
+     * @return
+     */
+    @RequestMapping(value = "/product/productInfo/getProductSku", method = {RequestMethod.GET})
+    public Result getProductSku(
+            @RequestParam("sku_id") Integer skuId){
+        Map<String,Object> res = productInfoService.getProductSku(skuId);
+        return Result.success(res.get("data"));
+    }
 }

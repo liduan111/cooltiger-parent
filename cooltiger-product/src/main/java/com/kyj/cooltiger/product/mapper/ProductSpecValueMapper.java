@@ -27,4 +27,12 @@ public interface ProductSpecValueMapper {
      * @param specNameId
      */
     public void deleteProductSpecValueBySpecNameId(@Param("specNameId") Integer specNameId);
+
+    /**
+     * 根据id字符串查询规格值集合
+     *
+     * @param specValueIds
+     * @return
+     */
+    public List<ProductSpecValue> getSpecValueListByValueIds(@Param("specValueIds") String specValueIds);
 }

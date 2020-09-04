@@ -80,4 +80,14 @@ public interface StoreInfoClient {
     public Result updateStoreInfo(
             @RequestParam("store_id") Integer storeId,
             @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo);
+
+    /**
+     * 获取店铺运费信息
+     *
+     * @param storeId 店铺ID
+     * @return
+     */
+    @RequestMapping(value = "/store/storeInfo/getStoreFreight", method = {RequestMethod.GET})
+    public Result getStoreFreight(
+            @RequestParam("store_id") Integer storeId);
 }

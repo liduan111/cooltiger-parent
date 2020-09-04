@@ -25,5 +25,15 @@ public interface ProductPictureMapper {
      *
      * @param relationIds
      */
-    public void deleteProductPictureByRelationIds(List<Integer> relationIds);
+    public void deleteProductPictureByRelationIds(@Param("relationIds") List<Integer> relationIds);
+
+    /**
+     * 根据关联ID和图片类型查询图片信息
+     *
+     * @param relationId
+     * @param picType
+     * @return
+     */
+    public List<ProductPicture> getProductPictureListByRelationId$PicType(
+            @Param("relationId") Integer relationId, @Param("picType") int picType);
 }

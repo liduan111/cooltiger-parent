@@ -7,8 +7,10 @@ import com.kyj.cooltiger.common.utils.PageUtil;
 import com.kyj.cooltiger.feign.product.vo.StoreApplyIntoReqVo;
 import com.kyj.cooltiger.feign.product.vo.StoreInfoListRespVo;
 import com.kyj.cooltiger.feign.product.vo.StoreInfoRespVo;
+import com.kyj.cooltiger.product.entity.StoreFreight;
 import com.kyj.cooltiger.product.entity.StoreInfo;
 import com.kyj.cooltiger.product.entity.StorePicture;
+import com.kyj.cooltiger.product.mapper.StoreFreightMapper;
 import com.kyj.cooltiger.product.mapper.StoreInfoMapper;
 import com.kyj.cooltiger.product.mapper.StorePictureMapper;
 import com.kyj.cooltiger.product.service.StoreInfoService;
@@ -33,6 +35,8 @@ public class StoreInfoServiceImpl implements StoreInfoService {
     private StoreInfoMapper storeInfoMapper;
     @Autowired
     private StorePictureMapper storePictureMapper;
+    @Autowired
+    private StoreFreightMapper storeFreightMapper;
 
     /**
      * 添加店铺入驻信息
@@ -229,5 +233,19 @@ public class StoreInfoServiceImpl implements StoreInfoService {
             throw new MyException("STORE_INFO_NOT_EXIST", "店铺信息不存在");
         }
         return storeInfo;
+    }
+
+    /**
+     * 获取店铺运费信息
+     *
+     * @param storeId
+     * @return
+     */
+    @Override
+    public Map<String, Object> getStoreFreight(Integer storeId) {
+        StoreFreight storeFreight = storeFreightMapper.getStoreFreightByStoreId(storeId);
+        Map<String,Object> res = new HashMap<>();
+        res.put("data",storeFreight);
+        return res;
     }
 }

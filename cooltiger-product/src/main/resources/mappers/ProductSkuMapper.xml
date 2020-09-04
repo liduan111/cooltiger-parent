@@ -24,6 +24,7 @@
         WHERE product_id = #productId}
     </update>
 
+    <!-- 根据商品ID获取sku列表 -->
     <select id="getProductSkuListByProductId" resultType="ProductSku">
         SELECT
             sku_id         skuId,
@@ -41,6 +42,27 @@
             modified_time  modifiedTime
         FROM ky_product_sku
         WHERE product_id = #{productId}
+          AND deleted = 0
+    </select>
+
+    <!-- 根据skuID获取sku信息 -->
+    <select id="getProductSkuBySkuId" resultType="ProductSku">
+        SELECT
+            sku_id         skuId,
+            sku_code       skuCode,
+            sku_name       skuName,
+            product_id     productId,
+            spec_value_ids specValueIds,
+            sale_price     salePrice,
+            stock,
+            weight,
+            distri_type    distriType,
+            distri_ratio   distriRatio,
+            distri_amount  distriAmount,
+            create_time    createTime,
+            modified_time  modifiedTime
+        FROM ky_product_sku
+        WHERE sku_id = #{skuId}
           AND deleted = 0
     </select>
 </mapper>

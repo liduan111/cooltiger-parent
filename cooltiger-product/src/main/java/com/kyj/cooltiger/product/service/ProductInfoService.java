@@ -78,4 +78,12 @@ public interface ProductInfoService {
      * @param detail
      */
     public void addProductDetail(Integer productId, String detail);
+
+    /**
+     * 查询商品sku信息
+     *
+     * @param skuId
+     * @return
+     */
+    public Map<String,Object> getProductSku(Integer skuId);
 }

@@ -2,12 +2,15 @@ package com.kyj.cooltiger.feign.order.controller;
 
 import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.order.client.OrderInfoClient;
+import com.kyj.cooltiger.feign.order.vo.ProductSettlementReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author liduan
- * Description:
+ * Description: 订单信息controller
  * date: 2020/8/24 11:16
  */
 @RestController
@@ -32,7 +35,7 @@ public class OrderInfoController {
      */
     @RequestMapping(value = "/getOrderList", method = {RequestMethod.GET})
     public Result getOrderList(
-            @RequestParam(value = "store_id",required = false) Integer storeId,
+            @RequestParam(value = "store_id", required = false) Integer storeId,
             @RequestParam(value = "user_id", required = false) Integer userId,
             @RequestParam(value = "order_status", required = false) Integer orderStatus,
             @RequestParam(value = "date_start", required = false) String dateStart,
@@ -41,5 +44,19 @@ public class OrderInfoController {
             @RequestParam(value = "page_no", defaultValue = "1") Integer pageNo,
             @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize) {
         return orderInfoClient.getOrderList(storeId, userId, orderStatus, dateStart, dateEnd, keyword, pageNo, pageSize);
+    }
+
+    /**
+     * 购物车或商品结算
+     *
+     * @param userId                     用户ID
+     * @param productSettlementReqVoList 结算信息入参
+     * @return
+     */
+    @RequestMapping(value = "/settlement", method = {RequestMethod.POST})
+    public Result settlement(
+            @RequestParam("user_id") Integer userId,
+            @RequestBody List<ProductSettlementReqVo> productSettlementReqVoList) {
+        return null;
     }
 }

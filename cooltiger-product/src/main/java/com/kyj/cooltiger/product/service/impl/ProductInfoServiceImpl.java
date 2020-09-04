@@ -8,6 +8,7 @@ import com.kyj.cooltiger.common.utils.PageUtil;
 import com.kyj.cooltiger.feign.product.vo.ProductBaseReqVo;
 import com.kyj.cooltiger.feign.product.vo.ProductInfoListByStoreIdRespVo;
 import com.kyj.cooltiger.feign.product.vo.ProductSkuReqVo;
+import com.kyj.cooltiger.feign.product.vo.ProductSkuRespVo;
 import com.kyj.cooltiger.product.entity.*;
 import com.kyj.cooltiger.product.mapper.*;
 import com.kyj.cooltiger.product.service.ProductInfoService;
@@ -43,7 +44,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     @Autowired
     private ProductPictureMapper productPictureMapper;
     @Autowired
-    private ProductFreightMapper productFreightMapper;
+    private StoreFreightMapper productFreightMapper;
     @Autowired
     private ProductDetailsMapper productDetailsMapper;
 
@@ -92,6 +93,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         productInfo.setTitle(productBaseReqVo.getTitle());
         productInfo.setStoreId(storeId);
         productInfo.setBrandId(productBaseReqVo.getBrandId());
+        productInfo.setProductFreightType(productBaseReqVo.getProductFreightType());
         productInfo.setCategoryOneId(productBaseReqVo.getCategoryOneId());
         productInfo.setCategoryTwoId(productBaseReqVo.getCategoryTwoId());
         productInfo.setCategoryThreeId(productBaseReqVo.getCategoryThreeId());
@@ -103,16 +105,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         productInfo.setAuditStatus(PRODUCT_AUDIT_STATUS.NOT);
         productInfo.setDeleted(DELETED.NOT);
         productInfoMapper.addProductInfo(productInfo);
-        //添加商品运费
-        ProductFreight productFreight = new ProductFreight();
-        productFreight.setProductId(productInfo.getProductId());
-        productFreight.setProductFreightType(productBaseReqVo.getProductFreight().getProductFreightType());
-        productFreight.setFactor(productBaseReqVo.getProductFreight().getFactor());
-        productFreight.setFreightPrice(productBaseReqVo.getProductFreight().getFreightPrice());
-        productFreight.setFirstWeight(productBaseReqVo.getProductFreight().getFirstWeight());
-        productFreight.setContinueWeight(productBaseReqVo.getProductFreight().getContinueWeight());
-        productFreight.setWhetherKg(productBaseReqVo.getProductFreight().getWhetherKg());
-        productFreightMapper.addProductFreight(productFreight);
         //添加商品参数
         if (!productBaseReqVo.getParams().isEmpty()) {
             ProductParam productParam = null;
@@ -288,8 +280,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         productParamMapper.deleteProductParamByProductId(productId);
         //删除商品自有服务
         productServiceMapper.deleteProductServiceByProductId(productId);
-        //删除商品运费
-        productFreightMapper.deleteProductFreightByProductId(productId);
         //获取商品规格名集合
         List<ProductSpecName> productSpecNameLists = productSpecNameMapper.getProductSpecNameListByProductId(productId);
         //删除商品规格名
@@ -321,6 +311,44 @@ public class ProductInfoServiceImpl implements ProductInfoService {
             productDetailsMapper.updateProductDetails(productDetails);
         }
 
+    }
+
+    /**
+     * 查询商品sku信息
+     *
+     * @param skuId
+     * @return
+     */
+    @Override
+    public Map<String,Object> getProductSku(Integer skuId) {
+        ProductSku productSku = productSkuMapper.getProductSkuBySkuId(skuId);
+        if (productSku == null){
+            throw new MyException("SKU_INFO_NOT_EXIST","商Sku信息不存在");
+        }
+        ProductInfo productInfo = productInfoMapper.getProductInfo(productSku.getProductId());
+        List<ProductPicture> productPictureList = productPictureMapper.getProductPictureListByRelationId$PicType(skuId,2);
+        List<ProductSpecValue> productSpecValueList = productSpecValueMapper.getSpecValueListByValueIds(productSku.getSpecValueIds());
+        String specValues = "";
+        for (ProductSpecValue productSpecValue : productSpecValueList){
+            specValues += ";" + productSpecValue.getValue();
+        }
+        ProductSkuRespVo productSkuRespVo = new ProductSkuRespVo();
+        productSkuRespVo.setSkuId(productSku.getSkuId());
+        productSkuRespVo.setSkuCode(productSku.getSkuCode());
+        productSkuRespVo.setSkuUrl(productPictureList.get(0).getPicUrl());
+        productSkuRespVo.setProductId(productSku.getProductId());
+        productSkuRespVo.setProductTitle(productInfo.getTitle());
+        productSkuRespVo.setProductFreightType(productInfo.getProductFreightType());
+        productSkuRespVo.setSpecValues(specValues.substring(1));
+        productSkuRespVo.setSalePrice(productSku.getSalePrice());
+        productSkuRespVo.setWeight(productSku.getWeight());
+        productSkuRespVo.setStock(productSku.getStock());
+        productSkuRespVo.setDistriType(productSku.getDistriType());
+        productSkuRespVo.setDistriRatio(productSku.getDistriRatio());
+        productSkuRespVo.setDistriAmount(productSku.getDistriAmount());
+        Map<String, Object> res = new HashMap<>();
+        res.put("data",productSkuRespVo);
+        return res;
     }
 
 }
