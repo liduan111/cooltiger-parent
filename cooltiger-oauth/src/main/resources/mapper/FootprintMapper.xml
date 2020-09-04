@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyj.cooltiger.oauth.dao.FootprintDao">
+
+    <resultMap type="com.kyj.cooltiger.oauth.entity.FootprintEntity" id="fpMap">
+        <result property="Id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="goodsId" column="goods_id"/>
+        <result property="title" column="title"/>
+        <result property="picUrl" column="pic_url"/>
+        <result property="saleprice" column="sale_price"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <select id="footprintlist" resultType="com.kyj.cooltiger.oauth.entity.FootprintEntity">
+        select a.id,b.pic_url,c.title,d.sale_price
+        from ky_user_footprint a
+                 left join ky_product_picture b
+                           on a.goods_id=b.relation_id
+                 left join ky_product_info c
+                           on a.goods_id=c.product_id
+                 left join  ky_product_sku d
+                           on a.goods_id=d.product_id
+        where b.pic_type=1
+          and b.is_main=1
+          and c.deleted=0
+          and d.deleted=0
+        <if test="userCode != null and userCode!=0">
+            and a.user_id=#{userId}
+        </if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by a.id asc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <delete id="footprintdelete">
+        delete from ky_user_footprint
+        where 1 = 1
+        <if test="userId != null">and `user_id` = #{userId} </if>
+        <if test="goodsId != null">and `goods_id` = #{goodsId} </if>
+    </delete>
+
+</mapper>

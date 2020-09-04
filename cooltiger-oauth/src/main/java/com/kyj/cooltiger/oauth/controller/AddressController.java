@@ -229,4 +229,27 @@ public class AddressController extends ApiBaseAction  implements AddressClient {
         }
         return toResponsFail("修改失败");
     }
+    /**
+     * 删除收货人地址
+     *
+     * @param //usercode id
+     * @return
+     */
+    @ApiOperation("删除收货人地址")
+    @RequestMapping(value = "/addressdelete",method = RequestMethod.DELETE)
+    public Object deleteaddress(@RequestBody Map<String,Object> map){
+        if (map.isEmpty()||map.size()==0){
+            return toResponscode(500,"删除为空");
+        }
+        Long  id=Long.valueOf(map.get("Id").toString());
+        Long  userId=Long.valueOf(map.get("userCode").toString());
+        if(id==null||id==0){
+            return toResponsFail("收货地址id为空");
+        }
+        if(userId==null||userId==0){
+            return toResponsFail("用户id为空");
+        }
+        addressService.deleteaddress(map);
+        return toResponsSuccess();
+    }
 }

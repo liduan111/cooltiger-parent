@@ -64,4 +64,13 @@ public interface AddressClient {
      */
     @RequestMapping(value = "/address/addresslist",method = RequestMethod.GET)
     public  Object Addresslist(@RequestBody Map<String,Object> map);
+
+    /**
+     * 删除收货人地址
+     *
+     * @param //usercode id
+     * @return
+     */
+    @RequestMapping(value = "/addressdelete",method = RequestMethod.DELETE)
+    public Object deleteaddress(@RequestBody Map<String,Object> map);
 }

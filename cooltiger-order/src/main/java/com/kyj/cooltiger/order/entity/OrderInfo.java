@@ -19,6 +19,8 @@ public class OrderInfo implements Serializable {
     private Integer orderId;
     //订单编号
     private String orderCode;
+    //店铺ID
+    private Integer storeId;
     //用户id
     private Integer userId;
     //省（直辖市）
@@ -59,7 +61,7 @@ public class OrderInfo implements Serializable {
     private Integer sourceType;
     //删除状态(0-未删除1-已删除）
     private Integer deleted;
-    //提交时间
+    //创建时间
     private Date createTime;
     //修改时间
     private Date modifiedTime;

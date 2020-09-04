@@ -24,6 +24,15 @@ public class AddressServiceimpl implements AddressService {
     private AddressDao addressDao;
 
     /**
+     * 删除地址
+     * @param map
+     */
+    @Override
+    public void deleteaddress(Map<String, Object> map) {
+      addressDao.deleteaddress(map);
+    }
+
+    /**
      * 收货地址列表查询
      * @return
      */

@@ -75,4 +75,15 @@ public class AddressController {
     public  Object Addresslist(@RequestBody Map<String,Object> map){
         return addressClient.Addresslist(map);
     }
+
+    /**
+     * 删除收货人地址
+     *
+     * @param //usercode id
+     * @return
+     */
+    @RequestMapping(value = "/addressdelete",method = RequestMethod.DELETE)
+    public Object deleteaddress(@RequestBody Map<String,Object> map){
+        return addressClient.deleteaddress(map);
+    }
 }

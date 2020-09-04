@@ -73,13 +73,21 @@ public class ApiBaseAction {
             obj.put("data", data);
         return obj;
     }
-
+    public Map<String, Object> toResponscode(int requestCode, String msg) {
+        Map<String, Object> obj = new HashMap<String, Object>();
+        obj.put("errno", requestCode);
+        obj.put("errmsg", msg);
+        return obj;
+    }
     public Map<String, Object> toResponsSuccess(Object data) {
         Map<String, Object> rp = toResponsObject(0, "执行成功", data);
 //        logger.info("response:" + rp);
         return rp;
     }
+    public Map<String, Object> toResponsSuccess() {
 
+       return toResponscode(0, "执行成功");
+    }
     public Map<String, Object> toResponsMsgSuccess(String msg) {
         return toResponsObject(0, msg, "");
     }

@@ -40,4 +40,10 @@ public interface AddressDao {
      * @return
      */
    int addressupdate(AddressVo addressVo);
+
+    /**
+     * 删除收货人地址
+     * @param map
+     */
+    int deleteaddress(Map<String, Object> map);
 }

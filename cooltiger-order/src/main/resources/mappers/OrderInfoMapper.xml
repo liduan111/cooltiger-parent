@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kyj.cooltiger.order.mapper.OrderInfoMapper">
+
+    <!-- 查询订单列表总数 -->
+    <select id="getOrderListTotalCount" resultType="int">
+        SELECT
+        COUNT(o.order_id)
+        FROM
+        ky_order_info o
+        <if test="keyword != null and keyword != ''">
+            LEFT JOIN ky_order_detail d ON d.order_id = o.order_id
+        </if>
+        WHERE
+        o.deleted = 0
+        <if test="storeId != null and storeId != ''">
+            AND o.store_id = #{storeId}
+        </if>
+        <if test="userId != null and userId != ''">
+            AND o.user_id = #{userId}
+        </if>
+        <if test="orderStatus != null and orderStatus != ''">
+            AND o.order_status = #{orderStatus}
+        </if>
+        <if test="dateStart != null and dateStart != ''">
+            AND DATE_FORMAT(o.create_time,'%Y-%m-%d') &gt;= #{dateStart}
+        </if>
+        <if test="dateEnd != null and dateEnd != ''">
+            AND DATE_FORMAT(o.create_time,'%Y-%m-%d') &lt;= #{dateEnd}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND (o.order_code = #{keyword}
+            OR d.product_title LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+    </select>
+
+    <!-- 查询订单列表 -->
+    <select id="getOrderListByStoreId$UserId" resultType="com.kyj.cooltiger.feign.order.vo.OrderInfoListRespVo">
+        SELECT
+        o.order_id orderId,
+        o.order_code orderCode,
+        o.store_id storeId,
+        s.store_name storeName,
+        o.user_id userId,
+        u.user_name userName,
+        o.order_status orderStatus,
+        o.total_price totalPrice,
+        o.freight_price freightPrice,
+        o.pay_price payPrice,
+        o.source_type sourceType,
+        o.create_time createTime
+        FROM
+        ky_order_info o
+        LEFT JOIN ky_store_info s ON s.store_id = o.store_id
+        LEFT JOIN ky_user_info u ON u.id = o.user_id
+        <if test="keyword != null and keyword != ''">
+            LEFT JOIN ky_order_detail d ON d.order_id = o.order_id
+        </if>
+        WHERE
+        o.deleted = 0
+        <if test="storeId != null and storeId != ''">
+            AND o.store_id = #{storeId}
+        </if>
+        <if test="userId != null and userId != ''">
+            AND o.user_id = #{userId}
+        </if>
+        <if test="orderStatus != null and orderStatus != ''">
+            AND o.order_status = #{orderStatus}
+        </if>
+        <if test="dateStart != null and dateStart != ''">
+            AND DATE_FORMAT(o.create_time,'%Y-%m-%d') &gt;= #{dateStart}
+        </if>
+        <if test="dateEnd != null and dateEnd != ''">
+            AND DATE_FORMAT(o.create_time,'%Y-%m-%d') &lt;= #{dateEnd}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND (o.order_code = #{keyword}
+            OR d.product_title LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+        ORDER BY o.create_time DESC
+        LIMIT #{pageStart},#{pageSize}
+    </select>
+</mapper>
