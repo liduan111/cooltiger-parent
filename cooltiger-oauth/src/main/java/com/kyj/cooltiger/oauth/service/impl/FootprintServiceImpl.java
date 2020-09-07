@@ -38,4 +38,26 @@ public class FootprintServiceImpl implements FootprintService {
     public void footprintdelete(Map<String, Object> map) {
         footprintDao.footprintdelete(map);
     }
+
+    /**
+     * 添加
+     * @param footprint
+     * @return
+     */
+    @Override
+    public boolean save(FootprintEntity footprint) {
+        FootprintEntity footprintEntity=  footprintDao.selectgoodfootprint(footprint.getUserId(),footprint.getGoodsId());
+        if (footprintEntity==null||footprintEntity.equals("")){
+             int i=footprintDao.footprintsave(footprint);
+             if (i>0){
+                 return true;
+             }
+        }else{
+            int i=footprintDao.footprintupdate(footprint);
+            if (i>0){
+                return true;
+            }
+        }
+        return false;
+    }
 }

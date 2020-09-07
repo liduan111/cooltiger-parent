@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * date: 2020/8/24 14:45
  */
 @RestController
-@RequestMapping("/wxIndex")
+@RequestMapping("/api")
 public class WxIndexController {
 
     @Autowired

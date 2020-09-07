@@ -26,21 +26,18 @@ public class ApiShopCartServiceimpl implements ApiShopCartService {
 
     /**
      * 批量删除
-     * @param parms
+     * @param
      */
     @Override
-    public void deleteAllgoods(String  parms) {
-        JSONObject object= JSON.parseObject(parms);
-        Long  userCode=Long.parseLong(object.getString("userCode"));
-        String  cartIds=object.getString("cardIds");
-        if (userCode==null||userCode==0){
+    public void deleteAllgoods(Long userId,String cartIds) {
+        if (userId==null||userId==0){
             new RRException("用户id不能为空");
         }
         if (cartIds==null||cartIds.equals("")){
             new RRException("cartIds不能为空");
         }
        String[] cartIdsarr=cartIds.split(",");
-        shopCartDao.deleteAllgoods(userCode,cartIdsarr);
+        shopCartDao.deleteAllgoods(userId,cartIdsarr);
 
     }
 

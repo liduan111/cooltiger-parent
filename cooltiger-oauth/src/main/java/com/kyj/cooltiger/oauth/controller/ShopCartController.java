@@ -128,16 +128,14 @@ public class ShopCartController extends ApiBaseAction implements ShopCartClient{
 
     /**
      * 删除购物车
-     * @param parms
+     * @param
      * @return
      */
     @ApiOperation("删除购物车商品")
     @RequestMapping(value = "/deleteAllgoods",method = RequestMethod.DELETE)
-    public  Object deleteAllgoods(@RequestBody String  parms){
-        if(parms==null|| parms.equals("")){
-            toResponsFail("参数为空");
-        }
-        shopCartService.deleteAllgoods(parms);
+    public  Object deleteAllgoods(@RequestParam("userId") Long userId, @RequestParam("cartIds")String cartIds){
+
+        shopCartService.deleteAllgoods(userId,cartIds);
         return  toResponsMsgSuccess("删除成功");
     }
 

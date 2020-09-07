@@ -15,7 +15,7 @@ import java.util.Map;
  * date: 2020/8/24 14:28
  */
 @RestController
-@RequestMapping("/collect")
+@RequestMapping("/api/collect")
 public class CollectController {
 
     @Autowired

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyj.cooltiger.oauth.dao.KeywordsDao">
+
+    <resultMap type="com.kyj.cooltiger.oauth.entity.KeywordsEntity" id="keyMap">
+        <result property="Id" column="id"/>
+        <result property="keyword" column="keyword"/>
+        <result property="isHot" column="is_hot"/>
+        <result property="isDefault" column="is_default"/>
+        <result property="isShow" column="is_show"/>
+        <result property="sortOrder" column="sort_order"/>
+        <result property="type" column="type"/>
+    </resultMap>
+
+    <select id="queryObject" resultMap="keyMap">
+        select * from ky_search_hotkeywords where id = #{value}
+    </select>
+
+    <select id="queryList" resultMap="keyMap">
+        select
+        <if test="fields != null and fields != ''">
+            ${fields}
+        </if>
+        <if test="fields == null or fields == ''">
+            *
+        </if>
+        from ky_search_hotkeywords
+        <where>
+            <if test="keyword != null">
+                and keyword like concat('%',#{keyword},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by keyword desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from ky_search_hotkeywords
+    </select>
+
+    <insert id="save" parameterType="com.kyj.cooltiger.oauth.entity.KeywordsEntity">
+        insert into ky_search_hotkeywords
+        (
+            `id`,
+            `keyword`,
+            `is_hot`,
+            `is_default`,
+            `is_show`,
+            `sort_order`,
+            `type`
+        )
+        values
+        (
+            #{Id},
+            #{keyword},
+            #{isHot},
+            #{isDefault},
+            #{isShow},
+            #{sortOrder},
+            #{type}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.kyj.cooltiger.oauth.entity.KeywordsEntity">
+        update ky_search_hotkeywords
+        <set>
+            <if test="Id != null">`id` = #{Id},</if>
+            <if test="isHot != null">`is_hot` = #{isHot},</if>
+            <if test="isDefault != null">`is_default` = #{isDefault},</if>
+            <if test="isShow != null">`is_show` = #{isShow},</if>
+            <if test="sortOrder != null">`sort_order` = #{sortOrder},</if>
+            <if test="type != null">`type` = #{type}</if>
+        </set>
+        where keyword = #{keyword}
+    </update>
+
+    <delete id="delete">
+        delete from ky_search_hotkeywords where keyword = #{value}
+    </delete>
+
+    <delete id="deleteBatch">
+        delete from ky_search_hotkeywords where keyword in
+        <foreach item="keyword" collection="array" open="(" separator="," close=")">
+            #{keyword}
+        </foreach>
+    </delete>
+    <select id="hotKeywordList" resultType="map">
+        select distinct keyword,is_hot from ky_search_hotkeywords where 1 = 1 limit 0,10
+    </select>
+</mapper>

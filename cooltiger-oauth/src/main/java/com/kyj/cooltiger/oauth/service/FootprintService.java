@@ -19,7 +19,18 @@ public interface FootprintService {
      */
     List<FootprintEntity>  footprintlist(Map<String, Object> map);
 
+    /**
+     * 删除足迹
+     * @param map
+     */
     void footprintdelete(Map<String, Object> map);
+
+    /**
+     * 添加足迹
+     * @param footprint
+     * @return
+     */
+    boolean save(FootprintEntity footprint);
 
 
 }

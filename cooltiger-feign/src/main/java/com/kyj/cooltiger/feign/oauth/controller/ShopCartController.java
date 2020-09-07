@@ -2,10 +2,7 @@ package com.kyj.cooltiger.feign.oauth.controller;
 
 import com.kyj.cooltiger.feign.oauth.client.ShopCartClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -15,7 +12,7 @@ import java.util.Map;
  * date: 2020/8/24 14:40
  */
 @RestController
-@RequestMapping("/shopCart")
+@RequestMapping("/api/shopCart")
 public class ShopCartController {
 
     @Autowired
@@ -41,12 +38,12 @@ public class ShopCartController {
     }
     /**
      * 删除购物车
-     * @param parms
+     * @param 
      * @return
      */
     @RequestMapping(value = "/deleteAllgoods",method = RequestMethod.DELETE)
-    public  Object deleteAllgoods(@RequestBody String  parms){
-        return shopCartClient.deleteAllgoods(parms);
+    public  Object deleteAllgoods(@RequestParam("userId") Long userId, @RequestParam("cartIds")String cartIds){
+        return shopCartClient.deleteAllgoods(userId, cartIds);
     }
     /**
      *获得商品数

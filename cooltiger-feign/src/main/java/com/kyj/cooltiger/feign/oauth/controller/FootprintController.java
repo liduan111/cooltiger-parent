@@ -15,7 +15,7 @@ import java.util.Map;
  * @date 2020/9/4 13:09
  */
 @RestController
-@RequestMapping(value = "/footprint")
+@RequestMapping(value = "/api/footprint")
 public class FootprintController {
     @Autowired
     private FootprintClient footprintClient;

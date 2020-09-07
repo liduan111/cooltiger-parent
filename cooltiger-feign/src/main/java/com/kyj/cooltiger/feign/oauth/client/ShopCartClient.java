@@ -4,6 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -31,12 +32,12 @@ public interface ShopCartClient {
     @RequestMapping(value = "/shopCart/addshopcart",method = RequestMethod.POST)
     public  Object  addshopcart(@RequestBody Map<String,Object> map);
     /**
-     * 删除购物车
-     * @param parms
+     * piliang删除购物车
+     * @param
      * @return
      */
     @RequestMapping(value = "/shopCart/deleteAllgoods",method = RequestMethod.DELETE)
-    public  Object deleteAllgoods(@RequestBody String  parms);
+    public  Object deleteAllgoods(@RequestParam("userId") Long userId, @RequestParam("cartIds")String cartIds);
     /**
      *获得商品数
      * @return

@@ -1,21 +1,17 @@
 package com.kyj.cooltiger.oauth.controller;
 
+import com.kyj.cooltiger.common.excep.MyException;
 import com.kyj.cooltiger.common.utils.DateUtils;
 import com.kyj.cooltiger.feign.oauth.client.WxIndexClient;
-import com.kyj.cooltiger.oauth.entity.CountryReginVo;
-import com.kyj.cooltiger.oauth.entity.GoodsVo;
-import com.kyj.cooltiger.oauth.entity.ProductCategoryVo;
-import com.kyj.cooltiger.oauth.entity.RotationchartVo;
-import com.kyj.cooltiger.oauth.service.ApiCountryreginService;
-import com.kyj.cooltiger.oauth.service.ApiGoodsService;
-import com.kyj.cooltiger.oauth.service.ApiProductCategoryService;
-import com.kyj.cooltiger.oauth.service.ApiRotationchartService;
+import com.kyj.cooltiger.oauth.entity.*;
+import com.kyj.cooltiger.oauth.service.*;
 import com.kyj.cooltiger.oauth.utils.ApiBaseAction;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -42,7 +38,8 @@ public class ApiIndexController extends ApiBaseAction implements WxIndexClient {
     private ApiProductCategoryService productCategoryService;
     @Autowired
     private ApiGoodsService goodsService;
-
+    @Autowired
+    private SearchRecordService searchRecordService;
 
 
     /**
@@ -87,7 +84,24 @@ public class ApiIndexController extends ApiBaseAction implements WxIndexClient {
         return toResponsSuccess(map);
     }
 
+    @ApiOperation("获取查询的商品")
+    @RequestMapping(value = "/goodslist",method = RequestMethod.GET)
+    public Object  querygoodslist(@RequestParam("keyword")String keyword,@RequestParam("userId")Long userId){
 
-
+        if (keyword.isEmpty()||keyword.equals("")){
+            new MyException("500","参数为空");
+        }
+        SearchRecordEntity  searchRecord =new SearchRecordEntity();
+        searchRecord.setKeyword(keyword);
+        searchRecord.setUserId(userId);
+        searchRecord.setCreateTime(System.currentTimeMillis() / 1000);
+        if (searchRecord !=null||!searchRecord.equals("")){
+            boolean flag=searchRecordService.save(searchRecord);
+            if (flag){
+                return toResponsMsgSuccess("success");
+            }
+        }
+        return  toResponsSuccess(null);
+    }
 
 }

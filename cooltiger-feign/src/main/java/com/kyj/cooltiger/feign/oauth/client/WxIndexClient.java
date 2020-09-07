@@ -15,6 +15,6 @@ public interface WxIndexClient {
      * 首页查询导航栏
      * @return
      */
-    @RequestMapping(value = "/wxIndex/index",method = RequestMethod.GET)
+    @RequestMapping(value = "/index",method = RequestMethod.GET)
     public  Object  index();
 }
