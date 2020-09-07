@@ -65,8 +65,8 @@ public interface ProductInfoClient {
      * @param productId
      * @return
      */
-    @RequestMapping(value = "/product/productInfo/getProductInfo/{productId}", method = {RequestMethod.GET})
-    public Result getProductInfo(@PathVariable("productId") Integer productId);
+    @RequestMapping(value = "/product/productInfo/getProductItem/{productId}", method = {RequestMethod.GET})
+    public Result getProductItem(@PathVariable("productId") Integer productId);
 
     /**
      * 商品下架

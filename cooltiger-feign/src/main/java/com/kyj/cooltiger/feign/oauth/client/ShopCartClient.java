@@ -18,30 +18,37 @@ public interface ShopCartClient {
 
     /**
      * 购物车列表展示
+     *
      * @param map
      * @return
      */
-    @RequestMapping(value = "/shopCart",method = RequestMethod.GET)
-    public Object  shopcartlist(@RequestBody Map<String,Object> map);
+    @RequestMapping(value = "/shopCart", method = RequestMethod.GET)
+    public Object shopcartlist(@RequestBody Map<String, Object> map);
+
     /**
      * 加入购物车
+     *
      * @param map
      * @return
      */
-    @RequestMapping(value = "/shopCart/addshopcart",method = RequestMethod.POST)
-    public  Object  addshopcart(@RequestBody Map<String,Object> map);
+    @RequestMapping(value = "/shopCart/addshopcart", method = RequestMethod.POST)
+    public Object addshopcart(@RequestBody Map<String, Object> map);
+
     /**
      * 删除购物车
+     *
      * @param parms
      * @return
      */
-    @RequestMapping(value = "/shopCart/deleteAllgoods",method = RequestMethod.DELETE)
-    public  Object deleteAllgoods(@RequestBody String  parms);
+    @RequestMapping(value = "/shopCart/deleteAllgoods", method = RequestMethod.DELETE)
+    public Object deleteAllgoods(@RequestBody String parms);
+
     /**
-     *获得商品数
+     * 获得商品数
+     *
      * @return
      */
-    @RequestMapping(value = "/shopCart/getgoodsNum",method = RequestMethod.GET)
-    public Object getgoodsNum(@RequestBody Map<String,Object> map);
+    @RequestMapping(value = "/shopCart/getgoodsNum", method = RequestMethod.GET)
+    public Object getgoodsNum(@RequestBody Map<String, Object> map);
 
 }

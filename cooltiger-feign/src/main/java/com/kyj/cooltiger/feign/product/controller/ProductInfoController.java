@@ -77,9 +77,9 @@ public class ProductInfoController {
      * @param productId
      * @return
      */
-    @RequestMapping(value = "/getProductInfo/{productId}", method = {RequestMethod.GET})
-    public Result getProductInfo(@PathVariable("productId") Integer productId) {
-        return productInfoClient.getProductInfo(productId);
+    @RequestMapping(value = "/getProductItem/{productId}", method = {RequestMethod.GET})
+    public Result getProductItem(@PathVariable("productId") Integer productId) {
+        return productInfoClient.getProductItem(productId);
     }
 
     /**

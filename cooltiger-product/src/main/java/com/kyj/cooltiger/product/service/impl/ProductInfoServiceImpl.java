@@ -44,8 +44,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     @Autowired
     private ProductPictureMapper productPictureMapper;
     @Autowired
-    private StoreFreightMapper productFreightMapper;
-    @Autowired
     private ProductDetailsMapper productDetailsMapper;
 
     /**
@@ -216,6 +214,23 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 
     /**
      * 查询商品信息
+     *
+     * @param productId
+     * @return
+     */
+    @Override
+    public Map<String,Object> getProductItem(Integer productId) {
+        ProductInfo productInfo = productInfoMapper.getProductInfo(productId);
+        if (productId == null) {
+            throw new MyException("PRODUCT_INFO_NOT_EXIST", "商品信息不存在");
+        }
+
+        Map<String,Object> res = new HashMap<>();
+        return null;
+    }
+
+    /**
+     * 查询商品基本信息
      *
      * @param productId
      * @return

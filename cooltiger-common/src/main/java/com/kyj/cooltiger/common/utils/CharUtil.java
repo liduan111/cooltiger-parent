@@ -96,6 +96,20 @@ public class CharUtil {
     }
 
     /**
+     * 生成时间戳+随机数字字符串
+     * @param num
+     * @return
+     */
+    public static String getTimeStampRandom(Integer num){
+        //取当前时间的长整形值包含毫秒
+        long millis = System.currentTimeMillis();
+        String str = millis + getRandomNum(num);
+        return str;
+    }
+
+
+
+    /**
      * 右补位，左对齐
      *
      * @param oriStr   原字符串

@@ -80,4 +80,21 @@
         ORDER BY o.create_time DESC
         LIMIT #{pageStart},#{pageSize}
     </select>
+
+    <!-- 插入订单信息 -->
+    <insert id="insertOrderInfo" parameterType="OrderInfo" useGeneratedKeys="true" keyProperty="orderInfo.orderId">
+        INSERT INTO ky_order_info
+        (order_code, store_id, user_id, receiver_province, receiver_city, receiver_region, receiver_address_detail,
+         receiver_name, receiver_mobile, total_price, freight_price, pay_price, order_note, order_status,
+         pay_type, outer_trade_no, pay_time, express_comp, express_number, send_time, confirm_receive_time,
+         review_status, source_type, deleted, create_time, modified_time)
+        VALUES
+        (#{orderInfo.orderCode}, #{orderInfo.storeId}, #{orderInfo.userId}, #{orderInfo.receiverProvince},
+         #{orderInfo.receiverCity}, #{orderInfo.receiverRegion}, #{orderInfo.receiverAddressDetail},
+         #{orderInfo.receiverName}, #{orderInfo.receiverMobile}, #{orderInfo.totalPrice}, #{orderInfo.freightPrice},
+         #{orderInfo.payPrice}, #{orderInfo.orderNote}, #{orderInfo.orderStatus}, #{orderInfo.payType},
+         #{orderInfo.outerTradeNo}, #{orderInfo.payTime}, #{orderInfo.expressComp}, #{orderInfo.expressNumber},
+         #{orderInfo.sendTime}, #{orderInfo.confirmReceiveTime}, #{orderInfo.reviewStatus}, #{orderInfo.sourceType},
+         #{orderInfo.deleted}, #{orderInfo.createTime}, #{orderInfo.modifiedTime})
+    </insert>
 </mapper>
