@@ -15,7 +15,7 @@ import java.util.Map;
  * date: 2020/8/24 14:31
  */
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/api/member")
 public class MemberController {
 
     @Autowired

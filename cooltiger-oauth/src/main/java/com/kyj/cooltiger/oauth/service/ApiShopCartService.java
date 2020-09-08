@@ -41,9 +41,9 @@ public interface ApiShopCartService {
 
     /**
      * 清空购物车
-     * @param parms
+     * @param
      */
-    void  deleteAllgoods(String parms);
+    void  deleteAllgoods(Long userId,String cartIds);
 
 
 

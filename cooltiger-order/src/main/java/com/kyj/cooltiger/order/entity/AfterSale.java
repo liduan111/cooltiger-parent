@@ -21,6 +21,8 @@ public class AfterSale implements Serializable {
     private  Integer refundId;
     //订单id
     private  Integer orderId;
+   //商品id
+    private  Integer productId;
     //用户id
     private  Long userId;
     //商品标题
@@ -31,6 +33,8 @@ public class AfterSale implements Serializable {
     private BigDecimal refundPrice;
     //是否删除 1：已删除  0：未删除
     private Integer deleted;
+
+    private BigDecimal skuPrice;
     //商品图片
     private  String picturl;
     //售后类型（1-退款2-退货退款）

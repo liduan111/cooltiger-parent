@@ -49,21 +49,21 @@ public interface AfterSaleMapper {
 
     /**
      * 退款类型
-     * @param refundId
+     *
      * @param orderId
      * @param userId
      * @return
      */
-    AfterSale   refundtype(@Param("refundId") Integer refundId, @Param("orderId")Integer orderId, @Param("userId")Integer userId);
+    AfterSale   refundtype(@Param("orderId")Integer orderId, @Param("userId")Integer userId);
 
     /**
      * 申请退款
-     * @param refundId
+     *
      * @param orderId
      * @param userId
      * @return
      */
-    RefundApplication  refundappplication(@Param("refundId") Integer refundId, @Param("orderId")Integer orderId, @Param("userId")Integer userId);
+    AfterSale  refundappplication(@Param("orderId")Integer orderId, @Param("userId")Integer userId);
 
 
 }

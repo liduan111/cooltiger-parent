@@ -19,4 +19,19 @@
         FROM ky_product_spec_value
         WHERE spec_name_id = #{specNameId}
     </delete>
+
+    <!-- 根据id字符串查询规格值集合 -->
+    <select id="getSpecValueListByValueIds" resultType="ProductSpecValue">
+        SELECT
+            id,
+            'value',
+            spec_name_id  specNameId,
+            sort,
+            create_time   createTime,
+            modified_time modifiedTime
+        FROM
+            ky_product_spec_value
+        WHERE
+            id IN (#{specValueIds})
+    </select>
 </mapper>

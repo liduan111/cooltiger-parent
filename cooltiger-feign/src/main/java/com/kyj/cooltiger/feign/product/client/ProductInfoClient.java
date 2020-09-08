@@ -65,8 +65,8 @@ public interface ProductInfoClient {
      * @param productId
      * @return
      */
-    @RequestMapping(value = "/product/productInfo/getProductInfo/{productId}", method = {RequestMethod.GET})
-    public Result getProductInfo(@PathVariable("productId") Integer productId);
+    @RequestMapping(value = "/product/productInfo/getProductItem/{productId}", method = {RequestMethod.GET})
+    public Result getProductItem(@PathVariable("productId") Integer productId);
 
     /**
      * 商品下架
@@ -92,7 +92,7 @@ public interface ProductInfoClient {
      * @param productId
      * @return
      */
-    @RequestMapping(value = "/product/productInfo/deleteProductInfo/{productId}", method = {RequestMethod.DELETE})
+    @RequestMapping(value = "/product/productInfo/product/productInfo/deleteProductInfo/{productId}", method = {RequestMethod.DELETE})
     public Result deleteProductInfo(@PathVariable("productId") Integer productId);
 
     /**
@@ -103,7 +103,7 @@ public interface ProductInfoClient {
      * @param pics      图片
      * @return
      */
-    @RequestMapping(value = "/upProductImage", method = {RequestMethod.POST})
+    @RequestMapping(value = "/product/productInfo/upProductImage", method = {RequestMethod.POST})
     public Result upProductImage(
             @RequestParam("product_id") Integer productId,
             @RequestParam("pic_type") Integer picType,
@@ -115,7 +115,7 @@ public interface ProductInfoClient {
      * @param imageUrls 图片url
      * @return
      */
-    @RequestMapping(value = "/delProductImage",method = {RequestMethod.DELETE})
+    @RequestMapping(value = "/product/productInfo/delProductImage", method = {RequestMethod.DELETE})
     public Result delProductImage(
             @RequestBody List<String> imageUrls);
 
@@ -126,8 +126,10 @@ public interface ProductInfoClient {
      * @param detail    商品详情
      * @return
      */
-    @RequestMapping(value = "/addProductDetail", method = {RequestMethod.POST})
+    @RequestMapping(value = "/product/productInfo/addProductDetail", method = {RequestMethod.POST})
     public Result addProductDetail(
             @RequestParam("product_id") Integer productId,
             @RequestParam("detail") String detail);
+
+
 }

@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
  * date: 2020/8/24 14:20
  */
 @RestController
-@RequestMapping("/store/storeInfo")
+@RequestMapping("/product/storeInfo")
 public class StoreInfoController {
 
     @Autowired

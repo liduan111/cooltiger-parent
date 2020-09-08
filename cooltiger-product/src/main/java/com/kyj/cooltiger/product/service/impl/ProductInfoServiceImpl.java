@@ -5,9 +5,7 @@ import com.kyj.cooltiger.common.constant.PRODUCT_AUDIT_STATUS;
 import com.kyj.cooltiger.common.excep.MyException;
 import com.kyj.cooltiger.common.utils.CharUtil;
 import com.kyj.cooltiger.common.utils.PageUtil;
-import com.kyj.cooltiger.feign.product.vo.ProductBaseReqVo;
-import com.kyj.cooltiger.feign.product.vo.ProductInfoListByStoreIdRespVo;
-import com.kyj.cooltiger.feign.product.vo.ProductSkuReqVo;
+import com.kyj.cooltiger.feign.product.vo.*;
 import com.kyj.cooltiger.product.entity.*;
 import com.kyj.cooltiger.product.mapper.*;
 import com.kyj.cooltiger.product.service.ProductInfoService;
@@ -42,8 +40,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     private ProductSkuMapper productSkuMapper;
     @Autowired
     private ProductPictureMapper productPictureMapper;
-    @Autowired
-    private ProductFreightMapper productFreightMapper;
     @Autowired
     private ProductDetailsMapper productDetailsMapper;
 
@@ -92,6 +88,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         productInfo.setTitle(productBaseReqVo.getTitle());
         productInfo.setStoreId(storeId);
         productInfo.setBrandId(productBaseReqVo.getBrandId());
+        productInfo.setProductFreightType(productBaseReqVo.getProductFreightType());
         productInfo.setCategoryOneId(productBaseReqVo.getCategoryOneId());
         productInfo.setCategoryTwoId(productBaseReqVo.getCategoryTwoId());
         productInfo.setCategoryThreeId(productBaseReqVo.getCategoryThreeId());
@@ -103,16 +100,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         productInfo.setAuditStatus(PRODUCT_AUDIT_STATUS.NOT);
         productInfo.setDeleted(DELETED.NOT);
         productInfoMapper.addProductInfo(productInfo);
-        //添加商品运费
-        ProductFreight productFreight = new ProductFreight();
-        productFreight.setProductId(productInfo.getProductId());
-        productFreight.setProductFreightType(productBaseReqVo.getProductFreight().getProductFreightType());
-        productFreight.setFactor(productBaseReqVo.getProductFreight().getFactor());
-        productFreight.setFreightPrice(productBaseReqVo.getProductFreight().getFreightPrice());
-        productFreight.setFirstWeight(productBaseReqVo.getProductFreight().getFirstWeight());
-        productFreight.setContinueWeight(productBaseReqVo.getProductFreight().getContinueWeight());
-        productFreight.setWhetherKg(productBaseReqVo.getProductFreight().getWhetherKg());
-        productFreightMapper.addProductFreight(productFreight);
         //添加商品参数
         if (!productBaseReqVo.getParams().isEmpty()) {
             ProductParam productParam = null;
@@ -129,7 +116,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
             ProductService productService = null;
             for (String name : productBaseReqVo.getCustomServices()) {
                 productService = new ProductService();
-                productService.setName(name);
+                productService.setServiceName(name);
                 productService.setServiceType(1);
                 productService.setProductId(productInfo.getProductId());
                 productServiceMapper.addProductService(productService);
@@ -229,6 +216,56 @@ public class ProductInfoServiceImpl implements ProductInfoService {
      * @return
      */
     @Override
+    public Map<String,Object> getProductItem(Integer productId) {
+        //商品基本信息
+        ProductItemRespVo productItemRespVo = productInfoMapper.getProductItemByProductId(productId);
+        if (productItemRespVo == null) {
+            throw new MyException("PRODUCT_INFO_NOT_EXIST", "商品信息不存在");
+        }
+        //商品服务
+        List<ProductService> productServiceList = new ArrayList<>();
+        productServiceList.addAll(productServiceMapper.getProductServiceByIds(productItemRespVo.getServiceIds()));
+        productServiceList.addAll(productServiceMapper.getProductServiceByProductId(productId));
+        List<ProductItemRespVo.Service> services = null;
+        if (productServiceList.size() > 0){
+            services = new ArrayList<>();
+            ProductItemRespVo.Service service = null;
+            for (ProductService productService : productServiceList){
+                service = productItemRespVo.new Service();
+                service.setServiceId(productService.getServiceId());
+                service.setServiceName(productService.getServiceName());
+                services.add(service);
+            }
+        }
+        productItemRespVo.setServices(services);
+        //商品图片
+        List<ProductItemRespVo.ProductPic> productPics = null;
+        List<ProductPicture> productPictures = productPictureMapper.getProductPictureListByRelationId$PicType(productId,1);
+        if (productPictures != null){
+            productPics = new ArrayList<>();
+            ProductItemRespVo.ProductPic productPic = null;
+            for (ProductPicture productPicture : productPictures){
+                productPic = productItemRespVo.new ProductPic();
+                productPic.setPicId(productPicture.getPicId());
+                productPic.setPicUrl(productPicture.getPicUrl());
+                productPic.setIsMain(productPicture.getIsMain());
+                productPic.setRelationId(productPicture.getRelationId());
+                productPics.add(productPic);
+            }
+        }
+        productItemRespVo.setProductPics(productPics);
+        Map<String,Object> res = new HashMap<>();
+        res.put("data",productItemRespVo);
+        return res;
+    }
+
+    /**
+     * 查询商品基本信息
+     *
+     * @param productId
+     * @return
+     */
+    @Override
     public ProductInfo getProductInfo(Integer productId) {
         ProductInfo productInfo = productInfoMapper.getProductInfo(productId);
         if (productId == null) {
@@ -288,8 +325,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         productParamMapper.deleteProductParamByProductId(productId);
         //删除商品自有服务
         productServiceMapper.deleteProductServiceByProductId(productId);
-        //删除商品运费
-        productFreightMapper.deleteProductFreightByProductId(productId);
         //获取商品规格名集合
         List<ProductSpecName> productSpecNameLists = productSpecNameMapper.getProductSpecNameListByProductId(productId);
         //删除商品规格名

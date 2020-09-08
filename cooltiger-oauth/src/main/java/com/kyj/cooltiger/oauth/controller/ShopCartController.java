@@ -78,7 +78,7 @@ public class ShopCartController extends ApiBaseAction implements ShopCartClient{
         map1.put("limit", 8);
         map1.put("userCode",userCode);
         List<ShopCartVo>  shopCartVoList=shopCartService.shopcartlist(map1);
-        Result result=productInfoClient.getProductInfo(productId);
+        Result result=productInfoClient.getProductItem(productId);
         GoodsEntity productInfo1=(GoodsEntity)result.getData();
        // GoodsEntity productInfo1=null;
         if(productInfo1==null||productInfo1.getShelfStatus()!=1||productInfo1.getDeleted()!=0){
@@ -128,16 +128,14 @@ public class ShopCartController extends ApiBaseAction implements ShopCartClient{
 
     /**
      * 删除购物车
-     * @param parms
+     * @param
      * @return
      */
     @ApiOperation("删除购物车商品")
     @RequestMapping(value = "/deleteAllgoods",method = RequestMethod.DELETE)
-    public  Object deleteAllgoods(@RequestBody String  parms){
-        if(parms==null|| parms.equals("")){
-            toResponsFail("参数为空");
-        }
-        shopCartService.deleteAllgoods(parms);
+    public  Object deleteAllgoods(@RequestParam("userId") Long userId, @RequestParam("cartIds")String cartIds){
+
+        shopCartService.deleteAllgoods(userId,cartIds);
         return  toResponsMsgSuccess("删除成功");
     }
 

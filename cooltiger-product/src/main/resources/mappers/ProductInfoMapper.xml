@@ -48,38 +48,38 @@
     <!-- 添加商品基本信息 -->
     <insert id="addProductInfo" parameterType="ProductInfo" useGeneratedKeys="true" keyProperty="productInfo.productId">
         INSERT INTO ky_product_info
-        (product_code, title, store_id, brand_id, category_one_id, category_two_id,
-         category_three_id, address_from_id, create_address_id, about_deliver_time,
-         service_ids, shelf_status, audit_status, deleted
-        )
+        (product_code, title, store_id, brand_id, product_freight_type, category_one_id, category_two_id,
+         category_three_id, address_from_id, create_address_id, about_deliver_time, service_ids, shelf_status,
+         audit_status, deleted)
         VALUES
         (#{productInfo.productCode}, #{productInfo.title}, #{productInfo.storeId},
-         #{productInfo.brandId}, #{productInfo.categoryOneId}, #{productInfo.categoryTwoId},
-         #{productInfo.categoryThreeId}, #{productInfo.addressFromId}, #{productInfo.createAddressId},
-         #{productInfo.aboutDeliverTime}, #{productInfo.serviceIds}, #{productInfo.shelfStatus},
-         #{productInfo.auditStatus}, #{productInfo.deleted})
+         #{productInfo.brandId}, #{productInfo.productFreightType}, #{productInfo.categoryOneId},
+         #{productInfo.categoryTwoId}, #{productInfo.categoryThreeId}, #{productInfo.addressFromId},
+         #{productInfo.createAddressId}, #{productInfo.aboutDeliverTime}, #{productInfo.serviceIds},
+         #{productInfo.shelfStatus}, #{productInfo.auditStatus}, #{productInfo.deleted})
     </insert>
 
     <!-- 查询商品信息 -->
     <select id="getProductInfo" resultType="ProductInfo">
         SELECT
-            product_id         productId,
-            product_code       productCode,
+            product_id           productId,
+            product_code         productCode,
             title,
-            store_id           storeId,
-            brand_id           brandId,
-            category_one_id    categoryOneId,
-            category_two_id    categoryTwoId,
-            category_Three_id  categoryThreeId,
-            address_from_id    addressFromId,
-            create_address_id  createAddressId,
-            about_deliver_time aboutDeliverTime,
-            service_ids        serviceIds,
-            shelf_status       shelfStatus,
-            audit_status       auditStatus,
+            store_id             storeId,
+            brand_id             brandId,
+            product_freight_type productFreightType,
+            category_one_id      categoryOneId,
+            category_two_id      categoryTwoId,
+            category_Three_id    categoryThreeId,
+            address_from_id      addressFromId,
+            create_address_id    createAddressId,
+            about_deliver_time   aboutDeliverTime,
+            service_ids          serviceIds,
+            shelf_status         shelfStatus,
+            audit_status         auditStatus,
             deleted,
-            create_time        createTime,
-            modified_time      modifiedTime
+            create_time          createTime,
+            modified_time        modifiedTime
         FROM ky_product_info
         WHERE product_id = #{productId}
           AND deleted = 0
@@ -89,19 +89,20 @@
     <update id="updateProductInfo" parameterType="ProductInfo">
         UPDATE ky_product_info
         SET
-            product_code       = #{productInfo.productCode},
-            title              = #{productInfo.title},
-            store_id           = #{productInfo.storeId},
-            brand_id           = #{productInfo.brandId},
-            category_one_id    = #{productInfo.categoryOneId},
-            category_two_id    = #{productInfo.categoryTwoId},
-            category_Three_id  = #{productInfo.categoryThreeId},
-            address_from_id    = #{productInfo.addressFromId},
-            create_address_id  = #{productInfo.createAddressId},
-            about_deliver_time = #{productInfo.aboutDeliverTime},
-            service_ids        = #{productInfo.serviceIds},
-            shelf_status       = #{productInfo.shelfStatus},
-            audit_status       = #{productInfo.auditStatus}
+            product_code         = #{productInfo.productCode},
+            title                = #{productInfo.title},
+            store_id             = #{productInfo.storeId},
+            brand_id             = #{productInfo.brandId},
+            product_freight_type = #{productInfo.productFreightType},
+            category_one_id      = #{productInfo.categoryOneId},
+            category_two_id      = #{productInfo.categoryTwoId},
+            category_Three_id    = #{productInfo.categoryThreeId},
+            address_from_id      = #{productInfo.addressFromId},
+            create_address_id    = #{productInfo.createAddressId},
+            about_deliver_time   = #{productInfo.aboutDeliverTime},
+            service_ids          = #{productInfo.serviceIds},
+            shelf_status         = #{productInfo.shelfStatus},
+            audit_status         = #{productInfo.auditStatus}
         WHERE product_id = #{productInfo.productId}
     </update>
 
@@ -112,5 +113,57 @@
             deleted = 1
         WHERE product_id = #productId}
     </update>
+
+    <!-- 查询商品信息 -->
+    <select id="getProductItemByProductId" resultType="com.kyj.cooltiger.feign.product.vo.ProductItemRespVo">
+        SELECT
+            pro.product_id           productId,
+            pro.product_code         productCode,
+            pro.title,
+            sku.sale_price           minPrice,
+            pro.store_id             storeId,
+            store.store_name         storeName,
+            pro.brand_id             brandId,
+            brand.brand_name         brandName,
+            pro.product_freight_type productFreightType,
+            pro.category_one_id      categoryOneId,
+            cate1.category_name      categoryOneName,
+            pro.category_two_id      categoryTwoId,
+            cate2.category_name      categoryTwoName,
+            pro.category_Three_id    categoryThreeId,
+            cate3.category_name      categoryThreeName,
+            pro.address_from_id      addressFromId,
+            fro.region_name          addressFromName,
+            pro.create_address_id    createAddressId,
+            cre.region_name          createAddressName,
+            pro.about_deliver_time   aboutDeliverTime,
+            pro.service_ids          serviceIds,
+            pro.shelf_status         shelfStatus,
+            pro.audit_status         auditStatus,
+            pro.deleted,
+            pro.create_time          createTime,
+            pro.modified_time        modifiedTime
+        FROM
+            ky_product_info pro
+                LEFT JOIN ky_store_info store ON store.store_id = pro.store_id
+                LEFT JOIN ky_product_brand_info brand ON brand.brand_id = pro.brand_id
+                LEFT JOIN ky_product_category cate1 ON cate1.category_id = pro.category_one_id
+                LEFT JOIN ky_product_category cate2 ON cate2.category_id = pro.category_two_id
+                LEFT JOIN ky_product_category cate3 ON cate3.category_id = pro.category_three_id
+                LEFT JOIN ky_country_region fro ON fro.region_id = pro.address_from_id
+                LEFT JOIN ky_country_region cre ON cre.region_id = pro.create_address_id
+                LEFT JOIN ky_product_sku sku ON sku.product_id = pro.product_id
+                AND sku.sale_price = (
+                    SELECT
+                        MIN(sale_price)
+                    FROM
+                        ky_product_sku
+                    WHERE
+                        product_id = #{productId}
+                )
+        WHERE
+            pro.product_id = #{productId}
+          AND pro.deleted = 0
+    </select>
 
 </mapper>

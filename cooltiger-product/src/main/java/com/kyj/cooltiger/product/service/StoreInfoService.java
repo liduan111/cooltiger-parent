@@ -68,4 +68,12 @@ public interface StoreInfoService {
      * @return
      */
     public StoreInfo getStoreInfoByStoreId(Integer storeId);
+
+    /**
+     * 获取店铺运费信息
+     *
+     * @param storeId
+     * @return
+     */
+    public Map<String, Object> getStoreFreight(Integer storeId);
 }

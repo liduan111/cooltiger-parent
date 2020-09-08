@@ -26,7 +26,7 @@
           and b.is_main=1
           and c.deleted=0
           and d.deleted=0
-        <if test="userCode != null and userCode!=0">
+        <if test="userId != null and userId!=0">
             and a.user_id=#{userId}
         </if>
         <choose>
@@ -49,4 +49,33 @@
         <if test="goodsId != null">and `goods_id` = #{goodsId} </if>
     </delete>
 
+    <select id="selectgoodfootprint" resultType="com.kyj.cooltiger.oauth.entity.FootprintEntity">
+        select id,create_time from  ky_user_footprint where 1=1
+        <if test="userId != null and userId!=0">
+            and user_id=#{userId}
+        </if>
+        <if test="goodsId != null and goodsId!=0">
+            and goods_id=#{goodsId}
+        </if>
+    </select>
+
+    <insert id="footprintsave" parameterType="com.kyj.cooltiger.oauth.entity.FootprintEntity">
+        insert into ky_user_footprint(
+            `id`,
+            `user_id`,
+            `goods_id`,
+            `create_time`)
+        values(
+                  #{Id},
+                  #{userId},
+                  #{goodsId},
+                  #{createTime})
+    </insert>
+
+    <update id="footprintupdate" parameterType="com.kyj.cooltiger.oauth.entity.FootprintEntity">
+        update ky_user_footprint
+        set create_time  = #{footprint.createTime}
+        where user_id = #{footprint.userId}
+          and goods_id=#{footprint.goodsId}
+    </update>
 </mapper>

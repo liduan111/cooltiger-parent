@@ -24,7 +24,7 @@ import java.util.Map;
  * date: 2020/8/5 16:16
  */
 @RestController
-@RequestMapping("/store/storeInfo")
+@RequestMapping("/product/storeInfo")
 public class StoreInfoController implements StoreInfoClient {
 
     @Autowired
@@ -207,5 +207,18 @@ public class StoreInfoController implements StoreInfoClient {
             @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo) {
         storeInfoService.updateStoreInfo(storeId, storeApplyIntoReqVo);
         return Result.success();
+    }
+
+    /**
+     * 获取店铺运费信息
+     *
+     * @param storeId 店铺ID
+     * @return
+     */
+    @RequestMapping(value = "/store/storeInfo/getStoreFreight", method = {RequestMethod.GET})
+    public Result getStoreFreight(
+            @RequestParam("store_id") Integer storeId) {
+        Map<String, Object> res = storeInfoService.getStoreFreight(storeId);
+        return Result.success(res.get("data"));
     }
 }

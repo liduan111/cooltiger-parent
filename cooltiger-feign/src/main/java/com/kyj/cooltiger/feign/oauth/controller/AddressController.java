@@ -13,7 +13,7 @@ import java.util.Map;
  * date: 2020/8/24 14:25
  */
 @RestController
-@RequestMapping("/address")
+@RequestMapping("/api/address")
 public class AddressController {
 
     @Autowired

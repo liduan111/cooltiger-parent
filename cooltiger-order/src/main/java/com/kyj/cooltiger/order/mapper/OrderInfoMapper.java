@@ -1,6 +1,7 @@
 package com.kyj.cooltiger.order.mapper;
 
 import com.kyj.cooltiger.feign.order.vo.OrderInfoListRespVo;
+import com.kyj.cooltiger.order.entity.OrderInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -48,4 +49,11 @@ public interface OrderInfoMapper {
             @Param("orderStatus") Integer orderStatus, @Param("dateStart") String dateStart,
             @Param("dateEnd") String dateEnd, @Param("keyword") String keyword,
             @Param("pageStart") int pageStart, @Param("pageSize") Integer pageSize);
+
+    /**
+     * 插入订单信息
+     *
+     * @param orderInfo 订单信息
+     */
+    public int insertOrderInfo(@Param("orderInfo") OrderInfo orderInfo);
 }

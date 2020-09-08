@@ -14,7 +14,7 @@ import java.util.Map;
  * date: 2020/8/24 14:34
  */
 @RestController
-@RequestMapping("/oauth")
+@RequestMapping("/api/oauth")
 public class OauthController {
 
     @Autowired

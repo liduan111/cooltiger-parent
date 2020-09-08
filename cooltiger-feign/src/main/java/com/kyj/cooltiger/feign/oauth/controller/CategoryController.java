@@ -15,7 +15,7 @@ import java.util.Map;
  * date: 2020/8/24 14:38
  */
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/api/category")
 public class CategoryController {
 
     @Autowired

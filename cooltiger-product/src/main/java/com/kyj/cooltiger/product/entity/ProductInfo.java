@@ -22,6 +22,8 @@ public class ProductInfo implements Serializable {
     private Integer storeId;
     /** 品牌ID */
     private Integer brandId;
+    /** 商品运费方式 */
+    private Integer productFreightType;
     /** 一级分类ID */
     private Integer categoryOneId;
     /** 二级分类ID */
@@ -89,6 +91,14 @@ public class ProductInfo implements Serializable {
 
     public void setBrandId(Integer brandId) {
         this.brandId = brandId;
+    }
+
+    public Integer getProductFreightType() {
+        return productFreightType;
+    }
+
+    public void setProductFreightType(Integer productFreightType) {
+        this.productFreightType = productFreightType;
     }
 
     public Integer getCategoryOneId() {

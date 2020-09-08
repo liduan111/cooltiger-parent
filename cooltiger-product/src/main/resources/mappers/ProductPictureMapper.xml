@@ -21,4 +21,20 @@
         </foreach>
         )
     </delete>
+
+    <!-- 根据关联ID和图片类型查询图片信息 -->
+    <select id="getProductPictureListByRelationId$PicType" resultType="ProductPicture">
+        SELECT
+            pic_id      picId,
+            pic_type    picType,
+            relation_id relationId,
+            pic_url     picUrl,
+            is_main     isMain,
+            sort
+        FROM
+            ky_product_picture
+        WHERE
+            pic_type = #{picType}
+          AND relation_id = #{relationId}
+    </select>
 </mapper>
