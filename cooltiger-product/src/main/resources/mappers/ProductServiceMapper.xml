@@ -5,14 +5,48 @@
     <!-- 添加商品自有服务 -->
     <insert id="addProductService" parameterType="ProductService">
         INSERT INTO ky_product_service
-            (name, details, service_type, product_id)
+            (service_name, service_detail, service_type, product_id)
         VALUES
-        (#{productService.name}, #{productService.details},
+        (#{productService.serviceName}, #{productService.serviceDetail},
          #{productService.serviceType}, #{productService.productId})
     </insert>
 
     <!-- 删除商品自有服务 -->
     <delete id="deleteProductServiceByProductId">
-        DELETE FROM ky_product_service WHERE product_id = #{productId}
+        DELETE
+        FROM ky_product_service
+        WHERE product_id = #{productId}
     </delete>
+
+    <!-- 根据服务Ids查询服务 -->
+    <select id="getProductServiceByIds" resultType="ProductService">
+        SELECT
+            service_id     serviceId,
+            service_name   serviceName,
+            service_detail serviceDetail,
+            service_type   serviceType,
+            product_id     productId,
+            create_time    createTime,
+            modified_time  modifiedTime
+        FROM
+            ky_product_service
+        WHERE
+            service_id IN (#{serviceIds})
+    </select>
+
+    <!-- 根据商品Id查询服务 -->
+    <select id="getProductServiceByProductId" resultType="ProductService">
+        SELECT
+            service_id     serviceId,
+            service_name   serviceName,
+            service_detail serviceDetail,
+            service_type   serviceType,
+            product_id     productId,
+            create_time    createTime,
+            modified_time  modifiedTime
+        FROM
+            ky_product_service
+        WHERE
+            product_id IN #{productId}
+    </select>
 </mapper>

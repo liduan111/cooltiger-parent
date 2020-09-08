@@ -50,8 +50,7 @@
         INSERT INTO ky_product_info
         (product_code, title, store_id, brand_id, product_freight_type, category_one_id, category_two_id,
          category_three_id, address_from_id, create_address_id, about_deliver_time, service_ids, shelf_status,
-         audit_status, deleted
-        )
+         audit_status, deleted)
         VALUES
         (#{productInfo.productCode}, #{productInfo.title}, #{productInfo.storeId},
          #{productInfo.brandId}, #{productInfo.productFreightType}, #{productInfo.categoryOneId},
@@ -114,5 +113,57 @@
             deleted = 1
         WHERE product_id = #productId}
     </update>
+
+    <!-- 查询商品信息 -->
+    <select id="getProductItemByProductId" resultType="com.kyj.cooltiger.feign.product.vo.ProductItemRespVo">
+        SELECT
+            pro.product_id           productId,
+            pro.product_code         productCode,
+            pro.title,
+            sku.sale_price           minPrice,
+            pro.store_id             storeId,
+            store.store_name         storeName,
+            pro.brand_id             brandId,
+            brand.brand_name         brandName,
+            pro.product_freight_type productFreightType,
+            pro.category_one_id      categoryOneId,
+            cate1.category_name      categoryOneName,
+            pro.category_two_id      categoryTwoId,
+            cate2.category_name      categoryTwoName,
+            pro.category_Three_id    categoryThreeId,
+            cate3.category_name      categoryThreeName,
+            pro.address_from_id      addressFromId,
+            fro.region_name          addressFromName,
+            pro.create_address_id    createAddressId,
+            cre.region_name          createAddressName,
+            pro.about_deliver_time   aboutDeliverTime,
+            pro.service_ids          serviceIds,
+            pro.shelf_status         shelfStatus,
+            pro.audit_status         auditStatus,
+            pro.deleted,
+            pro.create_time          createTime,
+            pro.modified_time        modifiedTime
+        FROM
+            ky_product_info pro
+                LEFT JOIN ky_store_info store ON store.store_id = pro.store_id
+                LEFT JOIN ky_product_brand_info brand ON brand.brand_id = pro.brand_id
+                LEFT JOIN ky_product_category cate1 ON cate1.category_id = pro.category_one_id
+                LEFT JOIN ky_product_category cate2 ON cate2.category_id = pro.category_two_id
+                LEFT JOIN ky_product_category cate3 ON cate3.category_id = pro.category_three_id
+                LEFT JOIN ky_country_region fro ON fro.region_id = pro.address_from_id
+                LEFT JOIN ky_country_region cre ON cre.region_id = pro.create_address_id
+                LEFT JOIN ky_product_sku sku ON sku.product_id = pro.product_id
+                AND sku.sale_price = (
+                    SELECT
+                        MIN(sale_price)
+                    FROM
+                        ky_product_sku
+                    WHERE
+                        product_id = #{productId}
+                )
+        WHERE
+            pro.product_id = #{productId}
+          AND pro.deleted = 0
+    </select>
 
 </mapper>
