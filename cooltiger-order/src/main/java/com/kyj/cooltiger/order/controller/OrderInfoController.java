@@ -3,6 +3,7 @@ package com.kyj.cooltiger.order.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.order.client.OrderInfoClient;
+import com.kyj.cooltiger.feign.order.vo.PlaceOrderReqVo;
 import com.kyj.cooltiger.feign.order.vo.ProductSettlementReqVo;
 import com.kyj.cooltiger.feign.order.vo.ProductSettlementRespVo;
 import com.kyj.cooltiger.feign.product.client.ProductInfoClient;
@@ -151,5 +152,23 @@ public class OrderInfoController implements OrderInfoClient {
         res.put("totalCount",totalCount);
         res.put("totalPrice",totalPrice);
         return Result.success(res);
+    }
+
+    /**
+     * 用户下单
+     *
+     * @param userId          用户ID
+     * @param sourceType      订单来源（0-pc 1-小程序 2-app）
+     * @param placeOrderReqVo 下单信息
+     * @return
+     */
+    @Override
+    @RequestMapping(value = "/placeOrder", method = {RequestMethod.POST})
+    public Result placeOrder(
+            @RequestParam("user_id") Integer userId,
+            @RequestParam("source_type") Integer sourceType,
+            @RequestBody PlaceOrderReqVo placeOrderReqVo){
+        Map<String,Object> res = orderInfoService.placeOrder(userId,placeOrderReqVo,sourceType);
+        return Result.success(res.get("data"));
     }
 }

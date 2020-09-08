@@ -78,7 +78,7 @@ public class ShopCartController extends ApiBaseAction implements ShopCartClient{
         map1.put("limit", 8);
         map1.put("userCode",userCode);
         List<ShopCartVo>  shopCartVoList=shopCartService.shopcartlist(map1);
-        Result result=productInfoClient.getProductInfo(productId);
+        Result result=productInfoClient.getProductItem(productId);
         GoodsEntity productInfo1=(GoodsEntity)result.getData();
        // GoodsEntity productInfo1=null;
         if(productInfo1==null||productInfo1.getShelfStatus()!=1||productInfo1.getDeleted()!=0){

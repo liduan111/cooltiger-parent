@@ -102,10 +102,10 @@ public class ProductInfoController implements ProductInfoClient {
      * @return
      */
     @Override
-    @RequestMapping(value = "/getProductInfo/{productId}", method = {RequestMethod.GET})
-    public Result getProductInfo(@PathVariable("productId") Integer productId) {
-        productInfoService.getProductInfo(productId);
-        return null;
+    @RequestMapping(value = "/getProductItem/{productId}", method = {RequestMethod.GET})
+    public Result getProductItem(@PathVariable("productId") Integer productId) {
+        Map<String,Object> res = productInfoService.getProductItem(productId);
+        return Result.success(res.get("data"));
     }
 
     /**

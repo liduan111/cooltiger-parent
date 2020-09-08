@@ -1,6 +1,7 @@
 package com.kyj.cooltiger.order.mapper;
 
 import com.kyj.cooltiger.feign.order.vo.OrderDetailListRespVo;
+import com.kyj.cooltiger.order.entity.OrderDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +22,11 @@ public interface OrderDetailMapper {
      * @return
      */
     public List<OrderDetailListRespVo> getOrderDetailListByOrderId(@Param("orderId") Integer orderId);
+
+    /**
+     * 批量插入订单详情信息
+     *
+     * @param orderDetails
+     */
+    public void batchInsertOrderDetail(@Param("list") List<OrderDetail> orderDetails);
 }

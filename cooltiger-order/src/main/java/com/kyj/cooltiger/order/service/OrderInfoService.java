@@ -1,5 +1,7 @@
 package com.kyj.cooltiger.order.service;
 
+import com.kyj.cooltiger.feign.order.vo.PlaceOrderReqVo;
+
 import java.util.Map;
 
 /**
@@ -25,4 +27,14 @@ public interface OrderInfoService {
     public Map<String, Object> getOrderList(
             Integer storeId, Integer userId, Integer orderStatus, String dateStart, String dateEnd, String keyword,
             Integer pageNo, Integer pageSize);
+
+    /**
+     * 用户下单
+     *
+     * @param userId          用户ID
+     * @param placeOrderReqVo 下单信息
+     * @param sourceType      订单来源（0-pc 1-小程序 2-app）
+     * @return
+     */
+    public Map<String, Object> placeOrder(Integer userId, PlaceOrderReqVo placeOrderReqVo, Integer sourceType);
 }

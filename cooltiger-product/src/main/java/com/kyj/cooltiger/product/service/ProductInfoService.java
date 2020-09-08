@@ -48,6 +48,14 @@ public interface ProductInfoService {
      * @param productId
      * @return
      */
+    public Map<String,Object> getProductItem(Integer productId);
+
+    /**
+     * 查询商品基本信息
+     *
+     * @param productId
+     * @return
+     */
     public ProductInfo getProductInfo(Integer productId);
 
     /**

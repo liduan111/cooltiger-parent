@@ -1,6 +1,7 @@
 package com.kyj.cooltiger.feign.order.client;
 
 import com.kyj.cooltiger.common.utils.Result;
+import com.kyj.cooltiger.feign.order.vo.PlaceOrderReqVo;
 import com.kyj.cooltiger.feign.order.vo.ProductSettlementReqVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -50,4 +51,18 @@ public interface OrderInfoClient {
     public Result settlement(
             @RequestParam("user_id") Integer userId,
             @RequestBody List<ProductSettlementReqVo> productSettlementReqVoList);
+
+    /**
+     * 用户下单
+     *
+     * @param userId          用户ID
+     * @param sourceType      订单来源（0-pc 1-小程序 2-app）
+     * @param placeOrderReqVo 下单信息
+     * @return
+     */
+    @RequestMapping(value = "/placeOrder", method = {RequestMethod.POST})
+    public Result placeOrder(
+            @RequestParam("user_id") Integer userId,
+            @RequestParam("source_type") Integer sourceType,
+            @RequestBody PlaceOrderReqVo placeOrderReqVo);
 }

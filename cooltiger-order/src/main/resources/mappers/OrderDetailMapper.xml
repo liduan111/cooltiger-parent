@@ -3,7 +3,7 @@
 <mapper namespace="com.kyj.cooltiger.order.mapper.OrderDetailMapper">
 
     <!-- 根据订单ID获取订单详情列表 -->
-    <select id="getOrderDetailListByOrderId">
+    <select id="getOrderDetailListByOrderId" resultType="com.kyj.cooltiger.feign.order.vo.OrderDetailListRespVo">
         SELECT
             order_detail_id orderDetailId,
             order_id        orderId,
@@ -18,4 +18,16 @@
         WHERE
             order_id = #{orderId}
     </select>
+
+    <!-- 批量插入订单详情信息 -->
+    <insert id="batchInsertOrderDetail" parameterType="OrderDetail">
+        INSERT INTO ky_order_detail
+        (order_id, product_id, product_title, sku_id, pic_url, sku_spec, sku_price, sku_number, sku_weight)
+        VALUES
+        <foreach collection="list" item="orderDetail" index="index" separator=",">
+            (#{orderDetail.orderId}, #{orderDetail.productId}, #{orderDetail.productTitle}, #{orderDetail.skuId},
+            #{orderDetail.picUrl}, #{orderDetail.skuSpec}, #{orderDetail.skuPrice}, #{orderDetail.skuNumber},
+            #{orderDetail.skuWeight})
+        </foreach>
+    </insert>
 </mapper>
