@@ -24,7 +24,7 @@ import java.util.Map;
  * date: 2020/8/5 16:16
  */
 @RestController
-@RequestMapping("/store/storeInfo")
+@RequestMapping("/product/storeInfo")
 public class StoreInfoController implements StoreInfoClient {
 
     @Autowired

@@ -125,7 +125,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
             orderDetailMapper.batchInsertOrderDetail(orderDetails);
         }
         if (placeOrderReqVo.getCartIds() != null && placeOrderReqVo.getCartIds() != ""){
-            shopCartClient.deleteAllgoods(placeOrderReqVo.getCartIds());
+            shopCartClient.deleteAllgoods(userId.longValue(),placeOrderReqVo.getCartIds());
         }
         Map<String,Object> res = new HashMap<>();
         res.put("data",orderIds);

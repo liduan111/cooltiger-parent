@@ -13,11 +13,11 @@ public class ProductService  implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //商品服务ID
-    private Integer id;
+    private Integer serviceId;
     //服务名称
-    private String name;
+    private String serviceName;
     //服务详情
-    private String details;
+    private String serviceDetail;
     //服务类型（0-通用服务1-商品自有服务）
     private Integer serviceType;
     //添加服务的商品ID
@@ -31,28 +31,28 @@ public class ProductService  implements Serializable {
         return serialVersionUID;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getServiceId() {
+        return serviceId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setServiceId(Integer serviceId) {
+        this.serviceId = serviceId;
     }
 
-    public String getName() {
-        return name;
+    public String getServiceName() {
+        return serviceName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
-    public String getDetails() {
-        return details;
+    public String getServiceDetail() {
+        return serviceDetail;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
+    public void setServiceDetail(String serviceDetail) {
+        this.serviceDetail = serviceDetail;
     }
 
     public Integer getServiceType() {

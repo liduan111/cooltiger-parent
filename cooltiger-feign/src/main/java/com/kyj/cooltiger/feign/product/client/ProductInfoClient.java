@@ -131,13 +131,5 @@ public interface ProductInfoClient {
             @RequestParam("product_id") Integer productId,
             @RequestParam("detail") String detail);
 
-    /**
-     * 获取商品sku信息
-     *
-     * @param skuId skuID
-     * @return
-     */
-    @RequestMapping(value = "/product/productInfo/getProductSku", method = {RequestMethod.GET})
-    public Result getProductSku(
-            @RequestParam("sku_id") Integer skuId);
+
 }

@@ -5,10 +5,7 @@ import com.kyj.cooltiger.common.constant.PRODUCT_AUDIT_STATUS;
 import com.kyj.cooltiger.common.excep.MyException;
 import com.kyj.cooltiger.common.utils.CharUtil;
 import com.kyj.cooltiger.common.utils.PageUtil;
-import com.kyj.cooltiger.feign.product.vo.ProductBaseReqVo;
-import com.kyj.cooltiger.feign.product.vo.ProductInfoListByStoreIdRespVo;
-import com.kyj.cooltiger.feign.product.vo.ProductSkuReqVo;
-import com.kyj.cooltiger.feign.product.vo.ProductSkuRespVo;
+import com.kyj.cooltiger.feign.product.vo.*;
 import com.kyj.cooltiger.product.entity.*;
 import com.kyj.cooltiger.product.mapper.*;
 import com.kyj.cooltiger.product.service.ProductInfoService;
@@ -119,7 +116,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
             ProductService productService = null;
             for (String name : productBaseReqVo.getCustomServices()) {
                 productService = new ProductService();
-                productService.setName(name);
+                productService.setServiceName(name);
                 productService.setServiceType(1);
                 productService.setProductId(productInfo.getProductId());
                 productServiceMapper.addProductService(productService);
@@ -220,13 +217,46 @@ public class ProductInfoServiceImpl implements ProductInfoService {
      */
     @Override
     public Map<String,Object> getProductItem(Integer productId) {
-        ProductInfo productInfo = productInfoMapper.getProductInfo(productId);
-        if (productId == null) {
+        //商品基本信息
+        ProductItemRespVo productItemRespVo = productInfoMapper.getProductItemByProductId(productId);
+        if (productItemRespVo == null) {
             throw new MyException("PRODUCT_INFO_NOT_EXIST", "商品信息不存在");
         }
-
+        //商品服务
+        List<ProductService> productServiceList = new ArrayList<>();
+        productServiceList.addAll(productServiceMapper.getProductServiceByIds(productItemRespVo.getServiceIds()));
+        productServiceList.addAll(productServiceMapper.getProductServiceByProductId(productId));
+        List<ProductItemRespVo.Service> services = null;
+        if (productServiceList.size() > 0){
+            services = new ArrayList<>();
+            ProductItemRespVo.Service service = null;
+            for (ProductService productService : productServiceList){
+                service = productItemRespVo.new Service();
+                service.setServiceId(productService.getServiceId());
+                service.setServiceName(productService.getServiceName());
+                services.add(service);
+            }
+        }
+        productItemRespVo.setServices(services);
+        //商品图片
+        List<ProductItemRespVo.ProductPic> productPics = null;
+        List<ProductPicture> productPictures = productPictureMapper.getProductPictureListByRelationId$PicType(productId,1);
+        if (productPictures != null){
+            productPics = new ArrayList<>();
+            ProductItemRespVo.ProductPic productPic = null;
+            for (ProductPicture productPicture : productPictures){
+                productPic = productItemRespVo.new ProductPic();
+                productPic.setPicId(productPicture.getPicId());
+                productPic.setPicUrl(productPicture.getPicUrl());
+                productPic.setIsMain(productPicture.getIsMain());
+                productPic.setRelationId(productPicture.getRelationId());
+                productPics.add(productPic);
+            }
+        }
+        productItemRespVo.setProductPics(productPics);
         Map<String,Object> res = new HashMap<>();
-        return null;
+        res.put("data",productItemRespVo);
+        return res;
     }
 
     /**
@@ -326,44 +356,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
             productDetailsMapper.updateProductDetails(productDetails);
         }
 
-    }
-
-    /**
-     * 查询商品sku信息
-     *
-     * @param skuId
-     * @return
-     */
-    @Override
-    public Map<String,Object> getProductSku(Integer skuId) {
-        ProductSku productSku = productSkuMapper.getProductSkuBySkuId(skuId);
-        if (productSku == null){
-            throw new MyException("SKU_INFO_NOT_EXIST","商Sku信息不存在");
-        }
-        ProductInfo productInfo = productInfoMapper.getProductInfo(productSku.getProductId());
-        List<ProductPicture> productPictureList = productPictureMapper.getProductPictureListByRelationId$PicType(skuId,2);
-        List<ProductSpecValue> productSpecValueList = productSpecValueMapper.getSpecValueListByValueIds(productSku.getSpecValueIds());
-        String specValues = "";
-        for (ProductSpecValue productSpecValue : productSpecValueList){
-            specValues += ";" + productSpecValue.getValue();
-        }
-        ProductSkuRespVo productSkuRespVo = new ProductSkuRespVo();
-        productSkuRespVo.setSkuId(productSku.getSkuId());
-        productSkuRespVo.setSkuCode(productSku.getSkuCode());
-        productSkuRespVo.setSkuUrl(productPictureList.get(0).getPicUrl());
-        productSkuRespVo.setProductId(productSku.getProductId());
-        productSkuRespVo.setProductTitle(productInfo.getTitle());
-        productSkuRespVo.setProductFreightType(productInfo.getProductFreightType());
-        productSkuRespVo.setSpecValues(specValues.substring(1));
-        productSkuRespVo.setSalePrice(productSku.getSalePrice());
-        productSkuRespVo.setWeight(productSku.getWeight());
-        productSkuRespVo.setStock(productSku.getStock());
-        productSkuRespVo.setDistriType(productSku.getDistriType());
-        productSkuRespVo.setDistriRatio(productSku.getDistriRatio());
-        productSkuRespVo.setDistriAmount(productSku.getDistriAmount());
-        Map<String, Object> res = new HashMap<>();
-        res.put("data",productSkuRespVo);
-        return res;
     }
 
 }

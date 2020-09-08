@@ -6,7 +6,7 @@ import com.kyj.cooltiger.feign.order.client.OrderInfoClient;
 import com.kyj.cooltiger.feign.order.vo.PlaceOrderReqVo;
 import com.kyj.cooltiger.feign.order.vo.ProductSettlementReqVo;
 import com.kyj.cooltiger.feign.order.vo.ProductSettlementRespVo;
-import com.kyj.cooltiger.feign.product.client.ProductInfoClient;
+import com.kyj.cooltiger.feign.product.client.ProductSkuClient;
 import com.kyj.cooltiger.feign.product.client.StoreInfoClient;
 import com.kyj.cooltiger.feign.product.vo.ProductSkuRespVo;
 import com.kyj.cooltiger.order.service.OrderInfoService;
@@ -30,7 +30,7 @@ public class OrderInfoController implements OrderInfoClient {
     @Autowired
     private StoreInfoClient storeInfoClient;
     @Autowired
-    private ProductInfoClient productInfoClient;
+    private ProductSkuClient productSkuClient;
 
     /**
      * 查询店铺订单列表信息
@@ -92,7 +92,7 @@ public class OrderInfoController implements OrderInfoClient {
                 if (storeId.equals(productSettlementReqVo.getStoreId())) {
                     sku = productSettlementRespVo.new Sku();
                     sku.setCartId(productSettlementReqVo.getCartId());
-                    ProductSkuRespVo productSkuRespVo = (ProductSkuRespVo) productInfoClient.getProductSku(productSettlementReqVo.getSkuId()).getData();
+                    ProductSkuRespVo productSkuRespVo = (ProductSkuRespVo) productSkuClient.getProductSku(productSettlementReqVo.getSkuId()).getData();
                     sku.setProductId(productSkuRespVo.getProductId());
                     sku.setProductTitle(productSkuRespVo.getProductTitle());
                     sku.setProductFreightType(productSkuRespVo.getProductFreightType());
