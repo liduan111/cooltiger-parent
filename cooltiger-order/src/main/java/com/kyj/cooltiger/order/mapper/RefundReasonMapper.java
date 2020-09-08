@@ -1,5 +1,6 @@
 package com.kyj.cooltiger.order.mapper;
 
+import com.kyj.cooltiger.order.entity.RefundApplication;
 import com.kyj.cooltiger.order.entity.RefundReason;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,4 +19,6 @@ public interface RefundReasonMapper {
      * @return
      */
     List<RefundReason> refundReasonList();
+
+
 }
