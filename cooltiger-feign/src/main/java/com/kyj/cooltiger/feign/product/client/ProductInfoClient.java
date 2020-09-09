@@ -131,5 +131,13 @@ public interface ProductInfoClient {
             @RequestParam("product_id") Integer productId,
             @RequestParam("detail") String detail);
 
-
+    /**
+     * 查询商品规格属性
+     *
+     * @param productId 商品ID
+     * @return
+     */
+    @RequestMapping(value = "/getProductSpec", method = {RequestMethod.GET})
+    public Result getProductSpec(
+            @RequestParam("product_id") Integer productId);
 }

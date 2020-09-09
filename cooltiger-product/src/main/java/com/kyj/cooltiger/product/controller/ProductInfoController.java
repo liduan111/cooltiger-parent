@@ -248,4 +248,16 @@ public class ProductInfoController implements ProductInfoClient {
         return Result.success();
     }
 
+    /**
+     * 查询商品规格属性
+     *
+     * @param productId 商品ID
+     * @return
+     */
+    @RequestMapping(value = "/getProductSpec", method = {RequestMethod.GET})
+    public Result getProductSpec(
+            @RequestParam("product_id") Integer productId){
+        Map<String,Object> res = productInfoService.getProductSpec(productId);
+        return Result.success(res.get("data"));
+    }
 }

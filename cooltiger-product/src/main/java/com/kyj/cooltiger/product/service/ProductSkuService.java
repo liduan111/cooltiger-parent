@@ -16,4 +16,12 @@ public interface ProductSkuService {
      * @return
      */
     public Map<String,Object> getProductSku(Integer skuId);
+
+    /**
+     * 查询商品sku列表
+     *
+     * @param productId
+     * @return
+     */
+    public Map<String, Object> getProductSkuList(Integer productId);
 }

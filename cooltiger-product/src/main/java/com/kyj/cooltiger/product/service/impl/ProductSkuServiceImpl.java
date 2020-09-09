@@ -1,6 +1,7 @@
 package com.kyj.cooltiger.product.service.impl;
 
 import com.kyj.cooltiger.common.excep.MyException;
+import com.kyj.cooltiger.feign.product.vo.ProductSkuListRespVo;
 import com.kyj.cooltiger.feign.product.vo.ProductSkuRespVo;
 import com.kyj.cooltiger.product.entity.ProductInfo;
 import com.kyj.cooltiger.product.entity.ProductPicture;
@@ -14,6 +15,7 @@ import com.kyj.cooltiger.product.service.ProductSkuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +54,7 @@ public class ProductSkuServiceImpl implements ProductSkuService {
         List<ProductSpecValue> productSpecValueList = productSpecValueMapper.getSpecValueListByValueIds(productSku.getSpecValueIds());
         String specValues = "";
         for (ProductSpecValue productSpecValue : productSpecValueList){
-            specValues += ";" + productSpecValue.getValue();
+            specValues += ";" + productSpecValue.getSpecValue();
         }
         ProductSkuRespVo productSkuRespVo = new ProductSkuRespVo();
         productSkuRespVo.setSkuId(productSku.getSkuId());
@@ -70,6 +72,50 @@ public class ProductSkuServiceImpl implements ProductSkuService {
         productSkuRespVo.setDistriAmount(productSku.getDistriAmount());
         Map<String, Object> res = new HashMap<>();
         res.put("data",productSkuRespVo);
+        return res;
+    }
+
+    /**
+     * 查询商品sku列表
+     *
+     * @param productId
+     * @return
+     */
+    @Override
+    public Map<String, Object> getProductSkuList(Integer productId) {
+        List<ProductSku> productSkuList = productSkuMapper.getProductSkuListByProductId(productId);
+        List<ProductSkuListRespVo> productSkuListRespVos = null;
+        if (productSkuList != null){
+            productSkuListRespVos = new ArrayList<>();
+            ProductSkuListRespVo productSkuListRespVo = null;
+            List<ProductPicture> productPictureList = null;
+            List<ProductSpecValue> productSpecValueList = null;
+            for (ProductSku productSku : productSkuList){
+                productSkuListRespVo = new ProductSkuListRespVo();
+                productSkuListRespVo.setSkuId(productSku.getSkuId());
+                productSkuListRespVo.setSkuCode(productSku.getSkuCode());
+                productPictureList = productPictureMapper.getProductPictureListByRelationId$PicType(productSku.getSkuId(),2);
+                productSkuListRespVo.setSkuUrl(productPictureList.get(0).getPicUrl());
+                productSkuListRespVo.setProductId(productSku.getProductId());
+                productSkuListRespVo.setSpecValueIds(productSku.getSpecValueIds());
+                //规格
+                productSpecValueList = productSpecValueMapper.getSpecValueListByValueIds(productSku.getSpecValueIds());
+                String specValues = "";
+                for (ProductSpecValue productSpecValue : productSpecValueList){
+                    specValues += ";" + productSpecValue.getSpecValue();
+                }
+                productSkuListRespVo.setSpecValues(specValues.substring(1));
+                productSkuListRespVo.setSalePrice(productSku.getSalePrice());
+                productSkuListRespVo.setWeight(productSku.getWeight());
+                productSkuListRespVo.setStock(productSku.getStock());
+                productSkuListRespVo.setDistriType(productSku.getDistriType());
+                productSkuListRespVo.setDistriRatio(productSku.getDistriRatio());
+                productSkuListRespVo.setDistriAmount(productSku.getDistriAmount());
+                productSkuListRespVos.add(productSkuListRespVo);
+            }
+        }
+        Map<String, Object> res = new HashMap<>();
+        res.put("data",productSkuListRespVos);
         return res;
     }
 }

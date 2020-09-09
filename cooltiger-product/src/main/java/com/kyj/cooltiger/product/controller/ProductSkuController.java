@@ -29,10 +29,22 @@ public class ProductSkuController implements ProductSkuClient {
      * @param skuId skuID
      * @return
      */
-    @RequestMapping(value = "/product/productInfo/getProductSku", method = {RequestMethod.GET})
+    @RequestMapping(value = "/getProductSku", method = {RequestMethod.GET})
     public Result getProductSku(
             @RequestParam("sku_id") Integer skuId){
         Map<String,Object> res = productSkuService.getProductSku(skuId);
+        return Result.success(res.get("data"));
+    }
+
+    /**
+     * 获取商品sku列表
+     *
+     * @param productId 商品ID
+     * @return
+     */
+    @RequestMapping(value = "/getProductSkuList", method = {RequestMethod.GET})
+    public Result getProductSkuList(@RequestParam("product_id") Integer productId){
+        Map<String,Object> res = productSkuService.getProductSkuList(productId);
         return Result.success(res.get("data"));
     }
 }

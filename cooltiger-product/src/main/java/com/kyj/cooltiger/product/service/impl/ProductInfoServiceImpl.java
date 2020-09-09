@@ -149,15 +149,15 @@ public class ProductInfoServiceImpl implements ProductInfoService {
             ProductSpecValue productSpecValue = null;
             for (ProductSkuReqVo.Spec spec : productSkuReqVo.getSpecs()) {
                 productSpecName = new ProductSpecName();
-                productSpecName.setName(spec.getSpecName());
+                productSpecName.setSpecName(spec.getSpecName());
                 productSpecName.setProductId(productInfo.getProductId());
                 productSpecName.setSort(productSkuReqVo.getSpecs().indexOf(spec));
                 //插入规格名
                 productSpecNameMapper.addProductSpecName(productSpecName);
                 for (String specValue : spec.getSpecValues()) {
                     productSpecValue = new ProductSpecValue();
-                    productSpecValue.setValue(specValue);
-                    productSpecValue.setSpecNameId(productSpecName.getId());
+                    productSpecValue.setSpecValue(specValue);
+                    productSpecValue.setSpecNameId(productSpecName.getNameId());
                     productSpecValue.setSort(spec.getSpecValues().indexOf(specValue));
                     productSpecValueList.add(productSpecValue);
                 }
@@ -167,7 +167,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
             //Map集合 key:规格值value:规格值ID
             Map<String, Integer> specValueMap = new HashMap<>();
             for (ProductSpecValue specValue : productSpecValueList) {
-                specValueMap.put(specValue.getValue(), specValue.getId());
+                specValueMap.put(specValue.getSpecValue(), specValue.getValueId());
             }
             //添加sku
             ProductPicture productPicture = null;
@@ -331,7 +331,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         productSpecNameMapper.deleteProductSpecNameByProductId(productId);
         //删除商品规格值
         for (ProductSpecName productSpecName : productSpecNameLists) {
-            productSpecValueMapper.deleteProductSpecValueBySpecNameId(productSpecName.getId());
+            productSpecValueMapper.deleteProductSpecValueBySpecNameId(productSpecName.getNameId());
         }
         //删除商品详情
         productDetailsMapper.deleteProductDetailsByProductId(productId);
@@ -356,6 +356,48 @@ public class ProductInfoServiceImpl implements ProductInfoService {
             productDetailsMapper.updateProductDetails(productDetails);
         }
 
+    }
+
+    /**
+     * 查询商品规格
+     *
+     * @param productId
+     * @return
+     */
+    @Override
+    public Map<String, Object> getProductSpec(Integer productId) {
+        List<ProductSpecName> productSpecNameList = productSpecNameMapper.getProductSpecNameListByProductId(productId);
+        List<ProductSpecRespVo> productSpecRespVos = null;
+        if (productSpecNameList != null){
+            productSpecRespVos = new ArrayList<>();
+            ProductSpecRespVo productSpecRespVo = null;
+            List<ProductSpecRespVo.SpecValue> specValues = null;
+            ProductSpecRespVo.SpecValue specValue = null;
+            for (ProductSpecName productSpecName : productSpecNameList){
+                productSpecRespVo = new ProductSpecRespVo();
+                productSpecRespVo.setNameId(productSpecName.getNameId());
+                productSpecRespVo.setSpecName(productSpecName.getSpecName());
+                productSpecRespVo.setProductId(productSpecName.getProductId());
+                productSpecRespVo.setSort(productSpecName.getSort());
+                List<ProductSpecValue> specValueList = productSpecValueMapper.getSpecValueListByNameId(productSpecName.getNameId());
+                specValues = new ArrayList<>();
+                if (specValueList != null){
+                    for (ProductSpecValue productSpecValue : specValueList){
+                        specValue = productSpecRespVo.new SpecValue();
+                        specValue.setValueId(productSpecValue.getValueId());
+                        specValue.setSpecValue(productSpecValue.getSpecValue());
+                        specValue.setSpecNameId(productSpecValue.getSpecNameId());
+                        specValue.setSort(productSpecValue.getSort());
+                        specValues.add(specValue);
+                    }
+                }
+                productSpecRespVo.setSpecValues(specValues);
+                productSpecRespVos.add(productSpecRespVo);
+            }
+        }
+        Map<String, Object> res = new HashMap<>();
+        res.put("data",productSpecRespVos);
+        return res;
     }
 
 }

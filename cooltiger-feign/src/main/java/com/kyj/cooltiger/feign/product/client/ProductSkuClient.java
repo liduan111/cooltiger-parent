@@ -23,4 +23,15 @@ public interface ProductSkuClient {
     @RequestMapping(value = "/product/productSku/getProductSku", method = {RequestMethod.GET})
     public Result getProductSku(
             @RequestParam("sku_id") Integer skuId);
+
+    /**
+     * 获取商品sku列表
+     *
+     * @param productId 商品ID
+     * @return
+     */
+    @RequestMapping(value = "/getProductSkuList", method = {RequestMethod.GET})
+    public Result getProductSkuList(@RequestParam("product_id") Integer productId);
+
+
 }
