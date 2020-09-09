@@ -71,10 +71,10 @@ public class AfterSaleServiceImpl implements AfterSaleService {
      */
     @Override
     public AfterSale refundtype(Map<String, Object> map) {
-        Integer  refundId=Integer.valueOf(map.get("refundId").toString());
+
         Integer  orderId=Integer.valueOf(map.get("orderId").toString());
         Integer  userId=Integer.valueOf(map.get("userId").toString());
-        AfterSale  afterSale=afterSaleMapper.refundtype(refundId,orderId,userId);
+        AfterSale  afterSale=afterSaleMapper.refundtype(orderId,userId);
         if (afterSale==null||afterSale.equals("")){
             new MyException("SOURCE_NOT_EXIST","当前数据不存在");
         }
@@ -87,12 +87,11 @@ public class AfterSaleServiceImpl implements AfterSaleService {
      * @return
      */
     @Override
-    public RefundApplication refundappplication(Map<String, Object> map) {
+    public AfterSale refundappplication(Map<String, Object> map) {
 
-        Integer  refundId=Integer.valueOf(map.get("refundId").toString());
         Integer  orderId=Integer.valueOf(map.get("orderId").toString());
         Integer  userId=Integer.valueOf(map.get("userId").toString());
-        RefundApplication refundApplication=afterSaleMapper.refundappplication(refundId,orderId,userId);
+        AfterSale refundApplication=afterSaleMapper.refundappplication(orderId,userId);
         if (refundApplication==null||refundApplication.equals("")){
             new MyException("SOURCE_NOT_EXIST","当前数据不存在");
         }

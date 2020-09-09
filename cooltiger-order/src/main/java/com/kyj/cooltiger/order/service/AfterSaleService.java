@@ -45,7 +45,7 @@ public interface AfterSaleService {
      * @param map
      * @return
      */
-    RefundApplication refundappplication(Map<String,Object> map);
+    AfterSale refundappplication(Map<String,Object> map);
 
 
 }

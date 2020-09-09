@@ -19,6 +19,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
+  #文件上传器
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
 #mybatis
 mybatis:
   mapper-locations: classpath:mappers/*Mapper.xml
@@ -31,3 +37,55 @@ logging:
         cooltiger:
           order:
             mapper: debug
+
+#ftp
+FTP:
+  ADDRESS: 36.133.141.6
+  PORT: 21
+  USERNAME: ftpuser
+  PASSWORD: kyj@ftp#123456
+  BASEPATH: /home/ftpuser/images
+
+#图片服务器
+IMAGE:
+  BASE:
+    URL: http://36.133.141.6:81/images
+
+#微信相关参数
+weChat:
+  #小程序id
+  appId: wx76f37efb12075c29
+  #小程序密钥v
+  secret: 66c0e0156659968c8734708e538a5f90
+  #商户号v
+  mchId: ''
+  #证书名称，对应不同的商户号
+  certName: /cert/apiclient_cert.p12
+  #获取code的请求地址
+  code: https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=STAT#wechat_redirect
+  #支付回调地址
+  notifyUrl: http://localhost:8085/api/pay/notify
+  #微信查询订单状态
+  orderquery: https://api.mch.weixin.qq.com/pay/orderquery
+  #支付签名
+  paySignKey: ''
+  #退款地址
+  refundUrl: https://api.mch.weixin.qq.com/secapi/pay/refund
+  #退款查询地址
+  refundqueryUrl: https://api.mch.weixin.qq.com/pay/refundquery
+
+  templateId: nAt_DYLLwYXkIhtDb5nyEm0ynrt98OK3Z3MmeUooPz4
+  #交易类型
+  tradeType: JSAPI
+  #微信统一下单接口路径
+  uniformorder: https://api.mch.weixin.qq.com/pay/unifiedorder
+  #拉取用户信息的请求地址
+  userMessage: https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s&lang=zh_CN
+  #获取Web_access_tokenhttps的请求地址
+  webAccessTokenhttps: https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code
+  #微信请求access_token接口
+  accessToken: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s
+  #获取小程序码
+  wXACodeUnlimit: https://api.weixin.qq.com/wxa/getwxacodeunlimit
+  #企业付款
+  orgPay: https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers
