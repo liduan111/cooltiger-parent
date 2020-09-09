@@ -13,9 +13,9 @@ public class ProductSpecName implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //规格名ID
-    private Integer id;
+    private Integer nameId;
     //规格名
-    private String name;
+    private String specName;
     //商品ID
     private Integer productId;
     //排序
@@ -29,20 +29,20 @@ public class ProductSpecName implements Serializable {
         return serialVersionUID;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getNameId() {
+        return nameId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setNameId(Integer nameId) {
+        this.nameId = nameId;
     }
 
-    public String getName() {
-        return name;
+    public String getSpecName() {
+        return specName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSpecName(String specName) {
+        this.specName = specName;
     }
 
     public Integer getProductId() {

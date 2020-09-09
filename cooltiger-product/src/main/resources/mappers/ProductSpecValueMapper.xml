@@ -4,12 +4,12 @@
 
     <!-- 批量添加商品规格值 -->
     <insert id="batchAddProductSpecValue" parameterType="ProductSpecValue" useGeneratedKeys="true"
-            keyProperty="id">
+            keyProperty="valueId">
         INSERT INTO ky_product_spec_value
-        (value, spec_name_id, sort)
+        (spec_value, spec_name_id, sort)
         VALUES
         <foreach collection="list" item="productSpecValue" index="index" separator=",">
-            (#{productSpecValue.value},#{productSpecValue.specNameId},#{productSpecValue.sort})
+            (#{productSpecValue.specValue},#{productSpecValue.specNameId},#{productSpecValue.sort})
         </foreach>
     </insert>
 
@@ -23,8 +23,8 @@
     <!-- 根据id字符串查询规格值集合 -->
     <select id="getSpecValueListByValueIds" resultType="ProductSpecValue">
         SELECT
-            id,
-            'value',
+            value_id      valueId,
+            spec_value    specValue,
             spec_name_id  specNameId,
             sort,
             create_time   createTime,
@@ -33,5 +33,20 @@
             ky_product_spec_value
         WHERE
             id IN (#{specValueIds})
+    </select>
+
+    <!-- 根据规格名ID获取规格值集合 -->
+    <select id="getSpecValueListByNameId" resultType="ProductSpecValue">
+        SELECT
+            value_id      valueId,
+            spec_value    specValue,
+            spec_name_id  specNameId,
+            sort,
+            create_time   createTime,
+            modified_time modifiedTime
+        FROM
+            ky_product_spec_value
+        WHERE
+            spec_name_id IN (#{specNameId})
     </select>
 </mapper>

@@ -87,4 +87,11 @@ public interface ProductInfoService {
      */
     public void addProductDetail(Integer productId, String detail);
 
+    /**
+     * 查询商品规格属性
+     *
+     * @param productId
+     * @return
+     */
+    public Map<String, Object> getProductSpec(Integer productId);
 }

@@ -35,4 +35,12 @@ public interface ProductSpecValueMapper {
      * @return
      */
     public List<ProductSpecValue> getSpecValueListByValueIds(@Param("specValueIds") String specValueIds);
+
+    /**
+     * 根据规格名ID获取规格值集合
+     *
+     * @param specNameId
+     * @return
+     */
+    public List<ProductSpecValue> getSpecValueListByNameId(@Param("specNameId") Integer specNameId);
 }
