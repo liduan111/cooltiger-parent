@@ -36,27 +36,28 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     /**
      * 查询店铺订单列表信息
      *
-     * @param storeId     店铺ID
-     * @param userId      用户ID
-     * @param orderStatus 订单状态（0-待付款1-待发货2-配送中3-已送达4-已完成5-已评价6-售后）
-     * @param dateStart   开始时间
-     * @param dateEnd     结束时间
-     * @param keyword     关键词
-     * @param pageNo      当前页
-     * @param pageSize    分页单位
+     * @param storeId      店铺ID
+     * @param userId       用户ID
+     * @param orderStatus  订单状态（0-待付款1-待发货2-配送中3-已送达4-已完成5-已评价6-售后）
+     * @param reviewStatus 评价状态（0-未评价1-已评价）
+     * @param dateStart    开始时间
+     * @param dateEnd      结束时间
+     * @param keyword      关键词
+     * @param pageNo       当前页
+     * @param pageSize     分页单位
      * @return
      */
     @Override
-    public Map<String, Object> getOrderList(Integer storeId, Integer userId, Integer orderStatus, String dateStart, String dateEnd, String keyword,
-                                            Integer pageNo, Integer pageSize) {
+    public Map<String, Object> getOrderList(Integer storeId, Integer userId, Integer orderStatus, Integer reviewStatus,
+                                            String dateStart, String dateEnd, String keyword, Integer pageNo, Integer pageSize) {
         //查询总数
-        int totalCount = orderInfoMapper.getOrderListTotalCount(storeId, userId, orderStatus, dateStart, dateEnd, keyword);
+        int totalCount = orderInfoMapper.getOrderListTotalCount(storeId, userId, orderStatus, reviewStatus, dateStart, dateEnd, keyword);
         //创建分页工具类对象
         PageUtil<Object> pageUtil = new PageUtil<>(pageNo, pageSize, totalCount);
         List<OrderInfoListRespVo> orderInfoListRespVoList = null;
         if (totalCount > 0) {
             int pageStart = (pageUtil.getPageNo() - 1) * pageUtil.getPageSize();
-            orderInfoListRespVoList = orderInfoMapper.getOrderListByStoreId$UserId(storeId, userId, orderStatus, dateStart, dateEnd, keyword, pageStart, pageSize);
+            orderInfoListRespVoList = orderInfoMapper.getOrderListByStoreId$UserId(storeId, userId, orderStatus, reviewStatus, dateStart, dateEnd, keyword, pageStart, pageSize);
             List<OrderDetailListRespVo> orderDetailListRespVoList = null;
             for (OrderInfoListRespVo orderInfoListRespVo : orderInfoListRespVoList) {
                 orderDetailListRespVoList = orderDetailMapper.getOrderDetailListByOrderId(orderInfoListRespVo.getOrderId());
@@ -109,7 +110,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
             orderInfoMapper.insertOrderInfo(orderInfo);
             orderIds.add(orderInfo.getOrderId());
             orderDetails = new ArrayList<>();
-            for (PlaceOrderReqVo.OrderDetailVo detail : info.getDetails()){
+            for (PlaceOrderReqVo.OrderDetailVo detail : info.getDetails()) {
                 orderDetail = new OrderDetail();
                 orderDetail.setOrderId(orderInfo.getOrderId());
                 orderDetail.setProductId(detail.getProductId());
@@ -124,11 +125,11 @@ public class OrderInfoServiceImpl implements OrderInfoService {
             }
             orderDetailMapper.batchInsertOrderDetail(orderDetails);
         }
-        if (placeOrderReqVo.getCartIds() != null && placeOrderReqVo.getCartIds() != ""){
-            shopCartClient.deleteAllgoods(userId.longValue(),placeOrderReqVo.getCartIds());
+        if (placeOrderReqVo.getCartIds() != null && placeOrderReqVo.getCartIds() != "") {
+            shopCartClient.deleteAllgoods(userId.longValue(), placeOrderReqVo.getCartIds());
         }
-        Map<String,Object> res = new HashMap<>();
-        res.put("data",orderIds);
+        Map<String, Object> res = new HashMap<>();
+        res.put("data", orderIds);
         return res;
     }
 }

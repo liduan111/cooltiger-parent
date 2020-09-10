@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kyj.cooltiger.order.mapper.RefundApplicationMapper">
+
+    <!-- 添加订单评价 -->
+    <insert id="insertOrderReview" parameterType="OrderReview" useGeneratedKeys="true" keyProperty="orderInfo.orderId">
+        INSERT INTO ky_order_review
+        (user_id, store_id, product_id, sku_id, order_id, anonymous, review_star, logistics_star,
+         store_star, review_content, review_time, reply_status, reply_content, reply_time)
+        VALUES
+        (#{order.userId}, #{order.storeId}, #{order.productId}, #{order.skuId}, #{order.orderId},
+         #{order.anonymous}, #{order.reviewStar}, #{order.logisticsStar}, #{order.storeStar},
+         #{order.reviewContent}, #{order.reviewTime}, #{order.replyStatus}, #{order.replyContent},
+         #{order.replyTime})
+    </insert>
+
+    <!-- 查询订单评价条数 -->
+    <select id="getOrderReviewCount" resultType="int">
+        SELECT COUNT(1)
+        FROM ky_order_review
+        WHERE store_id = #{storeId}
+        <if test="productId != null and productId != ''">
+            AND product_id = #{productId}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            <if test="keyword == '1'">
+                AND (review_star = '1' OR review_star = '2')
+            </if>
+            <if test="keyword == '2'">
+                AND review_star = '3'
+            </if>
+            <if test="keyword == '3'">
+                AND (review_star = '4' OR review_star = '5')
+            </if>
+        </if>
+        <if test="skuId != null and skuId != ''">
+            AND sku_id = #{skuId}
+        </if>
+    </select>
+
+    <!-- 查询订单评价列表 -->
+    <select id="getOrderReviewList" resultType="com.kyj.cooltiger.feign.order.vo.OrderReviewListRespVo">
+        SELECT
+            rev.review_id reviewId,
+            us.id userId,
+            us.avatar,
+            us.nick_name nickName,
+            rev.anonymous,
+            GROUP_CONCAT(det.sku_spec)
+        FROM
+            ky_order_review rev
+                LEFT JOIN ky_user_info us ON us.id = rev.user_id
+                LEFT JOIN ky_order_detail det ON det.order_id = rev.order_id
+        WHERE
+            store_id = 1
+        GROUP BY rev.review_id,us.avatar,us.nick_name
+                 LIMIT 0,10
+    </select>
+
+</mapper>

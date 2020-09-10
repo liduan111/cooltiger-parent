@@ -35,14 +35,15 @@ public class OrderInfoController implements OrderInfoClient {
     /**
      * 查询店铺订单列表信息
      *
-     * @param storeId     店铺ID
-     * @param userId      用户ID
-     * @param orderStatus 订单状态（0-待付款1-待发货2-配送中3-已送达4-已完成5-已评价6-售后）
-     * @param dateStart   开始时间
-     * @param dateEnd     结束时间
-     * @param keyword     关键词
-     * @param pageNo      当前页
-     * @param pageSize    分页单位
+     * @param storeId      店铺ID
+     * @param userId       用户ID
+     * @param orderStatus  订单状态（0-待付款1-待发货2-配送中3-已送达4-已完成5-已评价6-售后）
+     * @param reviewStatus 评价状态（0-未评价1-已评价）
+     * @param dateStart    开始时间
+     * @param dateEnd      结束时间
+     * @param keyword      关键词
+     * @param pageNo       当前页
+     * @param pageSize     分页单位
      * @return
      */
     @Override
@@ -51,13 +52,14 @@ public class OrderInfoController implements OrderInfoClient {
             @RequestParam(value = "store_id", required = false) Integer storeId,
             @RequestParam(value = "user_id", required = false) Integer userId,
             @RequestParam(value = "order_status", required = false) Integer orderStatus,
+            @RequestParam(value = "review_status", required = false) Integer reviewStatus,
             @RequestParam(value = "date_start", required = false) String dateStart,
             @RequestParam(value = "date_end", required = false) String dateEnd,
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page_no", defaultValue = "1") Integer pageNo,
             @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize) {
-        Map<String, Object> res = orderInfoService.getOrderList(storeId, userId, orderStatus, dateStart, dateEnd, keyword, pageNo, pageSize);
-        return Result.success();
+        Map<String, Object> res = orderInfoService.getOrderList(storeId, userId, orderStatus, reviewStatus, dateStart, dateEnd, keyword, pageNo, pageSize);
+        return Result.success(res);
     }
 
     /**
@@ -148,9 +150,9 @@ public class OrderInfoController implements OrderInfoClient {
             totalPrice += smallPrice;
         }
         Map<String, Object> res = new HashMap<>();
-        res.put("data",respVoList);
-        res.put("totalCount",totalCount);
-        res.put("totalPrice",totalPrice);
+        res.put("data", respVoList);
+        res.put("totalCount", totalCount);
+        res.put("totalPrice", totalPrice);
         return Result.success(res);
     }
 
@@ -167,8 +169,8 @@ public class OrderInfoController implements OrderInfoClient {
     public Result placeOrder(
             @RequestParam("user_id") Integer userId,
             @RequestParam("source_type") Integer sourceType,
-            @RequestBody PlaceOrderReqVo placeOrderReqVo){
-        Map<String,Object> res = orderInfoService.placeOrder(userId,placeOrderReqVo,sourceType);
+            @RequestBody PlaceOrderReqVo placeOrderReqVo) {
+        Map<String, Object> res = orderInfoService.placeOrder(userId, placeOrderReqVo, sourceType);
         return Result.success(res.get("data"));
     }
 }

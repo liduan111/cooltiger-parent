@@ -22,6 +22,9 @@
         <if test="orderStatus != null and orderStatus != ''">
             AND o.order_status = #{orderStatus}
         </if>
+        <if test="reviewStatus != null and reviewStatus != ''">
+            AND o.review_status = #{reviewStatus}
+        </if>
         <if test="dateStart != null and dateStart != ''">
             AND DATE_FORMAT(o.create_time,'%Y-%m-%d') &gt;= #{dateStart}
         </if>
@@ -67,6 +70,9 @@
         <if test="orderStatus != null and orderStatus != ''">
             AND o.order_status = #{orderStatus}
         </if>
+        <if test="reviewStatus != null and reviewStatus != ''">
+            AND o.review_status = #{reviewStatus}
+        </if>
         <if test="dateStart != null and dateStart != ''">
             AND DATE_FORMAT(o.create_time,'%Y-%m-%d') &gt;= #{dateStart}
         </if>
@@ -97,4 +103,70 @@
          #{orderInfo.sendTime}, #{orderInfo.confirmReceiveTime}, #{orderInfo.reviewStatus}, #{orderInfo.sourceType},
          #{orderInfo.deleted}, #{orderInfo.createTime}, #{orderInfo.modifiedTime})
     </insert>
+
+    <!-- 根据订单ID查询订单信息 -->
+    <select id="getOrderInfoByOrderId" resultType="OrderInfo">
+        SELECT
+            order_code              orderCode,
+            store_id                storeId,
+            user_id                 userId,
+            receiver_province       receiverProvince,
+            receiver_city           receiverCity,
+            receiver_region         receiverRegion,
+            receiver_address_detail receiverAddressDetail,
+            receiver_name           receiverName,
+            receiver_mobile         receiverMobile,
+            total_price             totalPrice,
+            freight_price           freightPrice,
+            pay_price               payPrice,
+            order_note              orderNote,
+            order_status            orderStatus,
+            pay_type                payType,
+            outer_trade_no          outerTradeNo,
+            pay_time                payTime,
+            express_comp            expressComp,
+            express_number          expressNumber,
+            send_time               sendTime,
+            confirm_receive_time    confirmReceiveTime,
+            review_status           reviewStatus,
+            source_type             sourceType,
+            deleted,
+            create_time             createTime,
+            modified_time           modifiedTime
+        FROM
+            ky_order_info
+        WHERE
+            order_id = #{orderId}
+    </select>
+
+    <!-- 修改订单信息 -->
+    <update id="updateOrderInfo" parameterType="OrderInfo">
+        UPDATE ky_order_info
+        SET order_code              = #{orderInfo.orderCode},
+            store_id                = #{orderInfo.storeId},
+            user_id                 = #{orderInfo.userId},
+            receiver_province       = #{orderInfo.receiverProvince},
+            receiver_city           = #{orderInfo.receiverCity},
+            receiver_region         = #{orderInfo.receiverRegion},
+            receiver_address_detail = #{orderInfo.receiverAddressDetail},
+            receiver_name           = #{orderInfo.receiverName},
+            receiver_mobile         = #{orderInfo.receiverMobile},
+            total_price             = #{orderInfo.totalPrice},
+            freight_price           = #{orderInfo.freightPrice},
+            pay_price               = #{orderInfo.payPrice},
+            order_note              = #{orderInfo.orderNote},
+            order_status            = #{orderInfo.orderStatus},
+            pay_type                = #{orderInfo.payType},
+            outer_trade_no          = #{orderInfo.outerTradeNo},
+            pay_time                = #{orderInfo.payTime},
+            express_comp            = #{orderInfo.expressComp},
+            express_number          = #{orderInfo.expressNumber},
+            send_time               = #{orderInfo.sendTime},
+            confirm_receive_time    = #{orderInfo.confirmReceiveTime},
+            review_status           = #{orderInfo.reviewStatus},
+            source_type             = #{orderInfo.sourceType},
+            deleted                 = #{orderInfo.deleted},
+            modified_time           = #{orderInfo.modifiedTime}
+        WHERE order_id = #{orderInfo.orderId}
+    </update>
 </mapper>

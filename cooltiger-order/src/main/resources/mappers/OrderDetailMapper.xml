@@ -7,11 +7,13 @@
         SELECT
             order_detail_id orderDetailId,
             order_id        orderId,
-            sku_id          skuId,
+            product_id      productId,
             product_title   productTitle,
+            sku_id          skuId,
+            pic_url         picUrl,
             sku_spec        skuSpec,
-            sku_number      skuNumber,
             sku_price       skuPrice,
+            sku_number      skuNumber,
             sku_weight      skuWeight
         FROM
             ky_order_detail

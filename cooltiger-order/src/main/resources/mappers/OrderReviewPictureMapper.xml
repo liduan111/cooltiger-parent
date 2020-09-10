@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kyj.cooltiger.order.mapper.OrderReviewPictureMapper">
+
+    <!-- 批量插入订单评价图片 -->
+    <insert id="batchInsertOrderReviewPicture" parameterType="OrderReviewPicture">
+        INSERT INTO ky_order_review_picture
+        (review_id,pic_url)
+        VALUES
+        <foreach collection="list" item="picture" index="index" separator=",">
+            (#{picture.reviewId},#{picture.picUrl})
+        </foreach>
+    </insert>
+</mapper>
