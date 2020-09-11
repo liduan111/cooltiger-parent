@@ -108,6 +108,6 @@ public class OrderReviewController implements OrderReviewClient {
             @RequestParam(value = "page_no", defaultValue = "1") Integer pageNo,
             @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize) {
         Map<String, Object> res = orderReviewService.getOrderReviewList(storeId, productId, keyword, skuId, pageNo, pageSize);
-        return Result.success();
+        return Result.success(res);
     }
 }

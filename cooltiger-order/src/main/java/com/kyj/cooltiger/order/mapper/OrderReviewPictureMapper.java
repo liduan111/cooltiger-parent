@@ -21,4 +21,12 @@ public interface OrderReviewPictureMapper {
      * @return
      */
     public int batchInsertOrderReviewPicture(@Param("list") List<OrderReviewPicture> pictures);
+
+    /**
+     * 根据评价ID查询图片
+     *
+     * @param reviewId
+     * @return
+     */
+    public List<OrderReviewPicture> getReviewPictureByReviewId(@Param("reviewId") Integer reviewId);
 }

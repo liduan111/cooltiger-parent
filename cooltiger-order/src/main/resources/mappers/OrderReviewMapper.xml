@@ -41,20 +41,43 @@
     <!-- 查询订单评价列表 -->
     <select id="getOrderReviewList" resultType="com.kyj.cooltiger.feign.order.vo.OrderReviewListRespVo">
         SELECT
-            rev.review_id reviewId,
-            us.id userId,
-            us.avatar,
-            us.nick_name nickName,
-            rev.anonymous,
-            GROUP_CONCAT(det.sku_spec)
+        rev.review_id reviewId,
+        us.id userId,
+        us.avatar,
+        us.nick_name nickName,
+        rev.anonymous,
+        GROUP_CONCAT(det.sku_spec) skuSpec,
+        rev.review_content reviewContent,
+        rev.review_time reviewTime
         FROM
-            ky_order_review rev
-                LEFT JOIN ky_user_info us ON us.id = rev.user_id
-                LEFT JOIN ky_order_detail det ON det.order_id = rev.order_id
+        ky_order_review rev
+        LEFT JOIN ky_user_info us ON us.id = rev.user_id
+        LEFT JOIN ky_order_detail det ON det.order_id = rev.order_id
         WHERE
-            store_id = 1
-        GROUP BY rev.review_id,us.avatar,us.nick_name
-                 LIMIT 0,10
+        rev.store_id = #{storeId}
+        <if test="productId != null and productId != ''">
+            AND rev.product_id = #{productId}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            <if test="keyword == '1'">
+                AND (rev.review_star = '1' OR rev.review_star = '2')
+            </if>
+            <if test="keyword == '2'">
+                AND rev.review_star = '3'
+            </if>
+            <if test="keyword == '3'">
+                AND (rev.review_star = '4' OR rev.review_star = '5')
+            </if>
+        </if>
+        <if test="skuId != null and skuId != ''">
+            AND rev.sku_id = #{skuId}
+        </if>
+        GROUP BY
+        rev.review_id,
+        us.avatar,
+        us.nick_name
+        ORDER BY rev.review_time DESC
+        LIMIT #{pageStart},#{pageSize}
     </select>
 
 </mapper>

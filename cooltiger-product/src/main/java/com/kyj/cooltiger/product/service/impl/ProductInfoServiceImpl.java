@@ -42,6 +42,8 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     private ProductPictureMapper productPictureMapper;
     @Autowired
     private ProductDetailsMapper productDetailsMapper;
+    @Autowired
+    private StoreInfoMapper storeInfoMapper;
 
     /**
      * 根据店铺ID获取商品列表
@@ -254,6 +256,9 @@ public class ProductInfoServiceImpl implements ProductInfoService {
             }
         }
         productItemRespVo.setProductPics(productPics);
+        //店铺评分信息
+        StoreReviewScoreResqVo storeReviewInfo = storeInfoMapper.getStoreReviewInfo(productItemRespVo.getStoreId());
+        productItemRespVo.setStoreReviewScoreResqVo(storeReviewInfo);
         Map<String,Object> res = new HashMap<>();
         res.put("data",productItemRespVo);
         return res;

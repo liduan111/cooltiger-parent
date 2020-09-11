@@ -1,6 +1,7 @@
 package com.kyj.cooltiger.product.mapper;
 
 import com.kyj.cooltiger.feign.product.vo.StoreInfoListRespVo;
+import com.kyj.cooltiger.feign.product.vo.StoreReviewScoreResqVo;
 import com.kyj.cooltiger.product.entity.StoreInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -60,5 +61,13 @@ public interface StoreInfoMapper {
      * @return
      */
     public int getStoreInfoCountByStoreName(@Param("storeName") String storeName);
+
+    /**
+     * 查询店铺评分信息
+     *
+     * @param storeId
+     * @return
+     */
+    public StoreReviewScoreResqVo getStoreReviewInfo(@Param("storeId") Integer storeId);
 
 }

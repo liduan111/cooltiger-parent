@@ -165,6 +165,6 @@ public class ProductInfoController {
     @RequestMapping(value = "/getProductSpec", method = {RequestMethod.GET})
     public Result getProductSpec(
             @RequestParam("product_id") Integer productId) {
-        return null;
+        return productInfoClient.getProductSpec(productId);
     }
 }

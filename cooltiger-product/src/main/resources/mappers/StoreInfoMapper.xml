@@ -122,4 +122,19 @@
           AND deleted = 0
     </select>
 
+    <!-- 查询店铺评分信息 -->
+    <select id="getStoreReviewInfo" resultType="com.kyj.cooltiger.feign.product.vo.StoreReviewScoreResqVo">
+        SELECT
+            store.store_id storeId,
+            store.store_name storeName,
+            store.store_logo_url storeLogoUrl,
+            FORMAT(IFNULL(AVG(rev.review_star),5.0),1) reviewStar,
+            FORMAT(IFNULL(AVG(rev.logistics_star),5.0),1) logisticsStar,
+            FORMAT(IFNULL(AVG(rev.store_star),5.0),1) storeStar
+        FROM
+            ky_store_info store
+                LEFT JOIN ky_order_review rev ON rev.store_id = store.store_id
+        WHERE
+            store.store_id = #{storeId}
+    </select>
 </mapper>

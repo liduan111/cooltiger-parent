@@ -95,8 +95,22 @@ public class OrderReviewServiceImpl implements OrderReviewService {
         if (totalCount > 0){
             int pageStart = (pageUtil.getPageNo() - 1) * pageUtil.getPageSize();
             orderReviewListRespVos = orderReviewMapper.getOrderReviewList(storeId,productId,keyword,skuId,pageStart,pageSize);
+            for (OrderReviewListRespVo orderReviewListRespVo : orderReviewListRespVos){
+                List<OrderReviewPicture> orderReviewPictures = orderReviewPictureMapper.getReviewPictureByReviewId(orderReviewListRespVo.getReviewId());
+                List<String> picUrls = null;
+                if (orderReviewPictures != null){
+                    picUrls = new ArrayList<>();
+                    for (OrderReviewPicture orderReviewPicture : orderReviewPictures){
+                        picUrls.add(orderReviewPicture.getPic_url());
+                    }
+                }
+                orderReviewListRespVo.setPicUrls(picUrls);
+            }
         }
         Map<String, Object> res = new HashMap<>();
+        res.put("totalCount",pageUtil.getTotalCount());
+        res.put("totalPage",pageUtil.getTotalPage());
+        res.put("data",orderReviewListRespVos);
         return res;
     }
 }

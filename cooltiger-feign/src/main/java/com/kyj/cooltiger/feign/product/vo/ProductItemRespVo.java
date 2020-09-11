@@ -64,7 +64,12 @@ public class ProductItemRespVo {
     private List<Service> services;
     /** 商品图片 **/
     private List<ProductPic> productPics;
-
+    /** 评论数量 **/
+    private Integer reviewCount;
+    /** 评论数量 **/
+    private String detail;
+    /** 店铺评分信息 **/
+    private StoreReviewScoreResqVo storeReviewScoreResqVo;
 
 
     public class Service{
@@ -356,5 +361,29 @@ public class ProductItemRespVo {
 
     public void setProductPics(List<ProductPic> productPics) {
         this.productPics = productPics;
+    }
+
+    public Integer getReviewCount() {
+        return reviewCount;
+    }
+
+    public void setReviewCount(Integer reviewCount) {
+        this.reviewCount = reviewCount;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public StoreReviewScoreResqVo getStoreReviewScoreResqVo() {
+        return storeReviewScoreResqVo;
+    }
+
+    public void setStoreReviewScoreResqVo(StoreReviewScoreResqVo storeReviewScoreResqVo) {
+        this.storeReviewScoreResqVo = storeReviewScoreResqVo;
     }
 }
