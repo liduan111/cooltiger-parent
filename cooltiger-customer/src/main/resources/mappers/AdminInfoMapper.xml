@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kyj.cooltiger.customer.mapper.AdminInfoMapper">
+
+    <!-- 根据用户名查询管理员信息 -->
+    <select id="getAdminInfo" resultType="AdminInfo">
+        SELECT
+            user_id       userId,
+            username,
+            password,
+            nickname,
+            avatar,
+            phone,
+            email,
+            sex,
+            store_id      storeId,
+            status,
+            create_time   createTime,
+            modified_time modifiedTime
+        FROM
+            ky_admin_info
+        WHERE
+            username = #{username}
+    </select>
+
+    <!-- 插入管理员信息 -->
+    <insert id="insertAdminInfo" parameterType="AdminInfo">
+        INSERT INTO ky_admin_info
+        (username, password, nickname, avatar, phone, email, sex, store_id, status)
+        VALUES
+        (#{adminInfo.username}, #{adminInfo.password}, #{adminInfo.nickname}, #{adminInfo.avatar},
+         #{adminInfo.phone}, #{adminInfo.email}, #{adminInfo.sex}, #{adminInfo.storeId}, #{adminInfo.status})
+    </insert>
+
+</mapper>
