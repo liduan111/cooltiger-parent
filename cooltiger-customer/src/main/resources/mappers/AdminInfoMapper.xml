@@ -23,6 +23,29 @@
             username = #{username}
     </select>
 
+    <!-- 根据用户名查询管理员信息 -->
+    <select id="getAdminInfoByUsername$Phone$Email" resultType="AdminInfo">
+        SELECT
+            user_id       userId,
+            username,
+            password,
+            nickname,
+            avatar,
+            phone,
+            email,
+            sex,
+            store_id      storeId,
+            status,
+            create_time   createTime,
+            modified_time modifiedTime
+        FROM
+            ky_admin_info
+        WHERE
+            username = #{username}
+           OR phone = #{username}
+           OR email = #{username}
+    </select>
+
     <!-- 插入管理员信息 -->
     <insert id="insertAdminInfo" parameterType="AdminInfo">
         INSERT INTO ky_admin_info

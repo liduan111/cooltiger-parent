@@ -6,9 +6,13 @@ import com.kyj.cooltiger.customer.entity.AdminInfo;
 import com.kyj.cooltiger.customer.mapper.AdminInfoMapper;
 import com.kyj.cooltiger.customer.service.AdminInfoService;
 import com.kyj.cooltiger.feign.customer.vo.AdminInfoReqVo;
+import com.kyj.cooltiger.feign.customer.vo.AdminLoginReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author liduan
@@ -28,9 +32,9 @@ public class AdminInfoServiceImpl implements AdminInfoService {
      */
     @Override
     public void addAdminInfo(AdminInfoReqVo adminInfoReqVo) {
-        AdminInfo adminInfo = adminInfoMapper.getAdminInfo(adminInfoReqVo.getUsername());
-        if(adminInfo != null){
-            throw new MyException("USERNAME_IS_EXIST","用户名已存在");
+        AdminInfo adminInfo = adminInfoMapper.getAdminInfoByUsername(adminInfoReqVo.getUsername());
+        if (adminInfo != null) {
+            throw new MyException("USERNAME_IS_EXIST", "用户名已存在");
         }
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String encode = bCryptPasswordEncoder.encode(adminInfoReqVo.getPassword());
@@ -45,5 +49,29 @@ public class AdminInfoServiceImpl implements AdminInfoService {
         adminInfo.setStoreId(adminInfoReqVo.getStoreId());
         adminInfo.setStatus(DELETED.YES);
         adminInfoMapper.insertAdminInfo(adminInfo);
+    }
+
+    /**
+     * 管理员登录
+     *
+     * @param adminLoginReqVo 登录信息
+     * @return
+     */
+    @Override
+    public Map<String, Object> adminLogin(AdminLoginReqVo adminLoginReqVo) {
+        AdminInfo adminInfo = adminInfoMapper.getAdminInfoByUsername$Phone$Email(adminLoginReqVo.getUsername());
+        if (adminInfo == null) {
+            throw new MyException("USERNAME_NOT_EXIST", "用户名不存在");
+        }
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        boolean matches = bCryptPasswordEncoder.matches(adminLoginReqVo.getPassword(), adminInfo.getPassword());
+        if (!matches) {
+            throw new MyException("PASSWORD_ERROR", "密码错误！");
+        }
+        Map<String, Object> res = new HashMap<>();
+        res.put("token", "123456");
+        res.put("userId", adminInfo.getUserId());
+        res.put("userType", 1);
+        return res;
     }
 }

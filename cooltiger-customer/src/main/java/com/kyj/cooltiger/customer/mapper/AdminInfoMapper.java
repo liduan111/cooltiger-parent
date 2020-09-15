@@ -18,7 +18,15 @@ public interface AdminInfoMapper {
      * @param username
      * @return
      */
-    public AdminInfo getAdminInfo(@Param("username") String username);
+    public AdminInfo getAdminInfoByUsername(@Param("username") String username);
+
+    /**
+     * 根据用户名/手机号、邮箱查询管理员信息
+     *
+     * @param username
+     * @return
+     */
+    public AdminInfo getAdminInfoByUsername$Phone$Email(@Param("username") String username);
 
     /**
      * 插入管理员信息
