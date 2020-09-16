@@ -5,6 +5,7 @@ import com.kyj.cooltiger.feign.customer.vo.AdminInfoReqVo;
 import com.kyj.cooltiger.feign.customer.vo.AdminLoginReqVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -31,6 +32,15 @@ public interface AdminInfoClient {
      * @param adminLoginReqVo 登录信息
      * @return
      */
-    @RequestMapping(value = "/adminLogin",method = {RequestMethod.POST})
+    @RequestMapping(value = "/customer/adminInfo/login",method = {RequestMethod.POST})
     public Result adminLogin(@RequestBody AdminLoginReqVo adminLoginReqVo);
+
+    /**
+     * 管理员登出
+     *
+     * @param token
+     * @return
+     */
+    @RequestMapping(value = "/customer/adminInfo/logOut", method = {RequestMethod.POST})
+    public Result adminLoginOut(@RequestHeader("token") String token);
 }

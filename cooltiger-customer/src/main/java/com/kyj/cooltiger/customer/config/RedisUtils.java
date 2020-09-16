@@ -38,7 +38,7 @@ public class RedisUtils {
     }
 
     /**
-     * 擦好人字符串类型值并设置过期时间
+     * 插入字符串类型值并设置过期时间
      *
      * @param key   键
      * @param value 值
@@ -46,6 +46,16 @@ public class RedisUtils {
      */
     public void set(String key, String value, Long time) {
         stringRedisTemplate.opsForValue().set(key, value, time, TimeUnit.MINUTES);
+    }
+
+    /**
+     * 根据key删除
+     *
+     * @param key 键
+     * @return
+     */
+    public Boolean delete(String key) {
+        return stringRedisTemplate.delete(key);
     }
 
     /**
@@ -57,4 +67,27 @@ public class RedisUtils {
     public Long getExpire(String key) {
         return stringRedisTemplate.getExpire(key);
     }
+
+    /**
+     * 判断key是否存在
+     *
+     * @param key
+     * @return
+     */
+    public Boolean hasKey(String key) {
+        return stringRedisTemplate.hasKey(key);
+    }
+
+    /**
+     * 给key设置过期时间
+     *
+     * @param key      键
+     * @param timeout  过期时间
+     * @param timeUnit 时间单位
+     * @return
+     */
+    public Boolean expire(String key, Long timeout, TimeUnit timeUnit) {
+        return stringRedisTemplate.expire(key, timeout, timeUnit);
+    }
+
 }

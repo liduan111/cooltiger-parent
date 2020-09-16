@@ -5,10 +5,7 @@ import com.kyj.cooltiger.feign.customer.client.AdminInfoClient;
 import com.kyj.cooltiger.feign.customer.vo.AdminInfoReqVo;
 import com.kyj.cooltiger.feign.customer.vo.AdminLoginReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author liduan
@@ -39,8 +36,19 @@ public class AdminInfoController {
      * @param adminLoginReqVo 登录信息
      * @return
      */
-    @RequestMapping(value = "/adminLogin",method = {RequestMethod.POST})
-    public Result adminLogin(@RequestBody AdminLoginReqVo adminLoginReqVo){
+    @RequestMapping(value = "/login", method = {RequestMethod.POST})
+    public Result adminLogin(@RequestBody AdminLoginReqVo adminLoginReqVo) {
         return adminInfoClient.adminLogin(adminLoginReqVo);
+    }
+
+    /**
+     * 管理员登出
+     *
+     * @param token
+     * @return
+     */
+    @RequestMapping(value = "/logOut", method = {RequestMethod.POST})
+    public Result adminLoginOut(@RequestHeader("token") String token) {
+        return adminInfoClient.adminLoginOut(token);
     }
 }

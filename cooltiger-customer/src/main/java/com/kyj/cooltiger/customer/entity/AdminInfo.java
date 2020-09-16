@@ -20,7 +20,7 @@ public class AdminInfo {
     private String username;
     //密码（MD5）
     private String password;
-    //用户名称
+    //昵称
     private String nickname;
     //头像
     private String avatar;

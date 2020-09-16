@@ -9,10 +9,7 @@ import com.kyj.cooltiger.feign.customer.client.AdminInfoClient;
 import com.kyj.cooltiger.feign.customer.vo.AdminInfoReqVo;
 import com.kyj.cooltiger.feign.customer.vo.AdminLoginReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -50,10 +47,22 @@ public class AdminInfoController implements AdminInfoClient {
      * @return
      */
     @Override
-    @RequestMapping(value = "/adminLogin",method = {RequestMethod.POST})
+    @RequestMapping(value = "/login",method = {RequestMethod.POST})
     public Result adminLogin(@RequestBody AdminLoginReqVo adminLoginReqVo){
         Map<String, Object> res = adminInfoService.adminLogin(adminLoginReqVo);
-        redisUtils.set((String)res.get("token"), JSON.toJSONString(res), 60*24L);
-        return Result.success((String)res.get("token"));
+        redisUtils.set((String)res.get("token"), JSON.toJSONString(res.get("data")), 60*24L);
+        return Result.success(res.get("token"));
+    }
+
+    /**
+     * 管理员登出
+     *
+     * @param token
+     * @return
+     */
+    @RequestMapping(value = "/logOut", method = {RequestMethod.POST})
+    public Result adminLoginOut(@RequestHeader("token") String token){
+        redisUtils.delete(token);
+        return Result.success();
     }
 }

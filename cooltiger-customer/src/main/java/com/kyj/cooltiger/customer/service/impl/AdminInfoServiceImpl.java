@@ -2,11 +2,13 @@ package com.kyj.cooltiger.customer.service.impl;
 
 import com.kyj.cooltiger.common.constant.DELETED;
 import com.kyj.cooltiger.common.excep.MyException;
+import com.kyj.cooltiger.common.utils.TokenUtils;
 import com.kyj.cooltiger.customer.entity.AdminInfo;
 import com.kyj.cooltiger.customer.mapper.AdminInfoMapper;
 import com.kyj.cooltiger.customer.service.AdminInfoService;
 import com.kyj.cooltiger.feign.customer.vo.AdminInfoReqVo;
 import com.kyj.cooltiger.feign.customer.vo.AdminLoginReqVo;
+import com.kyj.cooltiger.feign.vo.UserInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -68,10 +70,20 @@ public class AdminInfoServiceImpl implements AdminInfoService {
         if (!matches) {
             throw new MyException("PASSWORD_ERROR", "密码错误！");
         }
+        //根据用户类型、用户ID、用户名生成token
+        String token = TokenUtils.storageTokenByUserId$Username(1, adminInfo.getUserId(), adminInfo.getUsername());
+        //用户信息
+        UserInfoVo userInfoVo = new UserInfoVo();
+        userInfoVo.setUserId(adminInfo.getUserId());
+        userInfoVo.setUsername(adminInfo.getUsername());
+        userInfoVo.setAvatar(adminInfo.getAvatar());
+        userInfoVo.setNickname(adminInfo.getNickname());
+        userInfoVo.setSex(adminInfo.getSex());
+        userInfoVo.setUserType(1);
+        userInfoVo.setStoreId(adminInfo.getStoreId());
         Map<String, Object> res = new HashMap<>();
-        res.put("token", "123456");
-        res.put("userId", adminInfo.getUserId());
-        res.put("userType", 1);
+        res.put("token", token);
+        res.put("data", userInfoVo);
         return res;
     }
 }
