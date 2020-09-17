@@ -2,6 +2,7 @@ package com.kyj.cooltiger.customer.service;
 
 import com.kyj.cooltiger.feign.customer.vo.AdminInfoReqVo;
 import com.kyj.cooltiger.feign.customer.vo.AdminLoginReqVo;
+import com.kyj.cooltiger.feign.customer.vo.PasswordReqVo;
 
 import java.util.Map;
 
@@ -25,5 +26,13 @@ public interface AdminInfoService {
      * @param adminLoginReqVo 登录信息
      * @return
      */
-    public Map<String,Object> adminLogin(AdminLoginReqVo adminLoginReqVo);
+    public Map<String, Object> adminLogin(AdminLoginReqVo adminLoginReqVo);
+
+    /**
+     * 修改密码
+     *
+     * @param userId        用户ID
+     * @param passwordReqVo 密码信息
+     */
+    public void changePassword(Integer userId, PasswordReqVo passwordReqVo);
 }

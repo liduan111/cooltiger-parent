@@ -5,7 +5,7 @@ package com.kyj.cooltiger.feign.vo;
  * Description: 用户信息vo
  * date: 2020/9/16 13:16
  */
-public class UserInfoVo {
+public class AdminInfoVo {
 
     //用户ID
     private Integer userId;
@@ -17,8 +17,10 @@ public class UserInfoVo {
     private String nickname;
     //性别（1-男2-女）
     private Integer sex;
-    //用户类型（1-管理员2-用户）
-    private Integer userType;
+    //电话
+    private String phone;
+    //邮箱
+    private String email;
     //所属店铺ID（0-系统管理员）
     private Integer storeId;
 
@@ -62,12 +64,20 @@ public class UserInfoVo {
         this.sex = sex;
     }
 
-    public Integer getUserType() {
-        return userType;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUserType(Integer userType) {
-        this.userType = userType;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Integer getStoreId() {

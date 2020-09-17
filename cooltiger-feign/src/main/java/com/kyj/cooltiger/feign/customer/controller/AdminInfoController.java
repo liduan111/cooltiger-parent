@@ -4,6 +4,7 @@ import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.customer.client.AdminInfoClient;
 import com.kyj.cooltiger.feign.customer.vo.AdminInfoReqVo;
 import com.kyj.cooltiger.feign.customer.vo.AdminLoginReqVo;
+import com.kyj.cooltiger.feign.customer.vo.PasswordReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,5 +51,31 @@ public class AdminInfoController {
     @RequestMapping(value = "/logOut", method = {RequestMethod.POST})
     public Result adminLoginOut(@RequestHeader("token") String token) {
         return adminInfoClient.adminLoginOut(token);
+    }
+
+    /**
+     * 获取管理员信息
+     *
+     * @param token
+     * @return
+     */
+    @RequestMapping(value = "/getAdminInfo", method = {RequestMethod.GET})
+    public Result getAdminInfo(@RequestHeader("token") String token) {
+        return adminInfoClient.getAdminInfo(token);
+    }
+
+
+    /**
+     * 修改密码
+     *
+     * @param userId        用户ID
+     * @param passwordReqVo 密码信息
+     * @return
+     */
+    @RequestMapping(value = "/changePassword", method = {RequestMethod.POST})
+    public Result changePassword(
+            @RequestParam("user_id") Integer userId,
+            @RequestBody PasswordReqVo passwordReqVo) {
+        return adminInfoClient.changePassword(userId, passwordReqVo);
     }
 }

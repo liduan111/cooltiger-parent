@@ -34,4 +34,20 @@ public interface AdminInfoMapper {
      * @param adminInfo
      */
     public int insertAdminInfo(@Param("adminInfo") AdminInfo adminInfo);
+
+    /**
+     * 根据用户ID查询管理员信息
+     *
+     * @param userId 用户ID
+     * @return
+     */
+    public AdminInfo getAdminInfoByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 修改管理员信息
+     *
+     * @param adminInfo
+     * @return
+     */
+    public int updateAdminInfo(@Param("adminInfo") AdminInfo adminInfo);
 }
