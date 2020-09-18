@@ -1,5 +1,7 @@
 package com.kyj.cooltiger.feign.customer.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author liduan
  * Description: 管理员信息入参
@@ -22,6 +24,7 @@ public class AdminInfoReqVo {
     //性别（1-男2-女）
     private Integer sex;
     //所属店铺ID（0-系统管理员）
+    @JsonProperty("store_id")
     private Integer storeId;
 
     public String getUsername() {

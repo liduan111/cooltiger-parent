@@ -1,5 +1,7 @@
 package com.kyj.cooltiger.feign.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author liduan
  * Description: 用户信息vo
@@ -8,6 +10,7 @@ package com.kyj.cooltiger.feign.vo;
 public class AdminInfoVo {
 
     //用户ID
+    @JsonProperty("user_id")
     private Integer userId;
     //用户名
     private String username;
@@ -22,6 +25,7 @@ public class AdminInfoVo {
     //邮箱
     private String email;
     //所属店铺ID（0-系统管理员）
+    @JsonProperty("store_id")
     private Integer storeId;
 
     public Integer getUserId() {

@@ -58,7 +58,7 @@ public interface AdminInfoClient {
      * @param passwordReqVo 密码信息
      * @return
      */
-    @RequestMapping(value = "/changePassword", method = {RequestMethod.POST})
+    @RequestMapping(value = "/changePassword", method = {RequestMethod.PUT})
     public Result changePassword(
             @RequestParam("user_id") Integer userId,
             @RequestBody PasswordReqVo passwordReqVo);
