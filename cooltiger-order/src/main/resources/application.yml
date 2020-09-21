@@ -51,6 +51,17 @@ IMAGE:
   BASE:
     URL: http://36.133.141.6:81/images
 
+sandsdk:
+  url: https://cashier.sandpay.com.cn/gateway/api
+  mid:
+  plMid:
+  signCert:
+    path: D:/key/coolpri.pfx
+    pwd: kyj190828
+  sandCert:
+    path: D:/key/coolpub.cer
+
+
 #微信相关参数
 weChat:
   #小程序id
