@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kyj.cooltiger.customer.mapper.AdminInfoMapper">
+
+    <!-- 根据用户名查询管理员信息 -->
+    <select id="getAdminInfo" resultType="AdminInfo">
+        SELECT
+            user_id       userId,
+            username,
+            password,
+            nickname,
+            avatar,
+            phone,
+            email,
+            sex,
+            store_id      storeId,
+            status,
+            create_time   createTime,
+            modified_time modifiedTime
+        FROM
+            ky_admin_info
+        WHERE
+            username = #{username}
+    </select>
+
+    <!-- 根据用户名/手机号/邮箱查询管理员信息 -->
+    <select id="getAdminInfoByUsername$Phone$Email" resultType="AdminInfo">
+        SELECT
+            user_id       userId,
+            username,
+            password,
+            nickname,
+            avatar,
+            phone,
+            email,
+            sex,
+            store_id      storeId,
+            status,
+            create_time   createTime,
+            modified_time modifiedTime
+        FROM
+            ky_admin_info
+        WHERE
+            username = #{username}
+           OR phone = #{username}
+           OR email = #{username}
+    </select>
+
+    <!-- 插入管理员信息 -->
+    <insert id="insertAdminInfo" parameterType="AdminInfo">
+        INSERT INTO ky_admin_info
+        (username, password, nickname, avatar, phone, email, sex, store_id, status)
+        VALUES
+        (#{adminInfo.username}, #{adminInfo.password}, #{adminInfo.nickname}, #{adminInfo.avatar},
+         #{adminInfo.phone}, #{adminInfo.email}, #{adminInfo.sex}, #{adminInfo.storeId}, #{adminInfo.status})
+    </insert>
+
+    <!-- 根据用户ID查询用户信息 -->
+    <select id="getAdminInfoByUserId" resultType="AdminInfo">
+        SELECT
+            user_id       userId,
+            username,
+            password,
+            nickname,
+            avatar,
+            phone,
+            email,
+            sex,
+            store_id      storeId,
+            status,
+            create_time   createTime,
+            modified_time modifiedTime
+        FROM
+            ky_admin_info
+        WHERE
+            user_id = #{userId}
+    </select>
+
+    <!-- 修改管理员信息 -->
+    <update id="updateAdminInfo" parameterType="AdminInfo">
+        UPDATE ky_admin_info
+        SET
+            username   = #{adminInfo.username},
+            `password` = #{adminInfo.password},
+            nickname   = #{adminInfo.nickname},
+            avatar     = #{adminInfo.avatar},
+            phone      = #{adminInfo.phone},
+            email      = #{adminInfo.email},
+            sex        = #{adminInfo.sex},
+            store_id   = #{adminInfo.storeId},
+            `status`   = #{adminInfo.status}
+        WHERE user_id = #{adminInfo.userId}
+    </update>
+
+</mapper>

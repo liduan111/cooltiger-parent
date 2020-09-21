@@ -11,45 +11,39 @@ import java.util.Date;
  * @date 2020/9/9 14:05
  */
 @Data
-public class Commentreview implements Serializable {
+public class OrderReview implements Serializable {
 
     private static final long seriableUUID=1L;
 
     //评论id
     private  Integer reviewId;
-    //订单id
-    private  Integer orderId;
-    //skuid
-    private  Integer skuId;
-    //商品id
-    private  Integer productId;
     //用户id
     private  Long userId;
-    //商品标题
-    private String title;
-    //商品图片
-    private  String picturl;
     //店铺id
     private  Integer storeId;
-    //店铺名称
-    private String storeName;
-    //商品评价星级
+    //商品id
+    private  Integer productId;
+    //skuid
+    private  Integer skuId;
+    //订单id
+    private  Integer orderId;
+    //是否匿名评价（0-否1-是）
+    private Integer anonymous;
+    //商品评价星级（1-5星）
     private Integer reviewStar;
-    //物流服务星际
+    //物流服务星级（1-5星
     private Integer logisticsStar;
-    //店铺服务星际
+    //店铺服务星级（1-5星）
     private Integer storeStar;
-    //评论内容
+    //评价内容
     private String reviewContent;
     //评价时间
     private Date reviewTime;
-    //回复状态
+    //回复状态（0-未回复1-已回复）
     private Integer replyStatus;
     //回复内容
     private String  replyContent;
     //回复时间
     private Date replyTime;
-    //商品规格
-    private String goodspev;
 
 }

@@ -15,6 +15,7 @@
         <module>cooltiger-gateway</module>
         <module>cooltiger-product</module>
         <module>cooltiger-order</module>
+        <module>cooltiger-customer</module>
     </modules>
 
     <packaging>pom</packaging>

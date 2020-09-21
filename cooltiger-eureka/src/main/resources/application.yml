@@ -2,14 +2,18 @@
 server:
   port: 8888
 
+spring:
+  application:
+    name: Eureka-Service
+
 #eureka基本信息配置
 eureka:
   instance:
-    hostname: localhost
-    #hostname: 36.133.141.6 #注册中心ip
+    #hostname: localhost
+    hostname: 36.133.141.6 #注册中心ip
   client:
     #是否将自己注册到eureka
-    register-with-eureka: false
+    register-with-eureka: true
     #是否从eureka获取注册信息
     fetch-registry: false
     #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址
