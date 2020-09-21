@@ -56,7 +56,6 @@ public class ProductInfoController {
         return productInfoClient.addProductBaseInfo(storeId, productBaseReqVo);
     }
 
-
     /**
      * 添加商品Sku信息
      *
@@ -155,5 +154,17 @@ public class ProductInfoController {
             @RequestParam("product_id") Integer productId,
             @RequestParam("detail") String detail) {
         return productInfoClient.addProductDetail(productId, detail);
+    }
+
+    /**
+     * 查询商品规格属性
+     *
+     * @param productId 商品ID
+     * @return
+     */
+    @RequestMapping(value = "/getProductSpec", method = {RequestMethod.GET})
+    public Result getProductSpec(
+            @RequestParam("product_id") Integer productId) {
+        return productInfoClient.getProductSpec(productId);
     }
 }

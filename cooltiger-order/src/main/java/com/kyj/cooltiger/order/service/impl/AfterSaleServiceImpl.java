@@ -44,7 +44,7 @@ public class AfterSaleServiceImpl implements AfterSaleService {
 
         Integer  refundId=Integer.valueOf(map.get("refundId").toString());
         Integer  orderId=Integer.valueOf(map.get("orderId").toString());
-        Integer  userId=Integer.valueOf(map.get("userId").toString());
+        Long  userId=Long.valueOf(map.get("userId").toString());
         AfterSale  afterSale=afterSaleMapper.querysaleorderId(refundId,orderId,userId);
         if (afterSale.equals("")||afterSale==null){
             new MyException("SOURCE_NOT_EXIST","当前数据不存在");
@@ -73,7 +73,7 @@ public class AfterSaleServiceImpl implements AfterSaleService {
     public AfterSale refundtype(Map<String, Object> map) {
 
         Integer  orderId=Integer.valueOf(map.get("orderId").toString());
-        Integer  userId=Integer.valueOf(map.get("userId").toString());
+        Long  userId=Long.valueOf(map.get("userId").toString());
         AfterSale  afterSale=afterSaleMapper.refundtype(orderId,userId);
         if (afterSale==null||afterSale.equals("")){
             new MyException("SOURCE_NOT_EXIST","当前数据不存在");
@@ -90,7 +90,7 @@ public class AfterSaleServiceImpl implements AfterSaleService {
     public AfterSale refundappplication(Map<String, Object> map) {
 
         Integer  orderId=Integer.valueOf(map.get("orderId").toString());
-        Integer  userId=Integer.valueOf(map.get("userId").toString());
+        Long  userId=Long.valueOf(map.get("userId").toString());
         AfterSale refundApplication=afterSaleMapper.refundappplication(orderId,userId);
         if (refundApplication==null||refundApplication.equals("")){
             new MyException("SOURCE_NOT_EXIST","当前数据不存在");
@@ -108,7 +108,7 @@ public class AfterSaleServiceImpl implements AfterSaleService {
 
         Integer  refundId=Integer.valueOf(map.get("refundId").toString());
         Integer  orderId=Integer.valueOf(map.get("orderId").toString());
-        Integer  userId=Integer.valueOf(map.get("userId").toString());
+        Long  userId=Long.valueOf(map.get("userId").toString());
         AfterSale  afterSale=afterSaleMapper.looksaledetail(refundId,orderId,userId);
 
         return afterSale;

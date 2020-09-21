@@ -11,10 +11,14 @@ public class OrderDetailListRespVo {
     private Integer orderDetailId;
     //订单ID
     private Integer orderId;
-    //商品skuID
-    private Integer skuId;
+    //商品ID
+    private Integer productId;
     //商品标题
     private String productTitle;
+    //商品skuID
+    private Integer skuId;
+    //sku图片url
+    private String picUrl;
     //sku规格
     private String skuSpec;
     //商品数量
@@ -86,5 +90,21 @@ public class OrderDetailListRespVo {
 
     public void setSkuWeight(Double skuWeight) {
         this.skuWeight = skuWeight;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 }

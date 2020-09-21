@@ -10,6 +10,12 @@ eureka:
 spring:
   application:
     name: Gateway-Service
+  #Redis
+  redis:
+    database: 0
+    host: 36.133.141.6
+    port: 6379
+    password: kyj@redis.123456
   cloud:
     gateway:
       discovery:
@@ -18,15 +24,23 @@ spring:
           lowerCaseServiceId: true   # 该配置开启后，服务名可以小写
       #路由
       routes:
-        - id: product_serivce  #路由id标识
-          uri: http://localhost:8802  #请求转发地址
+        - id: eureka  #路由id标识
+          uri: lb://Eureka-Service  #请求转发地址
           predicates:  #断言
-            - Path=/product/**  #匹配规则
-        - id: order_service
-          uri: http://localhost:8803
-          predicates:
-            - Path=/order/**
-        - id: oauth_service
-          uri: http://localhost:8801
+            - Path=/eureka/**  #匹配规则
+        - id: oauth
+          uri: lb://Oauth-Service
           predicates:
             - Path=/api/**
+        - id: product
+          uri: lb://Product-Service
+          predicates:  #断言
+            - Path=/product/**
+        - id: order
+          uri: lb://Order-Service
+          predicates:
+            - Path=/order/**
+        - id: customer
+          uri: lb://Customer-Service
+          predicates:
+            - Path=/customer/**

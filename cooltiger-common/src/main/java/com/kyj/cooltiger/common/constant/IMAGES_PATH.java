@@ -31,4 +31,6 @@ public class IMAGES_PATH {
     public static final String SKU = "/sku";
     //商品详情图
     public static final String DETAIL = "/detail";
+    //商品评价图
+    public static final String REVIEW = "/review";
 }

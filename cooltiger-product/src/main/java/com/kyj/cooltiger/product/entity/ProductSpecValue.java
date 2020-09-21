@@ -13,11 +13,11 @@ public class ProductSpecValue implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //商品规格值ID
-    private Integer id;
+    private Integer valueId;
+    //商品规格值
+    private String specValue;
     //商品规格名ID
     private Integer specNameId;
-    //商品规格值
-    private String value;
     //排序
     private Integer sort;
     //创建时间
@@ -29,12 +29,20 @@ public class ProductSpecValue implements Serializable {
         return serialVersionUID;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getValueId() {
+        return valueId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setValueId(Integer valueId) {
+        this.valueId = valueId;
+    }
+
+    public String getSpecValue() {
+        return specValue;
+    }
+
+    public void setSpecValue(String specValue) {
+        this.specValue = specValue;
     }
 
     public Integer getSpecNameId() {
@@ -43,14 +51,6 @@ public class ProductSpecValue implements Serializable {
 
     public void setSpecNameId(Integer specNameId) {
         this.specNameId = specNameId;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 
     public Integer getSort() {

@@ -29,7 +29,7 @@ public interface AfterSaleMapper {
      * @param userId
      * @return
      */
-    AfterSale  querysaleorderId(@Param("refundId") Integer refundId, @Param("orderId")Integer orderId, @Param("userId")Integer userId);
+    AfterSale  querysaleorderId(@Param("refundId") Integer refundId, @Param("orderId")Integer orderId, @Param("userId")Long userId);
 
     /**
      * 修改删除状态
@@ -45,7 +45,7 @@ public interface AfterSaleMapper {
      * @param userId
      * @return
      */
-    AfterSale  looksaledetail(@Param("refundId") Integer refundId, @Param("orderId")Integer orderId, @Param("userId")Integer userId);
+    AfterSale  looksaledetail(@Param("refundId") Integer refundId, @Param("orderId")Integer orderId, @Param("userId")Long userId);
 
     /**
      * 退款类型
@@ -54,7 +54,7 @@ public interface AfterSaleMapper {
      * @param userId
      * @return
      */
-    AfterSale   refundtype(@Param("orderId")Integer orderId, @Param("userId")Integer userId);
+    AfterSale   refundtype(@Param("orderId")Integer orderId, @Param("userId")Long userId);
 
     /**
      * 申请退款
@@ -63,7 +63,7 @@ public interface AfterSaleMapper {
      * @param userId
      * @return
      */
-    AfterSale  refundappplication(@Param("orderId")Integer orderId, @Param("userId")Integer userId);
+    AfterSale  refundappplication(@Param("orderId")Integer orderId, @Param("userId")Long userId);
 
 
 }

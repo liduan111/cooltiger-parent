@@ -142,7 +142,9 @@
             pro.audit_status         auditStatus,
             pro.deleted,
             pro.create_time          createTime,
-            pro.modified_time        modifiedTime
+            pro.modified_time        modifiedTime,
+            COUNT(rev.review_id)     reviewCount,
+            det.details              detail
         FROM
             ky_product_info pro
                 LEFT JOIN ky_store_info store ON store.store_id = pro.store_id
@@ -161,9 +163,12 @@
                     WHERE
                         product_id = #{productId}
                 )
+                LEFT JOIN ky_order_review rev ON rev.product_id = pro.product_id
+                LEFT JOIN ky_product_details det ON det.product_id = pro.product_id
         WHERE
             pro.product_id = #{productId}
           AND pro.deleted = 0
+        GROUP BY sku.sale_price,det.details
     </select>
 
 </mapper>
