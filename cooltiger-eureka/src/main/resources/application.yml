@@ -9,8 +9,8 @@ spring:
 #eureka基本信息配置
 eureka:
   instance:
-    #hostname: localhost
-    hostname: 36.133.141.6 #注册中心ip
+    hostname: localhost
+    #hostname: 36.133.141.6 #注册中心ip
   client:
     #是否将自己注册到eureka
     register-with-eureka: true

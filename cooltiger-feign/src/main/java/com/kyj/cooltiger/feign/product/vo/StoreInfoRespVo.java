@@ -84,7 +84,7 @@ public class StoreInfoRespVo {
     private List<Picture> pictures;
 
     public class Picture{
-        //商品图片ID
+        //图片ID
         @JsonProperty("id")
         private Integer id;
         //图片类型（1-营业资质2-合约内容）

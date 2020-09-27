@@ -1,5 +1,7 @@
 package com.kyj.cooltiger.product.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 /**
@@ -12,14 +14,19 @@ public class StoreFreight implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //商品运费ID
+    @JsonProperty("freight_id")
     private Integer freightId;
     //店铺ID
+    @JsonProperty("store_id")
     private Integer storeId;
     //首重运费（元/1千克）
+    @JsonProperty("freight_price")
     private Double freightPrice;
-    //续重（元/kg）
+    //续重运费（元/kg）
+    @JsonProperty("continue_price")
     private Double continuePrice;
     //不足一千克是否按一千克计算（0-否1-是）
+    @JsonProperty("whether_kg")
     private Integer whetherKg;
 
     public static long getSerialVersionUID() {
