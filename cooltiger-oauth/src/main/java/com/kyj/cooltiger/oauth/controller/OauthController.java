@@ -80,11 +80,8 @@ public class OauthController extends ApiBaseAction implements OauthClient {
 
         Date nowTime = new Date();
       Userpo userVo=apiUserService.queryByopenId(openid);
-        Long userCode=userVo.getUserCode();
-        //查询用户收藏店铺的个数
-        CollectVo collectVo=collectService.queryusercodenum(userCode);
-        //查询用户收藏商品的个数
-        GoodsCollectVo goodsCollectVo=collectService.querygoodsusercode(userCode);
+        Map<String, Object> result = new HashMap<>();
+
         if (userVo == null){
             userVo=new Userpo();
             userVo.setUserCode(CharUtil.getID());
@@ -104,20 +101,28 @@ public class OauthController extends ApiBaseAction implements OauthClient {
             //添加数据库
             boolean flag=apiUserService.save(userVo);
             if (flag==true) {
+                if(userVo!=null||!userVo.equals("")) {
+                    Long userCode = userVo.getUserCode();
+                    //查询用户收藏店铺的个数
+                    CollectVo collectVo = collectService.queryusercodenum(userCode);
+                    //查询用户收藏商品的个数
+                    GoodsCollectVo goodsCollectVo = collectService.querygoodsusercode(userCode);
+                    result.put("collectVo",collectVo);
+                    result.put("goodsCollectVo",goodsCollectVo);
+                }
                 Map<String, Object> map = tokenService.creatToken(userVo.getUserId(),userVo.getUsername());
                 String token = MapUtils.getString(map, "token");
                 if (StringUtils.isEmpty(token)) {
                     return toResponsFail("登录失败");
                 }
-                Map<String, Object> result = new HashMap<>();
+
                 userVo.setPassword(null);
                 result.put("userVo", userVo);
                 result.put("session_key", session_key);
                 result.put("open_id", openid);
                 result.put("userVo", userVo);
                 result.put("token",token);
-                result.put("collectVo",collectVo);
-                result.put("goodsCollectVo",goodsCollectVo);
+
                 return toResponsSuccess(result);
             }else {
                 return toResponsFail("登录失败");
@@ -130,7 +135,11 @@ public class OauthController extends ApiBaseAction implements OauthClient {
             boolean flag=apiUserService.updatelogintime(user);
 
             if (flag==true) {
-                Map<String, Object> result = new HashMap<>();
+                Long userCode = userVo.getUserCode();
+                //查询用户收藏店铺的个数
+                CollectVo collectVo = collectService.queryusercodenum(userCode);
+                //查询用户收藏商品的个数
+                GoodsCollectVo goodsCollectVo = collectService.querygoodsusercode(userCode);
                 userVo.setPassword(null);
                 result.put("session_key", session_key);
                 result.put("open_id", openid);
