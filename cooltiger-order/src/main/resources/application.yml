@@ -51,15 +51,15 @@ IMAGE:
   BASE:
     URL: http://cool.coolyouji.com/images
 
-sandsdk:
-  url: https://cashier.sandpay.com.cn/gateway/api
-  mid:
-  plMid:
-  signCert:
-    path: D:/key/coolpri.pfx
-    pwd: kyj190828
-  sandCert:
-    path: D:/key/coolpub.cer
+#sandsdk:
+  #url: https://cashier.sandpay.com.cn/gateway/api
+  #mid:
+  #plMid:
+  #signCert:
+    #path: D:/key/coolpri.pfx
+    #pwd: kyj190828
+  #sandCert:
+    #path: D:/key/coolpub.cer
 
 
 #微信相关参数
