@@ -36,6 +36,7 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
         String url = request.getURI().toString();
         ServerHttpResponse response = exchange.getResponse();
         response.getHeaders().add("Access-Control-Allow-Origin","*");
+        response.getHeaders().add("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
         //过滤管理员登录接口
         if (url.contains("/customer/adminInfo/login")) {
             return chain.filter(exchange);
