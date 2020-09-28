@@ -215,7 +215,7 @@ public class StoreInfoController implements StoreInfoClient {
      * @param storeId 店铺ID
      * @return
      */
-    @RequestMapping(value = "/store/storeInfo/getStoreFreight", method = {RequestMethod.GET})
+    @RequestMapping(value = "/getStoreFreight", method = {RequestMethod.GET})
     public Result getStoreFreight(
             @RequestParam("store_id") Integer storeId) {
         Map<String, Object> res = storeInfoService.getStoreFreight(storeId);

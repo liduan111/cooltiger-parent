@@ -103,7 +103,7 @@ public class ProductBrandInfoController implements ProductBrandInfoClient {
      * @param brandStatus 品牌状态 0-未启用1-已启用
      * @return
      */
-    @RequestMapping(value = "updateProductBrandInfo", method = {RequestMethod.PUT})
+    @RequestMapping(value = "/updateProductBrandInfo", method = {RequestMethod.PUT})
     public Result updateProductBrandInfo(
             @RequestParam("brand_id") Integer brandId,
             @RequestParam("brand_name") String brandName,
@@ -125,7 +125,7 @@ public class ProductBrandInfoController implements ProductBrandInfoClient {
             @RequestParam("brand_id") Integer brandId) {
         //获取品牌信息
         ProductBrandInfo productBrandInfo = productBrandInfoService.getProductBrandInfo(brandId);
-        if (productBrandInfo.getBrandLogoUrl()!=null && productBrandInfo.getBrandLogoUrl() != ""){
+        if (productBrandInfo.getBrandLogoUrl() != null && productBrandInfo.getBrandLogoUrl() != "") {
             String fileName = productBrandInfo.getBrandLogoUrl().substring(productBrandInfo.getBrandLogoUrl().lastIndexOf("/") + 1);
             //调用FtpUtil工具类删除图片
             FtpUtil ftpUtil = new FtpUtil();
@@ -140,19 +140,19 @@ public class ProductBrandInfoController implements ProductBrandInfoClient {
     /**
      * 更换品牌logo图片
      *
-     * @param brandId 品牌ID
+     * @param brandId   品牌ID
      * @param brandLogo 品牌logo
      * @return
      */
     @Override
-    @RequestMapping(value = "/updateBrandLogo",method = {RequestMethod.PUT})
+    @RequestMapping(value = "/updateBrandLogo", method = {RequestMethod.PUT})
     public Result updateBrandLogo(
             @RequestParam("brand_id") Integer brandId,
             @RequestParam(value = "brand_logo") MultipartFile brandLogo) {
         //获取品牌信息
         ProductBrandInfo productBrandInfo = productBrandInfoService.getProductBrandInfo(brandId);
         //删除服务器图片
-        if (productBrandInfo.getBrandLogoUrl()!=null && productBrandInfo.getBrandLogoUrl() != ""){
+        if (productBrandInfo.getBrandLogoUrl() != null && productBrandInfo.getBrandLogoUrl() != "") {
             String fileName = productBrandInfo.getBrandLogoUrl().substring(productBrandInfo.getBrandLogoUrl().lastIndexOf("/") + 1);
             //调用FtpUtil工具类删除图片
             FtpUtil ftpUtil = new FtpUtil();
@@ -172,7 +172,7 @@ public class ProductBrandInfoController implements ProductBrandInfoClient {
 
         //2、更新数据到数据库
         productBrandInfoService.updateProductBrandInfo(brandId, productBrandInfo.getBrandName(),
-                productBrandInfo.getBrandDesc(),productBrandInfo.getBrandOrder(), productBrandInfo.getBrandStatus(),
+                productBrandInfo.getBrandDesc(), productBrandInfo.getBrandOrder(), productBrandInfo.getBrandStatus(),
                 ftpConfig.getImageBaseUrl() + IMAGES_PATH.BRAND_LOGO + "/" + newName);
         //3、调用FtpUtil工具类上传图片
         FtpUtil ftpUtil = new FtpUtil();

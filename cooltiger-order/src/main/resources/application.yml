@@ -49,7 +49,7 @@ FTP:
 #图片服务器
 IMAGE:
   BASE:
-    URL: http://36.133.141.6:81/images
+    URL: http://cool.coolyouji.com/images
 
 #sandsdk:
   #url: https://cashier.sandpay.com.cn/gateway/api
