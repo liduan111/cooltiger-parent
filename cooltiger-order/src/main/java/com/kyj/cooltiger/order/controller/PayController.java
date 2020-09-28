@@ -53,7 +53,6 @@ public class PayController implements OrderPayClient{
         try {
             //加载证书
             CertUtil.init(SDKConfig.getConfig().getSandCertPath(), SDKConfig.getConfig().getSignCertPath(), SDKConfig.getConfig().getSignCertPwd());
-            logger.info("证书加载。。。。"+SDKConfig.getConfig().getSandCertPath()+"1111"+SDKConfig.getConfig().getSignCertPath()+SDKConfig.getConfig().getSignCertPwd());
         }catch (Exception e){
             e.printStackTrace();
             logger.error(e.getMessage());
