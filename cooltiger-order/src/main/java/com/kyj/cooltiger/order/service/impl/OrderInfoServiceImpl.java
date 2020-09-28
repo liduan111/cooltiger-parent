@@ -132,4 +132,16 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         res.put("data", orderIds);
         return res;
     }
+
+    /**
+     *
+     * @param orderId
+     * @param userId
+     * @return
+     */
+    @Override
+    public OrderInfo queryorder(Integer orderId) {
+        OrderInfo orderInfo = orderInfoMapper.getOrderInfoByOrderId(orderId);
+        return orderInfo;
+    }
 }
