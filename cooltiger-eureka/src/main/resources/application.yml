@@ -2,7 +2,7 @@
 server:
   port: 8888
   servlet:
-    context-path: /eureka
+    context-path: /eureka/
 
 spring:
   application:
@@ -11,8 +11,8 @@ spring:
 #eureka基本信息配置
 eureka:
   instance:
-    #hostname: localhost
-    hostname: 36.133.141.6 #注册中心ip
+    hostname: localhost
+    #hostname: 36.133.141.6 #注册中心ip
   client:
     #是否将自己注册到eureka
     register-with-eureka: true
@@ -20,7 +20,7 @@ eureka:
     fetch-registry: false
     #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/eureka/
   server:
     #关闭自我保护
     enable-self-preservation: false
