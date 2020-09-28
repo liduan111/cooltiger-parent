@@ -34,7 +34,7 @@ spring:
             - Path=/api/**
         - id: product
           uri: lb://Product-Service
-          predicates:  #断言
+          predicates:
             - Path=/product/**
         - id: order
           uri: lb://Order-Service
