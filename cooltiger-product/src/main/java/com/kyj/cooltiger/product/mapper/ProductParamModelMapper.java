@@ -30,10 +30,10 @@ public interface ProductParamModelMapper {
     public void batchAddProductParamModel(@Param("productParamModelList") List<ProductParamModel> productParamModelList);
 
     /**
-     * 删除商品模板
+     * 批量删除商品模板参数
      *
-     * @param categoryId
+     * @param paramIds 参数ID（多个用,分隔）
      * @return
      */
-    public void delProductParamModel(@Param("categoryId") Integer categoryId);
+    public void batchDelProductModelByParamIds(@Param("paramIds") String paramIds);
 }

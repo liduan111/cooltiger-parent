@@ -47,26 +47,13 @@ public class ProductParamModelController {
     }
 
     /**
-     * 修改商品参数模板
+     * 批量删除商品模板参数
      *
-     * @param paramModelReqVos
+     * @param paramIds 参数ID（多个用,分隔）
      * @return
      */
-    @RequestMapping(value = "/updateProductParamModel", method = {RequestMethod.PUT})
-    public Result updateProductParamModel(
-            @RequestParam("category_id") Integer categoryId,
-            @RequestBody List<ProductParamModelReqVo> paramModelReqVos){
-        return productParamModelClient.updateProductParamModel(categoryId, paramModelReqVos);
-    }
-
-    /**
-     * 删除商品模板
-     *
-     * @param categoryId
-     * @return
-     */
-    @RequestMapping(value = "/delProductParamModel",method = {RequestMethod.DELETE})
-    public Result delProductParamModel(@RequestParam("category_id") Integer categoryId){
-        return productParamModelClient.delProductParamModel(categoryId);
+    @RequestMapping(value = "/batchDelProductModelParam",method = {RequestMethod.DELETE})
+    public Result batchDelProductModelParam(@RequestParam("param_ids") String paramIds){
+        return productParamModelClient.batchDelProductModelParam(paramIds);
     }
 }
