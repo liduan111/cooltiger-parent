@@ -13,6 +13,7 @@ import com.kyj.cooltiger.feign.vo.AdminInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -53,7 +54,8 @@ public class AdminInfoController implements AdminInfoClient {
     public Result adminLogin(@RequestBody AdminLoginReqVo adminLoginReqVo){
         Map<String, Object> res = adminInfoService.adminLogin(adminLoginReqVo);
         redisUtils.set((String)res.get("token"), JSON.toJSONString(res.get("data")), 60*24L);
-        return Result.success(res.get("token"));
+        res.remove("data");
+        return Result.success(res);
     }
 
     /**
