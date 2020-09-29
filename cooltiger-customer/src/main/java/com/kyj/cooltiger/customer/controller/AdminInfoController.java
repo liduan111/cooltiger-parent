@@ -22,7 +22,6 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/customer/adminInfo")
-@CrossOrigin
 public class AdminInfoController implements AdminInfoClient {
 
     @Autowired
