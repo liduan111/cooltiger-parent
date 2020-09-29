@@ -12,11 +12,11 @@ import org.springframework.web.util.pattern.PathPatternParser;
  * Description: 跨域请求
  * date: 2020/9/29 9:17
  */
-@Configuration
+//@Configuration
 public class CorsConfig {
     private static final Long MAX_AGE = 18000L;
 
-    @Bean
+    //@Bean
     public CorsWebFilter corsFilter(){
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); // 允许cookies跨域
