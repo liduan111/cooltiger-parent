@@ -12,7 +12,7 @@ spring:
     name: Gateway-Service
   #Redis
   redis:
-    database: 0
+    database: 2
     host: 36.133.141.6
     port: 6379
     password: kyj@redis.123456
