@@ -1,6 +1,7 @@
 package com.kyj.cooltiger.product.service;
 
 import com.kyj.cooltiger.feign.product.vo.StoreApplyIntoReqVo;
+import com.kyj.cooltiger.feign.product.vo.StoreFreightVo;
 import com.kyj.cooltiger.product.entity.StoreInfo;
 
 import java.util.List;
@@ -17,14 +18,9 @@ public interface StoreInfoService {
      * 添加店铺入驻信息
      *
      * @param userId              用户ID
-     * @param storeCode           店铺编码
-     * @param storeLogoUrl        店铺logoUrl
-     * @param idCardMainUrl       身份证正面图片url
-     * @param idCardBackUrl       身份证反面图片url
-     * @param licenseUrls         经营资质图片url
      * @param storeApplyIntoReqVo 店铺基本信息
      */
-    public void addStoreIntoInfo(Integer userId, String storeCode, String storeLogoUrl, String idCardMainUrl, String idCardBackUrl, List<String> licenseUrls, StoreApplyIntoReqVo storeApplyIntoReqVo);
+    public void addStoreIntoInfo(Integer userId, StoreApplyIntoReqVo storeApplyIntoReqVo);
 
     /**
      * 查询店铺列表
@@ -76,4 +72,11 @@ public interface StoreInfoService {
      * @return
      */
     public Map<String, Object> getStoreFreight(Integer storeId);
+
+    /**
+     * 添加/修改店铺运费信息
+     *
+     * @param storeFreightVo
+     */
+    public void editStoreFreight(StoreFreightVo storeFreightVo);
 }

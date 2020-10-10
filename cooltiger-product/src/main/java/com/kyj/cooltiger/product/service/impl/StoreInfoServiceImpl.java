@@ -1,10 +1,12 @@
 package com.kyj.cooltiger.product.service.impl;
 
 import com.kyj.cooltiger.common.constant.DELETED;
+import com.kyj.cooltiger.common.constant.PRODUCT_IMAGE_TYPE;
 import com.kyj.cooltiger.common.constant.STORE_AUDIT_STATUS;
 import com.kyj.cooltiger.common.excep.MyException;
 import com.kyj.cooltiger.common.utils.PageUtil;
 import com.kyj.cooltiger.feign.product.vo.StoreApplyIntoReqVo;
+import com.kyj.cooltiger.feign.product.vo.StoreFreightVo;
 import com.kyj.cooltiger.feign.product.vo.StoreInfoListRespVo;
 import com.kyj.cooltiger.feign.product.vo.StoreInfoRespVo;
 import com.kyj.cooltiger.product.entity.StoreFreight;
@@ -42,50 +44,49 @@ public class StoreInfoServiceImpl implements StoreInfoService {
      * 添加店铺入驻信息
      *
      * @param userId              用户ID
-     * @param storeCode           店铺编码
-     * @param storeLogoUrl        店铺logoUrl
-     * @param idCardMainUrl       身份证正面图片url
-     * @param idCardBackUrl       身份证反面图片url
-     * @param licenseUrls         经营资质图片url
      * @param storeApplyIntoReqVo 店铺基本信息
      */
     @Transactional
     @Override
-    public void addStoreIntoInfo(Integer userId, String storeCode, String storeLogoUrl, String idCardMainUrl, String idCardBackUrl, List<String> licenseUrls, StoreApplyIntoReqVo storeApplyIntoReqVo) {
-        int count = storeInfoMapper.getStoreInfoCountByStoreName(storeApplyIntoReqVo.getStore_name());
+    public void addStoreIntoInfo(Integer userId, StoreApplyIntoReqVo storeApplyIntoReqVo) {
+        int count = storeInfoMapper.getStoreInfoCountByStoreName(storeApplyIntoReqVo.getStoreName());
         if (count > 0) {
             throw new MyException("STORE_NAME_IS_EXIST", "店铺名称已存在");
         }
         //插入店铺信息
         StoreInfo storeInfo = new StoreInfo();
-        storeInfo.setStoreCode(storeCode);
-        storeInfo.setStoreName(storeApplyIntoReqVo.getStore_name());
-        storeInfo.setStoreLogoUrl(storeLogoUrl);
-        storeInfo.setRelationName(storeApplyIntoReqVo.getRelation_name());
-        storeInfo.setRelationTel(storeApplyIntoReqVo.getRelation_tel());
-        storeInfo.setStoreAddress(storeApplyIntoReqVo.getStore_address());
-        storeInfo.setIdCardMainUrl(idCardMainUrl);
-        storeInfo.setIdCardBackUrl(idCardBackUrl);
-        storeInfo.setSaleCategory(storeApplyIntoReqVo.getSale_category());
-        storeInfo.setMainProducts(storeApplyIntoReqVo.getMain_products());
+        storeInfo.setStoreCode(storeApplyIntoReqVo.getStoreCode());
+        storeInfo.setStoreName(storeApplyIntoReqVo.getStoreName());
+        storeInfo.setStoreLogoUrl(storeApplyIntoReqVo.getStoreLogoUrl());
+        storeInfo.setRelationName(storeApplyIntoReqVo.getRelationName());
+        storeInfo.setRelationTel(storeApplyIntoReqVo.getRelationTel());
+        storeInfo.setStoreAddress(storeApplyIntoReqVo.getStoreAddress());
+        storeInfo.setIdCardMainUrl(storeApplyIntoReqVo.getIdCardMainUrl());
+        storeInfo.setIdCardBackUrl(storeApplyIntoReqVo.getIdCardBackUrl());
+        storeInfo.setSaleCategory(storeApplyIntoReqVo.getSaleCategory());
+        storeInfo.setMainProducts(storeApplyIntoReqVo.getMainProducts());
         storeInfo.setApplyUserId(userId);
-        storeInfo.setBankCardNumber(storeApplyIntoReqVo.getBank_card_number());
-        storeInfo.setBankOfDeposit(storeApplyIntoReqVo.getBank_of_deposit());
-        storeInfo.setAccountName(storeApplyIntoReqVo.getAccount_name());
+        storeInfo.setBankCardNumber(storeApplyIntoReqVo.getBankCardNumber());
+        storeInfo.setBankOfDeposit(storeApplyIntoReqVo.getBankOfDeposit());
+        storeInfo.setAccountName(storeApplyIntoReqVo.getAccountName());
         storeInfo.setAuditStatus(STORE_AUDIT_STATUS.NOT_AUDIT);
-        storeInfo.setSignStatus(0);
+        storeInfo.setSignStatus(DELETED.NOT);
         storeInfo.setDeleted(DELETED.NOT);
         storeInfoMapper.addStoreInfo(storeInfo);
         //添加经营资质图片信息
-        StorePicture storePicture = null;
-        if (licenseUrls != null && !licenseUrls.isEmpty()) {
-            for (String licenseUrl : licenseUrls) {
+        List<StorePicture> storePictures = null;
+        if (storeApplyIntoReqVo.getLicenseUrls() != null && !storeApplyIntoReqVo.getLicenseUrls().isEmpty()) {
+            storePictures = new ArrayList<>();
+            StorePicture storePicture = null;
+            for (String licenseUrl : storeApplyIntoReqVo.getLicenseUrls()) {
                 storePicture = new StorePicture();
                 storePicture.setStoreId(storeInfo.getStoreId());
-                storePicture.setPictureType(1);
-                storePicture.setUrl(licenseUrl);
-                storePictureMapper.addStorePicture(storePicture);
+                storePicture.setPictureType(PRODUCT_IMAGE_TYPE.INFO);
+                storePicture.setPicUrl(licenseUrl);
+                storePictures.add(storePicture);
             }
+            //批量插入经营资质图片信息
+            storePictureMapper.addStorePicture(storePictures);
         }
     }
 
@@ -155,9 +156,9 @@ public class StoreInfoServiceImpl implements StoreInfoService {
         if (!storePictureLists.isEmpty()) {
             for (StorePicture storePicture : storePictureLists) {
                 picture = storeInfoRespVo.new Picture();
-                picture.setId(storePicture.getId());
+                picture.setId(storePicture.getPicId());
                 picture.setPictureType(storePicture.getPictureType());
-                picture.setUrl(storePicture.getUrl());
+                picture.setUrl(storePicture.getPicUrl());
                 pictures.add(picture);
             }
         }
@@ -204,19 +205,19 @@ public class StoreInfoServiceImpl implements StoreInfoService {
         if (storeInfo == null) {
             throw new MyException("STORE_INFO_NOT_EXIST", "店铺信息不存在");
         }
-        int count = storeInfoMapper.getStoreInfoCountByStoreName(storeApplyIntoReqVo.getStore_name());
-        if (!storeInfo.getStoreName().equals(storeApplyIntoReqVo.getAccount_name()) && count > 0) {
+        int count = storeInfoMapper.getStoreInfoCountByStoreName(storeApplyIntoReqVo.getStoreName());
+        if (!storeInfo.getStoreName().equals(storeApplyIntoReqVo.getAccountName()) && count > 0) {
             throw new MyException("STORE_NAME_IS_EXIST", "店铺名称已存在");
         }
-        storeInfo.setStoreName(storeApplyIntoReqVo.getStore_name());
-        storeInfo.setRelationName(storeApplyIntoReqVo.getRelation_name());
-        storeInfo.setRelationTel(storeApplyIntoReqVo.getRelation_tel());
-        storeInfo.setStoreAddress(storeApplyIntoReqVo.getStore_address());
-        storeInfo.setSaleCategory(storeApplyIntoReqVo.getSale_category());
-        storeInfo.setMainProducts(storeApplyIntoReqVo.getMain_products());
-        storeInfo.setBankCardNumber(storeApplyIntoReqVo.getBank_card_number());
-        storeInfo.setBankOfDeposit(storeApplyIntoReqVo.getBank_of_deposit());
-        storeInfo.setAccountName(storeApplyIntoReqVo.getAccount_name());
+        storeInfo.setStoreName(storeApplyIntoReqVo.getStoreName());
+        storeInfo.setRelationName(storeApplyIntoReqVo.getRelationName());
+        storeInfo.setRelationTel(storeApplyIntoReqVo.getRelationTel());
+        storeInfo.setStoreAddress(storeApplyIntoReqVo.getStoreAddress());
+        storeInfo.setSaleCategory(storeApplyIntoReqVo.getSaleCategory());
+        storeInfo.setMainProducts(storeApplyIntoReqVo.getMainProducts());
+        storeInfo.setBankCardNumber(storeApplyIntoReqVo.getBankCardNumber());
+        storeInfo.setBankOfDeposit(storeApplyIntoReqVo.getBankOfDeposit());
+        storeInfo.setAccountName(storeApplyIntoReqVo.getAccountName());
         storeInfoMapper.updateStoreInfo(storeInfo);
     }
 
@@ -247,5 +248,25 @@ public class StoreInfoServiceImpl implements StoreInfoService {
         Map<String,Object> res = new HashMap<>();
         res.put("data",storeFreight);
         return res;
+    }
+
+    /**
+     * 添加/修改店铺运费信息
+     *
+     * @param storeFreightVo
+     */
+    @Override
+    public void editStoreFreight(StoreFreightVo storeFreightVo) {
+        StoreFreight storeFreight = new StoreFreight();
+        storeFreight.setFreightId(storeFreightVo.getFreightId());
+        storeFreight.setStoreId(storeFreightVo.getStoreId());
+        storeFreight.setFreightPrice(storeFreightVo.getFreightPrice());
+        storeFreight.setContinuePrice(storeFreightVo.getContinuePrice());
+        storeFreight.setWhetherKg(storeFreightVo.getWhetherKg());
+        if (storeFreight.getFreightId() == null){
+            storeFreightMapper.addStoreFreight(storeFreight);
+        }else {
+            storeFreightMapper.updateStoreFreight(storeFreight);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.kyj.cooltiger.order.mapper;
 
 import com.kyj.cooltiger.feign.order.vo.OrderInfoListRespVo;
+import com.kyj.cooltiger.feign.order.vo.OrderInfoRespVo;
 import com.kyj.cooltiger.order.entity.OrderInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -66,6 +67,14 @@ public interface OrderInfoMapper {
      * @return
      */
     public OrderInfo getOrderInfoByOrderId(@Param("orderId") Integer orderId);
+
+    /**
+     * 根据订单ID获取订单信息详情
+     *
+     * @param orderId
+     * @return
+     */
+    public OrderInfoRespVo getOrderInfoDetailByOrderId(@Param("orderId") Integer orderId);
 
     /**
      * 修改订单信息

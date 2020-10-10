@@ -139,6 +139,43 @@
             order_id = #{orderId}
     </select>
 
+    <!-- 根据订单ID获取订单信息详情 -->
+    <select id="getOrderInfoDetailByOrderId" resultType="com.kyj.cooltiger.feign.order.vo.OrderInfoRespVo">
+        SELECT
+            o.order_code              orderCode,
+            o.store_id                storeId,
+            o.store_name              storeName,
+            o.user_id                 userId,
+            o.receiver_province       receiverProvince,
+            o.receiver_city           receiverCity,
+            o.receiver_region         receiverRegion,
+            o.receiver_address_detail receiverAddressDetail,
+            o.receiver_name           receiverName,
+            o.receiver_mobile         receiverMobile,
+            o.total_price             totalPrice,
+            o.freight_price           freightPrice,
+            o.pay_price               payPrice,
+            o.order_note              orderNote,
+            o.order_status            orderStatus,
+            o.pay_type                payType,
+            o.outer_trade_no          outerTradeNo,
+            o.pay_time                payTime,
+            o.express_comp            expressComp,
+            o.express_number          expressNumber,
+            o.send_time               sendTime,
+            o.confirm_receive_time    confirmReceiveTime,
+            o.review_status           reviewStatus,
+            o.source_type             sourceType,
+            o.deleted,
+            o.create_time             createTime,
+            o.modified_time           modifiedTime
+        FROM
+            ky_order_info o
+                LEFT JOIN ky_store_info s ON s.store_id = o.store_id
+        WHERE
+            o.order_id = #{orderId}
+    </select>
+
     <!-- 修改订单信息 -->
     <update id="updateOrderInfo" parameterType="OrderInfo">
         UPDATE ky_order_info

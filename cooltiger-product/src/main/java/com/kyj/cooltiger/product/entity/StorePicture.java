@@ -11,25 +11,25 @@ public class StorePicture implements Serializable {
     /** 版本号 */
     private static final long serialVersionUID = 1L;
 
-    //商品图片ID
-    private Integer id;
+    //图片ID
+    private Integer picId;
     //店铺ID
     private Integer storeId;
     //图片类型（1-营业资质2-合约内容）
     private Integer pictureType;
     //图片url
-    private String url;
+    private String picUrl;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getPicId() {
+        return picId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setPicId(Integer picId) {
+        this.picId = picId;
     }
 
     public Integer getStoreId() {
@@ -48,11 +48,11 @@ public class StorePicture implements Serializable {
         this.pictureType = pictureType;
     }
 
-    public String getUrl() {
-        return url;
+    public String getPicUrl() {
+        return picUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 }

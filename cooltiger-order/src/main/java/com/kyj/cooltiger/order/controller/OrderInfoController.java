@@ -3,6 +3,7 @@ package com.kyj.cooltiger.order.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.order.client.OrderInfoClient;
+import com.kyj.cooltiger.feign.order.vo.OrderInfoRespVo;
 import com.kyj.cooltiger.feign.order.vo.PlaceOrderReqVo;
 import com.kyj.cooltiger.feign.order.vo.ProductSettlementReqVo;
 import com.kyj.cooltiger.feign.order.vo.ProductSettlementRespVo;
@@ -60,6 +61,19 @@ public class OrderInfoController implements OrderInfoClient {
             @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize) {
         Map<String, Object> res = orderInfoService.getOrderList(storeId, userId, orderStatus, reviewStatus, dateStart, dateEnd, keyword, pageNo, pageSize);
         return Result.success(res);
+    }
+
+    /**
+     * 获取订单详情信息
+     *
+     * @param orderId 订单ID
+     * @return
+     */
+    @RequestMapping(value = "/getOrderDetail", method = {RequestMethod.GET})
+    public Result getOrderDetail(
+            @RequestParam("order_id") Integer orderId){
+        OrderInfoRespVo orderInfoRespVo = orderInfoService.getOrderDetail(orderId);
+        return Result.success(orderInfoRespVo);
     }
 
     /**
@@ -173,4 +187,5 @@ public class OrderInfoController implements OrderInfoClient {
         Map<String, Object> res = orderInfoService.placeOrder(userId, placeOrderReqVo, sourceType);
         return Result.success(res.get("data"));
     }
+
 }

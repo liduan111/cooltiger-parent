@@ -43,6 +43,16 @@ public interface OrderInfoClient {
             @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize);
 
     /**
+     * 获取订单详情信息
+     *
+     * @param orderId 订单ID
+     * @return
+     */
+    @RequestMapping(value = "/getOrderDetail", method = {RequestMethod.GET})
+    public Result getOrderDetail(
+            @RequestParam("order_id") Integer orderId);
+
+    /**
      * 购物车或商品结算
      *
      * @param userId                     用户ID
@@ -67,4 +77,5 @@ public interface OrderInfoClient {
             @RequestParam("user_id") Integer userId,
             @RequestParam("source_type") Integer sourceType,
             @RequestBody PlaceOrderReqVo placeOrderReqVo);
+
 }

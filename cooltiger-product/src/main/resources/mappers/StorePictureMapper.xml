@@ -2,20 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kyj.cooltiger.product.mapper.StorePictureMapper">
 
-    <!-- 添加店铺图片信息 -->
+    <!-- 批量添加店铺图片信息 -->
     <insert id="addStorePicture" parameterType="StorePicture">
         INSERT INTO ky_store_picture
-            (store_id, picture_type, url)
+        (store_id, picture_type, pic_url)
         VALUES
-        (#{storePicture.storeId}, #{storePicture.pictureType}, #{storePicture.url})
+        <foreach collection="storePictures" item="storePicture" index="index" separator=",">
+            (#{storePicture.storeId}, #{storePicture.pictureType}, #{storePicture.picUrl})
+        </foreach>
     </insert>
 
+    <!-- 查询店铺图片集合 -->
     <select id="getStorePictureList" resultType="StorePicture">
         SELECT
-            id,
+            pic_id       picId,
             store_id     storeId,
             picture_type pictureType,
-            url
+            pic_url      picUrl
         FROM ky_store_picture
         WHERE store_id = #{storeId}
     </select>
