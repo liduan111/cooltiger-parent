@@ -80,22 +80,6 @@ public class ProductInfoController implements ProductInfoClient {
     }
 
     /**
-     * 添加商品Sku信息
-     *
-     * @param productId       商品ID
-     * @param productSkuReqVo 商品Sku信息
-     * @return
-     */
-    @Override
-    @RequestMapping(value = "/addProductSkuInfo/{product_id}", method = {RequestMethod.POST})
-    public Result addProductSkuInfo(
-            @PathVariable("product_id") Integer productId,
-            @RequestBody ProductSkuReqVo productSkuReqVo) {
-        productInfoService.addProductSkuInfo(productId, productSkuReqVo);
-        return Result.success();
-    }
-
-    /**
      * 查询商品信息
      *
      * @param productId

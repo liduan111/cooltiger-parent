@@ -1,7 +1,6 @@
 package com.kyj.cooltiger.product.service;
 
 import com.kyj.cooltiger.feign.product.vo.ProductBaseReqVo;
-import com.kyj.cooltiger.feign.product.vo.ProductSkuReqVo;
 import com.kyj.cooltiger.product.entity.ProductInfo;
 
 import java.util.Map;
@@ -34,13 +33,6 @@ public interface ProductInfoService {
      */
     public Map<String, Object> addProductBaseInfo(Integer storeId, ProductBaseReqVo productBaseReqVo);
 
-    /**
-     * 添加商品sku信息
-     *
-     * @param productId       商品ID
-     * @param productSkuReqVo 商品规格和sku参数
-     */
-    public void addProductSkuInfo(Integer productId, ProductSkuReqVo productSkuReqVo);
 
     /**
      * 查询商品信息

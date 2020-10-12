@@ -22,11 +22,11 @@ public interface ProductSpecValueMapper {
     public void batchAddProductSpecValue(@Param("list") List<ProductSpecValue> productSpecValueList);
 
     /**
-     * 根据商品规格名ID删除商品规格值
+     * 根据商品规格名Ids删除商品规格值
      *
-     * @param specNameId
+     * @param specNameIds
      */
-    public void deleteProductSpecValueBySpecNameId(@Param("specNameId") Integer specNameId);
+    public void deleteProductSpecValueBySpecNameIds(@Param("specNameIds") String specNameIds);
 
     /**
      * 根据id字符串查询规格值集合

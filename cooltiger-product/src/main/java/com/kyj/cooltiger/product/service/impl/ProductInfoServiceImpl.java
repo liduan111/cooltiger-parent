@@ -131,87 +131,6 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     }
 
     /**
-     * 添加商品sku信息
-     *
-     * @param productId       商品ID
-     * @param productSkuReqVo 商品规格和sku参数
-     */
-    @Transactional
-    @Override
-    public void addProductSkuInfo(Integer productId, ProductSkuReqVo productSkuReqVo) {
-        ProductInfo productInfo = productInfoMapper.getProductInfo(productId);
-        if (productId == null) {
-            throw new MyException("PRODUCT_INFO_NOT_EXIST", "商品信息不存在");
-        }
-        //添加商品规格
-        if (productSkuReqVo.getSpecs() != null && !productSkuReqVo.getSpecs().isEmpty()) {
-            //规格值List
-            List<ProductSpecValue> productSpecValueList = new ArrayList<>();
-            ProductSpecName productSpecName = null;
-            ProductSpecValue productSpecValue = null;
-            for (ProductSkuReqVo.Spec spec : productSkuReqVo.getSpecs()) {
-                productSpecName = new ProductSpecName();
-                productSpecName.setSpecName(spec.getSpecName());
-                productSpecName.setProductId(productInfo.getProductId());
-                productSpecName.setSort(productSkuReqVo.getSpecs().indexOf(spec));
-                //插入规格名
-                productSpecNameMapper.addProductSpecName(productSpecName);
-                for (String specValue : spec.getSpecValues()) {
-                    productSpecValue = new ProductSpecValue();
-                    productSpecValue.setSpecValue(specValue);
-                    productSpecValue.setSpecNameId(productSpecName.getNameId());
-                    productSpecValue.setSort(spec.getSpecValues().indexOf(specValue));
-                    productSpecValueList.add(productSpecValue);
-                }
-            }
-            //批量插入规格值
-            productSpecValueMapper.batchAddProductSpecValue(productSpecValueList);
-            //Map集合 key:规格值value:规格值ID
-            Map<String, Integer> specValueMap = new HashMap<>();
-            for (ProductSpecValue specValue : productSpecValueList) {
-                specValueMap.put(specValue.getSpecValue(), specValue.getValueId());
-            }
-            //添加sku
-            ProductPicture productPicture = null;
-            if (productSkuReqVo.getSkus() != null && !productSkuReqVo.getSkus().isEmpty()) {
-                List<ProductSku> productSkuList = new ArrayList<>();
-                List<ProductPicture> productPictureList = new ArrayList<>();
-                ProductSku productSku = null;
-                for (ProductSkuReqVo.Sku sku : productSkuReqVo.getSkus()) {
-                    productSku = new ProductSku();
-                    productSku.setSkuCode(productInfo.getProductCode() + CharUtil.getRandomNum(6));
-                    productSku.setProductId(productInfo.getProductId());
-                    String specIds = "";
-                    for (String specValue : sku.getSpecValues()) {
-                        specIds += "," + specValueMap.get(specValue).toString();
-                    }
-                    productSku.setSpecValueIds(specIds.substring(1));
-                    productSku.setSalePrice(sku.getSalePrice());
-                    productSku.setStock(sku.getStock());
-                    productSku.setWeight(sku.getWeight());
-                    productSku.setDistriType(sku.getDistriType());
-                    productSku.setDistriRatio(sku.getDistriRatio());
-                    productSku.setDistriAmount(sku.getDistriAmount());
-                    productSku.setDeleted(0);
-                    productSkuList.add(productSku);
-                    //添加图片url
-                    productPicture = new ProductPicture();
-                    productPicture.setPicType(2);
-                    productPicture.setPicUrl(sku.getPicUrl());
-                    productPictureList.add(productPicture);
-                }
-                //批量插入sku信息
-                productSkuMapper.batchAddProductSku(productSkuList);
-                for (ProductPicture picture : productPictureList) {
-                    picture.setRelationId(productSkuList.get(productPictureList.indexOf(picture)).getSkuId());
-                }
-                //批量插入sku图片信息
-                productPictureMapper.batchAddProductPicture(productPictureList);
-            }
-        }
-    }
-
-    /**
      * 查询商品信息
      *
      * @param productId
@@ -336,7 +255,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         productSpecNameMapper.deleteProductSpecNameByProductId(productId);
         //删除商品规格值
         for (ProductSpecName productSpecName : productSpecNameLists) {
-            productSpecValueMapper.deleteProductSpecValueBySpecNameId(productSpecName.getNameId());
+            //productSpecValueMapper.deleteProductSpecValueBySpecNameId(productSpecName.getNameId());
         }
         //删除商品详情
         productDetailsMapper.deleteProductDetailsByProductId(productId);
