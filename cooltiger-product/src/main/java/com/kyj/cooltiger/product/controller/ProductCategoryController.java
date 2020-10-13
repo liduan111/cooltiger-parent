@@ -7,6 +7,7 @@ import com.kyj.cooltiger.common.utils.FileTypeUtil;
 import com.kyj.cooltiger.common.utils.FtpUtil;
 import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.product.client.ProductCategoryClient;
+import com.kyj.cooltiger.feign.product.client.ProductInfoClient;
 import com.kyj.cooltiger.product.config.FtpConfig;
 import com.kyj.cooltiger.product.entity.ProductCategory;
 import com.kyj.cooltiger.product.service.ProductCategoryService;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,6 +32,8 @@ public class ProductCategoryController implements ProductCategoryClient {
     private ProductCategoryService productCategoryService;
     @Autowired
     private FtpConfig ftpConfig;
+    @Autowired
+    private ProductInfoClient productInfoClient;
 
     /**
      * 添加商品分类
@@ -117,11 +122,9 @@ public class ProductCategoryController implements ProductCategoryClient {
         ProductCategory productCategory = productCategoryService.getProductCategoryByCategoryId(categoryId);
         //图片url存在则删除
         if (productCategory.getCategoryLogoUrl() != null && productCategory.getCategoryLogoUrl() != "") {
-            String fileName = productCategory.getCategoryLogoUrl().substring(productCategory.getCategoryLogoUrl().lastIndexOf("/") + 1);
-            //调用FtpUtil工具类删除图片
-            FtpUtil ftpUtil = new FtpUtil();
-            ftpUtil.deleteFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
-                    ftpConfig.getPassWord(), ftpConfig.getBasePath() + IMAGES_PATH.CATEGORY_LOGO, fileName);
+            List<String> imageUrls = new ArrayList<>();
+            imageUrls.add(productCategory.getCategoryLogoUrl());
+            productInfoClient.delProductImage(imageUrls);
         }
         productCategoryService.delProductCategory(categoryId);
         return Result.success();
@@ -143,11 +146,9 @@ public class ProductCategoryController implements ProductCategoryClient {
         ProductCategory productCategory = productCategoryService.getProductCategoryByCategoryId(categoryId);
         //图片url存在则删除
         if (productCategory.getCategoryLogoUrl() != null && productCategory.getCategoryLogoUrl() != "") {
-            String fileName = productCategory.getCategoryLogoUrl().substring(productCategory.getCategoryLogoUrl().lastIndexOf("/") + 1);
-            //调用FtpUtil工具类删除图片
-            FtpUtil ftpUtil = new FtpUtil();
-            ftpUtil.deleteFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
-                    ftpConfig.getPassWord(), ftpConfig.getBasePath() + IMAGES_PATH.CATEGORY_LOGO, fileName);
+            List<String> imageUrls = new ArrayList<>();
+            imageUrls.add(productCategory.getCategoryLogoUrl());
+            productInfoClient.delProductImage(imageUrls);
         }
         //更换新图片
         //根据文件名字判断文件类型

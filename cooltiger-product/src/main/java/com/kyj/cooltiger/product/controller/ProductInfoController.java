@@ -88,7 +88,7 @@ public class ProductInfoController implements ProductInfoClient {
     @Override
     @RequestMapping(value = "/getProductItem/{productId}", method = {RequestMethod.GET})
     public Result getProductItem(@PathVariable("productId") Integer productId) {
-        Map<String,Object> res = productInfoService.getProductItem(productId);
+        Map<String, Object> res = productInfoService.getProductItem(productId);
         return Result.success(res.get("data"));
     }
 
@@ -183,7 +183,7 @@ public class ProductInfoController implements ProductInfoClient {
         }
         //添加到数据库
         if (picType == PRODUCT_IMAGE_TYPE.INFO) {
-            productPictureService.addProductPicture(productId,resUrls);
+            productPictureService.addProductPicture(productId, resUrls);
         }
         int result = ftpUtil.uploadBatchFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
                 ftpConfig.getPassWord(), fileInfos);
@@ -207,7 +207,7 @@ public class ProductInfoController implements ProductInfoClient {
         for (String imageUrl : imageUrls) {
             fileInfo = ftpUtil.new FileInfo();
             fileInfo.setBasePath(ftpConfig.getBasePath());
-            fileInfo.setFilePath(imageUrl.substring(imageUrl.lastIndexOf(IMAGES_PATH.STORE), imageUrl.lastIndexOf("/")));
+            fileInfo.setFilePath(imageUrl.substring(imageUrl.indexOf("/images") + 7, imageUrl.lastIndexOf("/")));
             fileInfo.setFileName(imageUrl.substring(imageUrl.lastIndexOf("/") + 1));
             fileInfos.add(fileInfo);
         }
@@ -227,8 +227,8 @@ public class ProductInfoController implements ProductInfoClient {
     @RequestMapping(value = "/addProductDetail", method = {RequestMethod.POST})
     public Result addProductDetail(
             @RequestParam("product_id") Integer productId,
-            @RequestParam("detail") String detail){
-        productInfoService.addProductDetail(productId,detail);
+            @RequestParam("detail") String detail) {
+        productInfoService.addProductDetail(productId, detail);
         return Result.success();
     }
 
@@ -240,8 +240,8 @@ public class ProductInfoController implements ProductInfoClient {
      */
     @RequestMapping(value = "/getProductSpec", method = {RequestMethod.GET})
     public Result getProductSpec(
-            @RequestParam("product_id") Integer productId){
-        Map<String,Object> res = productInfoService.getProductSpec(productId);
+            @RequestParam("product_id") Integer productId) {
+        Map<String, Object> res = productInfoService.getProductSpec(productId);
         return Result.success(res.get("data"));
     }
 }
