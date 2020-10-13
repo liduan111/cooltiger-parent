@@ -19,7 +19,7 @@ public interface ProductSkuService {
      * @param skuId
      * @return
      */
-    public Map<String,Object> getProductSku(Integer skuId);
+    public Map<String, Object> getProductSku(Integer skuId);
 
     /**
      * 查询商品sku列表
@@ -35,13 +35,13 @@ public interface ProductSkuService {
      * @param productId
      * @param specs
      */
-    public Map<String,Integer> addProductSpec(Integer productId,List<ProductSpecReqVo.Spec> specs);
+    public Map<String, Integer> addProductSpec(Integer productId, List<ProductSpecReqVo.Spec> specs);
 
     /**
      * 添加商品sku信息
      *
-     * @param productId       商品ID
-     * @param productSkuReqVo 商品规格和sku参数
+     * @param productId        商品ID
+     * @param productSkuReqVos 商品规格和sku参数
      */
-    public void addProductSkuInfo(Integer productId, ProductSkuReqVo productSkuReqVo);
+    public void addProductSkuInfo(Integer productId, List<ProductSkuReqVo> productSkuReqVos);
 }

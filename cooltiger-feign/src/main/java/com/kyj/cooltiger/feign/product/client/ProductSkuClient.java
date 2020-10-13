@@ -6,6 +6,8 @@ import com.kyj.cooltiger.feign.product.vo.ProductSpecReqVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author liduan
  * Description: 商品sku client
@@ -48,13 +50,13 @@ public interface ProductSkuClient {
     /**
      * 添加商品Sku信息
      *
-     * @param productId       商品ID
-     * @param productSkuReqVo 商品Sku信息
+     * @param productId        商品ID
+     * @param productSkuReqVos 商品Sku信息
      * @return
      */
-    @RequestMapping(value = "/product/productSku/addProductSkuInfo", method = {RequestMethod.POST})
+    @RequestMapping(value = "/addProductSkuInfo", method = {RequestMethod.POST})
     public Result addProductSkuInfo(
             @RequestParam("product_id") Integer productId,
-            @RequestBody ProductSkuReqVo productSkuReqVo);
+            @RequestBody List<ProductSkuReqVo> productSkuReqVos);
 
 }

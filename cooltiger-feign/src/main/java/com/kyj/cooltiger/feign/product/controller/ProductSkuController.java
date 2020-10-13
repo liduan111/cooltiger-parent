@@ -7,6 +7,7 @@ import com.kyj.cooltiger.feign.product.vo.ProductSpecReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,15 +63,15 @@ public class ProductSkuController {
     /**
      * 添加商品Sku信息
      *
-     * @param productId       商品ID
-     * @param productSkuReqVo 商品Sku信息
+     * @param productId        商品ID
+     * @param productSkuReqVos 商品Sku信息
      * @return
      */
     @RequestMapping(value = "/addProductSkuInfo", method = {RequestMethod.POST})
     public Result addProductSkuInfo(
             @RequestParam("product_id") Integer productId,
-            @RequestBody ProductSkuReqVo productSkuReqVo) {
-        return productSkuClient.addProductSkuInfo(productId, productSkuReqVo);
+            @RequestBody List<ProductSkuReqVo> productSkuReqVos) {
+        return productSkuClient.addProductSkuInfo(productId, productSkuReqVos);
     }
 
 

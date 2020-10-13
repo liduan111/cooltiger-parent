@@ -104,16 +104,15 @@ public class ProductSkuController implements ProductSkuClient {
     /**
      * 添加商品Sku信息
      *
-     * @param productId       商品ID
-     * @param productSkuReqVo 商品Sku信息
+     * @param productId        商品ID
+     * @param productSkuReqVos 商品Sku信息
      * @return
      */
-    @Override
     @RequestMapping(value = "/addProductSkuInfo", method = {RequestMethod.POST})
     public Result addProductSkuInfo(
             @RequestParam("product_id") Integer productId,
-            @RequestBody ProductSkuReqVo productSkuReqVo) {
-        productSkuService.addProductSkuInfo(productId, productSkuReqVo);
+            @RequestBody List<ProductSkuReqVo> productSkuReqVos) {
+        productSkuService.addProductSkuInfo(productId, productSkuReqVos);
         return Result.success();
     }
 }
