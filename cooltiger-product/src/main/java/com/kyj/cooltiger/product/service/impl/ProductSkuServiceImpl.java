@@ -69,8 +69,7 @@ public class ProductSkuServiceImpl implements ProductSkuService {
         productSkuRespVo.setWeight(productSku.getWeight());
         productSkuRespVo.setStock(productSku.getStock());
         productSkuRespVo.setDistriType(productSku.getDistriType());
-        productSkuRespVo.setDistriRatio(productSku.getDistriRatio());
-        productSkuRespVo.setDistriAmount(productSku.getDistriAmount());
+        productSkuRespVo.setDistriValue(productSku.getDistriValue());
         Map<String, Object> res = new HashMap<>();
         res.put("data", productSkuRespVo);
         return res;
@@ -110,8 +109,7 @@ public class ProductSkuServiceImpl implements ProductSkuService {
                 productSkuListRespVo.setWeight(productSku.getWeight());
                 productSkuListRespVo.setStock(productSku.getStock());
                 productSkuListRespVo.setDistriType(productSku.getDistriType());
-                productSkuListRespVo.setDistriRatio(productSku.getDistriRatio());
-                productSkuListRespVo.setDistriAmount(productSku.getDistriAmount());
+                productSkuListRespVo.setDistriValue(productSku.getDistriValue());
                 productSkuListRespVos.add(productSkuListRespVo);
             }
         }
@@ -222,4 +220,4 @@ public class ProductSkuServiceImpl implements ProductSkuService {
         }
     }
 }
-}
+

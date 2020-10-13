@@ -27,10 +27,8 @@ public class ProductSkuListRespVo {
     private Double weight;
     //分销方式（1-固定金额2-百分比）
     private Integer distriType;
-    //百分比值（%）
-    private Integer distriRatio;
-    //分销金额
-    private Double distriAmount;
+    //分销金额(元)|百分比值（%）
+    private Double distriValue;;
 
     public Integer getSkuId() {
         return skuId;
@@ -112,19 +110,11 @@ public class ProductSkuListRespVo {
         this.distriType = distriType;
     }
 
-    public Integer getDistriRatio() {
-        return distriRatio;
+    public Double getDistriValue() {
+        return distriValue;
     }
 
-    public void setDistriRatio(Integer distriRatio) {
-        this.distriRatio = distriRatio;
-    }
-
-    public Double getDistriAmount() {
-        return distriAmount;
-    }
-
-    public void setDistriAmount(Double distriAmount) {
-        this.distriAmount = distriAmount;
+    public void setDistriValue(Double distriValue) {
+        this.distriValue = distriValue;
     }
 }

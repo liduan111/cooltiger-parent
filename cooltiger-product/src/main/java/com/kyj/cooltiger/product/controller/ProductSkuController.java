@@ -78,7 +78,7 @@ public class ProductSkuController implements ProductSkuClient {
             StringBuilder specValueIds = new StringBuilder();
             StringBuilder specValues = new StringBuilder();
             for (String value : valuesList){
-                specValues.append(",").append(value);
+                specValues.append(";").append(value);
                 specValueIds.append(",").append(res.get(value));
             }
             productSkuReqVo.setSpecValueIds(specValueIds.substring(1).toString());
