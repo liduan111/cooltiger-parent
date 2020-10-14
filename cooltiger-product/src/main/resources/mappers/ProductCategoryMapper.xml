@@ -29,10 +29,10 @@
         category_logo_url categoryLogoUrl
         FROM ky_product_category
         WHERE 1 = 1
-        <if test="categoryParentId != null and categoryParentId != ''">
+        <if test="categoryParentId != null">
             AND category_parent_id = #{categoryParentId}
         </if>
-        <if test="categoryLevel != null and categoryLevel != ''">
+        <if test="categoryLevel != null">
             AND category_level = #{categoryLevel}
         </if>
     </select>

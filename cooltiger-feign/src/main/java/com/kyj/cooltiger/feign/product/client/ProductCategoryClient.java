@@ -46,12 +46,16 @@ public interface ProductCategoryClient {
      *
      * @param categoryId   分类ID
      * @param categoryName 分类名称
+     * @param logoUpdate   是否修改logo(0-未更换图片1-更换图片)
+     * @param categoryLogo 分类logo
      * @return
      */
-    @RequestMapping(value = "/product/productCategory/updateProductCategory", method = {RequestMethod.PUT})
+    @RequestMapping(value = "/updateProductCategory", method = {RequestMethod.PUT})
     public Result updateProductCategory(
             @RequestParam("category_id") Integer categoryId,
-            @RequestParam("category_name") String categoryName);
+            @RequestParam("category_name") String categoryName,
+            @RequestParam("logo_update") Integer logoUpdate,
+            @RequestParam(value = "category_logo",required = false) MultipartFile categoryLogo);
 
     /**
      * 删除商品分类信息

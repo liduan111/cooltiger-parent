@@ -55,13 +55,17 @@ public class ProductCategoryController {
      *
      * @param categoryId   分类ID
      * @param categoryName 分类名称
+     * @param logoUpdate   是否修改logo(0-未更换图片1-更换图片)
+     * @param categoryLogo 分类logo
      * @return
      */
     @RequestMapping(value = "/updateProductCategory", method = {RequestMethod.PUT})
     public Result updateProductCategory(
             @RequestParam("category_id") Integer categoryId,
-            @RequestParam("category_name") String categoryName) {
-        return productCategoryClient.updateProductCategory(categoryId, categoryName);
+            @RequestParam("category_name") String categoryName,
+            @RequestParam("logo_update") Integer logoUpdate,
+            @RequestParam(value = "category_logo",required = false) MultipartFile categoryLogo) {
+        return productCategoryClient.updateProductCategory(categoryId, categoryName, logoUpdate, categoryLogo);
     }
 
     /**

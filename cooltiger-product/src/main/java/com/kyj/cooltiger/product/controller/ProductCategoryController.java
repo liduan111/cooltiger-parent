@@ -1,5 +1,6 @@
 package com.kyj.cooltiger.product.controller;
 
+import com.kyj.cooltiger.common.constant.DELETED;
 import com.kyj.cooltiger.common.constant.IMAGES_PATH;
 import com.kyj.cooltiger.common.excep.MyException;
 import com.kyj.cooltiger.common.utils.CharUtil;
@@ -97,14 +98,51 @@ public class ProductCategoryController implements ProductCategoryClient {
      *
      * @param categoryId   分类ID
      * @param categoryName 分类名称
+     * @param logoUpdate   是否修改logo(0-未更换图片1-更换图片)
+     * @param categoryLogo 分类logo
      * @return
      */
     @Override
     @RequestMapping(value = "/updateProductCategory", method = {RequestMethod.PUT})
     public Result updateProductCategory(
-            @RequestParam(value = "category_id") Integer categoryId,
-            @RequestParam(value = "category_name") String categoryName) {
-        productCategoryService.updateProductCategory(categoryId, categoryName, null);
+            @RequestParam("category_id") Integer categoryId,
+            @RequestParam("category_name") String categoryName,
+            @RequestParam("logo_update") Integer logoUpdate,
+            @RequestParam(value = "category_logo",required = false) MultipartFile categoryLogo) {
+        //查询分类信息
+        ProductCategory productCategory = productCategoryService.getProductCategoryByCategoryId(categoryId);
+        if (logoUpdate.equals(DELETED.NOT)){
+            productCategoryService.updateProductCategory(categoryId, categoryName, productCategory.getCategoryLogoUrl());
+        }else if (logoUpdate.equals(DELETED.YES)){
+            //图片url存在则删除
+            if (productCategory.getCategoryLogoUrl() != null && productCategory.getCategoryLogoUrl() != "") {
+                List<String> imageUrls = new ArrayList<>();
+                imageUrls.add(productCategory.getCategoryLogoUrl());
+                productInfoClient.delProductImage(imageUrls);
+            }
+            if (categoryLogo != null && !categoryLogo.isEmpty()) {
+                //更换新图片
+                //根据文件名字判断文件类型
+                String oldName = categoryLogo.getOriginalFilename();
+                if (!FileTypeUtil.isImageByName(oldName)) {
+                    throw new MyException("PICTURE_FORMAT_ERROR", "图片格式错误");
+                }
+                //生成新的图片名
+                String newName = CharUtil.getImageName(25) + oldName.substring(oldName.lastIndexOf("."));
+                //添加
+                productCategoryService.updateProductCategory(categoryId, productCategory.getCategoryName(),
+                        ftpConfig.getImageBaseUrl() + IMAGES_PATH.CATEGORY_LOGO + "/" + newName);
+                //上传图片
+                FtpUtil ftpUtil = new FtpUtil();
+                boolean result = ftpUtil.uploadFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
+                        ftpConfig.getPassWord(), ftpConfig.getBasePath(), IMAGES_PATH.CATEGORY_LOGO, newName, categoryLogo);
+                if (!result) {
+                    throw new MyException("PICTURE_UPLOAD_ERROR", "图片上传失败");
+                }
+            }else {
+                productCategoryService.updateProductCategory(categoryId, categoryName, null);
+            }
+        }
         return Result.success();
     }
 
