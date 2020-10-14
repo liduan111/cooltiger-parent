@@ -6,13 +6,12 @@
     <insert id="batchAddProductSku" parameterType="ProductSku" useGeneratedKeys="true" keyProperty="skuId">
         INSERT INTO ky_product_sku
         (sku_code, product_id, spec_value_ids, sale_price, stock, weight,
-        distri_type, distri_ratio, distri_amount, deleted)
+        distri_type, distri_value, deleted)
         VALUES
         <foreach collection="list" item="productSku" index="index" separator=",">
-            (#{productSku.skuCode}, #{productSku.productId},
-            #{productSku.specValueIds}, #{productSku.salePrice}, #{productSku.stock},
-            #{productSku.weight}, #{productSku.distriType}, #{productSku.distriRatio},
-            #{productSku.distriAmount}, #{productSku.deleted})
+            (#{productSku.skuCode}, #{productSku.productId},#{productSku.specValueIds},
+            #{productSku.salePrice}, #{productSku.stock},#{productSku.weight},
+            #{productSku.distriType}, #{productSku.distriValue}, #{productSku.deleted})
         </foreach>
     </insert>
 
@@ -36,8 +35,7 @@
             stock,
             weight,
             distri_type    distriType,
-            distri_ratio   distriRatio,
-            distri_amount  distriAmount,
+            distri_value   distriValue,
             create_time    createTime,
             modified_time  modifiedTime
         FROM ky_product_sku
@@ -57,8 +55,7 @@
             stock,
             weight,
             distri_type    distriType,
-            distri_ratio   distriRatio,
-            distri_amount  distriAmount,
+            distri_value   distriValue,
             create_time    createTime,
             modified_time  modifiedTime
         FROM ky_product_sku

@@ -34,6 +34,7 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         String url = request.getURI().toString();
+        ServerHttpResponse response = exchange.getResponse();
         //过滤管理员登录接口
         if (url.contains("/customer/adminInfo/login")) {
             return chain.filter(exchange);
@@ -43,7 +44,6 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
         }
         HttpHeaders headers = request.getHeaders();
         String token = headers.getFirst(AUTHORIZE_TOKEN);
-        ServerHttpResponse response = exchange.getResponse();
         //验证redis中是否存在token
         if (token == null || !stringRedisTemplate.hasKey(token)) {
             JSONObject message = new JSONObject();

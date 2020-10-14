@@ -57,6 +57,7 @@ spring:
       force: true
       enabled: true
   redis:
+    database: 2
     host: 127.0.0.1
     port: 6379
       #password: kyj@redis.123456

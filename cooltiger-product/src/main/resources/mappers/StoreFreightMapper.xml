@@ -5,8 +5,7 @@
     <!-- 添加店铺运费 -->
     <insert id="addStoreFreight" parameterType="StoreFreight">
         INSERT INTO ky_store_freight
-            (store_id, freight_price, continue_price, whether_kg
-        )
+            (store_id, freight_price, continue_price, whether_kg)
         VALUES
         (#{storeFreight.storeId}, #{storeFreight.freightPrice},
          #{storeFreight.continuePrice}, #{storeFreight.whetherKg})
@@ -25,4 +24,14 @@
         WHERE
             store_id = #{storeId}
     </select>
+
+    <!-- 修改店铺运费信息 -->
+    <update id="updateStoreFreight" parameterType="StoreFreight">
+        UPDATE ky_store_freight
+        SET store_id       = #{storeFreight.storeId},
+            freight_price  = #{storeFreight.freightPrice},
+            continue_price = #{storeFreight.continuePrice},
+            whether_kg     = #{storeFreight.whetherKg}
+        WHERE freight_id = #{storeFreight.freightId}
+    </update>
 </mapper>

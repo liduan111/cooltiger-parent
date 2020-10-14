@@ -1,5 +1,6 @@
 package com.kyj.cooltiger.order.service;
 
+import com.kyj.cooltiger.feign.order.vo.OrderInfoRespVo;
 import com.kyj.cooltiger.feign.order.vo.PlaceOrderReqVo;
 import com.kyj.cooltiger.order.entity.OrderInfo;
 
@@ -31,6 +32,14 @@ public interface OrderInfoService {
             Integer pageNo, Integer pageSize);
 
     /**
+     * 查询订单详情
+     *
+     * @param orderId 订单ID
+     * @return
+     */
+    public OrderInfoRespVo getOrderDetail(Integer orderId);
+
+    /**
      * 用户下单
      *
      * @param userId          用户ID
@@ -42,8 +51,8 @@ public interface OrderInfoService {
 
     /**
      * 根据订单id查询订单信息
+     *
      * @return
      */
-    OrderInfo  queryorder(Integer orderId);
-
+    OrderInfo queryorder(Integer orderId);
 }

@@ -1,10 +1,12 @@
 package com.kyj.cooltiger.feign.product.client;
 
 import com.kyj.cooltiger.common.utils.Result;
+import com.kyj.cooltiger.feign.product.vo.ProductSkuReqVo;
+import com.kyj.cooltiger.feign.product.vo.ProductSpecReqVo;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author liduan
@@ -30,8 +32,31 @@ public interface ProductSkuClient {
      * @param productId 商品ID
      * @return
      */
-    @RequestMapping(value = "/getProductSkuList", method = {RequestMethod.GET})
+    @RequestMapping(value = "/product/productSku/getProductSkuList", method = {RequestMethod.GET})
     public Result getProductSkuList(@RequestParam("product_id") Integer productId);
 
+    /**
+     * 添加商品规格
+     *
+     * @param productId        商品ID
+     * @param productSpecReqVo 商品规格参数
+     * @return
+     */
+    @RequestMapping(value = "/product/productSku/addProductSpec", method = {RequestMethod.POST})
+    public Result addProductSpec(
+            @RequestParam("product_id") Integer productId,
+            @RequestBody ProductSpecReqVo productSpecReqVo);
+
+    /**
+     * 添加商品Sku信息
+     *
+     * @param productId        商品ID
+     * @param productSkuReqVos 商品Sku信息
+     * @return
+     */
+    @RequestMapping(value = "/addProductSkuInfo", method = {RequestMethod.POST})
+    public Result addProductSkuInfo(
+            @RequestParam("product_id") Integer productId,
+            @RequestBody List<ProductSkuReqVo> productSkuReqVos);
 
 }

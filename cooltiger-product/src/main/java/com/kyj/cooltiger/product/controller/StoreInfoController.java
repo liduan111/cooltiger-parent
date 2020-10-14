@@ -1,6 +1,7 @@
 package com.kyj.cooltiger.product.controller;
 
 import com.kyj.cooltiger.common.constant.IMAGES_PATH;
+import com.kyj.cooltiger.common.constant.PRODUCT_IMAGE_TYPE;
 import com.kyj.cooltiger.common.excep.MyException;
 import com.kyj.cooltiger.common.utils.CharUtil;
 import com.kyj.cooltiger.common.utils.FileTypeUtil;
@@ -8,6 +9,7 @@ import com.kyj.cooltiger.common.utils.FtpUtil;
 import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.product.client.StoreInfoClient;
 import com.kyj.cooltiger.feign.product.vo.StoreApplyIntoReqVo;
+import com.kyj.cooltiger.feign.product.vo.StoreFreightVo;
 import com.kyj.cooltiger.product.config.FtpConfig;
 import com.kyj.cooltiger.product.service.StoreInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,13 +36,67 @@ public class StoreInfoController implements StoreInfoClient {
     private FtpConfig ftpConfig;
 
     /**
+     * 生成店铺编码
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getStoreCode", method = {RequestMethod.GET})
+    public Result getStoreCode() {
+        //生成店铺编码
+        Map<String, Object> res = new HashMap<>();
+        res.put("store_code", CharUtil.getRandomNum(8));
+        return Result.success(res);
+    }
+
+    /**
+     * 上传店铺图片
+     *
+     * @param storeCode 店铺编码
+     * @param pic       图片
+     * @param picType   图片类型（1-店铺logo2-身份证3-经营资质）
+     * @return
+     */
+    @RequestMapping(value = "/uploadStorePic", method = {RequestMethod.POST})
+    public Result uploadStorePic(
+            @RequestParam("store_code") String storeCode,
+            @RequestParam("pic") MultipartFile pic,
+            @RequestParam("pic_type") Integer picType) {
+        if (pic == null || pic.isEmpty()) {
+            throw new MyException("PIC_NOT_NULL", "图片不能为空");
+        }
+        String oldName = pic.getOriginalFilename();
+        if (!FileTypeUtil.isImageByName(oldName)) {
+            throw new MyException("PIC_FORMAT_ERROR", "图片格式错误");
+        }
+        //生成新的图片名
+        String newName = CharUtil.getImageName(25) + oldName.substring(oldName.lastIndexOf("."));
+        //图片存放子目录
+        StringBuilder filePath = new StringBuilder(IMAGES_PATH.STORE + "/" + storeCode);
+        if (picType == PRODUCT_IMAGE_TYPE.INFO) {
+            filePath.append(IMAGES_PATH.STORE_LOGO);
+        } else if (picType == PRODUCT_IMAGE_TYPE.SKU) {
+            filePath.append(IMAGES_PATH.ID_CARD);
+        } else if (picType == PRODUCT_IMAGE_TYPE.DATAIL) {
+            filePath.append(IMAGES_PATH.LICENSES);
+        }
+        //图片上传
+        FtpUtil ftpUtil = new FtpUtil();
+        boolean result = ftpUtil.uploadFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
+                ftpConfig.getPassWord(), ftpConfig.getBasePath(), filePath.toString(), newName, pic);
+        //响应信息
+        Map<String, Object> res = new HashMap<>();
+        if (result){
+            res.put("pic_url", ftpConfig.getImageBaseUrl() + IMAGES_PATH.STORE + "/" + storeCode + IMAGES_PATH.STORE_LOGO + "/" + newName);
+        }else {
+            throw new MyException("PIC_UPLOAD_ERROR","图片上传失败");
+        }
+        return Result.success(res);
+    }
+
+    /**
      * 店铺申请入驻
      *
      * @param userId              申请人ID
-     * @param storeLogo           店铺Logo
-     * @param idCardMain          身份证正面照片
-     * @param idCardBack          身份证反面照片
-     * @param licenses            经营资质照片
      * @param storeApplyIntoReqVo 店铺基本信息
      * @return
      */
@@ -47,101 +104,8 @@ public class StoreInfoController implements StoreInfoClient {
     @RequestMapping(value = "/storeApplyInto", method = {RequestMethod.POST})
     public Result storeApplyInto(
             @RequestParam("user_id") Integer userId,
-            @RequestParam("store_logo") MultipartFile storeLogo,
-            @RequestParam("id_card_main") MultipartFile idCardMain,
-            @RequestParam("id_card_back") MultipartFile idCardBack,
-            @RequestParam("licenses") MultipartFile[] licenses,
-            StoreApplyIntoReqVo storeApplyIntoReqVo) {
-        //店铺logo图片名字
-        String storeLogoOldName = null;
-        //身份证图片名字
-        String idCardMainOldName = null;
-        String idCardBackOldName = null;
-        //验证图片
-        //店铺logo
-        if (storeLogo != null && !storeLogo.isEmpty()) {
-            storeLogoOldName = storeLogo.getOriginalFilename();
-            if (!FileTypeUtil.isImageByName(storeLogoOldName)) {
-                throw new MyException("STORE_LOGO_FORMAT_ERROR", "店铺Logo图片格式错误");
-            }
-        } else {
-            throw new MyException("STORE_LOGO_NOT_NULL", "店铺Logo不能为空");
-        }
-        //身份证
-        if (idCardMain != null && !idCardMain.isEmpty() &&
-                idCardBack != null && !idCardBack.isEmpty()) {
-            idCardMainOldName = idCardMain.getOriginalFilename();
-            idCardBackOldName = idCardBack.getOriginalFilename();
-            if (!FileTypeUtil.isImageByName(idCardMainOldName) || !FileTypeUtil.isImageByName(idCardBackOldName)) {
-                throw new MyException("PICTURE_FORMAT_ERROR", "身份证图片格式错误");
-            }
-        } else {
-            throw new MyException("ID_CARD_NOT_NULL", "身份证不能为空");
-        }
-        //经营资质图片
-        if (licenses != null && licenses.length > 0) {
-            for (MultipartFile license : licenses) {
-                if (!FileTypeUtil.isImageByName(license.getOriginalFilename())) {
-                    throw new MyException("LICENSE_FORMAT_ERROR", "经营资质图片格式错误");
-                }
-            }
-        }
-        //生成新的图片名
-        String storeLogoNewName = CharUtil.getImageName(25) + storeLogoOldName.substring(storeLogoOldName.lastIndexOf("."));
-        String idCardMainNewName = CharUtil.getImageName(25) + idCardMainOldName.substring(idCardMainOldName.lastIndexOf("."));
-        String idCardBackNewName = CharUtil.getImageName(25) + idCardBackOldName.substring(idCardBackOldName.lastIndexOf("."));
-        //生成店铺编码
-        String storeCode = CharUtil.getRandomNum(8);
-        //图片上传工具类
-        FtpUtil ftpUtil = new FtpUtil();
-        //上传图片信息的集合
-        List<FtpUtil.FileInfo> fileInfos = new ArrayList<>();
-        FtpUtil.FileInfo fileInfo = null;
-        //店铺logo
-        fileInfo = ftpUtil.new FileInfo();
-        fileInfo.setBasePath(ftpConfig.getBasePath());
-        fileInfo.setFilePath(IMAGES_PATH.STORE + "/" + storeCode + IMAGES_PATH.STORE_LOGO);
-        fileInfo.setFileName(storeLogoNewName);
-        fileInfo.setUpFile(storeLogo);
-        fileInfos.add(fileInfo);
-        //身份证正面
-        fileInfo = ftpUtil.new FileInfo();
-        fileInfo.setBasePath(ftpConfig.getBasePath());
-        fileInfo.setFilePath(IMAGES_PATH.STORE + "/" + storeCode + IMAGES_PATH.ID_CARD);
-        fileInfo.setFileName(idCardMainNewName);
-        fileInfo.setUpFile(idCardMain);
-        fileInfos.add(fileInfo);
-        //身份证反面
-        fileInfo = ftpUtil.new FileInfo();
-        fileInfo.setBasePath(ftpConfig.getBasePath());
-        fileInfo.setFilePath(IMAGES_PATH.STORE + "/" + storeCode + IMAGES_PATH.ID_CARD);
-        fileInfo.setFileName(idCardBackNewName);
-        fileInfo.setUpFile(idCardBack);
-        fileInfos.add(fileInfo);
-        //经营资质图片
-        List<String> licenseUrls = null;
-        if (licenses != null && licenses.length > 0) {
-            licenseUrls = new ArrayList<>();
-            for (MultipartFile license : licenses) {
-                String licenseOldName = license.getOriginalFilename();
-                String licenseNewName = CharUtil.getImageName(25) + licenseOldName.substring(licenseOldName.lastIndexOf("."));
-                fileInfo = ftpUtil.new FileInfo();
-                fileInfo.setBasePath(ftpConfig.getBasePath());
-                fileInfo.setFilePath(IMAGES_PATH.STORE + "/" + storeCode + IMAGES_PATH.LICENSES);
-                fileInfo.setFileName(licenseNewName);
-                fileInfo.setUpFile(license);
-                fileInfos.add(fileInfo);
-                licenseUrls.add(ftpConfig.getImageBaseUrl() + IMAGES_PATH.STORE + "/" + storeCode + IMAGES_PATH.LICENSES + "/" + licenseNewName);
-            }
-        }
-        //添加到数据库
-        storeInfoService.addStoreIntoInfo(userId, storeCode,
-                ftpConfig.getImageBaseUrl() + IMAGES_PATH.STORE + "/" + storeCode + IMAGES_PATH.STORE_LOGO + "/" + storeLogoNewName,
-                ftpConfig.getImageBaseUrl() + IMAGES_PATH.STORE + "/" + storeCode + IMAGES_PATH.ID_CARD + "/" + idCardMainNewName,
-                ftpConfig.getImageBaseUrl() + IMAGES_PATH.STORE + "/" + storeCode + IMAGES_PATH.ID_CARD + "/" + idCardBackNewName,
-                licenseUrls, storeApplyIntoReqVo);
-        //图片批量上传
-        int num = ftpUtil.uploadBatchFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(), ftpConfig.getPassWord(), fileInfos);
+            @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo) {
+        storeInfoService.addStoreIntoInfo(userId,storeApplyIntoReqVo);
         return Result.success();
     }
 
@@ -220,5 +184,18 @@ public class StoreInfoController implements StoreInfoClient {
             @RequestParam("store_id") Integer storeId) {
         Map<String, Object> res = storeInfoService.getStoreFreight(storeId);
         return Result.success(res.get("data"));
+    }
+
+    /**
+     * 添加/修改店铺运费信息
+     *
+     * @param storeFreightVo 店铺运费信息
+     * @return
+     */
+    @RequestMapping(value = "/editStoreFreight", method = {RequestMethod.POST})
+    public Result editStoreFreight(
+            @RequestBody StoreFreightVo storeFreightVo) {
+        storeInfoService.editStoreFreight(storeFreightVo);
+        return Result.success();
     }
 }

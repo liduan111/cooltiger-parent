@@ -2,6 +2,8 @@ package com.kyj.cooltiger.product.service;
 
 import com.kyj.cooltiger.product.entity.ProductCategory;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 /**
@@ -16,10 +18,13 @@ public interface ProductCategoryService {
      *
      * @param categoryName     分类名称
      * @param categoryParentId 分类父ID
-     * @param categotyLevel    分类等级
+     * @param categoryLevel    分类等级
      * @param categoryLogoUrl  分类logoUrl
      */
-    public void addProductCategory(String categoryName, Integer categoryParentId, Integer categotyLevel, String categoryLogoUrl);
+    public void addProductCategory(
+            @NotBlank(message = "类别名不能为空") String categoryName,
+            Integer categoryParentId, Integer categoryLevel,
+            String categoryLogoUrl);
 
     /**
      * 查询商品分类列表信息

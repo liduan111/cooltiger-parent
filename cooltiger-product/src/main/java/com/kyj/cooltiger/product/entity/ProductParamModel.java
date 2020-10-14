@@ -18,7 +18,8 @@ public class ProductParamModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //商品参数ID
-    private Integer id;
+    @JsonProperty("param_id")
+    private Integer paramId;
     //参数名称
     @JsonProperty("param_name")
     private String paramName;
@@ -27,25 +28,17 @@ public class ProductParamModel implements Serializable {
     //类别ID
     @JsonProperty("category_id")
     private Integer categoryId;
-    //创建时间
-    @JsonProperty("create_time")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Timestamp createTime;
-    //修改时间
-    @JsonProperty("modified_time")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Timestamp modifiedTime;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getParamId() {
+        return paramId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setParamId(Integer paramId) {
+        this.paramId = paramId;
     }
 
     public String getParamName() {
@@ -72,19 +65,4 @@ public class ProductParamModel implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public Timestamp getModifiedTime() {
-        return modifiedTime;
-    }
-
-    public void setModifiedTime(Timestamp modifiedTime) {
-        this.modifiedTime = modifiedTime;
-    }
 }

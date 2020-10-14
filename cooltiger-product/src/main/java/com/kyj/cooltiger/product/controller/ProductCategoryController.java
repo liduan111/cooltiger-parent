@@ -7,6 +7,7 @@ import com.kyj.cooltiger.common.utils.FileTypeUtil;
 import com.kyj.cooltiger.common.utils.FtpUtil;
 import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.product.client.ProductCategoryClient;
+import com.kyj.cooltiger.feign.product.client.ProductInfoClient;
 import com.kyj.cooltiger.product.config.FtpConfig;
 import com.kyj.cooltiger.product.entity.ProductCategory;
 import com.kyj.cooltiger.product.service.ProductCategoryService;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,13 +32,15 @@ public class ProductCategoryController implements ProductCategoryClient {
     private ProductCategoryService productCategoryService;
     @Autowired
     private FtpConfig ftpConfig;
+    @Autowired
+    private ProductInfoClient productInfoClient;
 
     /**
      * 添加商品分类
      *
      * @param categoryName     分类名称
      * @param categoryParentId 父分类ID(0:一级分类）
-     * @param categotyLevel    分类等级（0-一级分类1-二级分类2-三级分类）
+     * @param categoryLevel    分类等级（0-一级分类1-二级分类2-三级分类）
      * @param categoryLogo     分类图片logo
      * @return
      */
@@ -44,11 +49,11 @@ public class ProductCategoryController implements ProductCategoryClient {
     public Result addProductCategory(
             @RequestParam("category_name") String categoryName,
             @RequestParam(value = "category_parent_id", defaultValue = "0") Integer categoryParentId,
-            @RequestParam(value = "categoty_level", defaultValue = "0") Integer categotyLevel,
+            @RequestParam(value = "category_level", defaultValue = "0") Integer categoryLevel,
             @RequestParam(value = "category_logo", required = false) MultipartFile categoryLogo) {
         //如果图片为空直接添加
         if (categoryLogo == null || categoryLogo.isEmpty()) {
-            productCategoryService.addProductCategory(categoryName, categoryParentId, categotyLevel, null);
+            productCategoryService.addProductCategory(categoryName, categoryParentId, categoryLevel, null);
         }else {
             //根据文件名字判断文件类型
             String oldName = categoryLogo.getOriginalFilename();
@@ -58,7 +63,7 @@ public class ProductCategoryController implements ProductCategoryClient {
             //生成新的图片名
             String newName = CharUtil.getImageName(25) + oldName.substring(oldName.lastIndexOf("."));
             //添加
-            productCategoryService.addProductCategory(categoryName, categoryParentId, categotyLevel,
+            productCategoryService.addProductCategory(categoryName, categoryParentId, categoryLevel,
                     ftpConfig.getImageBaseUrl() + IMAGES_PATH.CATEGORY_LOGO + "/" + newName);
             //上传图片
             FtpUtil ftpUtil = new FtpUtil();
@@ -75,15 +80,15 @@ public class ProductCategoryController implements ProductCategoryClient {
      * 查询商品分类列表信息
      *
      * @param categoryParentId 父分类ID(0:一级分类）
-     * @param categotyLevel    分类等级（0-一级分类1-二级分类2-三级分类）
+     * @param categoryLevel    分类等级（0-一级分类1-二级分类2-三级分类）
      * @return
      */
     @Override
     @RequestMapping(value = "/productCategoryList", method = {RequestMethod.GET})
     public Result productCategoryList(
             @RequestParam(value = "category_parent_id", required = false) Integer categoryParentId,
-            @RequestParam(value = "categoty_level", required = false) Integer categotyLevel) {
-        Map<String, Object> resMap = productCategoryService.getProductCategoryList(categoryParentId,categotyLevel);
+            @RequestParam(value = "category_level", required = false) Integer categoryLevel) {
+        Map<String, Object> resMap = productCategoryService.getProductCategoryList(categoryParentId,categoryLevel);
         return Result.success(resMap.get("data"));
     }
 
@@ -117,11 +122,9 @@ public class ProductCategoryController implements ProductCategoryClient {
         ProductCategory productCategory = productCategoryService.getProductCategoryByCategoryId(categoryId);
         //图片url存在则删除
         if (productCategory.getCategoryLogoUrl() != null && productCategory.getCategoryLogoUrl() != "") {
-            String fileName = productCategory.getCategoryLogoUrl().substring(productCategory.getCategoryLogoUrl().lastIndexOf("/") + 1);
-            //调用FtpUtil工具类删除图片
-            FtpUtil ftpUtil = new FtpUtil();
-            ftpUtil.deleteFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
-                    ftpConfig.getPassWord(), ftpConfig.getBasePath() + IMAGES_PATH.CATEGORY_LOGO, fileName);
+            List<String> imageUrls = new ArrayList<>();
+            imageUrls.add(productCategory.getCategoryLogoUrl());
+            productInfoClient.delProductImage(imageUrls);
         }
         productCategoryService.delProductCategory(categoryId);
         return Result.success();
@@ -143,11 +146,9 @@ public class ProductCategoryController implements ProductCategoryClient {
         ProductCategory productCategory = productCategoryService.getProductCategoryByCategoryId(categoryId);
         //图片url存在则删除
         if (productCategory.getCategoryLogoUrl() != null && productCategory.getCategoryLogoUrl() != "") {
-            String fileName = productCategory.getCategoryLogoUrl().substring(productCategory.getCategoryLogoUrl().lastIndexOf("/") + 1);
-            //调用FtpUtil工具类删除图片
-            FtpUtil ftpUtil = new FtpUtil();
-            ftpUtil.deleteFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
-                    ftpConfig.getPassWord(), ftpConfig.getBasePath() + IMAGES_PATH.CATEGORY_LOGO, fileName);
+            List<String> imageUrls = new ArrayList<>();
+            imageUrls.add(productCategory.getCategoryLogoUrl());
+            productInfoClient.delProductImage(imageUrls);
         }
         //更换新图片
         //根据文件名字判断文件类型

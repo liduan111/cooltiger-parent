@@ -5,12 +5,10 @@
     <!-- 根据分类ID查询参数模板 -->
     <select id="getProductParamModelByCategoryId" resultType="ProductParamModel">
         SELECT
-            id,
-            param_name    paramName,
+            param_id    paramId,
+            param_name  paramName,
             required,
-            category_id   categoryId,
-            create_time   createTime,
-            modified_time modifiedTime
+            category_id categoryId
         FROM
             ky_product_param_model
         WHERE category_id = #{categoryId}
@@ -26,11 +24,11 @@
         </foreach>
     </insert>
 
-    <!-- 删除参数模板 -->
-    <delete id="delProductParamModel">
+    <!-- 批量删除参数模板 -->
+    <delete id="batchDelProductModelByParamIds">
         DELETE
         FROM ky_product_param_model
-        WHERE category_id = #{categoryId}
+        WHERE param_id IN (#{paramIds})
     </delete>
 
 </mapper>

@@ -2,11 +2,13 @@ package com.kyj.cooltiger.order.service.impl;
 
 import com.kyj.cooltiger.common.constant.DELETED;
 import com.kyj.cooltiger.common.constant.ORDER_STATUS;
+import com.kyj.cooltiger.common.excep.MyException;
 import com.kyj.cooltiger.common.utils.CharUtil;
 import com.kyj.cooltiger.common.utils.PageUtil;
 import com.kyj.cooltiger.feign.oauth.client.ShopCartClient;
 import com.kyj.cooltiger.feign.order.vo.OrderDetailListRespVo;
 import com.kyj.cooltiger.feign.order.vo.OrderInfoListRespVo;
+import com.kyj.cooltiger.feign.order.vo.OrderInfoRespVo;
 import com.kyj.cooltiger.feign.order.vo.PlaceOrderReqVo;
 import com.kyj.cooltiger.order.entity.OrderDetail;
 import com.kyj.cooltiger.order.entity.OrderInfo;
@@ -69,6 +71,23 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         res.put("totalPage", pageUtil.getTotalPage());
         res.put("data", orderInfoListRespVoList);
         return res;
+    }
+
+    /**
+     * 查询订单详情
+     *
+     * @param orderId 订单ID
+     * @return
+     */
+    @Override
+    public OrderInfoRespVo getOrderDetail(Integer orderId) {
+        OrderInfoRespVo orderInfoRespVo = orderInfoMapper.getOrderInfoDetailByOrderId(orderId);
+        if (orderInfoRespVo == null){
+            throw new MyException("ORDER_INFO_NOT_EXIST","订单信息不存在");
+        }
+        List<OrderDetailListRespVo> details = orderDetailMapper.getOrderDetailListByOrderId(orderId);
+        orderInfoRespVo.setDetails(details);
+        return orderInfoRespVo;
     }
 
     /**
@@ -136,7 +155,6 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     /**
      *
      * @param orderId
-     * @param userId
      * @return
      */
     @Override

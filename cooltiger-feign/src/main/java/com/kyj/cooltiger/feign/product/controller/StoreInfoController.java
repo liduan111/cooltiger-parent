@@ -3,6 +3,7 @@ package com.kyj.cooltiger.feign.product.controller;
 import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.product.client.StoreInfoClient;
 import com.kyj.cooltiger.feign.product.vo.StoreApplyIntoReqVo;
+import com.kyj.cooltiger.feign.product.vo.StoreFreightVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,25 +21,43 @@ public class StoreInfoController {
     private StoreInfoClient storeInfoClient;
 
     /**
+     * 生成店铺编码
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getStoreCode", method = {RequestMethod.GET})
+    public Result getStoreCode() {
+        return storeInfoClient.getStoreCode();
+    }
+
+    /**
+     * 上传店铺图片
+     *
+     * @param storeCode 店铺编码
+     * @param pic       图片
+     * @param picType   图片类型（1-店铺logo2-身份证3-经营资质）
+     * @return
+     */
+    @RequestMapping(value = "/uploadStorePic", method = {RequestMethod.POST})
+    public Result uploadStorePic(
+            @RequestParam("store_code") String storeCode,
+            @RequestParam("pic") MultipartFile pic,
+            @RequestParam("pic_type") Integer picType) {
+        return storeInfoClient.uploadStorePic(storeCode, pic, picType);
+    }
+
+    /**
      * 店铺申请入驻
      *
      * @param userId              申请人ID
-     * @param storeLogo           店铺Logo
-     * @param idCardMain          身份证正面照片
-     * @param idCardBack          身份证反面照片
-     * @param licenses            经营资质照片
      * @param storeApplyIntoReqVo 店铺基本信息
      * @return
      */
     @RequestMapping(value = "/storeApplyInto", method = {RequestMethod.POST})
     public Result storeApplyInto(
             @RequestParam("user_id") Integer userId,
-            @RequestParam("store_logo") MultipartFile storeLogo,
-            @RequestParam("id_card_main") MultipartFile idCardMain,
-            @RequestParam("id_card_back") MultipartFile idCardBack,
-            @RequestParam("licenses") MultipartFile[] licenses,
-            StoreApplyIntoReqVo storeApplyIntoReqVo) {
-        return storeInfoClient.storeApplyInto(userId, storeLogo, idCardMain, idCardBack, licenses, storeApplyIntoReqVo);
+            @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo) {
+        return storeInfoClient.storeApplyInto(userId, storeApplyIntoReqVo);
     }
 
     /**
@@ -95,5 +114,29 @@ public class StoreInfoController {
             @RequestParam("store_id") Integer storeId,
             @RequestBody StoreApplyIntoReqVo storeApplyIntoReqVo) {
         return storeInfoClient.updateStoreInfo(storeId, storeApplyIntoReqVo);
+    }
+
+    /**
+     * 获取店铺运费信息
+     *
+     * @param storeId 店铺ID
+     * @return
+     */
+    @RequestMapping(value = "/getStoreFreight", method = {RequestMethod.GET})
+    public Result getStoreFreight(
+            @RequestParam("store_id") Integer storeId) {
+        return storeInfoClient.getStoreFreight(storeId);
+    }
+
+    /**
+     * 添加/修改店铺运费信息
+     *
+     * @param storeFreightVo 店铺运费信息
+     * @return
+     */
+    @RequestMapping(value = "/editStoreFreight", method = {RequestMethod.POST})
+    public Result editStoreFreight(
+            @RequestBody StoreFreightVo storeFreightVo) {
+        return storeInfoClient.editStoreFreight(storeFreightVo);
     }
 }
