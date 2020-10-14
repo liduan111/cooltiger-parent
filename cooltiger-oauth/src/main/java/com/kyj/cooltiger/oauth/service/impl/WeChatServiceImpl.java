@@ -62,7 +62,7 @@ public class WeChatServiceImpl implements WeChatService {
         HashMap<String,Object> map=new HashMap<>();
         map.put("id",userpo.getUserId().toString());
         map.put("authorities",authset);
-        String token = JwtTokenUtil.generateToken(userpo);
+        String token = JwtTokenUtil.createJsonWebToken(userpo);
         redisUtil.hset(token,map);
         return GenericResponse.response(ServiceError.NORMAL,token);
     }
