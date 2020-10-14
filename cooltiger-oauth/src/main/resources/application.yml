@@ -60,7 +60,7 @@ spring:
     database: 2
     host: 127.0.0.1
     port: 6379
-      #password:
+      #password: kyj@redis.123456
       #jedis:
         #pool:
           #max-active: 8
@@ -82,12 +82,12 @@ mybatis:
     level:
       com.cool.oauth.dao: debug
 
-  #jwt:
-    #tokenHeader: Authorization
-    #tokenPrefix: Bearer
-    #secret: cooljwt
-    #expiration: 3600
-    #rememberExpiration: 604800
+  jwt:
+    tokenHeader: Authorization
+    tokenPrefix: Bearer
+    secret: cooljwt
+    expiration: 3600
+    rememberExpiration: 604800
     #自定义参数，可以迁移走
 token:
   #redis默认过期时间（2小时）(这是自定义的)(毫秒)
