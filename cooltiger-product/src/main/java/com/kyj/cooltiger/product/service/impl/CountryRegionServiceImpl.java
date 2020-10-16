@@ -80,7 +80,7 @@ public class CountryRegionServiceImpl implements CountryRegionService {
         }
         countryRegion.setRegionName(regionName);
         countryRegion.setRegionCode(regionCode);
-        countryRegion.setNationalFlagUrl(nationalFlagUrl==null?countryRegion.getNationalFlagUrl():nationalFlagUrl);
+        countryRegion.setNationalFlagUrl(nationalFlagUrl);
         countryRegionMapper.updateCountryRegion(countryRegion);
     }
 

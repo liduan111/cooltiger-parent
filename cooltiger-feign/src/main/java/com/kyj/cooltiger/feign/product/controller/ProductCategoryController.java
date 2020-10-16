@@ -80,17 +80,4 @@ public class ProductCategoryController {
         return productCategoryClient.delProductCategory(categoryId);
     }
 
-    /**
-     * 更换分类logo
-     *
-     * @param categoryId   分类ID
-     * @param categoryLogo 分类Logo
-     * @return
-     */
-    @RequestMapping(value = "/updateCategoryLogo", method = {RequestMethod.PUT})
-    public Result updateCategoryLogo(
-            @RequestParam("category_id") Integer categoryId,
-            @RequestParam("category_logo") MultipartFile categoryLogo) {
-        return productCategoryClient.updateCategoryLogo(categoryId, categoryLogo);
-    }
 }

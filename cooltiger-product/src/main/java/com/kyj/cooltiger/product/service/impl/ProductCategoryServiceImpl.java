@@ -81,7 +81,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
             throw new MyException("CATEGOTY_NAME_IS_EXIST", "类别名称已存在");
         }
         productCategory.setCategoryName(categoryName);
-        productCategory.setCategoryLogoUrl(categoryLogoUrl==null?productCategory.getCategoryLogoUrl():categoryLogoUrl);
+        productCategory.setCategoryLogoUrl(categoryLogoUrl);
         productCategoryMapper.updateProductCategory(productCategory);
     }
 

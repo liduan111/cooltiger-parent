@@ -114,11 +114,10 @@ public class ProductCategoryController implements ProductCategoryClient {
         if (logoUpdate.equals(DELETED.NOT)){
             productCategoryService.updateProductCategory(categoryId, categoryName, productCategory.getCategoryLogoUrl());
         }else if (logoUpdate.equals(DELETED.YES)){
-            //图片url存在则删除
+            StringBuilder oldUrl = null;
+            //是否存在图片
             if (productCategory.getCategoryLogoUrl() != null && productCategory.getCategoryLogoUrl() != "") {
-                List<String> imageUrls = new ArrayList<>();
-                imageUrls.add(productCategory.getCategoryLogoUrl());
-                productInfoClient.delProductImage(imageUrls);
+                oldUrl = new StringBuilder(productCategory.getCategoryLogoUrl());
             }
             if (categoryLogo != null && !categoryLogo.isEmpty()) {
                 //更换新图片
@@ -130,7 +129,7 @@ public class ProductCategoryController implements ProductCategoryClient {
                 //生成新的图片名
                 String newName = CharUtil.getImageName(25) + oldName.substring(oldName.lastIndexOf("."));
                 //添加
-                productCategoryService.updateProductCategory(categoryId, productCategory.getCategoryName(),
+                productCategoryService.updateProductCategory(categoryId, categoryName,
                         ftpConfig.getImageBaseUrl() + IMAGES_PATH.CATEGORY_LOGO + "/" + newName);
                 //上传图片
                 FtpUtil ftpUtil = new FtpUtil();
@@ -141,6 +140,12 @@ public class ProductCategoryController implements ProductCategoryClient {
                 }
             }else {
                 productCategoryService.updateProductCategory(categoryId, categoryName, null);
+            }
+            //图片url存在则删除
+            if (oldUrl != null && oldUrl.length() > 0) {
+                List<String> imageUrls = new ArrayList<>();
+                imageUrls.add(oldUrl.toString());
+                productInfoClient.delProductImage(imageUrls);
             }
         }
         return Result.success();
@@ -167,46 +172,4 @@ public class ProductCategoryController implements ProductCategoryClient {
         productCategoryService.delProductCategory(categoryId);
         return Result.success();
     }
-
-    /**
-     * 更换分类logo
-     *
-     * @param categoryId   分类ID
-     * @param categoryLogo 分类Logo
-     * @return
-     */
-    @Override
-    @RequestMapping(value = "/updateCategoryLogo",method = {RequestMethod.PUT})
-    public Result updateCategoryLogo(
-            @RequestParam("category_id") Integer categoryId,
-            @RequestParam("category_logo") MultipartFile categoryLogo){
-        //查询分类信息
-        ProductCategory productCategory = productCategoryService.getProductCategoryByCategoryId(categoryId);
-        //图片url存在则删除
-        if (productCategory.getCategoryLogoUrl() != null && productCategory.getCategoryLogoUrl() != "") {
-            List<String> imageUrls = new ArrayList<>();
-            imageUrls.add(productCategory.getCategoryLogoUrl());
-            productInfoClient.delProductImage(imageUrls);
-        }
-        //更换新图片
-        //根据文件名字判断文件类型
-        String oldName = categoryLogo.getOriginalFilename();
-        if (!FileTypeUtil.isImageByName(oldName)) {
-            throw new MyException("PICTURE_FORMAT_ERROR", "图片格式错误");
-        }
-        //生成新的图片名
-        String newName = CharUtil.getImageName(25) + oldName.substring(oldName.lastIndexOf("."));
-        //添加
-        productCategoryService.updateProductCategory(categoryId, productCategory.getCategoryName(),
-                ftpConfig.getImageBaseUrl() + IMAGES_PATH.CATEGORY_LOGO + "/" + newName);
-        //上传图片
-        FtpUtil ftpUtil = new FtpUtil();
-        boolean result = ftpUtil.uploadFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
-                ftpConfig.getPassWord(), ftpConfig.getBasePath(), IMAGES_PATH.CATEGORY_LOGO, newName, categoryLogo);
-        if (!result) {
-            throw new MyException("PICTURE_UPLOAD_ERROR", "图片上传失败");
-        }
-        return Result.success();
-    }
-
 }
