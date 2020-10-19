@@ -54,14 +54,18 @@ public class CountryRegionController {
      * @param regionId   地区ID
      * @param regionName 地区名称
      * @param regionCode 地区行政编码
+     * @param picUpdate  是否修改图片(0-未更换图片1-更换图片)
+     * @param upFile     国旗图片
      * @return
      */
     @RequestMapping(value = "/updateCountryRegion", method = {RequestMethod.PUT})
     public Result updateCountryRegion(
             @RequestParam("region_id") Integer regionId,
             @RequestParam("region_name") String regionName,
-            @RequestParam(value = "region_code", required = false) String regionCode) {
-        return countryRegionClient.updateCountryRegion(regionId, regionName, regionCode);
+            @RequestParam(value = "region_code", required = false) String regionCode,
+            @RequestParam("pic_update") Integer picUpdate,
+            @RequestParam(value = "up_file", required = false) MultipartFile upFile) {
+        return countryRegionClient.updateCountryRegion(regionId, regionName, regionCode, picUpdate, upFile);
     }
 
     /**
@@ -76,17 +80,4 @@ public class CountryRegionController {
         return countryRegionClient.delCountryRegion(regionId);
     }
 
-    /**
-     * 更改国旗图片
-     *
-     * @param regionId
-     * @param upFile
-     * @return
-     */
-    @RequestMapping(value = "/updateNationalFlag",method = {RequestMethod.PUT})
-    public Result updateNationalFlag(
-            @RequestParam("region_id") Integer regionId,
-            @RequestParam("pict") MultipartFile upFile){
-        return countryRegionClient.updateNationalFlag(regionId,upFile);
-    }
 }

@@ -1,5 +1,9 @@
 package com.kyj.cooltiger.feign.product.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
+
 /**
  * @author liduan
  * Description: 店铺信息参数vo
@@ -7,94 +11,158 @@ package com.kyj.cooltiger.feign.product.vo;
  */
 public class StoreApplyIntoReqVo {
 
+    //店铺编码
+    @JsonProperty("store_code")
+    private String storeCode;
     //店铺名称
-    private String store_name;
+    @JsonProperty("store_code")
+    private String storeName;
+    //店铺LogoUrl
+    @JsonProperty("store_logo_url")
+    private String storeLogoUrl;
     //联系人
-    private String relation_name;
+    @JsonProperty("relation_name")
+    private String relationName;
     //联系电话
-    private String relation_tel;
+    @JsonProperty("relation_tel")
+    private String relationTel;
+    //身份证正面url
+    @JsonProperty("id_card_main_url")
+    private String idCardMainUrl;
+    //身份证反面url
+    @JsonProperty("id_card_back_url")
+    private String idCardBackUrl;
     //店铺地址
-    private String store_address;
+    @JsonProperty("store_address")
+    private String storeAddress;
     //销售类目
-    private String sale_category;
+    @JsonProperty("sale_category")
+    private String saleCategory;
     //主营产品
-    private String main_products;
+    @JsonProperty("main_products")
+    private String mainProducts;
     //银行卡号
-    private String bank_card_number;
+    @JsonProperty("bank_card_number")
+    private String bankCardNumber;
     //开户行
-    private String bank_of_deposit;
+    @JsonProperty("bank_of_deposit")
+    private String bankOfDeposit;
     //账户名
-    private String account_name;
+    @JsonProperty("account_name")
+    private String accountName;
+    //经营资质照片urls
+    @JsonProperty("license_urls")
+    private List<String> licenseUrls;
 
-    public String getStore_name() {
-        return store_name;
+    public String getStoreCode() {
+        return storeCode;
     }
 
-    public void setStore_name(String store_name) {
-        this.store_name = store_name;
+    public void setStoreCode(String storeCode) {
+        this.storeCode = storeCode;
     }
 
-    public String getRelation_name() {
-        return relation_name;
+    public String getStoreName() {
+        return storeName;
     }
 
-    public void setRelation_name(String relation_name) {
-        this.relation_name = relation_name;
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 
-    public String getRelation_tel() {
-        return relation_tel;
+    public String getStoreLogoUrl() {
+        return storeLogoUrl;
     }
 
-    public void setRelation_tel(String relation_tel) {
-        this.relation_tel = relation_tel;
+    public void setStoreLogoUrl(String storeLogoUrl) {
+        this.storeLogoUrl = storeLogoUrl;
     }
 
-    public String getStore_address() {
-        return store_address;
+    public String getRelationName() {
+        return relationName;
     }
 
-    public void setStore_address(String store_address) {
-        this.store_address = store_address;
+    public void setRelationName(String relationName) {
+        this.relationName = relationName;
     }
 
-    public String getSale_category() {
-        return sale_category;
+    public String getRelationTel() {
+        return relationTel;
     }
 
-    public void setSale_category(String sale_category) {
-        this.sale_category = sale_category;
+    public void setRelationTel(String relationTel) {
+        this.relationTel = relationTel;
     }
 
-    public String getMain_products() {
-        return main_products;
+    public String getIdCardMainUrl() {
+        return idCardMainUrl;
     }
 
-    public void setMain_products(String main_products) {
-        this.main_products = main_products;
+    public void setIdCardMainUrl(String idCardMainUrl) {
+        this.idCardMainUrl = idCardMainUrl;
     }
 
-    public String getBank_card_number() {
-        return bank_card_number;
+    public String getIdCardBackUrl() {
+        return idCardBackUrl;
     }
 
-    public void setBank_card_number(String bank_card_number) {
-        this.bank_card_number = bank_card_number;
+    public void setIdCardBackUrl(String idCardBackUrl) {
+        this.idCardBackUrl = idCardBackUrl;
     }
 
-    public String getBank_of_deposit() {
-        return bank_of_deposit;
+    public String getStoreAddress() {
+        return storeAddress;
     }
 
-    public void setBank_of_deposit(String bank_of_deposit) {
-        this.bank_of_deposit = bank_of_deposit;
+    public void setStoreAddress(String storeAddress) {
+        this.storeAddress = storeAddress;
     }
 
-    public String getAccount_name() {
-        return account_name;
+    public String getSaleCategory() {
+        return saleCategory;
     }
 
-    public void setAccount_name(String account_name) {
-        this.account_name = account_name;
+    public void setSaleCategory(String saleCategory) {
+        this.saleCategory = saleCategory;
+    }
+
+    public String getMainProducts() {
+        return mainProducts;
+    }
+
+    public void setMainProducts(String mainProducts) {
+        this.mainProducts = mainProducts;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
+    }
+
+    public String getBankOfDeposit() {
+        return bankOfDeposit;
+    }
+
+    public void setBankOfDeposit(String bankOfDeposit) {
+        this.bankOfDeposit = bankOfDeposit;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public List<String> getLicenseUrls() {
+        return licenseUrls;
+    }
+
+    public void setLicenseUrls(List<String> licenseUrls) {
+        this.licenseUrls = licenseUrls;
     }
 }

@@ -15,10 +15,10 @@ import java.util.List;
 public interface StorePictureMapper {
 
     /**
-     * 添加店铺图片信息
-     * @param storePicture
+     * 批量添加店铺图片信息
+     * @param storePictures
      */
-    public void addStorePicture(@Param("storePicture") StorePicture storePicture);
+    public void addStorePicture(@Param("storePictures") List<StorePicture> storePictures);
 
     /**
      * 查询店铺图片url

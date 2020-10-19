@@ -50,6 +50,18 @@ public class OrderInfoController {
     }
 
     /**
+     * 获取订单详情信息
+     *
+     * @param orderId 订单ID
+     * @return
+     */
+    @RequestMapping(value = "/getOrderDetail", method = {RequestMethod.GET})
+    public Result getOrderDetail(
+            @RequestParam("order_id") Integer orderId) {
+        return orderInfoClient.getOrderDetail(orderId);
+    }
+
+    /**
      * 购物车或商品结算
      *
      * @param userId                     用户ID
@@ -78,4 +90,5 @@ public class OrderInfoController {
             @RequestBody PlaceOrderReqVo placeOrderReqVo) {
         return orderInfoClient.placeOrder(userId, sourceType, placeOrderReqVo);
     }
+
 }

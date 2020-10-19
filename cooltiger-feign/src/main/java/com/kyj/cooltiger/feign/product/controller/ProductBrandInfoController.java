@@ -21,21 +21,21 @@ public class ProductBrandInfoController {
     /**
      * 添加品牌信息
      *
-     * @param brandName 品牌名称
-     * @param brandDesc 品牌描述
-     * @param brandOrder 排序
+     * @param brandName   品牌名称
+     * @param brandDesc   品牌描述
+     * @param brandOrder  排序
      * @param brandStatus 品牌状态 0-未启用1-启用
-     * @param brandLogo 品牌logo
+     * @param brandLogo   品牌logo
      * @return
      */
     @RequestMapping(value = "/addProductBrandInfo", method = {RequestMethod.POST})
     public Result addProductBrandInfo(
             @RequestParam("brand_name") String brandName,
             @RequestParam(value = "brand_desc", required = false) String brandDesc,
-            @RequestParam(value = "brand_order",defaultValue = "0") Integer brandOrder,
-            @RequestParam(value = "brand_status",defaultValue = "1") Integer brandStatus,
-            @RequestParam(value = "brand_logo", required = false) MultipartFile brandLogo){
-        return productBrandInfoClient.addProductBrandInfo(brandName,brandDesc,brandOrder,brandStatus,brandLogo);
+            @RequestParam(value = "brand_order", defaultValue = "0") Integer brandOrder,
+            @RequestParam(value = "brand_status", defaultValue = "1") Integer brandStatus,
+            @RequestParam(value = "brand_logo", required = false) MultipartFile brandLogo) {
+        return productBrandInfoClient.addProductBrandInfo(brandName, brandDesc, brandOrder, brandStatus, brandLogo);
     }
 
     /**
@@ -50,18 +50,20 @@ public class ProductBrandInfoController {
     public Result getProductBrandInfoList(
             @RequestParam(value = "page_no", defaultValue = "1") Integer pageNo,
             @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize,
-            @RequestParam(value = "keyword", required = false) String keyword){
-        return productBrandInfoClient.getProductBrandInfoList(pageNo,pageSize,keyword);
+            @RequestParam(value = "keyword", required = false) String keyword) {
+        return productBrandInfoClient.getProductBrandInfoList(pageNo, pageSize, keyword);
     }
 
     /**
      * 修改商品品牌信息
      *
-     * @param brandId 品牌ID
-     * @param brandName 品牌名称
-     * @param brandDesc 品牌描述
-     * @param brandOrder 排序
+     * @param brandId     品牌ID
+     * @param brandName   品牌名称
+     * @param brandDesc   品牌描述
+     * @param brandOrder  排序
      * @param brandStatus 品牌状态 0-未启用1-已启用
+     * @param picUpdate   是否修改图片(0-未更换图片1-更换图片)
+     * @param brandLogo   品牌logo
      * @return
      */
     @RequestMapping(value = "updateProductBrandInfo", method = {RequestMethod.PUT})
@@ -69,9 +71,11 @@ public class ProductBrandInfoController {
             @RequestParam("brand_id") Integer brandId,
             @RequestParam("brand_name") String brandName,
             @RequestParam(value = "brand_desc", required = false) String brandDesc,
-            @RequestParam(value = "brand_order",defaultValue = "0") Integer brandOrder,
-            @RequestParam(value = "brand_status",defaultValue = "1") Integer brandStatus){
-        return productBrandInfoClient.updateProductBrandInfo(brandId,brandName,brandDesc,brandOrder,brandStatus);
+            @RequestParam(value = "brand_order", defaultValue = "0") Integer brandOrder,
+            @RequestParam(value = "brand_status", defaultValue = "1") Integer brandStatus,
+            @RequestParam("pic_update") Integer picUpdate,
+            @RequestParam(value = "brand_logo") MultipartFile brandLogo) {
+        return productBrandInfoClient.updateProductBrandInfo(brandId, brandName, brandDesc, brandOrder, brandStatus, picUpdate, brandLogo);
     }
 
     /**
@@ -82,21 +86,7 @@ public class ProductBrandInfoController {
      */
     @RequestMapping(value = "/delProductBrandInfo", method = {RequestMethod.DELETE})
     public Result delProductBrandInfo(
-            @RequestParam("brand_id") Integer brandId){
+            @RequestParam("brand_id") Integer brandId) {
         return productBrandInfoClient.delProductBrandInfo(brandId);
-    }
-
-    /**
-     * 更换品牌logo图片
-     *
-     * @param brandId 品牌ID
-     * @param brandLogo 品牌logo
-     * @return
-     */
-    @RequestMapping(value = "/updateBrandLogo",method = {RequestMethod.PUT})
-    public Result updateBrandLogo(
-            @RequestParam("brand_id") Integer brandId,
-            @RequestParam(value = "brand_logo") MultipartFile brandLogo){
-        return productBrandInfoClient.updateBrandLogo(brandId,brandLogo);
     }
 }

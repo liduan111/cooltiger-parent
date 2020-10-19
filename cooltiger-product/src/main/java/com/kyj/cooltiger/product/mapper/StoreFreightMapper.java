@@ -26,4 +26,11 @@ public interface StoreFreightMapper {
      * @return
      */
     public StoreFreight getStoreFreightByStoreId(@Param("storeId") Integer storeId);
+
+    /**
+     * 修改店铺运费
+     *
+     * @param storeFreight
+     */
+    public void updateStoreFreight(@Param("storeFreight") StoreFreight storeFreight);
 }

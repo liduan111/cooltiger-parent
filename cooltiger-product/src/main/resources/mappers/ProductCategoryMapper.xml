@@ -13,10 +13,10 @@
     <!-- 添加商品分类 -->
     <insert id="addProductCategory" parameterType="ProductCategory">
         INSERT INTO ky_product_category
-            (category_name, category_parent_id, categoty_level, category_logo_url)
+            (category_name, category_parent_id, category_level, category_logo_url)
         VALUES
         (#{productCategory.categoryName}, #{productCategory.categoryParentId},
-         #{productCategory.categotyLevel}, #{productCategory.categoryLogoUrl})
+         #{productCategory.categoryLevel}, #{productCategory.categoryLogoUrl})
     </insert>
 
     <!-- 根据分类父ID或分类等级查询商品分类列表 -->
@@ -25,15 +25,15 @@
         category_id categoryId,
         category_name categoryName,
         category_parent_id categoryParentId,
-        categoty_level categotyLevel,
+        category_level categoryLevel,
         category_logo_url categoryLogoUrl
         FROM ky_product_category
         WHERE 1 = 1
-        <if test="categoryParentId != null and categoryParentId != ''">
+        <if test="categoryParentId != null">
             AND category_parent_id = #{categoryParentId}
         </if>
-        <if test="categoryLevel != null and categoryLevel != ''">
-            AND categoty_level = #{categoryLevel}
+        <if test="categoryLevel != null">
+            AND category_level = #{categoryLevel}
         </if>
     </select>
 
@@ -43,7 +43,7 @@
             category_id        categoryId,
             category_name      categoryName,
             category_parent_id categoryParentId,
-            categoty_level     categotyLevel,
+            category_level     categoryLevel,
             category_logo_url  categoryLogoUrl
         FROM ky_product_category
         WHERE category_id = #{categoryId}
@@ -56,7 +56,7 @@
         SET
             category_name      = #{productCategory.categoryName},
             category_parent_id = #{productCategory.categoryParentId},
-            categoty_level     = #{productCategory.categotyLevel},
+            category_level     = #{productCategory.categoryLevel},
             category_logo_url  = #{productCategory.categoryLogoUrl}
         WHERE
             category_id = #{productCategory.categoryId}

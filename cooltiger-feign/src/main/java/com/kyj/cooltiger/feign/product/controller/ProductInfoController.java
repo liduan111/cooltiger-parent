@@ -56,19 +56,6 @@ public class ProductInfoController {
         return productInfoClient.addProductBaseInfo(storeId, productBaseReqVo);
     }
 
-    /**
-     * 添加商品Sku信息
-     *
-     * @param productId       商品ID
-     * @param productSkuReqVo 商品Sku信息
-     * @return
-     */
-    @RequestMapping(value = "/addProductSkuInfo/{product_id}", method = {RequestMethod.POST})
-    public Result addProductSkuInfo(
-            @PathVariable("product_id") Integer productId,
-            @RequestBody ProductSkuReqVo productSkuReqVo) {
-        return productInfoClient.addProductSkuInfo(productId, productSkuReqVo);
-    }
 
     /**
      * 查询商品信息

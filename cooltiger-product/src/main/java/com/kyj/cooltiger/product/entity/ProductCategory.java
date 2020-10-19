@@ -23,8 +23,8 @@ public class ProductCategory implements Serializable {
     @JsonProperty("category_parent_id")
     private Integer categoryParentId;
     /** 分类等级（0-一级分类1-二级分类2-三级分类） */
-    @JsonProperty("categoty_level")
-    private Integer categotyLevel;
+    @JsonProperty("category_level")
+    private Integer categoryLevel;
     /** 类别图片url */
     @JsonProperty("category_logo_url")
     private String categoryLogoUrl;
@@ -57,12 +57,12 @@ public class ProductCategory implements Serializable {
         this.categoryParentId = categoryParentId;
     }
 
-    public Integer getCategotyLevel() {
-        return categotyLevel;
+    public Integer getCategoryLevel() {
+        return categoryLevel;
     }
 
-    public void setCategotyLevel(Integer categotyLevel) {
-        this.categotyLevel = categotyLevel;
+    public void setCategoryLevel(Integer categoryLevel) {
+        this.categoryLevel = categoryLevel;
     }
 
     public String getCategoryLogoUrl() {

@@ -42,22 +42,11 @@ public interface ProductInfoClient {
      * @param productBaseReqVo 商品基本信息
      * @return
      */
-    @RequestMapping(value = "/addProductBaseInfo/{store_id}", method = {RequestMethod.POST})
+    @RequestMapping(value = "/product/productInfo/addProductBaseInfo/{store_id}", method = {RequestMethod.POST})
     public Result addProductBaseInfo(
             @PathVariable("store_id") Integer storeId,
             @RequestBody ProductBaseReqVo productBaseReqVo);
 
-    /**
-     * 添加商品Sku信息
-     *
-     * @param productId       商品ID
-     * @param productSkuReqVo 商品Sku信息
-     * @return
-     */
-    @RequestMapping(value = "/product/productInfo/addProductSkuInfo/{product_id}", method = {RequestMethod.POST})
-    public Result addProductSkuInfo(
-            @PathVariable("product_id") Integer productId,
-            @RequestBody ProductSkuReqVo productSkuReqVo);
 
     /**
      * 查询商品信息

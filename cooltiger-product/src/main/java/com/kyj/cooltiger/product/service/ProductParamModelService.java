@@ -30,18 +30,10 @@ public interface ProductParamModelService {
     public Map<String, Object> getProductParamModel(Integer categoryId);
 
     /**
-     * 修改商品参数模板
+     * 批量删除商品模板参数
      *
-     * @param categoryId
-     * @param paramModelReqVos
-     */
-    public void updateProductParamModel(Integer categoryId, List<ProductParamModelReqVo> paramModelReqVos);
-
-    /**
-     * 删除商品模板
-     *
-     * @param categoryId
+     * @param paramIds 参数ID（多个用,分隔）
      * @return
      */
-    public void delProductParamModel(Integer categoryId);
+    public void batchDelProductModelParam(String paramIds);
 }

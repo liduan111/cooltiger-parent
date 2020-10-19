@@ -1,5 +1,6 @@
 package com.kyj.cooltiger.product.controller;
 
+import com.kyj.cooltiger.common.constant.DELETED;
 import com.kyj.cooltiger.common.constant.IMAGES_PATH;
 import com.kyj.cooltiger.common.excep.MyException;
 import com.kyj.cooltiger.common.utils.CharUtil;
@@ -7,6 +8,7 @@ import com.kyj.cooltiger.common.utils.FileTypeUtil;
 import com.kyj.cooltiger.common.utils.FtpUtil;
 import com.kyj.cooltiger.common.utils.Result;
 import com.kyj.cooltiger.feign.product.client.ProductBrandInfoClient;
+import com.kyj.cooltiger.feign.product.client.ProductInfoClient;
 import com.kyj.cooltiger.product.config.FtpConfig;
 import com.kyj.cooltiger.product.entity.ProductBrandInfo;
 import com.kyj.cooltiger.product.service.ProductBrandInfoService;
@@ -14,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,6 +33,8 @@ public class ProductBrandInfoController implements ProductBrandInfoClient {
     private ProductBrandInfoService productBrandInfoService;
     @Autowired
     private FtpConfig ftpConfig;
+    @Autowired
+    private ProductInfoClient productInfoClient;
 
     /**
      * 添加品牌信息
@@ -101,16 +107,55 @@ public class ProductBrandInfoController implements ProductBrandInfoClient {
      * @param brandDesc   品牌描述
      * @param brandOrder  排序
      * @param brandStatus 品牌状态 0-未启用1-已启用
+     * @param picUpdate   是否修改图片(0-未更换图片1-更换图片)
+     * @param brandLogo   品牌logo
      * @return
      */
-    @RequestMapping(value = "/updateProductBrandInfo", method = {RequestMethod.PUT})
+    @RequestMapping(value = "updateProductBrandInfo", method = {RequestMethod.PUT})
     public Result updateProductBrandInfo(
             @RequestParam("brand_id") Integer brandId,
             @RequestParam("brand_name") String brandName,
             @RequestParam(value = "brand_desc", required = false) String brandDesc,
             @RequestParam(value = "brand_order", defaultValue = "0") Integer brandOrder,
-            @RequestParam(value = "brand_status", defaultValue = "1") Integer brandStatus) {
-        productBrandInfoService.updateProductBrandInfo(brandId, brandName, brandDesc, brandOrder, brandStatus, null);
+            @RequestParam(value = "brand_status", defaultValue = "1") Integer brandStatus,
+            @RequestParam("pic_update") Integer picUpdate,
+            @RequestParam(value = "brand_logo") MultipartFile brandLogo) {
+        //获取品牌信息
+        ProductBrandInfo productBrandInfo = productBrandInfoService.getProductBrandInfo(brandId);
+        if (picUpdate.equals(DELETED.NOT)) {
+            productBrandInfoService.updateProductBrandInfo(brandId, brandName, brandDesc, brandOrder, brandStatus, productBrandInfo.getBrandLogoUrl());
+        } else if (picUpdate.equals(DELETED.YES)) {
+            StringBuilder oldUrl = null;
+            //是否存在图片
+            if (productBrandInfo.getBrandLogoUrl() != null && productBrandInfo.getBrandLogoUrl() != "") {
+                oldUrl = new StringBuilder(productBrandInfo.getBrandLogoUrl());
+            }
+            if (brandLogo != null && !brandLogo.isEmpty()) {
+                String oldName = brandLogo.getOriginalFilename();
+                if (!FileTypeUtil.isImageByName(oldName)) {
+                    throw new MyException("PICTURE_FORMAT_ERROR", "图片格式错误");
+                }
+                String newName = CharUtil.getImageName(25) + oldName.substring(oldName.lastIndexOf("."));
+
+                productBrandInfoService.updateProductBrandInfo(brandId, brandName, brandDesc, brandOrder, brandStatus,
+                        ftpConfig.getImageBaseUrl() + IMAGES_PATH.BRAND_LOGO + "/" + newName);
+                //3、调用FtpUtil工具类上传图片
+                FtpUtil ftpUtil = new FtpUtil();
+                boolean result = ftpUtil.uploadFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
+                        ftpConfig.getPassWord(), ftpConfig.getBasePath(), IMAGES_PATH.BRAND_LOGO, newName, brandLogo);
+                if (!result) {
+                    throw new MyException("PICTURE_UPLOAD_ERROR", "图片上传失败");
+                }
+            } else {
+                productBrandInfoService.updateProductBrandInfo(brandId, brandName, brandDesc, brandOrder, brandStatus, null);
+            }
+            //图片存在则删除
+            if (oldUrl != null && oldUrl.length() > 0) {
+                List<String> imageUrls = new ArrayList<>();
+                imageUrls.add(oldUrl.toString());
+                productInfoClient.delProductImage(imageUrls);
+            }
+        }
         return Result.success();
     }
 
@@ -134,53 +179,6 @@ public class ProductBrandInfoController implements ProductBrandInfoClient {
         }
         //删除数据库数据
         productBrandInfoService.delProductBrandInfo(brandId);
-        return Result.success();
-    }
-
-    /**
-     * 更换品牌logo图片
-     *
-     * @param brandId   品牌ID
-     * @param brandLogo 品牌logo
-     * @return
-     */
-    @Override
-    @RequestMapping(value = "/updateBrandLogo", method = {RequestMethod.PUT})
-    public Result updateBrandLogo(
-            @RequestParam("brand_id") Integer brandId,
-            @RequestParam(value = "brand_logo") MultipartFile brandLogo) {
-        //获取品牌信息
-        ProductBrandInfo productBrandInfo = productBrandInfoService.getProductBrandInfo(brandId);
-        //删除服务器图片
-        if (productBrandInfo.getBrandLogoUrl() != null && productBrandInfo.getBrandLogoUrl() != "") {
-            String fileName = productBrandInfo.getBrandLogoUrl().substring(productBrandInfo.getBrandLogoUrl().lastIndexOf("/") + 1);
-            //调用FtpUtil工具类删除图片
-            FtpUtil ftpUtil = new FtpUtil();
-            ftpUtil.deleteFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
-                    ftpConfig.getPassWord(), ftpConfig.getBasePath() + IMAGES_PATH.BRAND_LOGO, fileName);
-        }
-        //更换新图片
-        //1、给上传的图片生成新的文件名
-        //1.1获取原始文件名
-        String oldName = brandLogo.getOriginalFilename();
-        //1.1.1根据文件名字判断是否为图片，支持（jpg png gif bmp）
-        if (!FileTypeUtil.isImageByName(oldName)) {
-            throw new MyException("PICTURE_FORMAT_ERROR", "图片格式错误");
-        }
-        //1.2使用CharUtil工具类生成新图片名（时间戳+随机字符串）+ 后缀名
-        String newName = CharUtil.getImageName(25) + oldName.substring(oldName.lastIndexOf("."));
-
-        //2、更新数据到数据库
-        productBrandInfoService.updateProductBrandInfo(brandId, productBrandInfo.getBrandName(),
-                productBrandInfo.getBrandDesc(), productBrandInfo.getBrandOrder(), productBrandInfo.getBrandStatus(),
-                ftpConfig.getImageBaseUrl() + IMAGES_PATH.BRAND_LOGO + "/" + newName);
-        //3、调用FtpUtil工具类上传图片
-        FtpUtil ftpUtil = new FtpUtil();
-        boolean result = ftpUtil.uploadFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
-                ftpConfig.getPassWord(), ftpConfig.getBasePath(), IMAGES_PATH.BRAND_LOGO, newName, brandLogo);
-        if (!result) {
-            throw new MyException("PICTURE_UPLOAD_ERROR", "图片上传失败");
-        }
         return Result.success();
     }
 }

@@ -28,11 +28,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      *
      * @param categoryName     分类名称
      * @param categoryParentId 分类父ID
-     * @param categotyLevel    分类等级
+     * @param categoryLevel    分类等级
      * @param categoryLogoUrl  分类logoUrl
      */
     @Override
-    public void addProductCategory(String categoryName, Integer categoryParentId, Integer categotyLevel, String categoryLogoUrl) {
+    public void addProductCategory(String categoryName, Integer categoryParentId, Integer categoryLevel, String categoryLogoUrl) {
         //判断名字是否有重复
         int count = productCategoryMapper.getProductCategoryCountByCategoryName(categoryName);
         if (count > 0) {
@@ -42,7 +42,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         ProductCategory productCategory = new ProductCategory();
         productCategory.setCategoryName(categoryName);
         productCategory.setCategoryParentId(categoryParentId);
-        productCategory.setCategotyLevel(categotyLevel);
+        productCategory.setCategoryLevel(categoryLevel);
         productCategory.setCategoryLogoUrl(categoryLogoUrl);
         productCategoryMapper.addProductCategory(productCategory);
     }
@@ -81,7 +81,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
             throw new MyException("CATEGOTY_NAME_IS_EXIST", "类别名称已存在");
         }
         productCategory.setCategoryName(categoryName);
-        productCategory.setCategoryLogoUrl(categoryLogoUrl==null?productCategory.getCategoryLogoUrl():categoryLogoUrl);
+        productCategory.setCategoryLogoUrl(categoryLogoUrl);
         productCategoryMapper.updateProductCategory(productCategory);
     }
 

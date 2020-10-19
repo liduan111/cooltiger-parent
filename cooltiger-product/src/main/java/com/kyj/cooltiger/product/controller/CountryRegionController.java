@@ -1,9 +1,11 @@
 package com.kyj.cooltiger.product.controller;
 
+import com.kyj.cooltiger.common.constant.DELETED;
 import com.kyj.cooltiger.common.constant.IMAGES_PATH;
 import com.kyj.cooltiger.common.excep.MyException;
 import com.kyj.cooltiger.common.utils.*;
 import com.kyj.cooltiger.feign.product.client.CountryRegionClient;
+import com.kyj.cooltiger.feign.product.client.ProductInfoClient;
 import com.kyj.cooltiger.product.config.FtpConfig;
 import com.kyj.cooltiger.product.entity.CountryRegion;
 import com.kyj.cooltiger.product.service.CountryRegionService;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,6 +30,8 @@ public class CountryRegionController implements CountryRegionClient {
     private CountryRegionService countryRegionService;
     @Autowired
     private FtpConfig ftpConfig;
+    @Autowired
+    private ProductInfoClient productInfoClient;
 
 
     /**
@@ -45,7 +51,7 @@ public class CountryRegionController implements CountryRegionClient {
             @RequestParam(value = "region_code", required = false) String regionCode,
             @RequestParam(value = "pict", required = false) MultipartFile upFile) {
         //如果图片为空直接添加
-        if (upFile == null || upFile.isEmpty()) {
+        if (parentId > 0 || upFile == null || upFile.isEmpty()) {
             countryRegionService.addCountryRegion(parentId, regionName, regionCode, null);
         } else {
             //1、给上传的图片生成新的文件名
@@ -92,6 +98,8 @@ public class CountryRegionController implements CountryRegionClient {
      * @param regionId   地区ID
      * @param regionName 地区名称
      * @param regionCode 地区行政编码
+     * @param picUpdate  是否修改图片(0-未更换图片1-更换图片)
+     * @param upFile     国旗图片
      * @return
      */
     @Override
@@ -99,8 +107,43 @@ public class CountryRegionController implements CountryRegionClient {
     public Result updateCountryRegion(
             @RequestParam("region_id") Integer regionId,
             @RequestParam("region_name") String regionName,
-            @RequestParam(value = "region_code", required = false) String regionCode) {
-        countryRegionService.updateCountryRegion(regionId, regionName, regionCode, null);
+            @RequestParam(value = "region_code", required = false) String regionCode,
+            @RequestParam("pic_update") Integer picUpdate,
+            @RequestParam(value = "up_file", required = false) MultipartFile upFile) {
+        //获取地区信息
+        CountryRegion countryRegion = countryRegionService.getCountryRegionByRegionId(regionId);
+        if (picUpdate.equals(DELETED.NOT)) {
+            countryRegionService.updateCountryRegion(regionId, regionName, regionCode, countryRegion.getNationalFlagUrl());
+        } else if (countryRegion.getParentId() == 0 && picUpdate.equals(DELETED.YES)) {
+            StringBuilder oldUrl = null;
+            //是否存在图片
+            if (countryRegion.getNationalFlagUrl() != null && countryRegion.getNationalFlagUrl() != "") {
+                oldUrl = new StringBuilder(countryRegion.getNationalFlagUrl());
+            }
+            if (upFile != null && !upFile.isEmpty()) {
+                String oldName = upFile.getOriginalFilename();
+                if (!FileTypeUtil.isImageByName(oldName)) {
+                    throw new MyException("PICTURE_FORMAT_ERROR", "图片格式错误");
+                }
+                String newName = CharUtil.getImageName(25) + oldName.substring(oldName.lastIndexOf("."));
+                countryRegionService.updateCountryRegion(regionId, regionName, regionCode,
+                        ftpConfig.getImageBaseUrl() + IMAGES_PATH.NATIONAL_FLAG + "/" + newName);
+                FtpUtil ftpUtil = new FtpUtil();
+                boolean result = ftpUtil.uploadFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
+                        ftpConfig.getPassWord(), ftpConfig.getBasePath(), IMAGES_PATH.NATIONAL_FLAG, newName, upFile);
+                if (!result) {
+                    throw new MyException("PICTURE_UPLOAD_ERROR", "图片上传失败");
+                }
+            } else {
+                countryRegionService.updateCountryRegion(regionId, regionName, regionCode, null);
+            }
+            //图片存在则删除
+            if (oldUrl != null && oldUrl.length() > 0) {
+                List<String> imageUrls = new ArrayList<>();
+                imageUrls.add(oldUrl.toString());
+                productInfoClient.delProductImage(imageUrls);
+            }
+        }
         return Result.success();
     }
 
@@ -125,53 +168,6 @@ public class CountryRegionController implements CountryRegionClient {
         }
         //删除数据库
         countryRegionService.delCountryRegion(regionId);
-        return Result.success();
-    }
-
-    /**
-     * 更改国旗图片
-     *
-     * @param regionId
-     * @param upFile
-     * @return
-     */
-    @Override
-    @RequestMapping(value = "/updateNationalFlag", method = {RequestMethod.PUT})
-    public Result updateNationalFlag(
-            @RequestParam("region_id") Integer regionId,
-            @RequestParam("pict") MultipartFile upFile) {
-        //删除旧图片
-        //获取地区信息
-        CountryRegion countryRegion = countryRegionService.getCountryRegionByRegionId(regionId);
-        //图片存在则删除
-        if (countryRegion.getNationalFlagUrl() != null && countryRegion.getNationalFlagUrl() != "") {
-            String fileName = countryRegion.getNationalFlagUrl().substring(countryRegion.getNationalFlagUrl().lastIndexOf("/") + 1);
-            //调用FtpUtil工具类删除图片
-            FtpUtil ftpUtil = new FtpUtil();
-            ftpUtil.deleteFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
-                    ftpConfig.getPassWord(), ftpConfig.getBasePath() + IMAGES_PATH.NATIONAL_FLAG, fileName);
-        }
-        //添加信息图片
-        //1、给上传的图片生成新的文件名
-        //1.1获取原始文件名
-        String oldName = upFile.getOriginalFilename();
-        //1.1.1根据文件名字判断是否为图片，支持（jpg png gif bmp）
-        if (!FileTypeUtil.isImageByName(oldName)) {
-            throw new MyException("PICTURE_FORMAT_ERROR", "图片格式错误");
-        }
-        //1.2使用CharUtil工具类生成新图片名（时间戳+随机字符串）+ 后缀名
-        String newName = CharUtil.getImageName(25) + oldName.substring(oldName.lastIndexOf("."));
-
-        //2、把新的图片url保存到数据库
-        countryRegionService.updateCountryRegion(regionId, countryRegion.getRegionName(), countryRegion.getRegionCode(),
-                ftpConfig.getImageBaseUrl() + IMAGES_PATH.NATIONAL_FLAG + "/" + newName);
-        //3、调用FtpUtil工具类上传图片
-        FtpUtil ftpUtil = new FtpUtil();
-        boolean result = ftpUtil.uploadFile(ftpConfig.getHost(), ftpConfig.getPort(), ftpConfig.getUserName(),
-                ftpConfig.getPassWord(), ftpConfig.getBasePath(), IMAGES_PATH.NATIONAL_FLAG, newName, upFile);
-        if (!result) {
-            throw new MyException("PICTURE_UPLOAD_ERROR", "图片上传失败");
-        }
         return Result.success();
     }
 }
